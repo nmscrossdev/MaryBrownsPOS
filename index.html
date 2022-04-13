@@ -1,0 +1,412 @@
+<!-- <body>
+    <div id="root"></div>
+     <script src="./dist/app-bundle.js"></script>
+</body> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- WebRegister Version 3.0.0 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Oliver POS</title>
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./assets/images/favicon/site.webmanifest">
+    <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#3D4C66">
+    <meta name="msapplication-TileColor" content="#3D4C66">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap">
+    <script src="./assets/js/jquery.min.js"></script>
+    <!-- Old Icons Files -->
+    <!-- These files are merge in style.css, nO longer need here to import -->
+    <!-- mergen in style.css <link rel="stylesheet" href="./assets/css/icon.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/iconSvg.css" type="text/css"> -->
+    <!-- END Old Icons Files -->
+
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="./assets/css/bootstrap-select.css" type="text/css"> -->
+    <!-- merge in style.css <link rel="stylesheet" href="./assets/css/bootstrap-select-override.css" type="text/css"> -->
+    
+    <!-- later comment -->
+    <!-- <link rel="stylesheet" href="./assets/css/all.min.css" type="text/css"> -->
+
+    <!-- Merge in style.css <link rel="stylesheet" href="./assets/css/theme.css" type="text/css"> -->
+    <!--Not in use <Removed> <link rel="stylesheet" href="./assets/css/circle.css" type="text/css"> -->
+    <!-- merge in style.css<link rel="stylesheet" href="./assets/css/search.css" type="text/css"> -->
+    <link rel="stylesheet" href="./assets/css/jquery.mCustomScrollbar.css" type="text/css">
+
+    <!-- merge in style.css <link rel="stylesheet" href="./assets/css/all.min.update.css" type="text/css" /> -->
+    <!-- merge in style.css <link rel="stylesheet" href="../assets/css/table.css" type="text/css"> -->
+
+    <link rel="stylesheet" href="./assets/css/bootstrap-select.min.css" type="text/css">
+    <!-- mergen in style.css <link rel="stylesheet" href="./assets/css/jquery.bootstrap-touchspin.css" type="text/css"> -->
+    <!-- Web View Css -->
+    <!-- later comment -->
+    <!-- <link rel="stylesheet" href="./assets/scss/css/webview2.css" type="text/css"> -->
+
+    <!-- for ticket seat css -->
+    <link rel="stylesheet" href="./assets/css/ticket_seat.css" type="text/css">
+    <!-- <link merge in style.css rel="stylesheet" href="./assets/css/jquery.seat-charts.css" type="text/css"> -->
+    <!-- merge in style.css <link rel="stylesheet" href="./assets/css/all.update.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="./assets/css/newStyle.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="./assets/css/onboarzd-v2.css" type="text/css"> -->
+    <!--  No need for now <link rel="stylesheet" href="./assets/css/jquery.scrollbar.css"> -->
+    <link rel="stylesheet" href="assets/css/style.min.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/newStyle.min.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/general_setting.css" type="text/css">       
+    <!-- merge in newstyle.css <link rel="stylesheet" href="./assets/css/newStyleFonts.css" type="text/css"> -->
+    <!-- merge in style.css <link rel="stylesheet" href="./assets/css/plug.css" type="text/css"> -->
+    <!-- merge in style.css <link rel="stylesheet" href="./assets/css/newIconfonts.css" type="text/css"> -->
+
+
+    
+    <!-- merge in newstyle.css <link rel="stylesheet" href="./assets/css/login.css" type="text/css"> -->
+
+   
+
+
+    <style>
+        .background-image-1 {
+            background: transparent url("./mobileAssets/img/logBg.svg") no-repeat top right /cover;
+        }
+
+        .background-image-2 {
+            background: transparent url("./mobileAssets/img/owl-tilt.svg") no-repeat top right;
+        }
+
+        .appSliderSC-index {
+            z-index: 22 !important;
+        }
+
+        .appSliderSC-overlay {
+            z-index: 11 !important;
+        }
+
+        .bg_trasn,
+        .calculator_wp #keys,
+        .pinChecker input {
+            background-color: transparent !important
+        }
+
+        /* .radio-primary-addon label {
+            color: #46b8da;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: "Poppins-medium";
+            height: 65px;
+        }
+
+        .radio-primary-addon label i {
+            font-size: 18px;
+        }
+
+        .radio-primary-addon label::before {
+            border-width: 3px
+        } */
+    </style>
+    <!-- Android & IOS Style -->
+    <!-- <link rel="stylesheet" href="./mobileAssets/assets/css/icons.css" type="text/css"> 
+    <link rel="stylesheet" href="./mobileAssets/assets/css/main.css" type="text/css"> 
+    <link rel="stylesheet" href="./mobileAssets/assets/css/text-view.css" type="text/css">  -->
+    <!-- End Android & IOS Style -->
+    <!-- <script type="text/javascript">
+
+      var isMobile = window.orientation > -1;
+      function addLinkOfCss(fileName) {
+            var head = document.head;
+            var link = document.createElement("link");
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            link.href = fileName;
+            head.appendChild(link);
+        }
+        if(isMobile){
+          var addCssStyle = ["./mobileAssets/css/main.css", "./mobileAssets/css/text-view.css", "./mobileAssets/www/jquery-scrollbar/css/jquery.scrollbar.css"]  
+          addCssStyle.forEach(addLinkOfCss);
+        }
+        if(!isMobile){
+           var addCssStyle = ["./assets/css/bootstrap.min.css", "./assets/css/bootstrap-select-override.css", "./assets/css/all.min.css", "./assets/css/theme.css", "./assets/css/circle.css", "./assets/css/search.css", "./assets/css/jquery.mCustomScrollbar.css", "./assets/css/iconSvg.css", "./assets/css/all.min.update.css", "../assets/css/table.css", "./assets/css/bootstrap-select.min.css", "./assets/css/jquery.bootstrap-touchspin.css", "./assets/css/flaticon.css", "./assets/scss/css/webview.css", "./assets/css/icon.css"]  
+          addCssStyle.forEach(addLinkOfCss);
+        }
+    </script> -->
+    <!-- <script>
+        var _data = localStorage.getItem('clientDetail');
+        var clientDetail = _data ? JSON.parse(_data) : null;
+        if (clientDetail) {
+            dataLayer = [{
+                'oliverpos-client-guid': clientDetail.ClientId,
+                'oliverpos-client-url': clientDetail.Host ? clientDetail.Host : "",
+                'oliverpos-client-email': clientDetail.Email ? clientDetail.Email : ""
+            }];
+        }
+
+        // When a user goes to the checkout page get total amount in the checkout. We can add it to the existing dataLayer
+        var checkout_list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : "";
+        if (checkout_list) {
+            console.log("total amount of checkout page for GTM")
+            dataLayer.push({
+                'event': 'checkoutPage',
+                'checkoutTotal': checkout_list.totalPrice
+            });
+        }
+        // when place order is successfully complete
+        var gtm_order = localStorage.getItem("GTM_ORDER") ? JSON.parse(localStorage.getItem("GTM_ORDER")) : "";
+        if (gtm_order) {
+            //console.log("place order json for GTM", gtm_order);
+            if (gtm_order.status == 'completed' && gtm_order.order_payments && gtm_order.order_payments.length > 0) {
+                console.log("if GTM order completed");
+                gtm_order.order_payments.map(items => {
+                    dataLayer.push({
+                        'event': 'payment',
+                        'paymentType': items.type,
+                        'paymentAmount': parseFloat(items.amount),
+                        'remainingBalance': 0
+                    });
+                })
+                dataLayer.push({
+                    'event': 'checkoutComplete',
+                    'orderDetails': gtm_order
+                });
+            }
+        }
+    </script> -->
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start':
+
+                    new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+
+        })(window, document, 'script', 'dataLayer', 'GTM-TQBJ7K8');
+    </script>
+
+    <!-- End Google Tag Manager -->
+
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQBJ7K8" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="root" >
+    </div>
+    <div id="hiddenIfrms">
+    </div>
+   
+
+    <script src="./dist/app-bundle.js"></script>
+    <!-- scripts -->
+    <script crossorigin src="https://js.stripe.com/terminal/v1/"></script>
+    <!-- <script src="./assets/js/jquery.min.js"></script> -->
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/bootstrap-select.min.js"></script>
+    <script src="./assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="./assets/js/jquery.nicescroll.js"></script>
+    <!-- <script src="./assets/js/simplyCountdown.js"></script> -->
+
+
+    <script src="./assets/js/jquery.bootstrap-touchspin.js"></script>
+    <!-- for ticket seat js -->
+    <script src="./assets/js/TicketSeatJs/ServerDate.js"></script>
+    <script src="./assets/js/TicketSeatJs/jquery.pan.js"></script>
+    <!-- <script src="./assets/js/TicketSeatJs/seat-charts-admin.js"></script> -->
+    <!-- <script src="./assets/js/TicketSeatJs/tc-firebase-admin.js"></script> -->
+    <!-- <script src="./assets/js/TicketSeatJs/tc-firebase.js"></script> -->
+    <script src="./assets/js/TicketSeatJs/tc-seat-charts-cart-front.js"></script>
+    <!-- <script src="./assets/js/TicketSeatJs/ticket-type-color-picker.js"></script> -->
+    <!-- start for tiket seat js -->
+    <!-- <script src="./assets/js/jquery.seat-charts-booking.js"></script> -->
+    <script src="./assets/js/jquery.seat-charts.js"></script>
+    <script src="./assets/js/newScript.js"></script>
+    <!-- end for tiket seat js -->
+    <script src="./assets/js/custom_height.js"></script>
+    <script src="./assets/js/script.js"></script>
+    <!-- <script src="./assets/js/jquery.scrollbar.js"></script> -->
+
+    <script src="./assets/www/select2/select2.js"></script>
+    <script src="./assets/www/datepicker/bootstrap-datepicker.js"></script>
+    <!-- <script src="./assets/www/customScript.js"></script> -->
+
+    <!-- end  -->
+    <script type="text/javascript">
+        function setMargins() {
+            var $box = $('.dialog-content');
+            var boxLeft = ($(window).width()) / 2 - ($box.width() / 2),
+                boxTop = ($(window).height()) / 2 - ($box.height() / 2);
+            $box.css({
+                top: boxTop
+            });
+        }
+        $(document).ready(function () {
+            setMargins();
+            $(window).resize(function () {
+                setMargins();
+            });
+        });
+        // window.addEventListener("beforeunload", (ev) => {
+        //     console.log("beforeunload",ev);
+        //     ev.preventDefault();
+        //     return ev.returnValue = 'Are you sure you want to close?';
+        // });
+
+        //----------- For vebView------------------------------
+        var JSInterface = '';
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (1 + min, max)) + max;
+        }
+
+        function showOrders() {
+
+            var number = getRandomNumber(10000, 50000)
+            console.log("number", number);
+            JSInterface.showOrders(number);
+        }
+
+        function showShopping() {
+            JSInterface.showShopping();
+        }
+
+
+        function callNativeApp() {
+            try {
+                webkit.messageHandlers.callbackHandler.postMessage("printReceipt");
+            } catch (err) {
+                console.log('The native context does not exist yet');
+            }
+        }
+
+        //-----------------------------------------------------
+    </script>
+
+    <!-- Android & IOS JavaScript -->
+    <!-- <script src="./mobileAssets/www/jquery.3.2.1.min.js"></script> -->
+    <script src="./mobileAssets/www/popper.min.js"></script>
+    <!-- <script src="./mobileAssets/www/jquery-scrollbar/js/jquery.scrollbar.js"></script> -->
+    <script src="./mobileAssets/www/customScript.js"></script>
+    <script src="./assets/js/newScript.js"></script>
+
+    <script>
+        // $(window).bind("load resize",function(){
+        //     $('.scrollbar-dynamic').scrollbar();
+        // });
+
+        /*-----Search Open And Close-----*/
+        $('div[data-target="search-out"]').click(function () {
+            var target = $(this).data("target");
+            $(this).parent().addClass("fadeOut").removeClass("fadeIn");
+            $("#" + target).removeClass("fadeOut");
+            $("#" + target).addClass("fadeIn");
+        });
+        $('button[data-target="slide_out_self"]').click(function () {
+            var self = $(this);
+            $(".appProductSlide").removeClass("fadeOut");
+            $(".appProductSlide").addClass("fadeIn");
+            $("#search-out").removeClass("fadeIn");
+        });
+        /*-----Search Open And Close END-----*/
+        /*-----Sidebar Open And Close-----*/
+        $('button[data-target="slide-out"]').click(function () {
+            var target = $(this).data("target");
+            $("#" + target).css("transform", "translateX(0%)");
+            $(".sidenav-overlay").css({
+                "display": "block",
+                "opacity": 0.88
+            });
+        });
+        $('div[data-target="slide-out"], a[data-target="slide-out"]').click(function () {
+            var target = $(this).data("target");
+            $("#" + target).removeAttr("style");
+            $(".sidenav-overlay").removeAttr("style");
+        });
+        /*-----Sidebar Open And Close END-----*/
+        // $(document).ready(function() {
+        //     $('.scrollbar').scrollbar();
+        // });
+    </script>
+    <!-- <script src="./mobileAssets/www/owl/owl.carousel.js"></script>
+<script src="./mobileAssets/www/jquery.mousewheel.min.js"></script> -->
+    <script>
+        // -----------------------
+        // -----------------------
+        /*-----Split Design-----*/
+        $('button[data-target="splitpayment"]').click(function () {
+            var target = $(this).data("target");
+            $("#" + target).css("transform", "translateY(0%)");
+            $(".appOffCanvasFooterOverlay").css({
+                "display": "block",
+                "opacity": 0.36
+            });
+            setCalculatorHeight();
+        });
+
+        $('div[data-target="splitpayment"]').click(function () {
+            var target = $(this).data("target");
+            $("#" + target).removeAttr("style");
+            $(".appOffCanvasFooterOverlay").removeAttr("style");
+        });
+        setCalculatorHeight = function () {
+            $(".calculatorSetHeight,.offcanvasOverlaySPLIT").height(($(".offcanvasOverlay").height() - $(".appBottomOnboarding").height()) / 6);
+        }
+        $(window).resize(setCalculatorHeight);
+        /*----End Split Design-----*/
+
+
+        // SHow Hide Field
+        $(document).ready(function () {
+            $("input[name$='refund']").click(function () {
+                var sibling = $(this).parents().siblings("td").parent().next().toggleClass("d-none");
+            });
+        });
+    </script>
+    <!-- End -->
+
+    <!-- calculator for Add fee and discount -->
+    <script>
+        $(".btn-toggle-percentage").click(function () {
+            if ($(this).children("label").hasClass("active") == false) {
+                $("#percentageToggle").html("%");
+            } else {
+                $("#percentageToggle").html("");
+            }
+        });
+
+        $(window).bind("load resize", function () {
+            var getWindowHeight = $(window).height() - (322 + $(".appBottomOnboarding").height());
+            $(".calculatorSetHeight").height(getWindowHeight / 5);
+        });
+    </script>
+
+    <!-- <div class="frame"></div>
+    <div class="frame-footer"></div>
+    <div class="frame-left"></div>
+    <div class="frame-right"></div> -->
+
+</body>
+
+</html>

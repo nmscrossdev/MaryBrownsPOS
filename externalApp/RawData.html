@@ -1,0 +1,146 @@
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+<style>
+		.op-addons-container{
+			/* display: block;
+			width: 50%;
+			margin: auto;
+			text-align: left; */
+		}
+		.op-label,
+		.productx_title.productx_title_center,
+		.op-heading {
+			font-size: 22px;
+			color: #4B4B4B;
+			margin-bottom: 5px;
+			font-weight: 600;
+			margin-top: 15px;
+			text-align: center;
+		}
+		.op-hide{
+			display: none;
+		}
+		.op-price{
+		margin: 7px;
+		}
+		.asterisk{
+		color:red;
+		}
+		.single_add_to_cart_button{
+			background: #000;
+			color: #fff;
+			padding: 1em;
+			border: none;
+		}
+		#cart_quantity{
+			width: 4em;
+			text-align: center;
+			padding: 1em;
+			background-color: #f2f2f2;
+			color: #43454b;
+			border: 0;
+			-webkit-appearance: none;
+			box-sizing: border-box;
+			font-weight: 400;
+			box-shadow: inset 0 1px 1px rgb(0 0 0 / 13%);
+			}
+			.mb-15 {
+				margin-bottom: 15px;
+			}
+			.mb-0 {
+				margin-bottom: 0px;
+			}
+			p {
+				text-align: center;
+			}
+		</style>
+<script src="data.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body class="vproductx_font">
+	<div id="modal-window" class="shadow">
+        
+            <div class="main-modal main-modal-lg">
+               
+                <div class="productx_popup w-100">
+                    
+                    <div class="productx_popup_body">
+						<form action="#" id="addons-app" method="post">
+							<div class="productx_grid">
+								<div class="productx_grid_items_100">
+									<div class="vproductx_product">
+										<div class="vproductx_product_body ">
+											<div id="dvShowOptions"></div>
+											
+											<div id="dvShowResult_multiple_choice_select"></div>
+											<div id="dvShowResult_multiple_choice_radiobutton"></div>
+											<div id="dvShowResult_multiple_choice_image"></div>
+											
+											<div id="dvShowResult_checkbox_select"></div>
+											<div id="dvShowResult_checkbox_radio"></div>
+											<div id="dvShowResult_checkbox_image"></div>
+											<div id="dvShowResult_custom_text_select"></div>
+											<div id="dvShowResult_custom_text_radio"></div>
+											<div id="dvShowResult_custom_text_image"></div>
+											<div id="dvShowResult_custom_textarea_select"></div>
+											<div id="dvShowResult_custom_textarea_radio"></div>
+											<div id="dvShowResult_custom_textarea_image"></div>
+											<div id="dvShowResult_custom_price_select"></div>
+											<div id="dvShowResult_custom_price_radio"></div>
+											<div id="dvShowResult_custom_price_image"></div>
+											<div id="dvShowResult_multiplier_select"></div>
+											<div id="dvShowResult_multiplier_radio"></div>
+											<div id="dvShowResult_multiplier_image"></div>
+										</div>
+										
+									</div>
+									<div class="vproductx_product_footer ">
+											<div id="dvShowResult1">
+												<h2><span class="quantity">1</span> * Product price= <span  class="proprice"> 33</span></h2>
+												<input type="hidden" class="proprice" op_amount="33">
+											</div>
+											<div class="addtocartp">
+												<input id="cart_quantity" type="hidden" step="1" min="1" value="1">
+												
+											</div>
+											
+										</div>
+								</div>
+								                           
+							</div>
+						</form>	
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+	<script>    
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+console.log("SendData",readyExtensionData)
+           // document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData);
+        }, 1000);
+        //----------------------------------------
+
+        window.addEventListener('message', function (e) {
+            msgData = JSON.parse(e.data);
+            console.log("Message from Oliver POS:", msgData)
+           // document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData);
+		   console.log("ReceivedData",msgData)
+        }, false);
+
+
+    </script>
+</body>
+
+</html>

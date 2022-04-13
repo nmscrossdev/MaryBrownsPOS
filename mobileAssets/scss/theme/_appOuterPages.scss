@@ -1,0 +1,54 @@
+.list-group-steps {
+    padding: 0px;
+    .list-group-item {
+        border: 0px;
+        &:nth-child(even) {
+            background-color: $gray-100;
+        }
+        a {
+            height: 40px;
+        }
+        &:first-child {
+            border-radius: 8px 8px 0px 0px;
+        }
+        span::first-letter {
+            text-transform: uppercase;
+        }
+    }
+}
+
+.tagOwls {
+    position: fixed;
+    bottom: 10px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+}
+.setupCalculater {
+    max-width: 301px;
+    @include cmq (80px, 480px) {
+        max-width: 260px;
+    }
+    font-weight: bold;
+    margin-right: 0px;
+    margin: auto;
+    table {
+        font-size: 45px;
+        font-weight: bolder;
+    }
+}
+.dot {
+    height: 12px;
+    width: 12px;
+    border: 2px solid $white;
+    opacity: 1;
+    border-radius: 50%;
+    display: inline-block;
+    background: $white;
+    &.bg_trasn {
+        opacity: 0.88;
+        background-color: transparent;
+    }
+}

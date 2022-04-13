@@ -1,0 +1,19 @@
+.onboarding-loginBox {
+    .input-group-addon {
+        border-color: #C5BFBF;
+    }
+    .form-control {
+        border-color: #C5BFBF;   
+    }
+    .form-control:focus {
+        background-color: #fff;
+        border-color: #C5BFBF;
+    }
+    .checkBox-custom {
+        border: 1px solid #C5BFBF;
+        background-color: #FFF;
+    }
+    .checkmark {
+        border-left: 1px solid #C5BFBF;
+    }
+}

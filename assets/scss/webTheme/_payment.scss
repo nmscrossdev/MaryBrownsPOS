@@ -1,0 +1,112 @@
+.page-payment {
+    background-color: $primary;
+    height: 100vh;
+    width: 100%;
+    padding: 27px;
+    padding-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    .payment-nav {
+        text-align: right;
+        &.text-left {
+            text-align: left;
+        }
+        &.text-center {
+            text-align: center;
+        }
+        .btn.btn-success {
+            height: 50px;
+            min-width: 200px;
+        }
+    }
+    .payment-copywright {
+        font-family: $font-light;
+        font-size: 20px;
+        color: #FFFFFF;
+        padding-bottom: 10px;
+    }
+    .widget_day_record .widget_day_record_text h6,
+    .widget_day_record .widget_day_record_text p,
+    .table-customise {
+        color: #FFFFFF;
+    }
+    .table-customise.table-day-record th, 
+    .table-customise.table-day-record td {
+        border-color: #FEFEFE;
+    }
+    .table-customise {
+        tr:last-child {
+            td {
+                border-bottom: 0px;
+            }
+        }
+    }
+    .btn.btn-default {
+        font-size: 20px;
+        background: #FFFFFF;
+        border: 1px solid rgba(128, 128, 128, 0.24);
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        color: #4B4B4B;
+        &:focus, &:hover {
+            background-color: #FFFFFF;
+        }
+    } 
+    .payment-page-title {
+        text-align: center;
+        // img {
+        //     padding-bottom: 40px;
+        // }
+    }
+    .payment-content {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .payment-button-group {
+        padding-top: 48px;
+        padding-bottom: 90px;
+        // max-width: 400px;
+        // margin: auto;
+        .btn.btn-default 
+        {
+            margin-bottom: 30px;
+            &:last-child{
+                margin-bottom: 0px;
+            }
+        }
+    }
+    .payment-button-group{
+        max-width: 400px;
+        margin: auto;
+    }
+    .self-checkout-table {
+        max-width: 568px;
+        margin: auto;
+    }
+    .payment-description {
+        margin: auto;
+        max-width: 288px;
+    }
+    .payment-footer {padding-top: 20px;}
+}
+
+.page-payment-card {
+    background-image: url('../img/self-checkout/card.svg');
+    background-size: 450px;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    padding-bottom: 313px;
+}
+
+.page-payment-successfull {
+    background-image: url(../img/Checked.svg);
+    background-size: 450px;
+    background-repeat: no-repeat;
+    background-position: bottom 16px right -126px;
+}
+
+
+@import "payment-responsive";

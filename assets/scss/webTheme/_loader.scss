@@ -1,0 +1,50 @@
+.loader-fixed {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    z-index: 1050;
+    background-color: #5362678a;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+}
+
+.loader-centered {
+    min-width: 200px;
+    background: $white;
+    // color: $blue;
+    padding: 5px 0px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+#right-eye01 , #right-eye02 , #eyes-follows{
+    /*fill: orange;*/
+    /*animation: dance 2s infinite;*/
+    animation-name: dance;
+    animation-duration: 2500ms;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: dance;
+    -webkit-animation-duration: 2500ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+#right-eye01{
+    transform-origin: 43.2% 43.2%;
+}
+#right-eye02 {
+        transform-origin: 56% 43%;
+}
+#eyes-follows {
+    transform-origin: 50% 50%;
+}
+@keyframes dance {
+      to {
+        transform: rotate(-360deg);
+      }
+}

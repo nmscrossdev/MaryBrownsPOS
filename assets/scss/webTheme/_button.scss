@@ -1,0 +1,233 @@
+.btn {
+    &.btn-primary {
+        background-color: $primary;
+        border-color: $primary;
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: opacify($color: $primary, $amount: 0.7);
+            border-color: opacify($color: $primary, $amount: 0.7);
+        }
+    }
+    &.btn-danger {
+        background-color: $danger;
+        border-color: $danger;
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: opacify($color: $danger, $amount: 0.7);
+            border-color: opacify($color: $danger, $amount: 0.7);
+        }
+    }
+    &.btn-success {
+        background-color: $success;
+        border-color: $success;
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: opacify($color: $success, $amount: 0.7);
+            border-color: opacify($color: $success, $amount: 0.7);
+        }
+    }
+} 
+
+.btn-secondary-custom {
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-size: 14px;
+    min-width: 76px;
+    height: 37px;
+    background-color: $white;
+    line-height: 37px;
+    padding: 0px;
+}
+.btn-outline-secondary {
+    color: #747373;
+    border-color: #747373;
+}
+
+.pl-margin {
+    button,
+    .btn-group-toggle {
+        cursor: pointer;
+        margin-bottom: 10px;
+        border-radius: 10px !important;
+        &:hover {
+            label.btn.btn-outline-secondary,
+            .btn-outline-secondary {
+                background-color: transparent;
+                color: #4B4B4B;
+            }
+        }
+        .btn-secondary {
+            font-size: 17px;
+            width: 100%;
+            font-family: $font-light;
+            font-weight: 300;
+            
+        }
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+    label.btn.btn-outline-secondary,
+    .btn-outline-secondary {
+        font-size: 17px;
+        cursor: pointer;
+        font-family: $font-light;
+        font-weight: 300;
+    }
+}
+
+.btn-outline-toggle {
+    position: relative;
+    &::after {
+        position: absolute;
+        border: 1px solid $primary;
+    }
+}
+.btn-outline-toggle:not(:disabled):not(.disabled).active,
+.btn-outline-toggle:not(:disabled):not(.disabled).focus {
+    &:hover {
+        color: #4b4b4b;
+    }
+    color: #4b4b4b;
+    background-color: transparent;
+    &::after {
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        opacity: 1;
+    }
+}
+
+.btn-mask {
+    position: relative;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15) !important;
+    &:hover,
+    &:focus,
+    &:visited,
+    &:active {
+        background-color: transparent;
+        color: #4B4B4B;
+    }
+    > .btn-overlay {
+        position: absolute;
+        // background-color: red;
+        width: 23px;
+        left: -1px;
+        top: -1px;
+        bottom: -1px;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+}
+
+.card-justify-buttons {
+    .button_with_checkbox [type=radio]:checked+label, 
+    .button_with_checkbox [type=radio]:not(:checked)+label {
+        font-size: 17px;
+        &::after {
+            height: calc(100% - 2px);
+            top: 1px;
+            left: 1px;
+            bottom: 1px;
+            right: 1px;
+        } 
+    }
+}
+
+.ol-outline-primary {
+    border: 1px solid $primary;
+    color: $primary;
+    box-shadow: none;
+    border-radius: 8px;
+    font-size: 16px;
+    &:hover {
+        color: $primary;
+    }
+    &.active {
+        background-color: $primary;
+        color: #FFFFFF;
+        box-shadow: none;
+    }
+}
+
+.ol-button-lg {
+    background: #46A9D4;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    height: 62px;
+    border-radius: 0px;
+    border: 0px;
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: #46a9d4e8;
+        border: 0px;
+    }
+}
+
+.ol-outline-danger {
+    border: 1px solid #E0654C;
+    border-radius: 8px;
+    color: #E0654C;
+    &:active,
+    &:focus {
+        color: #E0654C;
+    }
+    &:hover {
+        background-color: #E0654C;
+        color: #fff;
+    }
+}
+
+.ol-outline-primary {
+    background-color: transparent;
+    border: 1px solid $primary;
+    border-radius: 8px;
+    color: $primary;
+    font-size: 18px;
+    @include tablet {
+        font-size: 16px;
+    }
+    @include mobile {
+        font-size: 14px;
+    }
+    &:active,
+    &:focus {
+        color: $primary;
+    }
+    &:hover {
+        background-color: $primary;
+        color: #fff;
+    }
+}
+
+.btn-rounded-0 {
+    border-radius: 0px;
+}
+
+.btnpark-reverse{
+    border: 1px solid #46a9d4;
+    color: #ffffff;
+    background-color: #46a9d4;
+    padding: 3px 17px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-12 { font-size: 12px !important; }
+.btn-14 { font-size: 14px !important; }
+.btn-18 { font-size: 18px !important; }
+.btn-20 { font-size: 20px !important; }
+.btn-24 { font-size: 24px !important; } 
+
+.btn-90 {height: 90px}
+
+.btn-uppercase { text-transform: uppercase; }
+.btn-lowercase { text-transform: lowercase; }
+.btn-capitalize { text-transform: capitalize; }
+.btn-unset { text-transform: unset; }

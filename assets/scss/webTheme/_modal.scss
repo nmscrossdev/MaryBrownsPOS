@@ -1,0 +1,316 @@
+.modal-65 {
+    min-height: 65px;
+}
+.close {
+    opacity: 1;
+}
+
+.modal-full {
+    .modal-dialog  {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        @media (min-width: 576px) and (max-width: 991.5px)
+        {
+            max-width: 90%;
+        }
+    }
+    .modal-content {
+        min-height: 100vh;
+    }
+}
+.modal-center-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    & {
+        height: 100%;
+    }
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+.upgrade-content {
+    text-align: center;
+    .icon-upgrade {
+        color: #D4E50B;
+        line-height: 0;
+    }
+    h6 {
+        font-size: 16px;
+        margin-bottom: 0px;
+        padding-bottom: 5px;
+    }
+    p{
+        font-size: 13px;
+    }
+    .btn-upgrade {
+        width: 142px;
+        padding: 7px 0px;
+        font-size: 14px;
+        border-radius: 4px;
+    }
+}
+
+.card-body-content {
+    // margin-bottom: 20px;
+    padding: 10px 15px;
+    &:last-child {
+        margin-bottom: 0px;
+    }
+    .card-title,
+    button {
+        font-size: 16px;
+    }
+    .card-text {
+        font-size: 14px;
+    }
+    button {
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+    }
+}
+
+.quantity-portles {
+    img {
+        width: 30px;
+    }
+    .input-group {
+        height: 62px;
+        .quantity-portles-buttons {
+            width: 25%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .quantity-portles-form {
+            width: 50%;
+            display: flex;
+            background-color: #F5F5F5;
+            border-left: 1px solid rgba(151, 151, 151, 0.5);
+            border-right: 1px solid rgba(151, 151, 151, 0.5);
+            align-items: center;
+            font-size: 22px;
+            .form-control {
+                background-color: transparent;
+                border: 0px;
+                font-size: 22px;
+                width: 50%;
+                &::placeholder {
+                    color: #4b4b4b;
+                }
+                :-ms-input-placeholder { 
+                    color: #4b4b4b;
+                }
+                ::-ms-input-placeholder {
+                    color: #4b4b4b;
+                }
+            }
+            span {
+                width: 50%;
+                text-align: right;
+            }
+            .input-group-text {
+                align-items: right !important;
+                width: 100%;
+                border-top: 0px !important;
+                border-bottom: 0px !important;
+            }
+        }
+    }
+}
+
+.quantity-portles.no-border {
+    .quantity-portles-buttons {
+        border: 0px;
+    }
+    .quantity-portles-form {
+        .quantity-feild {
+            border: 0px;
+        }
+    }
+}
+
+
+
+.modal-md2 {
+    width: 512px !important;
+    padding: 30px
+  }
+  .plan-info {
+    text-align: center;
+  }
+  .plan-info i {
+    color: #D4E50B;
+    font-size: 96px;
+  }
+  .plan-info h4 {
+    color: #4B4B4B;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .plan-info p {
+    color: #747373;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+  }
+  
+.popUpMid,
+.modal-small {
+    @include tv {
+        .modal-sm {
+            width: 462px;
+        }
+    }
+    .modal-sm {
+        width: 400px;
+    }
+    @include mobile-small {
+        .modal-sm {
+            width: 80%;
+        }
+    }
+    .popScroll {
+        height: 76vh;
+        overflow: auto;
+    }
+    .header-modal {
+        border-color: #CACACA;
+        position: relative;
+        min-height: 63px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    h1 {
+        font-size: 22px;
+        margin: 0px;
+        text-align: center;
+        color: #4B4B4B;
+    }
+    .btn {
+        font-size: 18px;
+    }
+    @include tv {
+        h1 {
+            font-size: 26px;
+        }
+        .btn {
+            font-size: 24px;
+        }
+    }
+    .btn {
+        &.h-70 { 
+            height: 65px;
+        }
+    }   
+}
+.modal-center-block {
+    // height: 100vh;
+    margin: 0px auto;
+    padding: 0px;
+    .modal-content {
+        width: 100%;
+        overflow: hidden;
+    }
+}
+.data-dismiss {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0px;
+    width: 65px;
+    top: 0px;
+    bottom: 0px;
+    cursor: pointer;
+    img 
+    {
+        width: 40px;
+    }
+}
+
+.full-product {
+    height: calc(100vh - 94.1px);
+    overflow: auto;
+    padding: 0px 15px;
+    .full-product-image {
+        padding: 0px 20px 15px;
+        text-align: center;
+        border-bottom: 1px solid #CACACA;
+        overflow: hidden;
+        max-height: 200px;
+        img {
+            object-fit: cover;
+            width: 200px;
+            height: 100%;
+        }      
+    }
+    .full-product-sections {
+        margin-top: 17px;
+        h6 {
+            color: #4b4b44;
+            font-size: 14px;
+            line-height: normal;
+            margin-bottom: 10px;
+            font-family: $font-medium;
+        }
+        p {
+            color: #4b4b44;
+            font-size: 14px;
+            line-height: normal;
+            font-family: $font-light;
+        }
+        ul, li{
+            color: #4b4b44;
+            font-size: 14px;
+            line-height: normal;
+            font-family: $font-light;
+        }
+    }
+}
+
+.self-checkout-variation {
+    .btn.btn-primary
+    {
+        height: 76px;
+        margin: auto;
+        font-size: 28px;
+        border-radius: 8px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    @include device-lg {
+        .btn.btn-primary
+        {
+            font-size: 20px;
+            height: 60px;
+        }   
+    }
+}
+
+.self-checkout-no-variation {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 131px;
+    font-size: 18px;
+    color: #4B4B4B90;
+}
+
+@include tv {
+    .pr-lg-0 {
+        padding-right: 0px;
+    }
+}
+@include device-lg { 
+    .pr-lg-0 {
+        padding-right: 0px;
+    }
+}

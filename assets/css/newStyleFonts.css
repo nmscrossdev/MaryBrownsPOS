@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "Poppins-black";
+    src: url("../fonts/Poppins-Black.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Poppins-bold";
+    src: url("../fonts/Poppins-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Poppins-semibold";
+    src: url("../fonts/Poppins-SemiBold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Poppins-light";
+    src: url("../fonts/Poppins-Light.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Poppins-medium";
+    src: url("../fonts/Poppins-Medium.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../fonts/Poppins-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icons8-login,
+.icons8-logout-rounded-left,
+.icons8-menu-vertical,
+.icons8-menu,
+.icons8-menulist,
+.icons8-minus,
+.icons8-oliver,
+.icons8-plus,
+.icons8-remove,
+.icons8-restart,
+.icons8-road-closure,
+.icons8-roundbutton,
+.icons8-search-more,
+.icons8-task,
+.icons8-tick,
+.icons8-time-machine,
+.icons8-undo,
+.icons8-add-user-male,
+.icons8-addnew,
+.icons8-back-arrow,
+.icons8-bell,
+.icons8-cancel,
+.icons8-cash-register,
+.icons8-cloud-link,
+.icons8-cloud-sync,
+.icons8-discount,
+.icons8-down-button,
+.icons8-extensions,
+.icons8-gear,
+.icons8-go-back {
+  line-height: 0;
+}
+.home-tab-menus i.icons8-down-button,
+.home-tab-menus .icons8-down-button:before ,
+.home-tab-menus .icons8-cancel,
+.home-tab-menus .icons8-cancel:before{
+  line-height: 0 !important;
+}
+

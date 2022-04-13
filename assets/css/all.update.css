@@ -1,0 +1,221 @@
+.modal-md2 {
+    width: 512px;
+    padding: 30px
+}
+.plan-info {
+    text-align: center;
+}
+.plan-info i {
+    color: #D4E50B;
+    font-size: 96px;
+}
+.plan-info i.plan-info-dark {
+    color: #747373
+} 
+.plan-info h4 {
+    color: #4B4B4B;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 5px;
+}
+.plan-info p {
+    color: #747373;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+}
+.plan-info button.btn.btn-info.btn-lg {
+    width: 142px;
+    height: 38px;
+    padding: 0px;
+    margin-top: 20px;
+    font-size: 14px;
+    border: 0px;
+}
+
+.panel-flex {
+    height: 100vh;
+    margin-bottom: 0px;
+    height: calc(100vh - 88px);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border: 1px solid #C5BFBF;
+    border-radius: 8px;
+}
+.panel-flex .panel-header {
+    border-bottom: 1px solid #C5BFBF;
+}
+.panel-flex .panel--title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    text-align: center;
+}
+.panel-flex .panel-footer {
+    border-top: 1px solid #C5BFBF;
+}
+.panel-flex .panel-body{
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    overflow: auto;
+}
+.extension-box {
+    border-radius: 8px;
+    border: 1px solid #CBCBCB;
+    height: 118px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.extension-box-active{
+    border: 2px solid;
+    color:#45a8d3;
+}
+.extension-image {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    overflow: auto;
+}
+.extension-image img {
+    width: auto;
+    max-width: 80px;
+    min-width: auto;
+}
+.extension-info {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    overflow: auto;
+}
+.extension-title {
+    color: #4B4B4B;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-top: 1px solid #cbcbcb;
+    padding: 6px 0px;
+}
+.panel--inner-title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: rgba(75, 75, 75, 0.5);
+}
+
+
+.panel-flex-box {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+}
+.panel-flex-box .panel--title {
+    display: flex;
+    align-items: center;
+}
+.panel-flex-box-buttons {
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    cursor: pointer;
+}
+.btnpark{
+    border: 1px solid #3D4C66;
+    color: #3D4C66;
+    padding: 9px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.5s ease;
+}
+.btnpark:hover{
+    background-color: #3D4C66;
+    color: #ffffff;
+}
+/* 
+.card-input {
+    width: 100%;
+    border: 0px;
+    font-size: 20px;
+} */
+.pg-app {
+    display: flex;
+}
+
+.extension-horizontal {
+    width: 180px;
+}
+.panel-flex-menu {
+    width: 100%;
+    margin-left: 15px;
+}
+.overflow-unset {
+    overflow: unset !important;
+}
+
+@media screen and (max-width: 1170px) {
+    .box-flex-responsive {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    .box-flex-responsive > div {
+        padding: 0px;
+        overflow: hidden;
+    }
+    .btnpark {
+        padding: 6px 7px;
+        font-size: 12px;
+    }
+    
+    .box-flex-responsive .gray-background.border-0.color-4b.text-center.w-100.p-0.no-outline {
+        font-size: 14px;
+     }
+    }
+    @media screen and (min-width: 1800px) {
+        .sale-complete-strached {
+            max-width: 80%;
+            margin: auto;
+        }
+
+        /* .checkfooter {
+            height: 100px !important;
+        } */
+        /* .footer.footer-success.text-center.font-sm.font-bold {
+            font-size: 18px !important;
+         }
+         .footer.footer-success .font-sm.font-bold {
+             font-size: 18px !important;
+         } */
+    }
+    .horizontalScroll {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .horizontalScroll .mCSB_container{
+        margin-bottom: 0px !important;
+    }
+    .horizontalScroll .product-tile.pointer {
+        max-width: 118px;
+        display: inline-block;
+        overflow: hidden;
+        margin-bottom: 5px;
+    }
+    

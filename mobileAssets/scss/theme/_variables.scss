@@ -1,0 +1,114 @@
+
+//    Font Family
+$primary-font	: 'Avenir';
+
+/*--------------------------- Color variations ----------------------*/
+$white:    #fff !default;
+$gray-100: #F9F8F8 !default;
+$gray-200: #C5BFBF !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #747373 !default;
+$gray-700: #cbcbcb !default;
+$gray-800: #4B4B4B !default;
+$gray-900: rgba(255,255,255,0.54) !default;
+$black:    #000 !default;
+
+$pink:    #EF7E7E !default;
+$red:     #E16B6B !default;
+
+// body css override
+$font-size-base : 1.25rem;
+$transparent: transparent;
+$body-bg: $transparent;
+$body-color: $gray-800 !default;
+
+$table-color: $gray-800;
+$table-accent-bg: $gray-100;
+$gray-10: #BDBDBD;
+$blue:    #46A9D4 !default;
+$green:   #A9D47D !default;
+$dropdown-link-color: $gray-600 !default;
+
+$main : #EDEFF4;
+$border-color: #CACACA;
+$light-blue: rgba(70,169,212,1);
+$text-color : #4B4B4B !default;
+$text-secondary-color : $gray-600 !default;
+$input-font-size: 20px !default;
+$input-height: 38px;
+
+$enable-caret: true;
+$list-group-border-color: rgba(75, 75, 75, 0.5);
+// INput Overide
+$input-color: $text-color;
+
+$input-custom-height-lg: 90px;
+$input-custom-height-md: 57px;
+$input-custom-height-sm: 57px;
+$input-custom-height-xs: 45px;
+$input-disabled-bg: $gray-300 !default;
+
+$input-group-addon-color: $gray-800 !default;
+$input-group-addon-bg: $white !default;
+$input-border-width: 1px;
+$input-group-addon-border-color: $gray-700 !default;
+$input-focus-border-color: $gray-700 !default;
+$input-border-color: $gray-700 !default;
+$custom-control-indicator-checked-color:$green;
+$custom-control-indicator-checked-border-color:$transparent;
+$custom-control-indicator-checked-bg: $blue;
+$custom-control-indicator-checked-box-shadow: none;
+$input-border-radius-lg: 8px;
+$input-border-radius: 8px;
+$btn-border-radius: 8px !default;
+$custom-checkbox-indicator-icon-checked : null;
+
+// tabs Content And Colors Override Css
+$nav-tabs-border-width: 0px;
+$nav-tabs-border-color: $blue !default;
+$nav-tabs-border-radius: 0px;
+$nav-tabs-link-hover-border-color: 0px;
+$nav-tabs-link-active-color: $gray-800 !default;
+$nav-tabs-link-active-border-color: $blue !default;
+
+// progress bar
+$progress-border-radius: 20px;
+
+
+// dropdown
+
+// $dropdown-spacer : 0.7rem;
+$custom-switch-width : 2rem;
+
+
+$enable-shadows : false;
+
+$modal-sm : 350px;
+
+$thumbnail-border-color: $border-color;
+
+$label-margin-bottom : 0.3rem;
+
+$card-cap-bg: $white !default;    
+$card-border-color: $border-color !default;
+
+
+$dropdown-item-padding-x : 1.3rem;
+$dropdown-item-padding-y: 0.5rem;
+
+$modal-content-border-color: $blue !default;
+$modal-content-border-radius: 10px;
+
+
+$font-size-h1:            floor(($font-size-base * 1.5)) !default; // ~36px
+$font-size-h2:            floor(($font-size-base * 1.2)) !default; // ~30px
+$font-size-h3:            ceil(($font-size-base * 1.25)) !default; // ~24px
+$font-size-h4:            ceil(($font-size-base * 1.0)) !default; // ~18px
+$font-size-h5:            $font-size-base !default;
+$font-size-h6:            ceil(($font-size-base * .85)) !default; // ~12px
+
+$table-striped-order:         even !default;
+$table-cell-padding:          10px 15px !default;
+

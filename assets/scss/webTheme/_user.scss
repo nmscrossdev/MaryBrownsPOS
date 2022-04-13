@@ -1,0 +1,66 @@
+.background {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/web/user.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.loginuser, .loginuser2 {
+    h6, .h6,
+    p {
+        margin-bottom: 0px;
+    }
+    p {
+    font-size: 16px;
+    }
+}
+.loginuser2 {
+    display: inline-flex;
+    align-items: center;
+    h6, .h6 {
+        font-size: 18px;
+        color: #fff;
+    }
+    p {
+        font-size: 14px;
+        color: #fff;
+    } 
+    .userimage {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        font-size: 20px;
+        justify-content: center;
+        color: white;
+        margin: 0px 10px;
+    }   
+}
+
+.loginuser3 {
+    display: flex;
+    align-items: center;
+    height: 71px;
+    justify-content: space-between;
+    h6{
+        margin-bottom: 0px;
+    }
+    .userimage {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        font-size: 20px;
+        justify-content: center;
+        color: $primary;
+        margin-right: 10px;
+    }
+}
+
+.no-justify {
+    justify-content: start !important;
+}

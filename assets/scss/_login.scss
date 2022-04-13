@@ -1,0 +1,153 @@
+input:focus {
+    outline: none;
+    outline-offset: 0px;
+}
+
+.onboarding-loginBox {
+    display: block;
+    width: 412px;
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 20px;
+
+    h1 {
+        margin: 0px;
+    }
+    .onboarding-pg-heading > p {
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+    .input-group {
+        margin-bottom: 15px;
+    }
+    .input-group-addon {
+        background-color: #fff;
+        min-width: 135px;
+        text-align: left;
+        font-size: inherit;
+        border-radius:  8px 0px 0px 8px;
+    }
+
+    .form-control {
+        border-radius:  0px 8px 8px 0px;
+        font-size: inherit;
+        box-shadow: none !important;
+        transition: none;
+    }
+    .form-control:focus {
+        color: #495057;
+        outline: 0;
+        box-shadow: 0px;
+        box-shadow: none !important;
+    }
+    .btn.btn-login {
+        margin-top: 15px !important;
+        font-size: inherit;
+    }
+
+    .checkBox-custom {
+        width: 100%;
+        border-radius: 8px;
+        color: #4B4B4B;
+        padding: 0 0 0 12px;
+    }
+    .checkbox {
+        margin: 0;
+    }
+    .checkbox label {
+        text-align: left
+    }
+    .checkmark {
+        right: 0;
+        height: 100%;
+    }
+    .customcheckbox {
+        display: block;
+        position: relative;
+        padding-left: 0px;
+        margin-bottom: 0px;
+        font-size: 20px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none
+    }
+    .customcheckbox input {
+        position: absolute;
+        opacity: 0
+    }
+    .checkmark {
+        position: absolute;
+        top: 0;
+        width: 75px;
+    }
+    .customcheckbox .checkmark:after {
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        font-family: 'Nucleo';
+        content: "\ea09";
+        font-size: 50px;
+        width: 50px;
+        font-weight: bold;
+    }
+    .checkmark:after {
+        position: absolute;
+        display: none;
+    }
+    .customcheckbox input:checked~span.checkmark.checkUncheck:after {
+        display: block
+    }
+
+
+    @include mobile-table() {
+        .form-control {
+            height: 55px;
+        }
+        .input-group, 
+        button.btn.btn-login {
+            height: 55px;
+        }
+        .customcheckbox {
+            height: 53px;
+        }
+        .checkbox label {
+            line-height: 55px;
+        }
+        .customcheckbox .checkmark:after {
+            font-size: 35px;
+            width: 35px;
+        }
+    }
+    @include desktop() {
+        .form-control {
+            height: 90px;
+        }
+        .input-group, 
+        button.btn.btn-login {
+            height: 90px;
+        }
+        .customcheckbox {
+            height: 88px;
+        }
+        .checkbox label {
+            line-height: 90px;
+        }
+    }
+      
+}
+@include mobile-table() {
+    .fs30 {
+        font-size: 24px!important;
+    }
+
+}
+

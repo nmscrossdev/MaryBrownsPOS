@@ -1,0 +1,360 @@
+﻿/*
+ *  Bootstrap TouchSpin - v4.2.5
+ *  A mobile and touch friendly input spinner component for Bootstrap 3 & 4.
+ *  http://www.virtuosoft.eu/code/bootstrap-touchspin/
+ *
+ *  Made by István Ujj-Mészáros
+ *  Under Apache License v2.0 License
+ */
+/* This CSS file is unnecessary if you are not using vertical buttons functionality */
+
+.bootstrap-touchspin .input-group-btn-vertical {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  z-index: 11;
+}
+
+.bootstrap-touchspin .input-group-btn-vertical > .btn {
+  position: absolute;
+  right: 0;
+  height: 50%;
+  padding: 0;
+  width: 2em;
+  text-align: center;
+  line-height: 1;
+}
+
+.bootstrap-touchspin .input-group-btn-vertical .bootstrap-touchspin-up {
+  border-radius: 0 4px 0 0;
+  top: 0;
+}
+
+.bootstrap-touchspin .input-group-btn-vertical .bootstrap-touchspin-down {
+  border-radius: 0 0 4px 0;
+  bottom: 0;
+}
+
+
+
+
+    .modal-xl  {
+        width: 75%;
+    }
+
+
+.modal.modal-fullscreen .modal-dialog .modal-content {
+    height: calc(100vh - 60px);
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: .3rem;
+    outline: 0;
+    border-radius: 4px;
+    border: 0px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+.modal.modal-fullscreen .modal-header {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #979797;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+    align-items: center;
+    font-size: 30px;
+    color: #4b4b4b;
+    font-weight: 400;
+}
+.modal.modal-fullscreen .modal-header .close {
+    margin-top: -2px;
+    margin: -15px 0px -15px auto;
+    opacity: 1
+}
+@media (min-width: 768px){
+    .modal.modal-fullscreen .modal-dialog .modal-content .modal-body{
+        flex-shrink: 3;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+.modal.modal-fullscreen .modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 15px;
+}
+.modal.modal-fullscreen .modal-footer {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 15px;
+    border-top: 1px solid #979797;
+}
+
+.variation-wrapper {
+    padding: 0px 10px 0px 20px;
+    height: calc(100vh - 142px);
+    overflow-y: scroll;
+}
+.variation-list {
+    padding: 17px 0px 0px;
+    position: relative;
+}
+.variation-list .button_with_checkbox [type=radio]:checked+label,
+.variation-list .button_with_checkbox [type=radio]:not(:checked)+label
+{
+    line-height: 51px;
+}
+
+.variation-list .button_with_checkbox [type=radio]:disabled+label
+{
+    border-radius: 4px;
+    background-color: #f4f4f4;
+}
+.variation-list .button_with_checkbox [type=radio]:disabled+label:before ,
+.variation-list .button_with_checkbox [type=radio]:disabled+label:after 
+{
+    border: 1px solid #e4e4e4;
+}
+.variation-list .button_with_checkbox [type=radio]:checked+label::before, 
+.variation-list .button_with_checkbox [type=radio]:not(:checked)+label::before {
+    /* height: 51px; */
+    height: 100%;
+}
+.variation-list .button_with_checkbox [type=radio]:checked+label:after, 
+.variation-list .button_with_checkbox [type=radio]:not(:checked)+label:after {
+     /* height: 51px; */
+     height: 100%;  
+}
+
+p.text-alert-record {
+    color: rgba(75, 75, 75, 0.44);
+    font-size: 24px;
+    font-weight: 400;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    margin-bottom: 0px;
+}
+p.org-price , p.org-discount {
+    color: #4b4b4b;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 0px;
+}
+p.no-variant-product-price {
+    line-height: 27px;
+    color: #e04949;
+}
+p.org-price {
+    font-style: italic;
+}
+.variation-list .col-sm-4, .variation-list .col-sm-8, .variation-list .col-sm-12{
+    padding: 0px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+.variation-list::after {
+    position: absolute;
+    content: ' ';
+    border-bottom: 1px solid #979797;
+    bottom:  0px;
+    left: 0px;
+    right: 10px;
+    height: 1px;
+}
+.variation-title {
+    color: #4b4b4b;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.variation-product-image {
+    border-bottom: 1px solid #979797;
+    height: 194px;
+    overflow: hidden;
+    margin: auto;
+    display: block;
+    background-color: #f8f9f9;
+    padding-bottom: 1px;
+}
+.variation-product-image img {
+        width: auto;
+    max-height: 100%;
+    margin: auto;
+    display: inherit;
+}
+.box-flex-small {
+    min-height: 60px;
+}
+.text-white {
+    color: #fff !important
+}
+.variation-footer {
+    border-top: 1px solid #cacaca;
+    /* padding: 0px; */
+}
+.variation-footer button {
+    margin-bottom: 0px;
+}
+
+
+.variation_quality button,
+.variation_quality input {
+    height: 68px;
+    border: 0px; 
+    color: #4b4b4b;
+    font-size: 32px;
+    font-weight: 300;
+}
+.variation_quality input {
+    padding-left: 0px;
+}
+
+.variation_quality span.input-group-btn.input-group-prepend.bootstrap-touchspin-injected,
+.variation_quality span.input-group-btn.input-group-append.bootstrap-touchspin-injected {
+    display: table-cell;
+}
+.variation_quality .input-group {
+    width: 100%;
+}
+
+.variation_quality span.input-group-btn.input-group-prepend.bootstrap-touchspin-injected,
+.variation_quality span.input-group-btn.input-group-append.bootstrap-touchspin-injected{
+    width: 20%;
+}
+.variation_quality span.input-group-addon.input-group-prepend.bootstrap-touchspin-prefix.input-group-prepend.bootstrap-touchspin-injected {
+    width: 30%;
+    text-align: right;
+    background-color: #fff;
+    border: 0px;
+    font-size: 24px;  
+}
+.variation_quality .form-group {
+    border-color: #979797;
+}
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-down {
+    border-right: 1px solid #979797
+}
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-up {
+    border-left: 1px solid #979797  
+}
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-down,
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-up {
+    background-color: #fff;
+    width: 100%;
+    border-color: #979797;
+    border-radius: 0px;
+}
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-down:focus,
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-up:focus,
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-down:active,
+.variation_quality button.btn.btn-primary.bootstrap-touchspin-up:active {
+    box-shadow: none;
+}   
+.variation_quality img.verticle_align-middle {
+    vertical-align: middle;
+} 
+
+.variation-wrapper .button_with_checkbox [type=radio]:checked+label, 
+.variation-wrapper .button_with_checkbox [type=radio]:not(:checked)+label {
+    font-size: 18px;
+}
+
+.variation-product-details {
+    height: calc(100vh - 244px);
+    overflow: auto;
+}
+.flex-row .table-calculate-price {
+    border-top: 1px solid #cacaca;
+}
+.flex-row .btn.checkout-items {
+    font-size: 20px;
+}
+
+.modal-fullscreen .modal-dialog.modal-xl{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.modal.modal-fullscreen .modal-dialog .modal-content {
+    height: 100vh;
+}
+
+.product-description-pop {
+    margin-bottom: 10px;
+}
+.product-description-pop h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+}
+.product-description-pop p {
+    font-size: 14px;
+    line-height: 21px;
+    padding-top: 10px;
+}
+.variations_button, 
+.variation-buttons-updated {
+    display: flex;
+    flex-wrap: wrap;
+}
+.variations_button .button_with_checkbox [type=radio]:checked+label,
+.variations_button .button_with_checkbox [type=radio]:not(:checked)+label {
+    font-size: 16px;
+    line-height: 30px;
+    padding: 0px 15px;
+}
+.variations_button .button_with_checkbox [type=radio]:checked+label,
+.variations_button .button_with_checkbox [type=radio]:not(:checked)+label {
+    color: #46A9D4;
+}
+.variations_button .button_with_checkbox [type=radio]:checked+label:before, 
+.variations_button .button_with_checkbox [type=radio]:not(:checked)+label:before {
+    height: 30px;
+    border-color: #46A9D4 !important;
+}
+.variations_button .button_with_checkbox [type=radio]:not(:checked)+label:before,
+.variations_button .button_with_checkbox [type=radio]:checked+label:after {
+    height: 30px;
+}
+
+
+.variation-buttons-updated .button_with_checkbox [type=radio]:checked+label::before,
+.variation-buttons-updated .button_with_checkbox [type=radio]:not(:checked)+label:before,
+.variation-buttons-updated .button_with_checkbox [type=radio]:checked+label:after,
+.variation-buttons-updated .button_with_checkbox [type=radio]:checked+label,
+.variation-buttons-updated .button_with_checkbox [type=radio]:not(:checked)+label {
+    height: auto;
+    bottom: 0px;
+    padding: 10px;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.6px;
+    line-height: 20px;
+}
+
+.clearvariation{
+    color: darkred;
+    text-align: center;
+    margin-bottom: 0px;position: absolute;bottom: 70px;right: 0px;text-align: center;left: 0px;
+    cursor: pointer;
+}

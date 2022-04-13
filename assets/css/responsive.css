@@ -1,0 +1,71 @@
+@media screen and (max-width: 600px)
+{
+
+   .bgimg-1 {
+      background-image: url(../img/bg-panel02.png);
+      background-position: center bottom;
+      background-repeat: no-repeat;
+    }
+    .onboarding-pg-heading h1 {
+        font-size: 24px;
+    }
+    .onboarding-pg-heading p {
+        font-size: 18px;
+    }
+    .onboarding-login-field .ig_ni-custom , .checkBox-custom , .onboarding-login-field .btn.btn-login{
+        height: 58px;
+    }
+    .checkBox-custom .checkbox {
+        line-height: 58px;
+    }
+    .onboarding-loginBox {
+        width: 348px;
+    }
+    .customcheckbox .checkmark:after {
+        height: 27px;
+        width: 16px;
+    }
+    .onboarding-login-field .ig_ni-custom 
+    {
+        font-size: 18px;
+        padding-left: 15px;
+    }
+
+    .powered-by-oliver {
+        font-size: 14px;
+        text-align: center;
+        right: 0px;
+    }
+    .chooseregisterLinks li {
+    height: 58px;
+    }
+    .chooseregisterLinks li a {
+        font-size: 18px;
+    }
+    .chooseregisterLinks li img {
+        width: 24px;
+    }
+    .checkBox-custom .checkbox .checkmark {
+        right: -12px;
+    }
+    .aonboardingbackicon {
+        font-size: 18px;
+    }
+    .onboardingbackicon {
+        background-size: 24px; 
+    }    
+}
+@media screen and (max-width: 600px){
+    .onboarding-loginBox {
+        width: 280px;
+    }
+}
+
+
+.form-control[readonly] {
+    /* background-color: #ffffff !important;  */
+    cursor: pointer;
+}
+
+
+

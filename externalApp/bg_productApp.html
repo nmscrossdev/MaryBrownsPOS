@@ -1,0 +1,100 @@
+<html>
+<body>
+    <h3> Order App</h3>
+    <script>
+        const AppName = "Product App";
+        const fontColor = "#f9a236";
+        //Register Native app
+        var RawDataAppWindow = window;
+        if (navigator.appVersion.includes('Android') || navigator.appVersion.includes('Mac')) {
+            window.postMessage = function (data) {
+                window.ReactNativeWebView.postMessage(data);
+                true;
+            };
+            RawDataAppWindow = document;
+        }
+        //=====
+        
+        //Listen for message from Oliver POS
+        var oResp = '';
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === 'complete') {
+                //call parent to inform it's loaded
+                var readyExtensionData = {
+                    command: "appReady",
+                    version: 1.0, //using data type as decimal
+                    method: "get",
+                    appName: AppName
+                }
+                //send to parent
+                window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+                console.log("msg post",readyExtensionData)
+                // Register Call Back Event's
+                var CallBackEvents = {
+                    command: "registerCallBack",
+                    version: 1.0,
+                    method: "post",
+                    data: [
+                        // {
+                        //     command: "cutomerAdded",
+                        //     onAction: "customer-added-in-cart",
+                        // },
+                        // {
+                        //     command: "checkoutSuccess",
+                        //     onAction: "checkout-done",
+                        // },
+                        // {
+                        //     command: "checkoutPayment",
+                        //     onAction: "app-payment",
+                        // },
+                        {
+                            command: "productDetail",
+                            onAction: "product-detail",
+                        },
+                        // {
+                        //     command: "appReady",
+                        //     onAction: "product-detail",
+                        // }
+                    ]
+                }
+                window.parent.postMessage(JSON.stringify(CallBackEvents), '*');
+                console.log("msg post",CallBackEvents)
+            }
+        });
+
+        //reciver all call backs from oliver
+        RawDataAppWindow.addEventListener('message', function (e) {
+            oResp = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+           // console.log("Message from Oliver POS:", oResp)
+            if (oResp) {
+                //console.log("Response", JSON.stringify(oResp.data, undefined, 4))
+                switch (oResp.command) {
+                    case "appReady":
+                       // parent.AddEventLog("App Ready: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                        break;
+                    // case "cutomerAdded":                        
+                    //    // parent.AddEventLog("command data: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                    //     break;
+                    // case "checkoutSuccess":
+                    //     //parent.AddEventLog("command data: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                    //     break;
+                    // case "error":
+                    //   //  parent.AddEventLog("Error Response: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                    //     break;
+                    // case "registerCallBack":
+                    //    // parent.AddEventLog("registerCallBack: " + AppName + " " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                    //     break;
+                    case "productDetail":
+                         console.log("Msg Receive","registerCallBack: " + AppName + " " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                    break;
+                        
+                    default:
+                        //read data and show error
+                        console.log("un-identified response");
+                        break;
+                }
+            }
+        }, false);
+    </script>
+</body>
+</html>

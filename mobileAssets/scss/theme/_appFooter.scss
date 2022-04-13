@@ -1,0 +1,143 @@
+.appBottomMenu {
+    &.appBottomCustomerButton {
+        height: 75px;    
+    }
+    height: 56px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #FFF;
+    // border-top: 1px solid #E5E9F2;    
+    box-shadow: 0px -1px 1px rgba(225, 225, 225, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; 
+    .item {
+        width: 20%;
+        text-align: center;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        &:first-child{
+            &.active {
+                &::after {
+                    background-image: url("../img/White/browse.svg");
+                }
+            }
+        }
+        &:nth-child(2){
+            &.active {
+                &::after {
+                    background-image: url("../img/White/math.svg");
+                }
+            }
+        }
+        &:nth-child(3){
+            &.active {
+                &::after {
+                    background-image: url("../img/White/cash-in-hand.svg");
+                }
+            }
+            
+        }
+        &:nth-child(4){
+            &.active {
+                &::after {
+                    background-image: url("../img/White/contacts.svg");
+                }
+            }
+            
+        }
+        &:last-child{
+            &.active {
+                &::after {
+                    background-image: url("../img/White/Puzzle.svg");
+                }
+            }
+            
+        }
+        &::before,
+        &::after {
+            content: " ";
+            position: absolute;
+            top: -38px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            border-radius: 100%;
+            width: 45px;
+            height: 45px;
+            margin: auto;
+            background-color: #fff;
+            opacity: 0;
+        }
+        &::before {
+            box-shadow: 0px -1px 1px rgba(225, 225, 225, 0.5);
+        }
+        &.active {
+            img {
+                display: none;
+            }
+            span {
+                opacity: 1;
+            }
+            &::before {
+                opacity: 1;
+            }
+            &::after {
+                opacity: 1;
+                background: #46A9D4;
+                width: 40px;
+                height: 40px;
+                background-size: 28px;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+            a {
+                z-index: unset;
+            }
+        }
+        img {
+            width: 30px;
+        }
+        > a {
+            width: 100%;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            justify-content: center;
+            color: $primary;
+            position: relative;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: #FFF;
+            z-index: 1;
+            > p {
+                margin: 0px;
+                span {
+                    display: block;
+                    font-size: 10px;
+                    opacity: 0;
+                    position: absolute;
+                    left: 0;
+                    bottom: 8px;
+                    right: 0;
+                    font-weight: bold;
+                    font-family: Avenir_roman;
+                }
+            }
+        }
+    }
+}
+
+.appBottomAbove {
+    position: fixed;
+    bottom: 57px;
+    height: 75px;
+    width: 100%;
+}

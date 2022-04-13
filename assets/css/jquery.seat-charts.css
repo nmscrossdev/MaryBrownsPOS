@@ -1,0 +1,146 @@
+div.seatCharts-seat:focus {
+	border: none;
+}
+div.seatCharts-space {
+	background-color: white;
+}
+div.seatCharts-row {
+	height: 35px;
+}
+div.seatCharts-row:after {
+	clear: both;
+}
+div.seatCharts-seat.unavailable {
+	cursor: not-allowed;
+}
+ul.seatCharts-legendList {
+	list-style: none;
+}
+li.seatCharts-legendItem {
+	margin-top: 10px;
+	line-height: 2;
+}
+
+.front-indicator {
+	margin: 5px 32px 15px 32px;
+	/*background-color: #f6f6f6;	*/
+	text-align: center;
+	padding: 3px;
+	border-radius: 5px;
+    font-size: 18px;
+    margin-bottom: 19px;
+    font-weight: bold;
+}
+ 
+div.seatCharts-cell {
+	color: #dd3333;
+	height: 22px;
+	width: 22px;
+	margin: 3px;
+	float: left;
+	outline: none;
+	line-height: 25px;
+	border-radius: 50px;
+	position: relative;
+}
+
+
+
+div.seatCharts-seat {
+	cursor: pointer;	
+}
+
+div.seatCharts-seat.available,
+div.seatCharts-seat.unavailable,
+div.seatCharts-seat.incart,
+div.seatCharts-seat.selected {
+	position: relative;
+}
+
+div.seatCharts-seat.available::before,
+div.seatCharts-seat.unavailable::before,
+div.seatCharts-seat.incart::before,
+div.seatCharts-seat.selected::before,
+div.seatCharts-seat.focused::before {
+    position: absolute;
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 50px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+
+div.seatCharts-seat.available {
+	background-color: transparent;
+	border: 2px solid #dd3333;
+}
+div.seatCharts-seat.unavailable {
+	background-color: transparent;
+	border: 2px solid #dccbcb;
+}
+div.seatCharts-seat.incart {
+	background-color: transparent;
+	border: 2px solid #4187c9;
+}
+div.seatCharts-seat.selected {
+	background-color: transparent;
+	border: 2px solid #4187c9;
+}
+
+div.seatCharts-seat.available::before {
+	background-color: #dd3333;
+}
+div.seatCharts-seat.unavailable::before {
+	background-color: #dccbcb;
+}
+div.seatCharts-seat.incart::before {
+	background-color: #4187c9;
+}
+div.seatCharts-seat.selected::before {
+	background-color: #4187c9;
+}
+
+div.seatCharts-seat.focused {
+	background-color: transparent;
+	border: 2px solid #4187c9;
+}
+div.seatCharts-seat.focused::before {
+	background-color: #4187c9;
+	width: 5px;
+    height: 5px;
+}
+
+ul.seatCharts-legendList {
+	padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 30px;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#selected-seats {
+	max-height: 90px;
+	overflow-y: scroll;
+	overflow-x: none;
+	width: 170px;
+}
+
+.d-inline-block {
+	display: inline-block;
+}
+
+.seatCharts-container-main .minus-plus-group {
+	display: inline-block;
+	float: right;
+	width: 150px;
+	margin-top: 30px;
+	margin-right: 20px;
+}

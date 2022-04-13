@@ -1,0 +1,78 @@
+<html>
+
+
+<body>
+
+    <div>   
+          <h1>ONLY TEST: Notes App</h1>
+        <div> 
+                <button id="addProducts">Add Notes</button> 
+              &nbsp;  
+          
+             
+              </div>
+    </div> 
+    <div id="dvRequest"></div>
+     <div id="dvResponse"></div>
+    <script>    
+//Register app commands for native Pateform Start
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('platform');        
+        if (myParam == "native") {
+            window.postMessage = function (data) {
+                window.ReactNativeWebView.postMessage(data);
+                true;
+            };
+        }
+        //Register app commands for native Pateform End
+
+
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData,undefined,2);
+        }, 1000);
+        //----------------------------------------
+
+        window.addEventListener('message', function (e) {
+            msgData = JSON.parse(e.data);
+            console.log("Message from Oliver POS:", msgData)
+            document.getElementById('dvResponse').innerText = "";
+            document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData,undefined,2);
+
+        }, false);
+
+
+        //CustomerDetails Button click event-----------
+        var btnaddProducts = document.getElementById('addProducts');
+        btnaddProducts.addEventListener('click', function (e) {
+
+            var jsonMsg =  {
+                    command: "Notes",
+                    method: "post",
+                    version: "1.0",
+                    title: "Gift Card",// [optional] 
+                    description: "$100 cash voucher" //[optional]
+
+                }
+
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+            e.preventDefault();
+        });
+
+        
+    </script>
+
+</body>
+
+</html>

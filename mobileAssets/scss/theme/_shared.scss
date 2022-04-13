@@ -1,0 +1,162 @@
+::-webkit-scrollbar {
+    width: 2px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.main-drawable {
+    padding-left: 84px;
+    @include media-breakpoint-down (md) {
+        padding-left: 60px;
+    }
+    
+}
+.main-bg-light {
+    background-color: $main;
+}
+.main-bg-light > .card {
+    background-color: $transparent;
+}
+
+/*height columns*/
+
+
+.vh-100-50 {
+    height: calc(100vh - 50px);
+}
+
+.vh-100-70 {
+    height: calc(100vh - 70px);
+}
+
+.vh-100-75 {
+    height: calc(100vh - 75px);
+}
+
+.vh-100-150 {
+    height: calc(100vh - 150px);
+}
+.vh-100-270 {
+    height: calc(100vh - 270px);
+}
+
+.height80 {
+    height: 80px;
+}
+
+@include media-breakpoint-down (md) {
+    .height80 {
+        height: 60px;
+    }
+    .vh-100-70 {
+        height: calc(100vh - 120px);
+    }
+    .vh-100-150 {
+        height: calc(100vh - 180px);
+    }
+}
+// @include media-breakpoint-down (md) {
+//     .height80 {
+//         height: 50px;
+//     }
+
+//     .vh-100-50 {
+//         height: calc(100vh - 50px);
+//     }
+    
+//     .vh-100-70 {
+//         height: calc(100vh - 100px);
+//     }
+    
+//     .vh-100-75 {
+//         height: calc(100vh - 75px);
+//     }
+    
+//     .vh-100-150 {
+//         height: calc(100vh - 150px);
+//     }
+//     .vh-100-270 {
+//         height: calc(100vh - 270px);
+//     }
+// }
+
+
+
+.text-divided {
+    &::after {
+        position: absolute;
+        content: ' ';
+        border: 0.5px solid #fff;
+        left: 10%;
+        right: 10%;
+        top: 50%;
+        margin-top: -2px;
+        z-index: 0;
+    }
+    span {
+        position: relative;
+        background: $blue;
+        padding: 0px 19px;
+        z-index: 2;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 100;
+    }
+}
+
+.btn-font-lg {
+    button,
+    input[type=button],
+    a.btn
+    {
+        font-size: 24px; 
+        @include cmq (280px, 767px) {
+            font-size: 17px;
+        }
+        @include cmq (768px, 1024px) {
+            font-size: 18px;
+        }
+        @include cmq (1025px, 1170px) {
+            font-size: 20px;
+        }
+        @include cmq (1170px, 1500px) {
+            font-size: 22px;
+        }
+    }
+    .icon 
+    {
+        font-size: 40px; 
+        @include cmq (280px, 767px) {
+            font-size: 26px;
+        }
+        @include cmq (768px, 1024px) {
+            font-size: 24px;
+        }
+        @include cmq (1025px, 1170px) {
+            font-size: 28px;
+        }
+        @include cmq (1170px, 1500px) {
+            font-size: 30px;
+        }
+    }
+}
+
+ul.list-group-striped > li{
+    border: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    a {
+        height: 70px;
+    }
+    &:nth-of-type(odd) {
+        background-color: $gray-100;
+    }
+}
+

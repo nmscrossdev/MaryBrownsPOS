@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'Avenir';
+    src: url("../fonts/AvenirLTStd-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/AvenirLTStd-Light.otf") format("opentype"), url("../fonts/AvenirLTStd-Light.woff") format("woff"), url("../fonts/AvenirLTStd-Light.ttf") format("truetype"), url("../fonts/AvenirLTStd-Light.svg#AvenirLTStd-Light") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Avenir_Book';
+    src: url("../fonts/AvenirLTStd-Book.eot?#iefix") format("embedded-opentype"), url("../fonts/AvenirLTStd-Book.otf") format("opentype"), url("../fonts/AvenirLTStd-Book.woff") format("woff"), url("../fonts/AvenirLTStd-Book.ttf") format("truetype"), url("../fonts/AvenirLTStd-Book.svg#AvenirLTStd-Book") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Avenir_roman';
+    src: url("../fonts/AvenirLTStd-Roman.eot?#iefix") format("embedded-opentype"), url("../fonts/AvenirLTStd-Roman.otf") format("opentype"), url("../fonts/AvenirLTStd-Roman.woff") format("woff"), url("../fonts/AvenirLTStd-Roman.ttf") format("truetype"), url("../fonts/AvenirLTStd-Roman.svg#AvenirLTStd-Roman") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}

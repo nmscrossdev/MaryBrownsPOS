@@ -1,0 +1,133 @@
+.block_startscreen {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+}
+.block_startscreen_background{
+    flex: 1 1 auto;
+    background-color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $success;
+    font-weight: 300;
+    h1 {
+        margin: 0px;
+    }
+}
+.btn-self-checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4B4B4B;
+    background: #F9F8F8;
+    height: 314px;
+    font-size: 60px;
+    padding: 0px;
+    &:focus {
+        box-shadow: none;
+    }
+    .btn-icon {
+        font-size: 144px;
+        width: 144px;
+        margin-right: 120px;
+    }
+    
+}
+
+.self-checkout-home {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    flex-direction: column;
+    .self-checkout-header {
+        height: 303px;
+        background-color: $primary;
+        overflow: hidden;
+        img {
+            // height: 100%;
+            width: 100%;
+        }
+    }
+    .self-checkout-content {
+        background: #E5E5E5;
+        flex: 1 1 auto;
+        overflow: auto;
+    }
+    .self-checkout-footer {
+        background: #ffffff;
+        button {
+            font-size: 24px;
+        }
+    }
+    h3 {
+        font-weight: 500;
+        font-size: 18px;
+        color: #000000;
+        margin-bottom: 25px;
+    }
+    .normal-text {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #4B4B4B;
+        text-transform: lowercase;
+    }
+    .self-checkout-form {
+        border-left: 1px solid #C5BFBF;
+        padding-left: 50px;
+        padding-right: 50px
+    }
+}
+
+.object-fit {
+    object-fit: cover;
+    width: 100%;
+}
+.self-checkout-grid {
+    display: flex;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    .app-list-responsive {
+        padding-left: 20px;
+    } 
+} 
+.filter-pruduct {
+    width: 100%;
+    padding-left: 20px;
+    // padding-right: 20px;
+}
+
+.self-checkout-table {
+    table {
+        td:first-child {
+            padding-left: 8px;
+            padding-right: 0px;
+            width: 24px !important;
+        }
+        td:first-child {
+            padding-right: 8px;
+        }
+        tr:last-child {
+            td {
+                border-bottom: 0px;
+            }
+        }
+        i {
+            font-size: 28px;
+        }
+    }
+}
+
+.self-checkout-scroll-1 {
+    height: 100%;
+}
+.self-checkout-scroll-2 {
+    height: 100%;
+}
+
+
+@import "self_checkout_responsive";

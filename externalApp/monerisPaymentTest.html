@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/stylesheets/style.css"> -->
+    <title>Nets Payment</title>
+</head>
+
+<body>
+
+<h3>Follow the instructions on the pin pad.</h3>
+
+<svg version="1.1" id="ologo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 400 400" xml:space="preserve" width="120px" height="120px">
+	<rect id="lime" x="249.28" y="156.01" class="st0 ologo-1" width="103.9" height="103.9"></rect>
+	<path id="teal" class="st1 ologo-2" d="M249.28,363.81V259.91h103.9C353.17,317.29,306.66,363.81,249.28,363.81z"></path>
+	<rect id="cyan" x="145.38" y="259.91" class="st2 ologo-3" width="103.9" height="103.89"></rect>
+	<path id="blue" class="st3 ologo-4" d="M41.49,259.91L41.49,259.91h103.9v103.89C88,363.81,41.49,317.29,41.49,259.91z"></path>
+	<rect id="purple" x="41.49" y="156.01" class="st4 ologo-5" width="103.9" height="103.9"></rect>
+	<path id="red" class="st5 ologo-6" d="M41.49,156.01L41.49,156.01c0-57.38,46.52-103.9,103.9-103.9v103.9H41.49z"></path>
+	<rect id="orange" x="145.38" y="52.12" class="st6 ologo-7" width="103.9" height="103.9"></rect>
+	<path id="yellow" class="st7 ologo-8" d="M281.3,123.99V20.09c57.38,0,103.9,46.52,103.9,103.9H281.3z"></path>
+</svg>
+
+<p id="paymentMsg">Processing payment...</p>
+<p id="info"></p>
+<p id="warningMsg">Please do not close this window during transaction!</p>
+<button id="cancel-btn">Cancel Payment</button>
+<img id="side_logo" src="/oliverpos_logo.png">
+	
+	
+		
+    <script type="text/javascript">
+	const sendMessage = (eventName, data) => {
+    window.parent.postMessage(JSON.stringify({
+        oliverpos: {
+            event: eventName
+        },
+        data: data
+    }), "*"); //'https://sell.oliverpos.com'
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    console.log("Call clientInfo")
+    sendMessage("clientInfo");
+});
+
+const processPurchase = async (data) => {
+    const req = await fetch('https://dev-1.manage-test.oliverpos.app/pos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            totalCost: Math.round(data.total * 100), 
+            client_guid: clientGUID,
+            register_id: registerID
+        })
+    });
+
+    const paymentData = await req.json();
+console.log("paymentData",paymentData)
+    if (paymentData.status === 200) {
+        const transactionID = paymentData.response[0].transactionId;
+        const customerReceipt = paymentData.response[0].customerReceipt;
+        const tipAmt = paymentData.response[0].localModeEventArgs.tipAmount;
+
+        sendMessage("addOrderNotes", {
+            note: "SALE: " + customerReceipt + " Tip Amount: " + tipAmt + " Txn ID: " + transactionID,
+            orderId: transactionID
+        });
+
+        console.log("call payment success")
+        sendMessage("extensionPayment", {
+            paymentDetails: {
+                paymentType: "Nets",
+                paidAmount: data.total,
+                paymentStatus: 'success',
+                transaction_id: transactionID
+            }
+        });		
+
+    } else {
+        document.getElementById('paymentMsg').innerHTML = paymentData.response;
+        document.getElementById('paymentMsg').style.color = 'red';
+    }
+}
+
+const processRefund = async (data) => {
+    if(data.total === 0) {
+        document.getElementById('paymentMsg').innerHTML = 'Refund value must be more than $0!';
+        document.getElementById('paymentMsg').style.color = 'red';
+        return;
+    }
+
+    const req = await fetch('https://dev-1.manage-test.oliverpos.app/pos/refund', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            transaction_ID: data.order_id,
+            client_guid: clientGUID,
+            register_id: registerID,
+            amount: Math.round(data.total * 100)
+        })
+    });
+
+    const refundData = await req.json();
+
+    if (refundData.status === 200) {
+        const customerReceipt = refundData.response[0].customerReceipt;
+        const transactionId = refundData.response[0].transactionId;
+        const cardNum = refundData.response[0].cardNumber;
+
+        sendMessage("addOrderNotes", {
+            note: "REFUND: " + customerReceipt + " Card Number: " + cardNum,
+            orderId: transactionId
+        });
+
+        sendMessage("extensionPayment", {
+            paymentDetails: {
+                paymentType: "Nets",
+                paidAmount: data.total,
+                paymentStatus: 'success',
+                transaction_id: transactionId
+            }
+        });
+    } else {
+        document.getElementById('paymentMsg').innerHTML = refundData.response;
+        document.getElementById('paymentMsg').style.color = 'red';
+    }
+}
+
+let registerID, clientGUID;
+window.addEventListener('message', async function (e) {
+    //if (e.origin !== "https://sell.oliverpos.com") return;
+    const msg = JSON.parse(e.data);
+console.log("msg",msg)
+    if (!msg.hasOwnProperty("data") || !msg.hasOwnProperty("oliverpos")) return;
+
+    switch (msg.oliverpos.event) {    
+        case 'shareCheckoutData':
+            if (msg.data.checkoutData.hasOwnProperty("transaction_id")) {               
+                await processRefund(msg.data.checkoutData);
+
+            } else {
+                console.log("DataReceived from POS")
+                await processPurchase(msg.data.checkoutData);
+            }
+            break;
+        // Client info event extension - Retrieves Client GUID
+        case 'clientInfo':
+            clientGUID = msg.data.clientGUID;
+            sendMessage('registerInfo');
+            break;
+        // Register info event extension - Retrieves Register ID
+        case 'registerInfo':
+            registerID = msg.data.id;
+            sendMessage('extensionReady');
+            break;
+    }
+});
+
+document.getElementById("cancel-btn").addEventListener('click', async () => {
+    const req = await fetch('https://dev-1.manage-test.oliverpos.app/pos/cancel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            client_guid: clientGUID,
+            register_id: registerID
+        })
+    });
+
+    document.getElementById("cancel-btn").style.visibility = 'hidden';
+    document.getElementById("paymentMsg").innerHTML = "Transaction has been cancelled";
+    document.getElementById("paymentMsg").style.color = 'red';
+    document.getElementById("warningMsg").innerHTML = "";
+});
+	</script>
+
+</body>
+</html>

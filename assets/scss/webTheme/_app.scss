@@ -1,0 +1,173 @@
+$app-border: 1px solid #CACACA;
+$app-border-selected: 2px solid #46A9D4;
+$app-radius: 8px;
+
+$app-border-light: rgba(70, 169, 212, 0.54387);
+$app-text-color: #4B4B4B;
+$size : 118px;
+$app-spacing: 15px;
+
+
+.app {
+    position: relative;
+    display: flex;
+    min-height: 118px;
+    min-width: 118px;
+    border-radius: $app-radius;
+    flex-direction: column;
+    &.app-default {
+        border: $app-border;
+        background-color: #FFFFFF;
+    }
+    &.app-primary {
+        background-color: $primary;
+        border-color: $primary;
+        .app-title {
+            color: #FFFFFF;
+        }
+    }
+    &.app-success {
+        background-color: $success;
+        border-color: $success;
+    }
+    &.app-danger {
+        background-color: $danger;
+        border-color: $danger;
+    }
+    .app-title {
+        font-size: 20px;
+        line-height: 30px;
+        color: #4B4B4B;
+        margin: 0px;
+        padding: 0px;
+        @media screen and (max-width: 1366px) { 
+            font-size: 16px;
+            line-height: normal;
+        }
+    }
+    .app-subtitle {
+        font-size: 20px;
+        line-height: 30px;
+        color: #4B4B4B;
+        margin: 0px;
+        padding: 0px;
+        @media screen and (max-width: 1366px) { 
+            font-size: 16px;
+            line-height: normal;
+        }
+    }
+    .app-desc {
+        font-size: 16px;
+        line-height: 24px;
+        color: #4B4B4B;
+        @media screen and (max-width: 1366px) { 
+            font-size: 12px;
+            line-height: normal;
+        }
+        margin: 0px;
+        padding: 0px;
+    }
+    .app-delete {
+        padding: 0px;
+        font-size: 28px;
+        line-height: 0px;
+        border: 0px;
+        box-shadow: unset;
+        outline: none;
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        background: #F8F8F9;
+        color: #E0654C;
+        border-radius: 30px;
+        opacity: 0;
+        img {
+            width: 28px;
+        }
+    }
+    &:hover {
+        .app-delete {
+            opacity: 1;
+        }
+    }
+    .app-image,
+    .app-body-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+.app {
+    .app-input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        margin: 0px;
+        border-radius: 8px;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .app-radio {
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+    .app-input[type=radio]:checked+.app-radio
+    {
+        border: 2px solid $primary;
+    }
+}
+.app-header {
+    border-radius: $app-radius $app-radius 0px 0px ;
+    border-bottom: 1px solid $app-border-light;
+    padding: 6px;
+}
+.app-footer {
+    border-radius: 0px 0px $app-radius $app-radius;
+    border-top: 1px solid $app-border-light;
+    padding: 6px;
+
+}
+.app-body {
+    padding: 6px;
+    flex: 1 1 auto;
+}
+
+.app-list-view {
+    width: 148px;
+    .app {
+        margin-bottom: 18px;
+    }
+}
+
+.app-grid-view {
+    display: flex;
+    flex-wrap: wrap;
+    .app {
+        margin: 10px;
+    }
+}
+
+.app-max-size {
+    .app-image {
+        height: 95px;
+        overflow: hidden;
+        img {
+            max-width: 100px;
+        }
+    }
+}
+
+.app-inrow {
+    .app {
+        margin-bottom: 20px;
+    }
+    .app-footer {
+        padding: 15px 6px;
+    } 
+}

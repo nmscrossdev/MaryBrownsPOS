@@ -1,0 +1,150 @@
+<html>
+
+
+<body>
+
+    <div>   
+          <h1>ONLY TEST: add customer</h1>
+        <div> 
+                <button id="CartValueGet">CartValue(Get)</button> 
+              &nbsp;  
+            <!-- <button id="CartValuePut">CartValue(put)</button> 
+              &nbsp;    -->
+                    <button id="CartGet">Cart(get)</button> 
+             <!--     &nbsp;    
+                    <button id="cartPost">Cart(Post)</button>  -->
+                  <br>   
+             
+              </div>
+
+           
+            
+
+    </div> 
+    <div id="dvRequest"></div>
+     <div id="dvResponse"></div>
+    <script>    
+//Register app commands for native Pateform Start
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('platform');        
+        if (myParam == "native") {
+            window.postMessage = function (data) {
+                window.ReactNativeWebView.postMessage(data);
+                true;
+            };
+        }
+        //Register app commands for native Pateform End
+
+
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData,undefined,2);
+        }, 1000);
+        //----------------------------------------
+
+        window.addEventListener('message', function (e) {
+            msgData = JSON.parse(e.data);
+            console.log("Message from Oliver POS:", msgData)
+            document.getElementById('dvResponse').innerText = "";
+            document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData,undefined,2);
+
+        }, false);
+
+
+        //CustomerDetails Button click event-----------
+        var btnCartValueGet = document.getElementById('CartValueGet');
+        btnCartValueGet.addEventListener('click', function (e) {
+
+            var jsonMsg = {
+                command: "CartValue",
+                version:"1.0",
+                method: "get",
+                }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        });
+
+        //  //CustomerDetails Button click event-----------
+        //  var btnCartValuePut = document.getElementById('CartValuePut');
+        // btnCartValuePut.addEventListener('click', function (e) {
+
+        //     var jsonMsg = {
+        //         command: "CartValue",
+        //         version:"1.0",
+        //         method: "put",
+        //         // data: {
+        //         //     discount: "5.00",
+        //         //     tender_amt: 12.00
+        //         // }
+
+        //         }
+        //     document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+        //     console.log('------get btn clicked----', jsonMsg);
+        //     window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        // });
+        //PrintReceipData-----------
+        var btnCartGet = document.getElementById('CartGet');
+        btnCartGet.addEventListener('click', function (e) {
+
+            var jsonMsg = {
+                command: "Cart",
+                version:"1.0",
+                method: "get",
+               
+            }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------print btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        });
+
+
+        // var btnCartPost = document.getElementById('cartPost');
+        // btnCartPost.addEventListener('click', function (e) {
+
+        //     var jsonMsg = {
+        //         command: "Cart",
+        //         version:"1.0",
+        //         method: "post",
+        //         data: [
+        //                     {
+        //                             product_id: 3341, //[required]
+        //                             qty: 1,
+        //                             name: "Samsung Galaxy Z Flip",
+        //                             discount: 0,
+        //                             type: "variable"
+        //                     },
+        //                     {
+        //                             product_id: 1120,// [required]
+        //                             qty: 1,
+        //                             name: "Samsung Galaxy Buds",
+        //                             discount: 0,
+        //                             type: "variable"
+        //                     }
+        //                 ]
+              
+        //     }
+        //     document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+        //     console.log('------print btn clicked----', jsonMsg);
+        //     window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        // });
+        
+        
+    </script>
+
+</body>
+
+</html>

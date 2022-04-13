@@ -1,0 +1,32 @@
+
+.modal-title-big {
+    text-align: center;
+    margin-left: auto;
+    position: relative;
+    right: -20px;
+    font-family: 'Avenir_roman';
+    h2 {
+        color: #3c4859;
+        position: relative;
+        text-align: center;
+        font-weight: 600;
+        font-size: 26px;
+        margin-top: 50px;
+     
+    }
+    p {
+        text-align: center;
+        display: block;
+        margin-top: 4px;
+        color: #9facbd;
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+    .modal-ok {
+        height: 52px;
+        padding: 0px;
+        border-radius: 8px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+}

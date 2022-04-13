@@ -1,0 +1,43 @@
+@media only screen and (max-width: 760px) {
+    td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr.table-active-outline {
+        border: 1px solid #cacaca;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    tr.table-active-outline td,
+    tr.table-active-outline th {
+            border: 0px !important;
+            border-left: 0px !important;
+    }
+    tr + tr {
+        margin-top: 1.5em;
+    }
+
+    td {
+        /* make like a "row" */
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        background-color: #ffffff;
+        text-align: left;
+    }
+
+    td:before {
+        content: attr(data-label);
+        display: inline-block;
+        line-height: 1.5;
+        margin-left: -100%;
+        width: 100%;
+        white-space: nowrap;
+    }
+}

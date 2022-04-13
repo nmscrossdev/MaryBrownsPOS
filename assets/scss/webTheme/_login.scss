@@ -1,0 +1,173 @@
+$card-bg: #ffffff;
+.wrapper-login {
+    padding-top: 62px;
+    height: 100vh;
+    .wrapper-login-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0; 
+        word-wrap: break-word;
+        background-color: $card-bg;
+        background-clip: border-box;
+        height: 100%;
+        .wrapper-login-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 50px;
+            @include mobile {
+                padding: 0px 15px;
+            }
+            @include tablet {
+                padding: 0px 30px;
+            }
+            .logo {
+                padding: 0px;
+            }
+        }
+        .ol-outline-primary {
+            min-width: 140px;
+            height: 46px;
+            @include mobile {
+                height: auto;
+            }
+            @include tablet {
+                height: 35px;
+            }
+        }
+        .wrapper-login-form {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            min-height: 1px;
+            z-index: 1;
+        }
+        .login-form-center {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            h1 {
+                font-weight: $font-medium;
+                font-size: 36px;
+                @include tv {
+                    font-size: 52px;
+                }
+                line-height: normal;
+                @include mobile {
+                    font-size: 24px;
+                }
+                @include tablet {
+                    font-size: 36px;
+                }
+            }
+            p {
+                color: #4b4b44;
+                @include mobile {
+                    font-size: 14px;
+                }
+                @include tablet {
+                    font-size: 18px;
+                }
+            }
+            .forgot-pwd,
+            .remember-me {
+                font-size: 12px;
+                color: #646C9A;
+                &:hover {
+                    text-decoration: none;
+                    color: $primary;
+                }
+            }
+            .remember-me {
+                align-items: center;
+                display: flex;
+                justify-content: flex-end;
+                input {
+                    margin-left: 10px;
+                    margin-top: 0px;
+                }
+            }
+        }
+    }
+    @include mobile {
+        padding-top: 20px;
+    }
+
+    @include tablet {
+        padding-top: 40px;
+    }
+}
+
+.login-google {
+    margin-top: 15px;
+    .btn-success,
+    .btn-primary {
+        border-radius: 2px;
+        height: 44px;
+        line-height: 44px;
+        padding: 0px;
+        @include mobile {
+            font-size: 14px;
+            height: 35px;
+            line-height: 35px;
+        }
+        @include tablet {
+            font-size: 16px;
+            height: 35px;
+            line-height: 35px;
+        }
+    }
+    img {
+        // width: auto;
+        float: left;
+        height: 100%;
+    }
+}
+
+.sparation-or {
+    position: relative;
+    text-align: center;
+    font-size: 18px;
+    @include mobile {
+        font-size: 12px;
+    }
+    @include tablet {
+        font-size: 14px;
+    }
+    // &::before,
+    // &::after {
+    //     position: absolute;
+    //     content: '';
+    //     background-color : $primary;
+    //     border-radius: 2px;
+    //     width: 100px;
+    //     height: 2px;
+    // }
+}
+
+.wrapper-background {
+    background-image: url('../img/login-bg.png');
+    height: 129px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    // margin-top: 10px;
+    @include tv {
+        height: 367px;
+    }
+    @include desktop {
+        height: 250px;
+    }
+    @include tablet {
+        height: 150px;
+    }
+}
+
+.login-icon {
+    width: 120px;
+    margin: auto;
+    svg {
+        width: 100%;
+    }
+}

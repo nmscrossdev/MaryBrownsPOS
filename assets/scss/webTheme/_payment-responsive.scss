@@ -1,0 +1,38 @@
+@media screen and (max-width: 1366px) {
+    .page-payment {
+        .payment-page-title {
+            img {
+                width: 90px;
+            }
+        }
+        .spacer-40 {
+            padding: 15px;
+        }
+        .spacer-25 {
+            padding: 10px;
+        }
+        .h2-title {
+            font-size: 28px !important;
+        }
+        .payment-button-group {
+            max-width: 299px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            .btn.btn-default {
+                margin-bottom: 15px;
+                font-size: 14px;
+            }
+            .btn-90 {
+                height: 50px;
+            }
+        }
+        .self-checkout-table {
+            max-width: 430px;
+        }
+        &.page-payment-successfull {
+            background-image: url(../img/Checked.svg);
+            background-size: 288px;
+            background-position: bottom 16px right -83px;
+        }
+    }
+}

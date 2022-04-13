@@ -1,0 +1,142 @@
+
+
+
+.shadow-none {
+    box-shadow:none !important;  
+}
+
+.powered-by-oliver {
+    font-size: 20px;
+    @include medium {
+        font-size: 18px;
+    }
+    @include tablet {
+        font-size: 16px;
+    }
+    @include mobile {
+        font-size: 14px;
+    }
+}
+.onboarding-loginBox {
+    @include cmq (80px, 450px) {
+        width: 95% ;
+    }
+}
+
+
+.HightLIghtPassword {
+    margin-top: 20px;
+   input {
+    height: 28px;
+    width: 28px;
+    border: 3px solid #FFFFFF;
+    display: block;
+    float: left;
+    border-radius: 100%;
+    background-color: #fff;
+        &:not(:first-child) {
+            margin-left: 10px;
+        }
+        @include mobile-table {
+            height: 20px;
+            width: 20px;
+            border: 2px solid #FFFFFF;
+        }
+   }
+}
+
+.icon.icon-css-override{
+    width: auto;
+    height: auto;
+}
+
+.icon-bottom-text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    line-height: 14px;
+    @include mobile-table {
+        font-size: 30px;
+    }
+    cursor: pointer;
+    li {
+        user-select: none;overflow: hidden;text-align: center;
+    }
+    .logout-text {
+        display: block;
+        -webkit-user-select: auto;
+        -moz-user-select: auto;
+        -ms-user-select: auto;
+        user-select: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 12px;
+    }
+}
+ .background-size-35 {
+     background-size: 38px; 
+ }
+
+ table.tile-view-product
+ {
+    @include ipad {
+        table-layout: fixed;   
+    }
+ }
+ .block__box_text_price, 
+ .box-flex-text-heading h2,
+ .button_with_checkbox [type=radio]:checked+label, .button_with_checkbox [type=radio]:not(:checked)+label
+ {
+    @include medium {
+        font-size: 18px;
+    }
+    @include tablet {
+        font-size: 16px;
+    }
+    @include mobile {
+        font-size: 14px;
+    }
+ }
+
+
+ /*=============Sidebar Css===========*/
+ #sidebar 
+ {
+    .cm-user {
+        width: 100%;
+    }
+    .cm-sec-acc {
+        .ulsidebar  {
+            li {
+               border-bottom: 0px; 
+               a {
+                   padding: 0px; 
+               }
+            }
+        }
+    }
+ }
+
+
+ @include mobile-table() {
+    .form_editinfo .input-group .form-control {
+        height: 60px;
+    }
+    .form_editinfo .input-group textarea.form-control {
+         height: 100px;   
+    }   
+ }
+
+ @include cmq(250px , 1280px) {
+    form.w-250-px.pl-3 {
+        padding-left: 0px !important;
+        display: block !important;
+    }
+    form.w-250-px .button_with_checkbox:last-child {
+        padding-bottom: 0px;
+    }
+ }
+ .form-control {
+    transition: none;
+    box-shadow: none !important; 
+}

@@ -1,0 +1,101 @@
+<html>
+<body>
+    <h3> Order App</h3>
+    <script>
+        const AppName = "Customer App";
+        const fontColor = "#f9a236";
+        //Register Native app
+        var RawDataAppWindow = window;
+        if (navigator.appVersion.includes('Android') || navigator.appVersion.includes('Mac')) {
+            window.postMessage = function (data) {
+                window.ReactNativeWebView.postMessage(data);
+                true;
+            };
+            RawDataAppWindow = document;
+        }
+        //=====
+        
+        //Listen for message from Oliver POS
+        var oResp = '';
+        document.addEventListener('readystatechange', event => {
+            if (event.target.readyState === 'complete') {
+                //call parent to inform it's loaded
+                var readyExtensionData = {
+                    command: "appReady",
+                    version: 1.0, //using data type as decimal
+                    method: "get",
+                    appName: AppName
+                }
+                //send to parent
+                window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+                console.log("msg post",readyExtensionData)
+                // Register Call Back Event's
+                var CallBackEvents = {
+                    command: "registerCallBack",
+                    version: 1.0,
+                    method: "post",
+                    data: [
+                        {
+                            command: "viewCustomerNotification",
+                            onAction: "customer-detail-view",
+                        },
+                        {
+                            command: "addCustomerNotification",
+                            onAction: "customer-save-notification",
+                        },
+                        {
+                            command: "updateCustomerNotification",
+                            onAction: "customer-update-notification",
+                        },
+                        {
+                            command: "deleteCustomerNotification",
+                            onAction: "customer-delete-notification",
+                        }
+                        
+                    ]
+                }
+                window.parent.postMessage(JSON.stringify(CallBackEvents), '*');
+                console.log("msg post",CallBackEvents)
+            }
+        });
+
+        //reciver all call backs from oliver
+        RawDataAppWindow.addEventListener('message', function (e) {
+            oResp = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+           // console.log("Message from Oliver POS:", oResp)
+            if (oResp) {
+               // console.log("Response", JSON.stringify(oResp.data, undefined, 4))
+                switch (oResp.command) {
+                    case "appReady":
+                       // parent.AddEventLog("App Ready: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                        break;                        
+                    case "viewCustomerNotification": 
+                    console.log("Message from Oliver POS: ",JSON.stringify(oResp.data, undefined, 4))                       
+                       // parent.AddEventLog("command data: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                        break;
+                    case "addCustomerNotification":      
+                    console.log("Message from Oliver POS: ",JSON.stringify(oResp.data, undefined, 4))   
+                    alert(JSON.stringify(oResp.data, undefined, 4))                   
+                       // parent.AddEventLog("command data: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                        break;
+                    case "updateCustomerNotification":
+                    console.log("Message from Oliver POS: ",JSON.stringify(oResp.data, undefined, 4))    
+                        //parent.AddEventLog("command data: " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                        break;
+                   
+                    case "deleteCustomerNotification":
+                    console.log("Message from Oliver POS: ",JSON.stringify(oResp.data, undefined, 4))   
+                    alert(JSON.stringify(oResp.data, undefined, 4)) 
+                        //parent.AddEventLog("registerCallBack: " + AppName + " " + JSON.stringify(oResp.data, undefined, 4), fontColor);                        
+                        break;
+                   
+                    default:
+                        //read data and show error
+                        console.log("un-identified response");
+                        break;
+                }
+            }
+        }, false);
+    </script>
+</body>
+</html>

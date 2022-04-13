@@ -1,0 +1,456 @@
+.custom-checkbox-override {
+    .custom-control-input:focus ~ .custom-control-label::before {
+        box-shadow: none;
+    }
+    .custom-control {
+        padding-left: 0;
+    }
+    .form-control {
+        padding: 0 0 0 1rem;
+        overflow: hidden;
+    }
+    .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: $white;
+    }
+    
+    label.custom-control-label {
+        width: 100%;
+        padding: 0;
+        outline: 0px;
+        height: $input-custom-height-lg - 1;
+        line-height: $input-custom-height-lg - 1;
+        font-size: 18px;
+        // @include cmq (280px, 767px) {
+        //     font-size: 15px;
+        // }
+        // @include cmq (768px, 1024px) {
+        //     font-size: 16px;
+        // }
+        // @include cmq (1025px, 1170px) {
+        //     font-size: 17px;
+        // }
+        // @include cmq (1170px, 1500px) {
+        //     font-size: 18px;
+        // }
+
+        @include medium {
+            height: $input-custom-height-md - 1;
+            line-height: $input-custom-height-md - 1;
+        }
+
+
+        @include tablet {
+            height: $input-custom-height-sm - 1;
+            line-height: $input-custom-height-sm - 1;
+        }
+
+        &:focus {
+            outline: none;
+
+            .custom-control-label::before,
+            .custom-control-label::after {
+                outline: none;
+            }
+        }
+    }
+
+    .custom-control-label::before,
+    .custom-control-label::after {
+        top: 0px;
+        margin-top: 0px;
+        left: unset;
+        right: 0px;
+        border-radius: 0px;
+        border: 0px;
+        box-shadow: none;
+        border-left: $input-border-width solid $gray-700;
+        width: 89px;
+        height: $input-custom-height-lg - 1;
+
+        @include medium {
+            height: $input-custom-height-md - 1;
+        }
+
+        @include tablet {
+            height: $input-custom-height-sm - 1;
+        }
+
+        @include mobile {
+            height: $input-custom-height-xs - 1;
+        }
+
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+input[type=button] {
+    cursor: pointer;
+}
+
+.mx-width-410 {
+    width: 320px;
+    @include cmq (100px, 321px){
+        width: 280px;
+    }
+}
+
+// Set Height FOr Mobile And Desktop
+.form-addon-medium {
+
+    .form-control:not(textarea),
+    .custom-select {
+        height: $input-custom-height-md - 1;
+    }
+
+    // Addon Label
+    .input-group-text {
+        min-width: 135px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        background: $white;
+        @include medium {
+            width: 100px;
+        }
+        @include mobile {}
+    }
+    .input-group-text.label-width-plus {
+        min-width: 175px;
+    }
+    //Button
+
+    // Set Height FOr Mobile And Desktop of (anchor buttons, btn tage buttons , input buttons)
+    .btn-md {
+        $btn-border-radius-lg: $input-border-radius-lg;
+        height: $input-custom-height-md - 1;
+        line-height: $input-custom-height-md - 1;
+        padding: 0px;
+    }
+
+    // label and checkmark height set
+    label.custom-control-label {
+        height: $input-custom-height-md - 1;
+        line-height: $input-custom-height-md - 1;
+    }
+    .custom-control-label::before,
+    .custom-control-label::after {
+        height: $input-custom-height-md - 1;
+    }
+
+    //fonts for all components
+
+    // Set Fonts Size
+    input,
+    button,
+    .btn,
+    select,
+    .input-group-text,
+    .btn-lg,
+    .btn-group-lg > .btn,
+    label.custom-control-label {
+        // @include cmq (280px, 767px) {
+        //     font-size: 15px;
+        // }
+        // @include cmq (768px, 1024px) {
+        //     font-size: 16px;
+        // }
+        font-size: 18px;
+    }
+}
+.btn-lg, .btn-group-lg > .btn {
+    font-size: inherit;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    // background-image: none;
+    // content: '\ea0f';
+    // font-family: Nucleo;
+    text-align: center;
+    font-weight: normal;
+    font-size: 32px;
+    @include mobile {
+        font-size: 22px;
+    }
+}
+.colorpicker-input-addon {
+    border-color: $border-color;
+    border-radius: 4px 0px 0px 4px !important;
+    border-right: 0px;
+}
+.text-success-focus:hover,
+.text-success-focus:focus,
+.text-success-focus:active {
+ color: $primary;
+}
+
+
+.form-control {
+    &::-webkit-input-placeholder{ color: #C5BFBF; }
+    &::-moz-placeholder { color: #C5BFBF; }
+    &:-ms-input-placeholder{ color: #C5BFBF; }
+    &:-moz-placeholder { color: #C5BFBF; }
+}
+.btn-style-01 {
+    border: 1px solid rgba(128, 128, 128, 0.24);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    height: 71px;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    &:focus {
+        outline: none;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    }
+    &:last-child {
+        margin-bottom: 0px;
+    }
+}
+
+.btn-style-02
+{
+    border: 1px solid rgba(128, 128, 128, 0.24);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    height: 90px;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    border-left-width: 28px;
+    &:focus {
+        outline: none;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    }
+    &:last-child {
+        margin-bottom: 0px;
+    }
+}
+.bleftcolor-01 {
+    border-left-color: $primary;
+}
+.bleftcolor-02 {
+    border-left-color: $success;
+}
+.bleftcolor-03 {
+    border-left-color: rgba(118, 91, 114, 0.95);
+}
+.bleftcolor-04 {
+    border-left-color:  rgba(198, 82, 167, 0.95);
+}
+.bleftcolor-05 {
+    border-left-color:  rgba(38, 98, 123, 0.95);;
+}
+
+.percentageButton {
+    .btn-group-toggle {
+        label.btn {
+            width: 43px;
+            height: 43px;
+            padding: 0px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCA0NCA0NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zMi42MDY3IDMyLjYwNjZDMzguNDY0NSAyNi43NDg3IDM4LjQ2NDUgMTcuMjUxMyAzMi42MDY3IDExLjM5MzRDMjYuNzQ4OCA1LjUzNTUzIDE3LjI1MTMgNS41MzU1MyAxMS4zOTM1IDExLjM5MzRDNS41MzU2IDE3LjI1MTMgNS41MzU2IDI2Ljc0ODcgMTEuMzkzNSAzMi42MDY2QzE3LjI1MTMgMzguNDY0NSAyNi43NDg4IDM4LjQ2NDUgMzIuNjA2NyAzMi42MDY2WiIgc3Ryb2tlPSIjMDBBQkQ5Ii8+CjxwYXRoIGQ9Ik0yMS43NTY4IDE3Ljg4NjhDMjEuNzU2OCAxOC4zODAxIDIxLjY2MzUgMTguODQwMSAyMS40NzY4IDE5LjI2NjhDMjEuMzAzNSAxOS42OTM1IDIxLjA1NjggMjAuMDY2OCAyMC43MzY4IDIwLjM4NjhDMjAuNDE2OCAyMC42OTM1IDIwLjA0MzUgMjAuOTQwMSAxOS42MTY4IDIxLjEyNjhDMTkuMTkwMSAyMS4zMDAxIDE4LjczMDEgMjEuMzg2OCAxOC4yMzY4IDIxLjM4NjhDMTcuNzQzNSAyMS4zODY4IDE3LjI4MzUgMjEuMzAwMSAxNi44NTY4IDIxLjEyNjhDMTYuNDMwMSAyMC45NDAxIDE2LjA1NjggMjAuNjkzNSAxNS43MzY4IDIwLjM4NjhDMTUuNDE2OCAyMC4wNjY4IDE1LjE2MzUgMTkuNjkzNSAxNC45NzY4IDE5LjI2NjhDMTQuODAzNSAxOC44NDAxIDE0LjcxNjggMTguMzgwMSAxNC43MTY4IDE3Ljg4NjhDMTQuNzE2OCAxNy4zOTM1IDE0LjgwMzUgMTYuOTMzNSAxNC45NzY4IDE2LjUwNjhDMTUuMTYzNSAxNi4wODAxIDE1LjQxNjggMTUuNzEzNSAxNS43MzY4IDE1LjQwNjhDMTYuMDU2OCAxNS4wODY4IDE2LjQzMDEgMTQuODQwMSAxNi44NTY4IDE0LjY2NjhDMTcuMjgzNSAxNC40ODAxIDE3Ljc0MzUgMTQuMzg2OCAxOC4yMzY4IDE0LjM4NjhDMTguNzMwMSAxNC4zODY4IDE5LjE5MDEgMTQuNDgwMSAxOS42MTY4IDE0LjY2NjhDMjAuMDQzNSAxNC44NDAxIDIwLjQxNjggMTUuMDg2OCAyMC43MzY4IDE1LjQwNjhDMjEuMDU2OCAxNS43MTM1IDIxLjMwMzUgMTYuMDgwMSAyMS40NzY4IDE2LjUwNjhDMjEuNjYzNSAxNi45MzM1IDIxLjc1NjggMTcuMzkzNSAyMS43NTY4IDE3Ljg4NjhaTTIwLjU1NjggMTcuODg2OEMyMC41NTY4IDE3LjU1MzUgMjAuNDkwMSAxNy4yNDY4IDIwLjM1NjggMTYuOTY2OEMyMC4yMzY4IDE2LjY4NjggMjAuMDcwMSAxNi40NDY4IDE5Ljg1NjggMTYuMjQ2OEMxOS42NTY4IDE2LjAzMzUgMTkuNDE2OCAxNS44NzM1IDE5LjEzNjggMTUuNzY2OEMxOC44NTY4IDE1LjY0NjggMTguNTU2OCAxNS41ODY4IDE4LjIzNjggMTUuNTg2OEMxNy45MTY4IDE1LjU4NjggMTcuNjE2OCAxNS42NDY4IDE3LjMzNjggMTUuNzY2OEMxNy4wNTY4IDE1Ljg3MzUgMTYuODEwMSAxNi4wMzM1IDE2LjU5NjggMTYuMjQ2OEMxNi4zOTY4IDE2LjQ0NjggMTYuMjMwMSAxNi42ODY4IDE2LjA5NjggMTYuOTY2OEMxNS45NzY4IDE3LjI0NjggMTUuOTE2OCAxNy41NTM1IDE1LjkxNjggMTcuODg2OEMxNS45MTY4IDE4LjIyMDEgMTUuOTc2OCAxOC41MjY4IDE2LjA5NjggMTguODA2OEMxNi4yMzAxIDE5LjA4NjggMTYuMzk2OCAxOS4zMzM1IDE2LjU5NjggMTkuNTQ2OEMxNi44MTAxIDE5Ljc0NjggMTcuMDU2OCAxOS45MDY4IDE3LjMzNjggMjAuMDI2OEMxNy42MTY4IDIwLjEzMzUgMTcuOTE2OCAyMC4xODY4IDE4LjIzNjggMjAuMTg2OEMxOC41NTY4IDIwLjE4NjggMTguODU2OCAyMC4xMzM1IDE5LjEzNjggMjAuMDI2OEMxOS40MTY4IDE5LjkwNjggMTkuNjU2OCAxOS43NDY4IDE5Ljg1NjggMTkuNTQ2OEMyMC4wNzAxIDE5LjMzMzUgMjAuMjM2OCAxOS4wODY4IDIwLjM1NjggMTguODA2OEMyMC40OTAxIDE4LjUyNjggMjAuNTU2OCAxOC4yMjAxIDIwLjU1NjggMTcuODg2OFpNMjkuODU2OCAyNS41MjY4QzI5Ljg1NjggMjYuMDIwMSAyOS43NjM1IDI2LjQ4MDEgMjkuNTc2OCAyNi45MDY4QzI5LjQwMzUgMjcuMzMzNSAyOS4xNTY4IDI3LjcwNjggMjguODM2OCAyOC4wMjY4QzI4LjUxNjggMjguMzMzNSAyOC4xNDM1IDI4LjU4MDEgMjcuNzE2OCAyOC43NjY4QzI3LjI5MDEgMjguOTQwMSAyNi44MzAxIDI5LjAyNjggMjYuMzM2OCAyOS4wMjY4QzI1Ljg0MzUgMjkuMDI2OCAyNS4zODM1IDI4Ljk0MDEgMjQuOTU2OCAyOC43NjY4QzI0LjUzMDEgMjguNTgwMSAyNC4xNTY4IDI4LjMzMzUgMjMuODM2OCAyOC4wMjY4QzIzLjUxNjggMjcuNzA2OCAyMy4yNjM1IDI3LjMzMzUgMjMuMDc2OCAyNi45MDY4QzIyLjkwMzUgMjYuNDgwMSAyMi44MTY4IDI2LjAyMDEgMjIuODE2OCAyNS41MjY4QzIyLjgxNjggMjUuMDMzNSAyMi45MDM1IDI0LjU3MzUgMjMuMDc2OCAyNC4xNDY4QzIzLjI2MzUgMjMuNzIwMSAyMy41MTY4IDIzLjM1MzUgMjMuODM2OCAyMy4wNDY4QzI0LjE1NjggMjIuNzI2OCAyNC41MzAxIDIyLjQ4MDEgMjQuOTU2OCAyMi4zMDY4QzI1LjM4MzUgMjIuMTIwMSAyNS44NDM1IDIyLjAyNjggMjYuMzM2OCAyMi4wMjY4QzI2LjgzMDEgMjIuMDI2OCAyNy4yOTAxIDIyLjEyMDEgMjcuNzE2OCAyMi4zMDY4QzI4LjE0MzUgMjIuNDgwMSAyOC41MTY4IDIyLjcyNjggMjguODM2OCAyMy4wNDY4QzI5LjE1NjggMjMuMzUzNSAyOS40MDM1IDIzLjcyMDEgMjkuNTc2OCAyNC4xNDY4QzI5Ljc2MzUgMjQuNTczNSAyOS44NTY4IDI1LjAzMzUgMjkuODU2OCAyNS41MjY4Wk0yOC42NTY4IDI1LjUyNjhDMjguNjU2OCAyNS4xOTM1IDI4LjU5MDEgMjQuODg2OCAyOC40NTY4IDI0LjYwNjhDMjguMzM2OCAyNC4zMjY4IDI4LjE3MDEgMjQuMDg2OCAyNy45NTY4IDIzLjg4NjhDMjcuNzU2OCAyMy42NzM1IDI3LjUxNjggMjMuNTEzNSAyNy4yMzY4IDIzLjQwNjhDMjYuOTU2OCAyMy4yODY4IDI2LjY1NjggMjMuMjI2OCAyNi4zMzY4IDIzLjIyNjhDMjYuMDE2OCAyMy4yMjY4IDI1LjcxNjggMjMuMjg2OCAyNS40MzY4IDIzLjQwNjhDMjUuMTU2OCAyMy41MTM1IDI0LjkxMDEgMjMuNjczNSAyNC42OTY4IDIzLjg4NjhDMjQuNDk2OCAyNC4wODY4IDI0LjMzMDEgMjQuMzI2OCAyNC4xOTY4IDI0LjYwNjhDMjQuMDc2OCAyNC44ODY4IDI0LjAxNjggMjUuMTkzNSAyNC4wMTY4IDI1LjUyNjhDMjQuMDE2OCAyNS44NjAxIDI0LjA3NjggMjYuMTY2OCAyNC4xOTY4IDI2LjQ0NjhDMjQuMzMwMSAyNi43MjY4IDI0LjQ5NjggMjYuOTczNSAyNC42OTY4IDI3LjE4NjhDMjQuOTEwMSAyNy4zODY4IDI1LjE1NjggMjcuNTQ2OCAyNS40MzY4IDI3LjY2NjhDMjUuNzE2OCAyNy43NzM1IDI2LjAxNjggMjcuODI2OCAyNi4zMzY4IDI3LjgyNjhDMjYuNjU2OCAyNy44MjY4IDI2Ljk1NjggMjcuNzczNSAyNy4yMzY4IDI3LjY2NjhDMjcuNTE2OCAyNy41NDY4IDI3Ljc1NjggMjcuMzg2OCAyNy45NTY4IDI3LjE4NjhDMjguMTcwMSAyNi45NzM1IDI4LjMzNjggMjYuNzI2OCAyOC40NTY4IDI2LjQ0NjhDMjguNTkwMSAyNi4xNjY4IDI4LjY1NjggMjUuODYwMSAyOC42NTY4IDI1LjUyNjhaTTE4LjI5NjggMjkuNDA2OEwxNy4yNTY4IDI4Ljg2NjhMMjYuMjc2OCAxNC4wMDY4TDI3LjI5NjggMTQuNTQ2OEwxOC4yOTY4IDI5LjQwNjhaIiBmaWxsPSIjNDZBOUQ0Ii8+Cjwvc3ZnPgo=');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            margin: 0px;
+        }
+        label.btn.active {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCA0NCA0NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zMi42MDY3IDMyLjYwNjZDMzguNDY0NSAyNi43NDg3IDM4LjQ2NDUgMTcuMjUxMyAzMi42MDY3IDExLjM5MzRDMjYuNzQ4OCA1LjUzNTUzIDE3LjI1MTMgNS41MzU1MyAxMS4zOTM1IDExLjM5MzRDNS41MzU2IDE3LjI1MTMgNS41MzU2IDI2Ljc0ODcgMTEuMzkzNSAzMi42MDY2QzE3LjI1MTMgMzguNDY0NSAyNi43NDg4IDM4LjQ2NDUgMzIuNjA2NyAzMi42MDY2WiIgZmlsbD0iIzQ2QTlENCIgc3Ryb2tlPSIjMDBBQkQ5Ii8+CjxwYXRoIGQ9Ik0yMS43NTY4IDE3Ljg4NjhDMjEuNzU2OCAxOC4zODAxIDIxLjY2MzUgMTguODQwMSAyMS40NzY4IDE5LjI2NjhDMjEuMzAzNSAxOS42OTM1IDIxLjA1NjggMjAuMDY2OCAyMC43MzY4IDIwLjM4NjhDMjAuNDE2OCAyMC42OTM1IDIwLjA0MzUgMjAuOTQwMSAxOS42MTY4IDIxLjEyNjhDMTkuMTkwMSAyMS4zMDAxIDE4LjczMDEgMjEuMzg2OCAxOC4yMzY4IDIxLjM4NjhDMTcuNzQzNSAyMS4zODY4IDE3LjI4MzUgMjEuMzAwMSAxNi44NTY4IDIxLjEyNjhDMTYuNDMwMSAyMC45NDAxIDE2LjA1NjggMjAuNjkzNSAxNS43MzY4IDIwLjM4NjhDMTUuNDE2OCAyMC4wNjY4IDE1LjE2MzUgMTkuNjkzNSAxNC45NzY4IDE5LjI2NjhDMTQuODAzNSAxOC44NDAxIDE0LjcxNjggMTguMzgwMSAxNC43MTY4IDE3Ljg4NjhDMTQuNzE2OCAxNy4zOTM1IDE0LjgwMzUgMTYuOTMzNSAxNC45NzY4IDE2LjUwNjhDMTUuMTYzNSAxNi4wODAxIDE1LjQxNjggMTUuNzEzNSAxNS43MzY4IDE1LjQwNjhDMTYuMDU2OCAxNS4wODY4IDE2LjQzMDEgMTQuODQwMSAxNi44NTY4IDE0LjY2NjhDMTcuMjgzNSAxNC40ODAxIDE3Ljc0MzUgMTQuMzg2OCAxOC4yMzY4IDE0LjM4NjhDMTguNzMwMSAxNC4zODY4IDE5LjE5MDEgMTQuNDgwMSAxOS42MTY4IDE0LjY2NjhDMjAuMDQzNSAxNC44NDAxIDIwLjQxNjggMTUuMDg2OCAyMC43MzY4IDE1LjQwNjhDMjEuMDU2OCAxNS43MTM1IDIxLjMwMzUgMTYuMDgwMSAyMS40NzY4IDE2LjUwNjhDMjEuNjYzNSAxNi45MzM1IDIxLjc1NjggMTcuMzkzNSAyMS43NTY4IDE3Ljg4NjhaTTIwLjU1NjggMTcuODg2OEMyMC41NTY4IDE3LjU1MzUgMjAuNDkwMSAxNy4yNDY4IDIwLjM1NjggMTYuOTY2OEMyMC4yMzY4IDE2LjY4NjggMjAuMDcwMSAxNi40NDY4IDE5Ljg1NjggMTYuMjQ2OEMxOS42NTY4IDE2LjAzMzUgMTkuNDE2OCAxNS44NzM1IDE5LjEzNjggMTUuNzY2OEMxOC44NTY4IDE1LjY0NjggMTguNTU2OCAxNS41ODY4IDE4LjIzNjggMTUuNTg2OEMxNy45MTY4IDE1LjU4NjggMTcuNjE2OCAxNS42NDY4IDE3LjMzNjggMTUuNzY2OEMxNy4wNTY4IDE1Ljg3MzUgMTYuODEwMSAxNi4wMzM1IDE2LjU5NjggMTYuMjQ2OEMxNi4zOTY4IDE2LjQ0NjggMTYuMjMwMSAxNi42ODY4IDE2LjA5NjggMTYuOTY2OEMxNS45NzY4IDE3LjI0NjggMTUuOTE2OCAxNy41NTM1IDE1LjkxNjggMTcuODg2OEMxNS45MTY4IDE4LjIyMDEgMTUuOTc2OCAxOC41MjY4IDE2LjA5NjggMTguODA2OEMxNi4yMzAxIDE5LjA4NjggMTYuMzk2OCAxOS4zMzM1IDE2LjU5NjggMTkuNTQ2OEMxNi44MTAxIDE5Ljc0NjggMTcuMDU2OCAxOS45MDY4IDE3LjMzNjggMjAuMDI2OEMxNy42MTY4IDIwLjEzMzUgMTcuOTE2OCAyMC4xODY4IDE4LjIzNjggMjAuMTg2OEMxOC41NTY4IDIwLjE4NjggMTguODU2OCAyMC4xMzM1IDE5LjEzNjggMjAuMDI2OEMxOS40MTY4IDE5LjkwNjggMTkuNjU2OCAxOS43NDY4IDE5Ljg1NjggMTkuNTQ2OEMyMC4wNzAxIDE5LjMzMzUgMjAuMjM2OCAxOS4wODY4IDIwLjM1NjggMTguODA2OEMyMC40OTAxIDE4LjUyNjggMjAuNTU2OCAxOC4yMjAxIDIwLjU1NjggMTcuODg2OFpNMjkuODU2OCAyNS41MjY4QzI5Ljg1NjggMjYuMDIwMSAyOS43NjM1IDI2LjQ4MDEgMjkuNTc2OCAyNi45MDY4QzI5LjQwMzUgMjcuMzMzNSAyOS4xNTY4IDI3LjcwNjggMjguODM2OCAyOC4wMjY4QzI4LjUxNjggMjguMzMzNSAyOC4xNDM1IDI4LjU4MDEgMjcuNzE2OCAyOC43NjY4QzI3LjI5MDEgMjguOTQwMSAyNi44MzAxIDI5LjAyNjggMjYuMzM2OCAyOS4wMjY4QzI1Ljg0MzUgMjkuMDI2OCAyNS4zODM1IDI4Ljk0MDEgMjQuOTU2OCAyOC43NjY4QzI0LjUzMDEgMjguNTgwMSAyNC4xNTY4IDI4LjMzMzUgMjMuODM2OCAyOC4wMjY4QzIzLjUxNjggMjcuNzA2OCAyMy4yNjM1IDI3LjMzMzUgMjMuMDc2OCAyNi45MDY4QzIyLjkwMzUgMjYuNDgwMSAyMi44MTY4IDI2LjAyMDEgMjIuODE2OCAyNS41MjY4QzIyLjgxNjggMjUuMDMzNSAyMi45MDM1IDI0LjU3MzUgMjMuMDc2OCAyNC4xNDY4QzIzLjI2MzUgMjMuNzIwMSAyMy41MTY4IDIzLjM1MzUgMjMuODM2OCAyMy4wNDY4QzI0LjE1NjggMjIuNzI2OCAyNC41MzAxIDIyLjQ4MDEgMjQuOTU2OCAyMi4zMDY4QzI1LjM4MzUgMjIuMTIwMSAyNS44NDM1IDIyLjAyNjggMjYuMzM2OCAyMi4wMjY4QzI2LjgzMDEgMjIuMDI2OCAyNy4yOTAxIDIyLjEyMDEgMjcuNzE2OCAyMi4zMDY4QzI4LjE0MzUgMjIuNDgwMSAyOC41MTY4IDIyLjcyNjggMjguODM2OCAyMy4wNDY4QzI5LjE1NjggMjMuMzUzNSAyOS40MDM1IDIzLjcyMDEgMjkuNTc2OCAyNC4xNDY4QzI5Ljc2MzUgMjQuNTczNSAyOS44NTY4IDI1LjAzMzUgMjkuODU2OCAyNS41MjY4Wk0yOC42NTY4IDI1LjUyNjhDMjguNjU2OCAyNS4xOTM1IDI4LjU5MDEgMjQuODg2OCAyOC40NTY4IDI0LjYwNjhDMjguMzM2OCAyNC4zMjY4IDI4LjE3MDEgMjQuMDg2OCAyNy45NTY4IDIzLjg4NjhDMjcuNzU2OCAyMy42NzM1IDI3LjUxNjggMjMuNTEzNSAyNy4yMzY4IDIzLjQwNjhDMjYuOTU2OCAyMy4yODY4IDI2LjY1NjggMjMuMjI2OCAyNi4zMzY4IDIzLjIyNjhDMjYuMDE2OCAyMy4yMjY4IDI1LjcxNjggMjMuMjg2OCAyNS40MzY4IDIzLjQwNjhDMjUuMTU2OCAyMy41MTM1IDI0LjkxMDEgMjMuNjczNSAyNC42OTY4IDIzLjg4NjhDMjQuNDk2OCAyNC4wODY4IDI0LjMzMDEgMjQuMzI2OCAyNC4xOTY4IDI0LjYwNjhDMjQuMDc2OCAyNC44ODY4IDI0LjAxNjggMjUuMTkzNSAyNC4wMTY4IDI1LjUyNjhDMjQuMDE2OCAyNS44NjAxIDI0LjA3NjggMjYuMTY2OCAyNC4xOTY4IDI2LjQ0NjhDMjQuMzMwMSAyNi43MjY4IDI0LjQ5NjggMjYuOTczNSAyNC42OTY4IDI3LjE4NjhDMjQuOTEwMSAyNy4zODY4IDI1LjE1NjggMjcuNTQ2OCAyNS40MzY4IDI3LjY2NjhDMjUuNzE2OCAyNy43NzM1IDI2LjAxNjggMjcuODI2OCAyNi4zMzY4IDI3LjgyNjhDMjYuNjU2OCAyNy44MjY4IDI2Ljk1NjggMjcuNzczNSAyNy4yMzY4IDI3LjY2NjhDMjcuNTE2OCAyNy41NDY4IDI3Ljc1NjggMjcuMzg2OCAyNy45NTY4IDI3LjE4NjhDMjguMTcwMSAyNi45NzM1IDI4LjMzNjggMjYuNzI2OCAyOC40NTY4IDI2LjQ0NjhDMjguNTkwMSAyNi4xNjY4IDI4LjY1NjggMjUuODYwMSAyOC42NTY4IDI1LjUyNjhaTTE4LjI5NjggMjkuNDA2OEwxNy4yNTY4IDI4Ljg2NjhMMjYuMjc2OCAxNC4wMDY4TDI3LjI5NjggMTQuNTQ2OEwxOC4yOTY4IDI5LjQwNjhaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K');
+        }
+    }
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyOSAyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yNy4xMzI1IDEuNjEzODhDMjYuOTYyNSAxLjQ3NzU3IDI2LjcxNDYgMS41MDI4MyAyNi41Nzc3IDEuNjczMzZMMTUuNDMzNSAxNS40NzE4QzE1LjQyMjUgMTUuNDg2IDE1LjQxMjUgMTUuNTAwMiAxNS40MDMgMTUuNTE1NUMxNS4zOTk4IDE1LjUyMDcgMTUuMzk2NyAxNS41MjY1IDE1LjM5MyAxNS41MzI4TDEyLjM3NzIgMTkuMjk2QzEyLjI4OTMgMTkuNDAzOSAxMi4xNjgzIDE5LjQ2OTEgMTIuMDM2MiAxOS40Nzk3QzExLjg5OTMgMTkuNDg3IDExLjc3NTEgMTkuNDQzOSAxMS42NzQxIDE5LjM1MjhMMy4wMjg3OSAxMS40OTI4QzIuODY4MjcgMTEuMzQ3IDIuNjE4MjcgMTEuMzU4MSAyLjQ3MDkgMTEuNTE5N0MyLjMyNDU4IDExLjY4MDcgMi4zMzYxNiAxMS45MzA3IDIuNDk3NzQgMTIuMDc3TDExLjE0NDEgMTkuOTM4MUMxMS4zODQxIDIwLjE1MzkgMTEuNjg0MSAyMC4yNzAyIDExLjk5ODMgMjAuMjcwMkMxMi4wMzA5IDIwLjI3MDIgMTIuMDYzNSAyMC4yNjkxIDEyLjA5NjcgMjAuMjY2NUMxMi40NDY3IDIwLjIzOTcgMTIuNzYzNSAyMC4wNzE4IDEyLjk5MTQgMTkuNzkxOEwxNi4wNDU2IDE1Ljk4MDdDMTYuMDU1NiAxNS45NjcgMTYuMDY2MiAxNS45NTA3IDE2LjA3NTYgMTUuOTMzNEwyNy4xOTE5IDIuMTY5MTVDMjcuMzI4OCAxLjk5OTY3IDI3LjMwMTkgMS43NTEyNSAyNy4xMzI1IDEuNjEzODhaIiBmaWxsPSIjNGI0YjRiIi8+CjxwYXRoIGQ9Ik0yNy4xMzI1IDEuNjEzODhDMjYuOTYyNSAxLjQ3NzU3IDI2LjcxNDYgMS41MDI4MyAyNi41Nzc3IDEuNjczMzZMMTUuNDMzNSAxNS40NzE4QzE1LjQyMjUgMTUuNDg2IDE1LjQxMjUgMTUuNTAwMiAxNS40MDMgMTUuNTE1NUMxNS4zOTk4IDE1LjUyMDcgMTUuMzk2NyAxNS41MjY1IDE1LjM5MyAxNS41MzI4TDEyLjM3NzIgMTkuMjk2QzEyLjI4OTMgMTkuNDAzOSAxMi4xNjgzIDE5LjQ2OTEgMTIuMDM2MiAxOS40Nzk3QzExLjg5OTMgMTkuNDg3IDExLjc3NTEgMTkuNDQzOSAxMS42NzQxIDE5LjM1MjhMMy4wMjg3OSAxMS40OTI4QzIuODY4MjcgMTEuMzQ3IDIuNjE4MjcgMTEuMzU4MSAyLjQ3MDkgMTEuNTE5N0MyLjMyNDU4IDExLjY4MDcgMi4zMzYxNiAxMS45MzA3IDIuNDk3NzQgMTIuMDc3TDExLjE0NDEgMTkuOTM4MUMxMS4zODQxIDIwLjE1MzkgMTEuNjg0MSAyMC4yNzAyIDExLjk5ODMgMjAuMjcwMkMxMi4wMzA5IDIwLjI3MDIgMTIuMDYzNSAyMC4yNjkxIDEyLjA5NjcgMjAuMjY2NUMxMi40NDY3IDIwLjIzOTcgMTIuNzYzNSAyMC4wNzE4IDEyLjk5MTQgMTkuNzkxOEwxNi4wNDU2IDE1Ljk4MDdDMTYuMDU1NiAxNS45NjcgMTYuMDY2MiAxNS45NTA3IDE2LjA3NTYgMTUuOTMzNEwyNy4xOTE5IDIuMTY5MTVDMjcuMzI4OCAxLjk5OTY3IDI3LjMwMTkgMS43NTEyNSAyNy4xMzI1IDEuNjEzODgiIHN0cm9rZT0iIzRiNGI0YiIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjwvc3ZnPgo=');
+}
+
+label.btn.focus,
+label.btn.active:focus {
+    box-shadow: none !important;
+}
+
+.RegisterTouchButtons {
+    display: inline-block;
+    label.btn.btn-style-03,
+    .btn-style-03 {
+        min-width: 251px;
+        margin-bottom: 10px;
+        &:last-child {
+            margin-bottom: 0px;   
+        }
+    }
+}
+label.btn.btn-style-03,
+.btn-style-03 {
+    border-radius: 8px !important;
+    white-space: nowrap;
+    border: 1px solid #979797;
+    min-width: 100px;
+    height: 51px;
+    line-height: 48px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    transition: border-width 0s linear;
+    &:first-child,
+    &:last-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px !important;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px !important;
+    }
+    &.active {
+        border-width: 3px;
+        border-color: $primary;
+    }
+    &.disabled {
+        background: #F4F4F4;
+        border: 1px solid #E4E4E4;
+        opacity: 1;
+        color: #C4C4C4;
+    }
+}
+.btn-style-04 {
+    border: 0.5px solid rgba(128, 128, 128, 0.24);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+}
+// small
+.onoffswitchSmall {
+    .onoffswitch {
+        position: relative; width: 100px;
+        -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    }
+    .onoffswitch-checkbox {
+        display: none;
+    }
+    .onoffswitch-label {
+        display: block; 
+        overflow: hidden; 
+        cursor: pointer;
+        border-radius: 100px;
+    }
+    .onoffswitch-inner {
+        display: block; 
+        width: 200%; 
+        margin-left: -100%;
+        transition: margin 0.3s ease-in 0s;
+    }
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        display: block; float: left; width: 50%; height: 36px; padding: 0; line-height: 36px;
+        font-size: 12px; color: white; 
+        box-sizing: border-box;
+    }
+    .onoffswitch-inner:before {
+        content: attr(data-switch);
+        padding-left: 12px;
+        background-color: #46A9D4; color: #FFFFFF;
+    }
+    .onoffswitch-inner:after {
+        content: attr(data-switch-selected);
+        padding-right: 12px;
+        background-color: #CACACA; color: #FFFFFF;
+        text-align: right;
+    }
+    .onoffswitch-switch {
+        display: block; width: 50px; margin: 4.5px;
+        background: #FFFFFF;
+        position: absolute; top: 0; bottom: 0;
+        right: 40px;
+        border: 2px solid #FFFFFF; border-radius: 100px;
+        transition: all 0.3s ease-in 0s; 
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left: 0;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right: 0px; 
+    }
+}
+// large
+.onoffswitchLarge {
+    .onoffswitch {
+        position: relative; 
+        width: 100%;
+        -webkit-user-select:none; 
+        -moz-user-select:none; 
+        -ms-user-select: none;
+    }
+    .onoffswitch-checkbox {
+        display: none;
+    }
+    .onoffswitch-label {
+        display: block; 
+        overflow: hidden; 
+        cursor: pointer;
+        border-radius: 100px;
+        border: 1px solid rgba(75, 75, 75, 0.52);
+    }
+    .onoffswitch-inner {
+        display: block; 
+        width: 100%; 
+        transition: margin 0.3s ease-in 0s;
+    }
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        display: block; 
+        float: left; 
+        width: 50%; 
+        height: 55px; 
+        padding: 0; 
+        line-height: 55px;
+        font-size: 24px; 
+        color: white;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .onoffswitch-inner:before {
+        content: attr(title-one);
+        padding-left: 10px;
+        background-color: #F8F9F9; 
+        color: rgba(75, 75, 75, 0.5);
+    }
+    .onoffswitch-inner:after {
+        content: attr(title-two);
+        padding-right: 10px;
+        background-color: #F8F9F9; 
+        color: rgba(75, 75, 75, 0.5);
+    }
+    .onoffswitch-switch {
+        display: block; width: 50%; margin: 5px;
+        background-color: #46A9D4; 
+        position: absolute; top: 0; bottom: 0;
+        left: 0px;
+        border-radius: 100px;
+        transition: all 0.3s ease-in 0s; 
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left: 0;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right: 0px; 
+        left: unset;
+    }
+    .onoffswitch-switch::before,
+    .onoffswitch-switch::after {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+        width: 100%;
+        color: #fff;
+        height: 47px;
+        line-height: 47px;
+        font-size: 24px;
+    }
+    .onoffswitch-switch::before {
+        content: attr(title-one);
+    }
+    .onoffswitch-switch::after {
+        content: attr(title-two);
+        display: none;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch::after {
+        display: block;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch::before {
+        display: none;
+    }
+}

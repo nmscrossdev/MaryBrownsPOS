@@ -1,0 +1,300 @@
+.d-location {
+    .toggle-icon-spacing {
+        padding-right: 35px;
+        padding-left: 35px;
+    }
+    .dropdown-toggle {
+        min-width: auto;
+        border: 1px solid $border-color;
+        text-align: left;
+        position: relative;
+        /*---adding Buiding Icon----*/
+        &::before {
+            content: '\ea16';
+            position: absolute;
+            left: 10px;
+            font-family: 'Nucleo';
+            color: $blue;
+            
+        }
+        /*---adding Carot Icon----*/
+        &::after {
+            content: '\ea27';
+            position: absolute;
+            right: 15px;
+            font-family: 'Nucleo';
+            font-size: 10px;
+            color: $border-color;
+            line-height: inherit;
+            top: 14px;
+            border: 0px;
+        }
+        &:hover,
+        &:focus,
+        &:active,
+        &:active:focus {
+            background: $transparent !important;
+            color: $gray-800;
+        }
+    }
+    
+}
+
+.d-location-mobile {
+    .dropdown-toggle {
+        text-align: left;
+        position: relative;
+        /*---adding Buiding Icon----*/
+        &::before {
+            content: '\ea16';
+            position: absolute;
+            right: 0px;
+            font-family: 'Nucleo';
+            color: $blue;
+        }
+        /*---adding Carot Icon----*/
+        &::after {
+            content: '';
+            border: 0px;
+            top: 10px;
+        }
+        // &:hover,
+        // &:focus,
+        // &:active,
+        // &:active:focus {
+        //     background: $transparent !important;
+        //     color: $gray-800;
+        // }
+    }
+    
+}
+.d-date-range {
+    button {
+         font-size: 18px;
+         text-align: left;
+         padding-left: 35px;
+         position: relative;
+         background: $white;
+         border: 1px solid $border-color;
+         height: 100%;
+         color: $gray-600;
+         font-family: $primary-font;
+         min-width: 170px !important;
+         &:hover, &:focus , &:active {
+             outline: none;
+         }
+         &:focus , &:active {
+             border-color: $gray-700;
+         }
+        /*---Adding Calender Icon----*/
+        line-height: 1.5;
+        &::before {
+            content: '\ea25';
+            position: absolute;
+            left: 10px;
+            font-family: 'Nucleo';
+            color: $blue;
+        }
+        /*---Adding Carot Icon----*/
+        &::after {
+            content: '\ea27' !important;
+            position: absolute;
+            right: 9px;
+            font-family: 'Nucleo';
+            font-size: 10px;
+            color: #cacaca;
+            line-height: inherit;
+            top: 14px;
+            border: 0px !important;
+        }
+        &:hover,
+        &:focus,
+        &:active,
+        &:active:focus {
+            background: $transparent !important;
+            color: $gray-800;
+        }
+    }
+    
+}
+
+.dropdown-custom {
+    .dropdown-menu {
+        min-width: 217px;
+        border: 1px solid #E8E8E8;	
+        border-radius: round($number: 4px);	
+        box-shadow: 0 2px 4px 4px rgba(0,0,0,0.06);
+        padding: 0px;
+        font-size: inherit;
+        margin-top: 20px;
+    }
+    .dropdown-item {
+        &:first-child {
+            border-radius: 2px 2px 0px 0px;
+        }
+        &:last-child {
+            border-radius: 0px 0px 2px 2px;
+        }
+    }
+    .dropdown-pointer:before ,
+    .dropdown-pointer:after {
+        display: inline-block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        vertical-align: middle;
+        content: "";
+        right: auto;
+        color: #FFFFFF;
+        left: 10px;
+    }
+
+    .dropdown-pointer:before {
+        top: -18.5px;
+        border-bottom: 16px solid #E8E8E8;
+        border-right: 16px solid transparent;
+        border-left: 16px solid transparent;
+    }
+    .dropdown-pointer:after {
+        top: -16px;
+        border-bottom: 16px solid;
+        border-right: 16px solid transparent;
+        border-left: 16px solid transparent;
+    }
+    .dropdown-pointer-right {
+        &::before,
+        &::after {
+            right: 10px;
+            left: auto;
+        }
+    }
+    .button-carot {
+        &::after {
+            content: '\ea27';
+            position: absolute;
+            right: 9px;
+            font-family: 'Nucleo';
+            font-size: 13px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+    }
+    .dropdown-item:hover {
+        color: $gray-800;
+    }
+    .dropdown-item.active:hover {
+        color: $white;
+    }
+}
+
+
+.d-location.dropdown-custom,
+.d-date-range.dropdown-custom
+{
+    font-size: 18px;
+    @include cmq (280px, 767px) {
+        font-size: 15px;
+    }
+    @include cmq (768px, 1024px) {
+        font-size: 16px;
+    }
+    @include cmq (1025px, 1170px) {
+        font-size: 18px;
+    }
+    button {
+        font-size: inherit;   
+    }
+}
+.select-picker {
+    color: #747373;	
+    line-height: 27px;
+    background-color:(--none); 
+    .border-light {
+        border-color: $border-color !important;
+    }
+    &:focus,
+    &:active  {
+        background-color:(--none); 
+    }
+    .dropdown-menu {
+        box-shadow: 0 2px 4px 4px rgba(0,0,0,0.06);
+        border: 1px solid #E8E8E8   ;
+        border-radius: 4px;
+        padding: 0px;
+        min-height: 130px;
+        .dropdown-item {
+            @include media-breakpoint-up (lg) {
+                padding: 0.6rem 1.5rem;
+            }
+            &:hover {
+                background-color: $gray-100;
+                color: $gray-800;
+            }
+            font-size: 18px;
+            @include cmq (280px, 767px) {
+                font-size: 14px;
+            }
+            @include cmq (768px, 1024px) {
+                font-size: 16px;
+            }
+            @include cmq (1025px, 1170px) {
+                font-size: 18px;
+            }
+            
+        }
+        .selected,
+        .active {
+            .dropdown-item {
+                background-color: $blue;
+                color: $white;
+                &:hover {
+                    background-color: $blue;
+                    color: $white;
+                }
+            }
+       }
+       
+    }
+}
+
+
+.comiseo-daterangepicker {
+    border: 1px solid #E8E8E8;
+    background-color: #FFFFFF;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px 4px rgba(0,0,0,0.06);
+
+    &::before ,
+    &::after {
+        display: inline-block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        vertical-align: middle;
+        content: "";
+        right: auto;
+        color: #FFFFFF;
+        right: 10px;
+    }
+
+    &::before {
+        top: -18.5px;
+        border-bottom: 16px solid #E8E8E8;
+        border-right: 16px solid transparent;
+        border-left: 16px solid transparent;
+    }
+    &::after {
+        top: -16px;
+        border-bottom: 16px solid;
+        border-right: 16px solid transparent;
+        border-left: 16px solid transparent;
+    }
+}
+
+.ui-widget {
+    font-family: $primary-font;
+}
+
+.comiseo-daterangepicker {
+    
+}

@@ -1,0 +1,91 @@
+<html>
+
+<body>
+
+    <div>   
+          <h1>ONLY TEST: Payment </h1>
+        <div> 
+            <!--     <button id="getCustomer">Get customer</button>  -->
+              &nbsp;    
+                    <button id="btnPayAmount">Pay Amount</button> 
+            
+                  <br>   
+             
+              </div>
+
+           
+            
+
+    </div> 
+    <div id="dvRequest"></div>
+     <div id="dvResponse"></div>
+    <script>    
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData);
+        }, 1000);
+        //----------------------------------------
+
+        window.addEventListener('message', function (e) {
+            msgData = JSON.parse(e.data);
+            console.log("Message from Oliver POS:", msgData)
+            document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData);
+
+        }, false);
+
+
+        //Send payment request-----------
+        var btnPayAmount = document.getElementById('btnPayAmount');
+        btnPayAmount.addEventListener('click', function (e) {
+
+            var jsonMsg = {
+                command: "Payment",
+                version:"1.0",
+                method: "post",
+                data: {
+                        payment_type: {
+                            name: "fortispay", // [required]
+                            payment_ID: "uidv4",
+                            data: {
+                                amt: 40.00, //[required]
+                                transaction_id: 64224,// [optional]
+                                emv_data: {
+                                    AC: "400012531" ,
+                                    AID:"a000532114",
+                                    AIDNAME: "VISA Debit/Credit",
+                                    APPLAB: "VISA Credit",
+                                    ARC: "00",
+                                    CURR: "USD$",
+                                    CVM: "No CVM",
+                                    IAD: "0654134452",
+                                    MODE: "Issuer",
+                                    PAN:"************2532",
+                                    TVR: "0000000000"
+                                }, //[optional]
+                        }
+                    }
+                }
+
+               
+            }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        });
+        
+        
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+.fixed-top-left {
+    display: flex;
+    align-items: center;
+    @include position(null, $top: 20px, $left: 20px, $right: unset);
+    
+}
+.fixed-top-right {
+    display: flex;
+    align-items: center;
+    @include position(null, $top: 20px, $left: unset, $right: 20px);
+}
+
+.fixed-bottom-left {
+    display: flex;
+    align-items: center;
+    @include position(null, $left: 20px, $right: unset, $bottom: 20px);
+}
+
+
+.fixed-bottom-right {
+    display: flex;
+    align-items: center;
+    @include position(null, $left: unset, $right: 20px, $bottom: 20px);
+}
+
+.fixed-bottom-center {
+  margin: auto;
+    @include position(null, $left: 0, $right: 0, $bottom: 10px);
+}
+// Mobile View
+@include cmq(0px, 480px) {
+    .fixed-top-left {
+        @include position(null, $top: 10px, $left: 10px, $right: unset);
+    }
+    .fixed-top-right {
+        @include position(null, $top: 10px, $left: unset, $right: 10px);
+    }
+    .fixed-bottom-left {
+        @include position(null, $left: 10px, $right: unset, $bottom: 10px);
+    }
+    .fixed-bottom-right {
+        @include position(null, $left: unset, $right: 10px, $bottom: 10px);
+    }
+
+}

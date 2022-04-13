@@ -1,0 +1,649 @@
+/*-----Shop View Product Page Table Design-------*/
+
+table.ShopProductTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4b4b4bed;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+}
+table.table.ShopProductTable>tbody>tr>td,
+table.table.ShopProductTable>tbody>tr>th {
+    border: 0px;
+    padding: 3px;
+    vertical-align: middle;
+    line-height: 27px;
+}
+table.table.ShopProductTable>tbody>tr>td.productPrice {
+    width: 100px;
+    text-align: right;
+}
+table.table.ShopProductTable>tbody>tr>td:first-child {
+    padding-left: 13px;
+}
+table.table.ShopProductTable>tbody>tr>td:last-child {
+    padding-right: 13px;
+    text-align: right;
+    width: 60px;
+}
+table.ShopProductTable td {
+    height: 90px;
+}
+
+table.ShopProductTable tr:nth-child(odd) {
+    background: #F9F8F8
+}
+
+table.ShopProductTable thead {
+    background-color: #ffffff;
+}
+table.ShopProductTable .selectProductCategory {
+    width: 70px;
+    border-right: 1px solid rgba(151,151,151,0.5) !important;
+}
+/* table.ShopProductTable .selectProductCategory {
+    
+} */
+
+/*------Shop view CartPage table Design------*/
+
+table.CartProductTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #000000;
+    text-transform: capitalize;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+}
+
+table.table.CartProductTable>tbody>tr>td,
+table.table.CartProductTable>tbody>tr>th {
+    border: 0px;
+    border-bottom: 1px solid #C5BFBF;
+    padding: 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 27px;
+}
+table.table.CartProductTable>tbody>tr>td.productPrice{
+    width: 100px;
+    text-align: right;
+}
+/* table.table.CartProductTable>tbody>tr:first-child>td {
+     border-top: 1px solid #C5BFBF; 
+} */
+
+table.table.CartProductTable>tbody>tr>td:first-child {
+    padding-left: 13px;
+    width: 50px;
+    /* padding-right: 0px; */
+}
+
+table.table.CartProductTable>tbody>tr>td:last-child {
+    padding-right: 0px;
+    text-align: right;
+    width: 50px;
+}
+
+
+/*------Shop View Calculator Table Design------*/
+
+table.table.ShopViewCalculator {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #000000;
+    text-transform: capitalize;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+}
+
+
+table.table.ShopViewCalculator td,
+table.table.ShopViewCalculator th {
+    height: 50px;
+    border-bottom: 1px solid #C5BFBF;
+    vertical-align: middle;
+    padding: 0px;
+}
+table.table.ShopViewCalculator td ,
+table.table.ShopViewCalculator th {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+table.table.ShopViewCalculator tr th.w-50 {
+    border-right: 1px solid rgba(151, 151, 151, 0.5);
+}
+table.table.ShopViewCalculator td,
+table.table.ShopViewCalculator th span {
+    font-family: 'Avenir-Roman';
+}
+table.table.ShopViewCalculator tr:last-child th {
+    border: 0px;
+}
+table.table.ShopViewCalculator tr th.bl-1 {
+    border-color: #C5BFBF;
+}
+table.table.ShopViewCalculator tr:nth-last-child(2) th
+{
+    border-bottom: 0px;
+}
+/* -------shopViewPopUpCalculator------- */
+table.table-bordered.shopViewPopUpCalculator {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4B4B4B;
+    text-transform: capitalize;
+    font-size: 36px;
+    font-family: 'Avenir-Light';
+    margin: 0px;
+    table-layout: fixed
+}
+table.table-bordered.shopViewPopUpCalculator>tbody>tr>td {
+    text-align: center;
+    padding: 0px;
+    border-color: rgba(151, 151, 151, 0.5);
+    vertical-align: middle;
+}
+table.table-bordered.shopViewPopUpCalculator td:last-child {
+    border-right: 0px;
+}
+table.table-bordered.shopViewPopUpCalculator tr:first-child td {
+    border-top: 0px;
+}
+table.table-bordered.shopViewPopUpCalculator tr:last-child td {
+    border-bottom: 0px;
+}
+table.table-bordered.shopViewPopUpCalculator td button.btn.btn-default.calculate
+ {
+    font-size: 36px;
+    color: #4B4B4B;
+    border: 0px;
+    width: 100%;
+    height: 70px;
+    border-radius: 0px;    
+}
+table.table-bordered.shopViewPopUpCalculator td input.form-control {
+    font-size: 36px;
+    color: #4B4B4B;
+    border: 0px;
+    width: 100%;
+    height: 70px;
+    border-radius: 0px;    
+}
+  table.table-bordered.shopViewPopUpCalculator td .discount-input-group input.form-control::-webkit-input-placeholder
+  { 
+    color: #4B4B4B;
+  }
+  table.table-bordered.shopViewPopUpCalculator td .discount-input-group input.form-control::-moz-placeholder {
+    color: #4B4B4B;
+  }
+  table.table-bordered.shopViewPopUpCalculator td .discount-input-group input.form-control:-ms-input-placeholder {
+    color: #4B4B4B;
+  }
+  table.table-bordered.shopViewPopUpCalculator td .discount-input-group input.form-control:-moz-placeholder {
+    color: #4B4B4B;
+  } 
+  .add-discount-popup {
+      font-size: 24px;
+  }
+
+
+  /*------List view CartPage table Design------*/
+
+table.ListViewCartProductTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #000000;
+    text-transform: capitalize;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+}
+
+table.table.ListViewCartProductTable>tbody>tr>td,
+table.table.ListViewCartProductTable>tbody>tr>th {
+    border: 0px;
+    border-bottom: 1px solid #C5BFBF;
+    padding: 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 27px;
+    height: 70px;
+}
+table.table.ListViewCartProductTable>tbody>tr>td .comman_delete,
+table.table.ListViewCartProductTable>tbody>tr>td .comman_subtitle {
+    font-family: 'Avenir-Book';
+}
+table.table.ListViewCartProductTable>tbody>tr>td.productPrice{
+    width: 100px;
+    text-align: right;
+}
+table.table.ListViewCartProductTable>tbody>tr:first-child>td {
+    border-top: 0px solid #C5BFBF;
+}
+
+table.table.ListViewCartProductTable>tbody>tr>td:first-child {
+    padding-left: 15px;
+    width: 50px;
+    /* padding-right: 0px; */
+}
+
+table.table.ListViewCartProductTable>tbody>tr>td:last-child {
+    padding-right: 15px;
+    text-align: right;
+    /* width: 50px; */
+}
+.border-bottom {
+    border-bottom: 1px solid rgba(151,151,151,0.5);
+}
+
+
+/*-----Customer View Page Table Design-------*/
+
+table.customerViewTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #000000;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+    
+}
+table.table.customerViewTable>tbody>tr>td,
+table.table.customerViewTable>tbody>tr>th {
+    border: 0px;
+    padding: 3px;
+    vertical-align: middle;
+    line-height: 27px;
+    text-transform: capitalize;
+    height: 74px;
+}
+
+table.table.customerViewTable>tbody>tr>td:first-child {
+    padding-left: 13px;
+}
+table.table.customerViewTable>tbody>tr>td:last-child {
+    padding-right: 13px;
+    text-align: right;
+    width: 60px;
+}
+
+table.customerViewTable  tr:nth-child(odd) {
+    background: #F9F8F8
+}
+
+table.customerViewTable thead {
+    background-color: #ffffff;
+}
+table.table.customerViewTable>tbody>tr>td .comman_delete,
+table.table.customerViewTable>tbody>tr>td .comman_subtitle {
+    font-family: "Avenir-Book";
+}
+
+
+/*-----Customer View Shorting Table Design-------*/
+
+table.customerViewShortingTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4B4B4B;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+    table-layout: fixed;
+}
+
+table.table.customerViewShortingTable>tbody>tr>td {
+    border: 0px;
+    padding: 3px;
+    vertical-align: middle;
+    line-height: 27px;
+    text-transform: capitalize;
+    border-bottom: 1px solid #979797;
+    height: 74px;
+}
+table.table.customerViewShortingTable>thead>tr>th{
+    border-bottom: 1px solid #000000;
+    padding: 3px;
+    line-height: 27px;
+}
+table.table.customerViewShortingTable>tbody>tr>td {
+    font-family: 'Avenir-Book';
+}
+table.table.customerViewShortingTable>thead>tr>th:first-child,
+table.table.customerViewShortingTable>tbody>tr>td:first-child {
+    padding-left: 13px;
+    min-width: 200px;
+}
+table.table.customerViewShortingTable>thead>tr>th.status_shorting,
+table.table.customerViewShortingTable>tbody>tr>td.status_shorting {
+    min-width: 200px;
+}
+table.table.customerViewShortingTable>thead>tr>th.amount_shorting,
+table.table.customerViewShortingTable>tbody>tr>td.amount_shorting {
+    min-width: 200px;
+    text-align: right;
+}
+table.table.customerViewShortingTable>thead>tr>th:last-child,
+table.table.customerViewShortingTable>tbody>tr>td:last-child {
+    padding-right: 13px;
+    text-align: right;
+    width: 70px;
+}
+
+
+/*-----Customer View Shorting Table Design-------*/
+
+table.table.CurrentActivityTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4B4B4B;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+}
+
+table.table.CurrentActivityTable tbody .comman_delete,
+table.table.CurrentActivityTable tbody .comman_subtitle {
+    font-family: 'Avenir-Book';
+}
+
+table.table.CurrentActivityTable>tbody>tr>td {
+    border: 0px;
+    padding: 3px;
+    vertical-align: middle;
+    line-height: 27px;
+    text-transform: capitalize;
+    border-bottom: 1px solid #C5BFBF;
+    height: 74px;
+}
+table.table.CurrentActivityTable>tbody>tr>th.tablecaption{
+    border-bottom: 1px solid #4B4B4B;
+    color: #4B4B4B;
+    font-family: 'Avenir-Book';
+}
+table.table.CurrentActivityTable>tbody>tr>td:first-child {
+    padding-left: 13px;
+}
+table.table.CurrentActivityTable>tbody>tr>td:last-child {
+    padding-right: 13px;
+}
+
+table.table.CurrentActivityTable>tbody>tr:last-child td {
+    border-color: #4B4B4B;
+}
+table.table.CurrentActivityTable>tbody+tbody {
+    border-top: 1px solid #4B4B4B;
+}
+
+table.table.CurrentActivityTable_shortingHead{
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4B4B4B;
+    font-size: 20px;
+    font-family: 'Avenir-Medium';
+    margin: 0px;
+}
+table.table.CurrentActivityTable_shortingHead>thead>tr>th {
+    border-bottom: 2px solid #000000;
+    padding-left: 15px;
+}
+
+table.table.CurrentActivityTable_shortingBody{
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4B4B4B;
+    font-size: 20px;
+    font-family: 'Avenir-Book';
+    margin: 0px;
+}
+table.table.CurrentActivityTable_shortingBody>tbody>tr>td {
+    border: 0px;
+    padding: 3px;
+    vertical-align: middle;
+    line-height: 27px;
+    text-transform: capitalize;
+    height: 50px;
+}
+table.table.CurrentActivityTable_shortingBody>tbody>tr>td:first-child {
+    padding-left: 15px;
+}
+table.table.CurrentActivityTable_shortingBody>tbody>tr>td:last-child {
+    padding-right: 15px;
+}
+table.table.CurrentActivityTable_shortingBody>tbody>tr:last-child>td {
+    border-bottom: 2px solid #C5BFBF;
+}
+
+.tableTotalCalculated {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4B4B4B;
+    font-size: 20px;
+}
+.tableTotalCalculated>tbody>tr.totalAmount>td{
+    font-family: 'Avenir-Medium';
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid #979797;
+    border-bottom: 1px solid #979797;
+}
+
+
+
+/* -------shopViewPopUpCalculator------- */
+table.table-bordered.calculatorBlockTable {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 0px;
+    color: #4B4B4B;
+    text-transform: capitalize;
+    font-size: 36px;
+    font-family: 'Avenir-Light';
+    margin: 0px;
+    table-layout: fixed
+}
+table.table-bordered.calculatorBlockTable>tbody>tr>td {
+    text-align: center;
+    padding: 0px;
+    border-color: rgba(151, 151, 151, 0.5);
+    vertical-align: middle;
+    height: 70px;
+    overflow: hidden;
+}
+table.table-bordered.calculatorBlockTable td:first-child {
+    border-left: 0px;
+}
+table.table-bordered.calculatorBlockTable td:last-child {
+    border-right: 0px;
+}
+
+table.table-bordered.calculatorBlockTable tr:last-child td {
+    border-bottom: 0px;
+}
+table.table-bordered.calculatorBlockTable td button.btn.btn-default.calculate
+ {
+    font-size: 36px;
+    color: #4B4B4B;
+    border: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;    
+}
+table.table-bordered.calculatorBlockTable td input.form-control {
+    font-size: 36px;
+    color: #4B4B4B;
+    border: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;    
+}
+table.table-bordered.calculatorBlockTable td .discount-input-group input.form-control::-webkit-input-placeholder
+{ 
+color: #4B4B4B;
+}
+table.table-bordered.calculatorBlockTable td .discount-input-group input.form-control::-moz-placeholder {
+color: #4B4B4B;
+}
+table.table-bordered.calculatorBlockTable td .discount-input-group input.form-control:-ms-input-placeholder {
+color: #4B4B4B;
+}
+table.table-bordered.calculatorBlockTable td .discount-input-group input.form-control:-moz-placeholder {
+color: #4B4B4B;
+} 
+
+table.table-bordered.calculatorBlockTable .btn.btn-default:hover,
+table.table-bordered.calculatorBlockTable .btn.btn-default:active, 
+table.table-bordered.calculatorBlockTable .btn.btn-default:focus {
+    background-color: #F8F9F9;
+    outline: none;
+}
+/* table.table-bordered.calculatorBlockTable button.icon-backarrow{
+    margin-top: 10px;
+} */
+table.table-bordered.calculatorBlockTable button.icon.icon-minus{
+    margin-left: 10px;
+}
+
+@media screen and (max-height: 767px) {
+    table.table-bordered.calculatorBlockTable>tbody>tr>td {
+        height: 41px;
+    }
+    table.table-bordered.calculatorBlockTable td button.btn.btn-default.calculate,
+    table.table-bordered.calculatorBlockTable td input.form-control {
+        font-size: 24px;
+    }
+}
+@media screen and (max-height: 480px)
+{
+    table.table-bordered.calculatorBlockTable>tbody>tr>td {
+        height: 30px;
+    }
+    table.table-bordered.calculatorBlockTable td button.btn.btn-default.calculate,
+    table.table-bordered.calculatorBlockTable td input.form-control {
+        font-size: 24px;
+    }
+}
+
+/*
+Updated By   :Shakuntala Jatav.ajay verma
+Updated Date :05-06-2019
+Description : for tax popup   
+*/
+table.table.table-striped.table-tax-header ,
+table.table.table-striped.table-tax-body {
+    margin-bottom: 0px;
+}
+
+
+table.table.table-striped.table-tax-header thead th,
+table.table.table-striped.table-tax-body tbody tr td{
+    vertical-align: middle;
+}
+table.table.table-striped.table-tax-header thead th {
+    font-weight: 600;
+}
+table.table.table-striped.table-tax-body tbody td{
+    border: 0px;
+    font-weight: 300;     
+}
+table.table.table-striped.table-tax-body tbody tr{
+    height: 90px;
+}
+table.table.table-striped.table-tax-header thead tr th:first-child,
+table.table.table-striped.table-tax-body tbody tr td:first-child
+{
+    padding-left: 25px; 
+}
+table.table.table-striped.table-tax-header thead tr th:last-child,
+table.table.table-striped.table-tax-body tbody tr td:last-child
+{
+    padding-right: 25px; 
+}
+
+
+
+@media only screen and (max-width: 1170px) 
+{
+    table.tile-view-product,
+    table.table.ShopViewCalculator,
+    table.CartProductTable,
+    table.ShopProductTable,
+    table.customerViewShortingTable,
+    table.customerViewTable,
+    .btn.total_checkout, .btn.total_checkout:focus,
+    .customer-detail label, .customer-detail p,
+    .customer-acc_details label,
+    .form_editinfo .input-group-addon ,
+    .btn.checkout-items{
+       font-size: 18px;
+    }
+    table.table.ShopProductTable>tbody>tr>td:first-child {
+        padding-left: 8px;
+    }
+    table.table.ShopProductTable>tbody>tr>td:last-child {
+       padding-right: 8px;
+    }
+    .fs40 {
+        font-size: 30px;
+    }
+}
+/* 
+Updated Date : 16-08-2019
+
+*/
+
+@media only screen and (max-width: 900px) 
+{
+    table.tile-view-product,
+    table.table.ShopViewCalculator,
+    table.CartProductTable,
+    table.ShopProductTable,
+    table.customerViewShortingTable,
+    table.customerViewTable,
+    .btn.total_checkout, .btn.total_checkout:focus,
+    .customer-detail label, .customer-detail p,
+    .customer-acc_details label,
+    .form_editinfo .input-group-addon ,
+    .btn.checkout-items{
+       font-size: 16px;
+    }
+    table.table.ShopProductTable>tbody>tr>td:first-child {
+        padding-left: 8px;
+    }
+    table.table.ShopProductTable>tbody>tr>td:last-child {
+       padding-right: 8px;
+    }
+    .fs40 {
+        font-size: 30px;
+    }
+}
+.table-responsive {
+    border: 0px;
+}

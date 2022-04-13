@@ -1,0 +1,41 @@
+.general-setting-tabs.nav-pills>li>a
+{
+    border-width: 1px;
+    font-size: 17px;
+    color: #000 !important;
+    border-top: 0px !important;
+    border-right: 0px !important;
+    margin-top: 0px !important;
+    border-bottom:1px solid #c5bfbf !important;
+    
+}
+.general-setting-tabs.nav-pills>li.active>a
+{
+    color: #3D4C66 !important;
+    border-top: 0px !important;
+    border-right: 0px !important;
+    margin-top: 0px !important;
+    border-bottom:1px solid #c5bfbf !important;
+   
+}
+/* .general-setting-tabs.nav-pills>li.active>a, */
+
+.btn-wd{
+    min-width: 330px
+}
+.hr-w300
+{
+width: 330px;
+}
+.no-cursor
+{
+    pointer-events: none;
+}
+.box-mid-heading-self
+{
+    margin-top:30px;
+    margin-bottom:15px;
+    color:#FFFFFF !important ;
+    font-size:30px  !important ;
+    text-align:center !important ;
+}

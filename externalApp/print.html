@@ -1,0 +1,119 @@
+<html>
+
+
+<body>
+
+    <div>   
+          <h1>ONLY TEST: add customer</h1>
+        <div> 
+                <button id="btnDataToReceipt">DataToReceipt</button> 
+              &nbsp;    
+                    <button id="PrintData">Receipt</button> 
+             <!--    &nbsp;    
+                    <button id="addCustomer">Add customer to sell</button> 
+                  <br>    -->
+             
+              </div>
+
+           
+            
+
+    </div> 
+    <div id="dvRequest"></div>
+     <div id="dvResponse"></div>
+    <script>    
+//Register app commands for native Pateform Start
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('platform');        
+        if (myParam == "native") {
+            window.postMessage = function (data) {
+                window.ReactNativeWebView.postMessage(data);
+                true;
+            };
+        }
+        //Register app commands for native Pateform End
+
+
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData);
+        }, 1000);
+        //----------------------------------------
+
+        window.addEventListener('message', function (e) {
+            msgData = JSON.parse(e.data);
+            console.log("Message from Oliver POS:", msgData)
+            document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData);
+
+        }, false);
+
+
+        //CustomerDetails Button click event-----------
+        var getCutomerButton = document.getElementById('btnDataToReceipt');
+        getCutomerButton.addEventListener('click', function (e) {
+
+            var jsonMsg = {
+                command: "DataToReceipt",
+                version:"1.0",
+                method: "post",
+               // url:'https://hub.oliverpos.com/Content/media/onboardingimage/signin.jpg'
+                url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWF8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
+            }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        });
+        
+        //PrintReceipData-----------
+        var getPrintData = document.getElementById('PrintData');
+        getPrintData.addEventListener('click', function (e) {
+
+            var jsonMsg = {
+                command: "Receipt",
+                version:"1.0",
+                method: "post",
+               // url:'https://hub.oliverpos.com/Content/media/onboardingimage/signin.jpg'
+                url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWF8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
+               
+            }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg);
+            console.log('------print btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        });
+        
+        // //CustomerToSale Button click event-----------
+        // var mobilpayButton = document.getElementById('addCustomer');
+        // mobilpayButton.addEventListener('click', function (e) {
+
+        //    // if (msgData.oliverpos && msgData.oliverpos.event && msgData.oliverpos.event == 'shareCheckoutData') {
+
+        //         var randomNumber = Math.floor(Math.random() * 100);
+
+
+        //         var jsonMsg = {
+        //             command: 'CustomerToSale',
+        //             version:"1.0",
+        //             method: 'post',
+        //             email: 'scully99@gmail.com' // [required]
+        //         }
+        //         document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg);
+        //         console.log('------add customer btn clicked----', jsonMsg);
+        //         window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+        //    // }
+        //})
+    </script>
+
+</body>
+
+</html>

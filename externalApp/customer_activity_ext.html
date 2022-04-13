@@ -1,0 +1,211 @@
+<html>
+
+<body>
+
+    <div>   
+          <h1> Extension : </h1>
+              <div>             
+                <button id="getCustomerDetail" >Get Cutomer Detail</button> 
+                <button id="updateStatus" style="visibility: hidden;">Update status</button> 
+                <button id="addCustomer">create new customer </button> 
+                <button id="updateCustomer">update customer </button> 
+                <button id="deleteCustomer">delete customer </button> 
+                <button id="CloseExtension">Close </button> 
+            
+                  <br>   
+              </div>
+            <table style="width: 95%; vertical-align:top;">
+                <tr  style="vertical-align: top;">
+                    <td>
+                         <b> Request:</b>
+                    </td>
+                    <td> <div id="dvRequest"></div></td>
+                    <td>
+                        <b>Response:</b>
+                    </td>
+                    <td> <div id="dvResponse"></div></td>
+                </tr>
+            </table> 
+    </div> 
+    <!--   <div id="dvRequest"></div>
+     <div id="dvResponse"></div> -->
+    <script>    
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        // setTimeout(() => {
+        //     var readyExtensionData = {
+        //         oliverpos: {
+        //             // event: "addData"
+        //             event: "extensionReady"
+        //         }
+        //     }
+
+        //     window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+        // }, 1000);
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData,undefined,2);
+        }, 1000);
+
+
+        window.addEventListener('message', function (e) {
+            msgData = JSON.parse(e.data);
+            console.log("Message from Oliver POS:", msgData)
+            document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData,undefined,2);
+        }, false);
+
+        // *** activity extension ***//
+        var activtyStatusButton = document.getElementById('updateStatus');
+        activtyStatusButton.addEventListener('click', function (e) {
+            if (msgData.oliverpos && msgData.oliverpos.event && msgData.oliverpos.event == 'orderData') {
+                var _order_id = msgData.data && msgData.data.orderData ? msgData.data.orderData.order_id : 0
+                var jsonMsg = {
+                    oliverpos: {
+                        // event: "addData"
+                        event: "updateOrderStatus"
+                    },
+                    data: {
+                        orderData: {
+                            status: 'pending',
+                            order_id: _order_id
+                        }
+                    }
+                }
+                console.log('update status data pass to Oliver pos : ', jsonMsg);
+                document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+                document.getElementById('dvResponse').innerText = "";
+                window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+            }
+        })
+
+        // *** activity extension end ***//
+
+        // *** customer  extension start ***//
+        var addCustomerButton = document.getElementById('addCustomer');
+        addCustomerButton.addEventListener('click', function (e) {
+                var randomNumber = Math.floor(Math.random() * 100);
+                var jsonMsg = {
+                        command: "Customers",
+                        version:"1.0",
+                        method: "post",                        
+                        data: {
+                            email: `extesionTest${randomNumber}@gmail.com`,// [required]
+                           //email:`extesionTest69@gmail.com`,// [required]
+                            first_name: "extnsn",
+                            last_name:randomNumber,
+                            address_line_one: "Extension Area",
+                            address_line_two: 'address line 2' , 
+                            country: "US",
+                            state: 'NJ', 
+                            city: 'New Jersey', 
+                            postal_code: "20111",
+                            notes: 'Test Notes' 
+                        }
+
+
+                }
+                document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+                document.getElementById('dvResponse').innerText = "";
+                console.log('------add customer btn clicked----', jsonMsg);
+                window.parent.postMessage(JSON.stringify(jsonMsg ,), '*');
+          
+        })
+ // *** delete customer  extension start ***//
+ var deleteCustomerButton = document.getElementById('deleteCustomer');
+    deleteCustomerButton.addEventListener('click', function (e) {
+                var randomNumber = Math.floor(Math.random() * 100);
+                var jsonMsg = {
+                        command: "Customers",
+                        version:"1.0",
+                        method: "delete",   
+                        email: `extesionTest77@gmail.com`,// [required]
+                }
+                document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+                document.getElementById('dvResponse').innerText = "";
+                console.log('------delete customer btn clicked----', jsonMsg);
+                window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+        })
+        
+       
+        // updaet customer event
+        var updateCustomerButton = document.getElementById('updateCustomer');
+        updateCustomerButton.addEventListener('click', function (e) {
+            //if (msgData.oliverpos && msgData.oliverpos.event && msgData.oliverpos.event == 'customerData') {
+                //var randomNumber = Math.floor(Math.random() * 100);
+                var jsonMsg = {
+                    command: "Customers",
+                    version:"1.0",
+                    method: "put",
+                    email: "rosa99@gmail.com", //[required]
+                    data: {
+                        email: "rosie99@gmail.com", 
+                        first_name: "Rosiee", 
+                        last_name: "Hernandez", 
+                        address_line_one: "183 Drake St 708",
+                        address_line_two: null , 
+                        country: "Canada",
+                        state:"British Columbia",
+                        city:"Vancouver",
+                        phone_number:"45446464646",
+                        postal_code: null ,
+                        notes: null 
+                    }
+
+                   
+                }
+                document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+                document.getElementById('dvResponse').innerText = "";
+                console.log('------update customer btn clicked----', jsonMsg);
+                window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+           // }
+        })
+          // *** customer  extension end ***//
+
+        //CustomerDetails Button click event-----------
+        var getCutomerButton = document.getElementById('getCustomerDetail');
+        getCutomerButton.addEventListener('click', function (e) {
+
+            var jsonMsg = {
+                command: "CustomerDetails",
+                version:"1.0",
+                method: "get",
+                email: "Test5555@gmail.com"
+            }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+
+        });
+
+          // *** Product  extension start ***//
+
+          if (msgData.oliverpos && msgData.oliverpos.event && msgData.oliverpos.event == 'productData') {
+              console.log('----- received product detail', msgData.data);
+          }
+          // *** Product  extension end ***//
+
+           // *** Close extension extension start ***//
+ var btnCloseExtension = document.getElementById('CloseExtension');
+ btnCloseExtension.addEventListener('click', function (e) {
+                var randomNumber = Math.floor(Math.random() * 100);
+                var jsonMsg = {
+                        command: "CloseExtension",
+                        version:"1.0",                       
+                }
+                document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+                document.getElementById('dvResponse').innerText = "";
+                console.log('------Close Extension btn clicked----', jsonMsg);
+                window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,430 @@
+<html>
+
+<body>
+
+    <div>   
+          <h1> Extension : </h1>
+                <select id ="ddlCutomerSelect">
+                    <option value="">select customer command</option>
+                    <option value="CustomerDetails">Customer Details</option>
+                    <option value="CustomerInSale">Customer In Sale</option>
+                    <option value="CustomerToSale">CustomerToSale</option>
+
+                    <option value="Customers">get All customer</option>
+                    <option value="CustomerPost">Create new customer</option>
+                    <option value="CustomerPut">Edit customer</option>
+                    <option value="CustomerDelete">Delete Customer</option>
+
+
+                </select>
+              <div> 
+            <!--     <button id="updateStatus">Update status</button> 
+                <button id="addCustomer">create new customer </button> 
+                <button id="updateCustomer">update customer </button> 
+                <button id="deleteCustomer">delete customer </button>  -->
+            
+            <table style="width: 95%; vertical-align:top;">
+                <tr  style="vertical-align: top;">
+                    <td>
+                         <b> Request:</b>
+                    </td>
+                    <td> <div id="dvRequest"></div></td>
+                    <td>
+                        <b>Response:</b>
+                    </td>
+                    <td> <div id="dvResponse"></div></td>
+                </tr>
+            </table> 
+              </div>
+            
+    </div> 
+   
+    
+    
+    <script>    
+
+
+
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        // setTimeout(() => {
+        //     var readyExtensionData = {
+        //         oliverpos: {
+        //             // event: "addData"
+        //             event: "extensionReady"
+        //         }
+        //     }
+
+        //     window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+        // }, 1000);
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+           // window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+           msgData={
+                    command: 'appReady/v1',
+                    method: 'get',
+                    status: 200,
+                    data: 
+                    {
+                    clientGUID: '6eaab-4ffierori-4utidfokmt-695kgtrg',
+                    view: 'Checkout Page',
+                    privilege: 'admin',
+                    viewport: 'desktop'
+                    },
+                    error: null
+                }
+           
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData,undefined,2);
+            document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData,undefined,2);
+        }, 1000);
+
+
+        // window.addEventListener('message', function (e) {
+        //     msgData = JSON.parse(e.data);
+        //     console.log("Message from Oliver POS:", msgData)
+        //     document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData);
+        // }, false);
+
+        // *** activity extension ***//
+        document.getElementById('ddlCutomerSelect').addEventListener('change', function() {
+       // document.getElementById(('#ddlCutomerSelect').change(function(){
+    console.log("value",this.value);
+   var selectedVal=this.value;
+   var strRequest=''
+   var strResponse=''
+   if(selectedVal=='CustomerDetails'){
+     strRequest={
+            command: 'CustomerDetails',
+            version:'1.0',
+            method: 'get',
+            email: 'jake99@gmail.com' //[required]
+        }
+
+    strResponse={
+            command: 'CustomerDetails',
+            version:'1.0',
+            method: 'get',
+            status: 200,
+            data: {
+                first_name: 'Jake',
+                last_name: 'Peralta',
+                email: 'jake99@gmail.com',
+                address_line_one: '153 East 67th Street',
+                address_line_two: null ,
+                country: 'USA' ,
+                state: 'New York',
+                city: 'Brooklyn',
+                postal_code: '10065' ,
+                notes: null
+            },
+            error: null
+        }
+
+   }
+   else if(selectedVal=='CustomerInSale'){
+     strRequest={
+            command: 'CustomerInSale',
+            version:'1.0',
+            method: 'get'
+        }
+
+    strResponse={
+                command: 'CustomerInSale',
+                version:'1.0',
+                method: 'get',
+                status: 200,
+                data: {
+                    first_name: 'Raymond',
+                    last_name: 'Holt',
+                    email: 'holt99@gmail.com'
+                },
+                error: null
+            }
+
+   }
+   else if(selectedVal=='CustomerToSale'){
+     strRequest={
+                    command: 'CustomerToSale',
+                    version:'1.0',
+                    method: 'post',
+                    email: 'scully99@gmail.com' //[required]
+                }
+
+
+    strResponse={
+                    command: 'CustomerToSale',
+                    version:'1.0',
+                    method: 'post',
+                    status: 200,
+                    error: null
+                }
+
+
+   }
+   else if(selectedVal=='Customers'){
+     strRequest={
+                command: 'Customers',
+                version:'1.0',
+                method: 'get'    
+            }
+
+
+
+    strResponse={
+                command: 'Customers',
+                version:'1.0',
+                method: 'get',
+                status: 200,
+                error: null,
+                data :[
+                    {
+                        email: 'rosa99@gmail.com',
+                        first_name: 'Rosa', 
+                        last_name: 'Diaz', 
+                        address_line_one: null, 
+                        address_line_two: null , 
+                        country: null , 
+                        state: null, 
+                        city: null, 
+                        postal_code: null ,
+                        notes: null 
+                    },
+                    {
+                        email: 'gina99@gmail.com',
+                        first_name: 'Gina', 
+                        last_name: 'Linetti', 
+                        address_line_one: 'Piazza Garibaldi 45',  
+                        address_line_two: null,
+                        country: 'Italy',
+                        state:'Udine', 
+                        city: 'Tricesimo', 
+                        postal_code: null ,
+                        notes: null 
+                    },
+                    {
+                        
+                                email: 'jake99@gmail.com',
+                                first_name: 'Jake',
+                                last_name: 'Peralta',
+                                address_line_one: '153 East 67th Street',
+                                address_line_two: null ,
+                                country: 'USA' ,
+                                state: 'New York',
+                                city: 'Brooklyn',
+                                postal_code: '10065' ,
+                                notes: null
+                    }
+
+                ]
+            } 
+        }
+    else if(selectedVal=='CustomerPost'){
+            strRequest={
+                        command: 'Customer',
+                        version:'1.0',
+                        method: 'post',
+                        data: {
+                            email: 'rosa99@gmail.com',// [required]
+                            first_name: 'Rosa',
+                            last_name: 'Diaz',
+                            address_line_one: null,
+                            address_line_two: null ,
+                            country: null ,
+                            state: null,
+                            city: null,
+                            postal_code: null ,
+                            notes: null
+                        }
+                    }
+
+            strResponse={
+                            command: 'Customer',
+                            version:'1.0',
+                            method: 'post',
+                            status: 200,
+                            error: null
+                        } 
+
+    }
+    else if(selectedVal=='CustomerPut'){
+            strRequest={
+                        command: 'Customer',
+                        version:'1.0',
+                        method: 'put',
+                        email: 'rosa99@gmail.com', //[required]
+                        data: {
+                            email: 'rosie99@gmail.com',
+                            first_name: 'Rosie',
+                            last_name: 'Hernandez',
+                            address_line_one: '183 Drake St 708',
+                            address_line_two: null ,
+                            country: 'Canada',
+                            state:'British Columbia',
+                            city:'Vancouver',
+                            postal_code: null ,
+                            notes: null
+                        }
+                    }
+
+            strResponse={
+                        command: 'Customer',
+                        version:'1.0',
+                        method: 'put',
+                        status: 200,
+                        error: null
+                    } 
+
+
+    }
+    else if(selectedVal=='CustomerDelete'){
+                strRequest={
+                                command: 'Customer',
+                                version:'1.0',
+                                method: 'delete',
+                                email: 'charles99@gmail.com' //[required]
+                            }
+                strResponse={
+                            command: 'Customer',
+                            version:'1.0',
+                            method: 'delete',
+                            status: 200,
+                            error: null
+                        } 
+
+        }
+    document.getElementById('dvRequest').innerText = JSON.stringify(strRequest,undefined,2);
+   document.getElementById('dvResponse').innerText =  JSON.stringify(strResponse,undefined,2);
+})
+//         var activtyStatusButton = document.getElementById('updateStatus');
+//         activtyStatusButton.addEventListener('click', function (e) {
+//             if (msgData.oliverpos && msgData.oliverpos.event && msgData.oliverpos.event == 'orderData') {
+//                 var _order_id = msgData.data && msgData.data.orderData ? msgData.data.orderData.order_id : 0
+//                 var jsonMsg = {
+//                     oliverpos: {
+//                         // event: "addData"
+//                         event: "updateOrderStatus"
+//                     },
+//                     data: {
+//                         orderData: {
+//                             status: 'pending',
+//                             order_id: _order_id
+//                         }
+//                     }
+//                 }
+//                 console.log('update status data pass to Oliver pos : ', jsonMsg);
+//                 window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+//             }
+//         })
+
+//         // *** activity extension end ***//
+
+//         // *** customer  extension start ***//
+//         var addCustomerButton = document.getElementById('addCustomer');
+//         addCustomerButton.addEventListener('click', function (e) {
+//                 var randomNumber = Math.floor(Math.random() * 100);
+//                 var jsonMsg = {
+//                         command: "Customer",
+//                         version:"1.0",
+//                         method: "post",                        
+//                         data: {
+//                             email: `extesionTest${randomNumber}@gmail.com`,// [required]
+//                             first_name: "extnsn",
+//                             last_name:randomNumber,
+//                             address_line_one: "Extension Area",
+//                             address_line_two: 'address line 2' , 
+//                             country: "US",
+//                             state: 'NJ', 
+//                             city: 'New Jersey', 
+//                             postal_code: "20111",
+//                             notes: 'Test Notes' 
+//                         }
+
+
+//                 }
+                
+//                 console.log('------add customer btn clicked----', jsonMsg);
+//                 window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+          
+//         })
+//  // *** delete customer  extension start ***//
+//  var deleteCustomerButton = document.getElementById('deleteCustomer');
+//     deleteCustomerButton.addEventListener('click', function (e) {
+//                 var randomNumber = Math.floor(Math.random() * 100);
+//                 var jsonMsg = {
+//                         command: "Customer",
+//                         version:"1.0",
+//                         method: "delete",   
+//                         email: `rosa99@gmail.com`,// [required]
+//                 }
+                
+//                 console.log('------delete customer btn clicked----', jsonMsg);
+//                 window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+//         })
+
+//         // updaet customer event
+//         var updateCustomerButton = document.getElementById('updateCustomer');
+//         updateCustomerButton.addEventListener('click', function (e) {
+//             //if (msgData.oliverpos && msgData.oliverpos.event && msgData.oliverpos.event == 'customerData') {
+//                 //var randomNumber = Math.floor(Math.random() * 100);
+//                 var jsonMsg = {
+//                     command: "Customer",
+//                     version:"1.0",
+//                     method: "put",
+//                     email: "rosa99@gmail.com", //[required]
+//                     data: {
+//                         email: "rosie99@gmail.com", 
+//                         first_name: "Rosie", 
+//                         last_name: "Hernandez", 
+//                         address_line_one: "183 Drake St 708",
+//                         address_line_two: null , 
+//                         country: "Canada",
+//                         state:"British Columbia",
+//                         city:"Vancouver",
+//                         phone_number:"45446464646",
+//                         postal_code: null ,
+//                         notes: null 
+//                     }
+
+//                     // oliverpos: {
+//                     //     // event: "addData"
+//                     //     event: "updateCustomer"
+//                     // },
+//                     // data: {
+//                     //     customerDetail: {
+//                     //         "FirstName": "extnsn",
+//                     //         "LastName": randomNumber,
+//                     //         "Contact": "0000222334",
+//                     //         "Email": `extesionTest${randomNumber}@gmail.com`,
+//                     //         "Notes": "",
+//                     //         "Address1": "Extension Area",
+//                     //         "Pincode": "20100",
+//                     //         "City": "ABC",
+//                     //         "Country": "USA",
+//                     //         "State": "",
+//                     //         "Address2": "Ext2 street2"
+//                     //     }
+//                     // }
+//                 }
+//                 console.log('------update customer btn clicked----', jsonMsg);
+//                 window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+//            // }
+//         })
+//           // *** customer  extension end ***//
+
+
+//           // *** Product  extension start ***//
+
+//           if (msgData.oliverpos && msgData.oliverpos.event && msgData.oliverpos.event == 'productData') {
+//               console.log('----- received product detail', msgData.data);
+//           }
+//           // *** Product  extension end ***//
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+
+@media screen and (max-width: 1366px) {
+    .self-checkout-home 
+    {
+        .self-checkout-footer {
+            button {
+                font-size: 14px;
+                height: 50px;
+            }
+            .padding-20 {
+                padding: 10px 20px;
+            }
+        }
+    }
+    .self-checkout-home h3 {
+        margin-bottom: 10px;
+    }
+    .self-checkout-table.widget_day_record {
+        font-size: 15px;
+    }
+    .self-checkout-table.widget_day_record .widget_day_record_text {
+        font-size: 12px;
+    }
+    .self-checkout-grid {
+        padding: 10px;
+        overflow: hidden;
+        .app-list-responsive {
+            padding-left: 10px;
+        }
+    }
+    .filter-pruduct {
+        padding-left: 10px;
+        .row {
+            margin-right: -5px;
+            margin-left: -5px;
+            .col-sm-4 {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    }
+    .self-checkout-scroll-1 {
+        &.app-list-view {
+            .app {
+                margin-bottom: 10px;    
+            }
+        }
+    }
+    .self-checkout-home .self-checkout-header {
+        // height: 110px;
+    }
+}
+
+
+@media (orientation: portrait) {
+    .portrait { display: block; }
+    .landscape { display: none; }
+}
+@media (orientation: landscape) {
+    .portrait { display: none; }
+    .landscape { display: block; }
+
+    .block_startscreen {
+        flex-direction: row;
+    }
+    .btn-self-checkout {
+        height: 100vh;
+        width: 300px;
+        flex-direction: column-reverse;
+    }
+    .btn-self-checkout .btn-icon {
+        margin-right: 0px;
+    }
+    .block_startscreen_background {
+        justify-content: flex-end;
+        h1 {
+            font-size: 100px;
+            margin-right: 45px;
+        }
+    }
+    .self-checkout-home {
+        flex-direction: row;
+    }
+    .self-checkout-home .self-checkout-content {
+        flex: none;
+    }
+    .self-checkout-home .self-checkout-form {
+        border-left: 0px;
+    }
+    .self-checkout-home .self-checkout-form {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .app-list-view {
+        width: 253px;
+    }
+    .self-checkout-content.scroll-hidden {
+        width: 70%;
+    }
+}
+
+.card-sc-profile {
+    border: 0px;
+    height: 100vh;
+    .card-header,
+    .card-footer,
+    .card-body {
+        padding-top: 30px;
+       padding-bottom: 30px;    
+    }
+}

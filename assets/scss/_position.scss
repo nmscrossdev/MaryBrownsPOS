@@ -1,0 +1,42 @@
+.fixed-text {
+    color: #fff;
+    font-size: 20px;
+    @include medium {
+        font-size: 18px;
+    }
+    @include tablet {
+        font-size: 16px;
+    }
+    @include mobile {
+        font-size: 14px;
+    }
+}
+.fixed-top-left {
+    @include position(fixed, $top: 15px, $right: null, $bottom: null, $left: 15px);
+}
+
+.fixed-top-right {
+    @include position(fixed , $top: 15px, $right: 15px, $bottom: null, $left: null);
+ }
+
+.fixed-bottom-left {
+    @include position(fixed , $top: null, $right: null, $bottom: 15px, $left: 15px);
+ }
+
+ .fixed-bottm-right {
+    @include position(fixed , $top: null, $right: 15px, $bottom: 15px, $left: null);
+ }
+
+ .push-top-min-2 {
+    @include position(relative , $top: -2px, $right: null, $bottom: null, $left: null);
+ }
+
+ .push-top-3 {
+    @include position(relative , $top: 3px, $right: null, $bottom: null, $left: null);
+ }
+ .push-top-5 {
+    @include position(relative , $top: 5px, $right: null, $bottom: null, $left: null);
+ }
+ .push-top-7 {
+    @include position(relative , $top: 7px, $right: null, $bottom: null, $left: null);
+ }

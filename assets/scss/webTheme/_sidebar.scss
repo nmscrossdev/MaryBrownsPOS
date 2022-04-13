@@ -1,0 +1,117 @@
+.offcanvas {
+    width: 275px;
+    left: -295px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 1001;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: left 0.3s ease, right 0.3s ease;
+    background: #ffffff;
+    box-shadow: 0px 1px 9px -3px rgba(0, 0, 0, 0.75);
+    &.offcanvas--on {
+        transition: left 0.3s ease, right 0.3s ease;
+        left: 0;
+    }
+}
+
+.wrapper-overlay {
+    display: none;
+    background-color: rgba(216, 216, 216, 0.78);
+}
+
+.offcanvashead {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-bottom: 1px solid #CBCBCB;
+    h6 {
+        font-size: 18px;
+        color: $primary;
+        font-family: $font-light;
+        font-weight: normal;
+        margin-bottom: 0px;
+    }
+    p {
+        margin-bottom: 0px;
+        font-size: 14px;
+        font-family: $font-light;
+    }
+}
+.offcanvas-menu {
+    .nav-top {
+        .nav-item {
+            .nav-link {
+                display: flex;
+                align-items: center;
+                padding: 0px 15px;
+                i {
+                    margin-right: 15px;
+                }
+            }
+        }
+    }
+    .nav-bottom {
+        .nav-item {
+            justify-content: center;
+            border-bottom: 0px;
+            .nav-link {
+                i {
+                    line-height: 0px;
+                }
+                padding: 0px;
+            }
+        }
+    }
+    .nav-item {
+        border-bottom: 1px solid #CBCBCB;
+        font-size: 14px;
+        align-items: center;
+        display: flex;
+        .nav-link {
+            letter-spacing: 0.321429px;
+            color: #1D1D26;
+            font-family: $font-light;
+            i {
+                font-size: 30px;
+            }
+            &.active {
+                color: $primary;
+            }
+            &:hover {
+                color: $primary;
+            }
+        }
+    }
+    .offcanvas-sticky {
+        position: sticky;
+        top: 0;
+        height: calc(100vh - 141px);
+        @media screen and (max-width: 1200px) { 
+            height: calc(100vh - 121px);
+        }
+        @media screen and (max-height: 600px) { 
+            height: calc(100vh - 121px);
+        }
+    }
+    .offcanvasfoot {
+        border-top: 1px solid #CBCBCB;
+    }
+    .offcanvasfoot,
+    .nav-item ,
+    .offcanvashead {
+        min-height: 70px;
+        @media screen and (max-width: 1200px) {
+            min-height: 60px;    
+        }
+        @media screen and (max-height: 600px) { 
+            min-height: 60px;    
+        }
+    }
+}

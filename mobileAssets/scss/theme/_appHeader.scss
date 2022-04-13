@@ -1,0 +1,95 @@
+.appHeader {
+    height: 61px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    color: $primary;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 1px 1px rgba(225,225,225,0.5);
+}
+.appToggle button{
+    padding: 0px;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border: 0px solid #00ABD9;
+    font-size: 24px;
+    cursor: pointer;
+}
+.appTitle {
+    text-align: center;
+    font-size: 13px;
+    color: $primary;
+}
+.appTitle H3 {
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+.appHeaderRight {
+    display: inline-block;
+}
+.appHeaderLeft {
+    display: inline-block;
+}
+.appHeaderBack {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    img {
+        margin-right: 15px;
+    }
+}
+.appHeaderCenter {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $gray-800;
+}
+.appHeaderPgbutton,
+.pageTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 0px;
+    letter-spacing: 0;
+    text-transform: capitalize;
+    line-height: 30px;
+    text-decoration: none;
+    background-color: transparent;
+    padding: 0px;
+}
+.icon-less-right {
+    position: absolute;
+    right: 15px;
+}
+.left-0 {
+    left: 0px;
+}
+.left-15 {
+ left: 15px;
+}
+.appHeaderPgbutton:hover {
+    text-decoration: none;
+}
+.popuptitle {
+    color: $primary;
+    font-size: 24px;
+    font-weight: 500;
+    padding-top: 23px;
+    padding-bottom: 23px;
+    margin-bottom: 0px;
+    padding-left: 15px;
+}
+
+.appHeader {
+    .text-muted {
+        color: $gray-800 !important;
+    }
+}

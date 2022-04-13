@@ -1,0 +1,13 @@
+.dot {
+    height: 12px;
+    width: 12px;
+    border: 2px solid $white;
+    opacity: 1;
+    border-radius: 50%;
+    display: inline-block;
+    background: $white;
+    &.bg_trasn {
+        opacity: 0.88;
+        background-color: transparent;
+    }
+}

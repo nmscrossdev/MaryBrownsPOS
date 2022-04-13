@@ -1,0 +1,121 @@
+/*----------------Web Veiw-----------*/
+.gray-100 {
+  color: #979797; }
+
+.text-success {
+  color: #A9D47D; }
+
+.text-primary {
+  color: #46A9D4; }
+
+.text-danger {
+  color: #E0654C; }
+
+/* Medium Layout: 1280px */
+/* Tablet Layout: 768px */
+/* Mobile Layout: 320px */
+/* Wide Mobile Layout: 480px */
+.fz-40 {
+  font-size: 40px; }
+
+.fz-48 {
+  font-size: 48px; }
+
+.shadow-none {
+  -webkit-box-shadow: 0 0 0 0 transparent;
+  -moz-box-shadow: 0 0 0 0 transparent;
+  box-shadow: 0 0 0 0 transparent; }
+
+.powered-by-oliver {
+  font-size: 20px; }
+  @media (min-width: 992px) and (max-width: 1400px) {
+    .powered-by-oliver {
+      font-size: 18px; } }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    .powered-by-oliver {
+      font-size: 16px; } }
+  @media (max-width: 767px) {
+    .powered-by-oliver {
+      font-size: 14px; } }
+
+@media (min-width: 80px) and (max-width: 450px) {
+  .onboarding-loginBox {
+    width: 95%; } }
+
+.HightLIghtPassword {
+  margin-top: 20px; }
+  .HightLIghtPassword input {
+    height: 28px;
+    width: 28px;
+    border: 3px solid #FFFFFF;
+    display: block;
+    float: left;
+    border-radius: 100%;
+    background-color: #fff; }
+    .HightLIghtPassword input:not(:first-child) {
+      margin-left: 10px; }
+    @media (max-width: 992px) {
+      .HightLIghtPassword input {
+        height: 20px;
+        width: 20px;
+        border: 2px solid #FFFFFF; } }
+
+.icon.icon-css-override {
+  width: auto;
+  height: auto; }
+
+.icon-bottom-text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  line-height: 14px;
+  cursor: pointer; }
+  @media (max-width: 992px) {
+    .icon-bottom-text {
+      font-size: 30px; } }
+  .icon-bottom-text li {
+    user-select: none;
+    overflow: hidden;
+    text-align: center; }
+  .icon-bottom-text .logout-text {
+    display: block;
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px; }
+
+.background-size-35 {
+  background-size: 38px; }
+
+@media only screen and (max-width: 1024px) {
+  table.tile-view-product {
+    table-layout: fixed; } }
+
+@media (min-width: 992px) and (max-width: 1400px) {
+  .block__box_text_price,
+  .box-flex-text-heading h2,
+  .button_with_checkbox [type=radio]:checked + label, .button_with_checkbox [type=radio]:not(:checked) + label {
+    font-size: 18px; } }
+@media (min-width: 768px) and (max-width: 1200px) {
+  .block__box_text_price,
+  .box-flex-text-heading h2,
+  .button_with_checkbox [type=radio]:checked + label, .button_with_checkbox [type=radio]:not(:checked) + label {
+    font-size: 16px; } }
+@media (max-width: 767px) {
+  .block__box_text_price,
+  .box-flex-text-heading h2,
+  .button_with_checkbox [type=radio]:checked + label, .button_with_checkbox [type=radio]:not(:checked) + label {
+    font-size: 14px; } }
+
+/*=============Sidebar Css===========*/
+#sidebar .cm-user {
+  width: 100%; }
+#sidebar .cm-sec-acc .ulsidebar li {
+  border-bottom: 0px; }
+  #sidebar .cm-sec-acc .ulsidebar li a {
+    padding: 0px; }
+
+/*# sourceMappingURL=style.css.map */

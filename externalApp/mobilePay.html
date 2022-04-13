@@ -1,0 +1,85 @@
+<html>
+<head>
+
+
+</head>
+<body>
+    <div class="elementor-widget-container">
+        <div>
+            <h1>ONLY TEST: Payment</h1>
+            <div>
+                <p>Choose paymenttype and send it to WooCommerce.</p>
+                <button id="btnmobilpay">Mobile pay</button>
+                <br>
+            </div>
+        </div>
+
+        <script>
+            //Listen for message from Oliver POS
+            var checkoutData;
+
+            //Add Listener to Retrive data from parent window
+            window.addEventListener('message', function (e) {
+                console.log("Message listener call",e);
+                checkoutData = typeof e.data === "string" ? JSON.parse(e.data) : e.data;                
+                console.log("Message from Oliver POS:", checkoutData);
+            }, false);
+
+            //On load event
+            window.addEventListener('DOMContentLoaded', (event) => {
+                console.log("page content loaded");
+                var readyExtensionData = {
+                    oliverpos: {
+                        event: "extensionReady",
+                        data: {
+                            //Any valid JSON here
+                        }
+                    }
+                }
+
+                console.log("push data:" + JSON.stringify(readyExtensionData));
+                //push notification to parent window it is loaded now please send the usefull data
+                window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+            });
+
+            //get element
+            var mobilpayButton = document.getElementById('btnmobilpay');
+            //Add click Listener
+            mobilpayButton.addEventListener('click', function (e) {
+                console.log("call click",checkoutData);
+                //check the cheout data having the infomation
+                if (checkoutData && checkoutData.oliverpos && checkoutData.oliverpos.event && checkoutData.oliverpos.event == 'shareCheckoutData') {
+                    // Get total payble amount
+                    var totalAmount = (checkoutData.data && checkoutData.data.checkoutData && checkoutData.data.checkoutData.total) ? checkoutData.data.checkoutData.total : 0
+                    console.log("totalAmount:" + totalAmount);
+                    //Todo: Here we need to implement the code for payment process
+                    // hold the status of the payment done then bind the information in the below event
+
+                    var paymentMsg = {
+                        oliverpos: {
+                            event: "extensionPayment"
+                        },
+                        data: {
+                            paymentDetails: {
+                                paymentType: "Mobilepay",
+                                paidAmount: totalAmount,
+                                paymentStatus: 'success',
+                                transaction_id: uuidv4()
+                            }
+                        }
+                    }
+                    //send payment result information to oliverpos
+                    window.parent.postMessage(JSON.stringify(paymentMsg), '*');
+                }
+            })
+
+            function uuidv4() {
+                return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+                    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+                );
+            }
+        </script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+//@import "bootstrap/variables";
+@import "theme/variables";
+@import "bootstrap";
+@import "theme/mixins";
+
+/*--------------------------- Reset Css ----------------------*/
+@import "theme/reset";
+@import "theme/position";
+@import "theme/form";
+@import "theme/table";
+
+/*--------------------------- Loading CSS ----------------------*/
+/*---------------------------  ----------------------*/
+@import "theme/loading";
+
+/*--------------------------- Switcher CSS ----------------------*/
+/*---------------------------  ----------------------*/
+@import "theme/switcher";
+
+/*--------------------------- Modal Css ----------------------*/
+/*---------------------------  ----------------------*/
+@import "theme/modal";
+
+
+/*--------------------------- App Css ----------------------*/
+/*---------------------------  ----------------------*/
+@import "theme/appRadioCheckbox";
+@import "theme/appOuterPages";
+@import "theme/appHeader";
+@import "theme/appFooter";
+@import "theme/appSidebar";
+@import "theme/appSearch";
+@import "theme/appContainer";

@@ -1,0 +1,124 @@
+<html>
+
+
+<body>
+
+    <div>   
+          <h1>ONLY TEST: add Products to cart</h1>
+        <div> 
+                <button id="btnGetEnv">get environment</button> 
+
+              &nbsp;  
+          
+              <button id="btnLockEnvironment">Lock Environment</button> 
+              &nbsp;  
+            <button id="btnUnLockEnvironment">Unlock Environment</button> 
+            &nbsp;  
+              <button id="btnGetLockEnvironment">Get lockEnvironment’</button> 
+          
+             
+            </div>
+
+    </div> 
+    <div id="dvRequest"></div>
+     <div id="dvResponse"></div>
+    <script>    
+//Register app commands for native Pateform Start
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('platform');        
+        if (myParam == "native") {
+            window.postMessage = function (data) {
+                window.ReactNativeWebView.postMessage(data);
+                true;
+            };
+        }
+        //Register app commands for native Pateform End
+
+
+        //Listen for message from Oliver POS  
+        var msgData = ''
+        setTimeout(() => {
+            var readyExtensionData = {
+                command: 'appReady',
+                version:"1.0",
+                method: 'get'
+            }
+
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(readyExtensionData,undefined,2);
+        }, 1000);
+        //----------------------------------------
+
+        window.addEventListener('message', function (e) {
+            msgData = JSON.parse(e.data);
+            console.log("Message from Oliver POS:", msgData)
+            document.getElementById('dvResponse').innerText = "";
+            document.getElementById('dvResponse').innerText = "Response:" + JSON.stringify(msgData,undefined,2);
+
+        }, false);
+
+
+        //CustomerDetails Button click event-----------
+        var btnGetEnv = document.getElementById('btnGetEnv');
+        btnGetEnv.addEventListener('click', function (e) {
+            var jsonMsg =  {
+                    command: "Environment",
+                    method: "get",
+                    version: "1.0",                   
+                }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+            e.preventDefault();
+        });
+//CustomerDetails Button click event-----------
+var btnLockEnvironment = document.getElementById('btnLockEnvironment');
+btnLockEnvironment.addEventListener('click', function (e) {
+            var jsonMsg =  {
+                    command: "lockEnvironment",
+                    method: "post",
+                    version: "1.0",   
+                    state: 'lock'                
+                }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+            e.preventDefault();
+        });
+      
+    
+   // Unlock Environment 
+   var btnUnLockEnvironment = document.getElementById('btnUnLockEnvironment');
+   btnUnLockEnvironment.addEventListener('click', function (e) {
+            var jsonMsg =  {
+                    command: "lockEnvironment",
+                    method: "post",
+                    version: "1.0",   
+                    state: 'unlock'                
+                }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+            e.preventDefault();
+        }); 
+        
+        var btnGetLockEnvironment = document.getElementById('btnGetLockEnvironment');
+        btnGetLockEnvironment.addEventListener('click', function (e) {
+            var jsonMsg =  {
+                    command: "lockEnvironment",
+                    method: "get",
+                    version: "1.0"             
+                }
+            document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            console.log('------get btn clicked----', jsonMsg);
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+            e.preventDefault();
+        }); 
+        
+
+    </script>
+
+</body>
+
+</html>

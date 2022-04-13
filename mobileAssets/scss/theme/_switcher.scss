@@ -1,0 +1,78 @@
+.customise-switch {
+    .custom-control-label {
+        width: 100%;
+    }
+    .custom-switch {
+        padding-left: 0px;
+        padding-right: $custom-switch-width + $custom-control-gutter;
+    }
+    .custom-control-label::before {
+        right: -1.5rem;
+        left: unset !important;
+        background-color: $border-color;
+    }
+    .custom-switch .custom-control-label::before {
+        right: -2.5rem;
+        left: unset !important;
+    }
+    .custom-control-label::after {
+        right: calc(-2.25rem + 1px);
+        left: unset !important;
+        background-color: $white; 
+    }
+    .custom-switch .custom-control-label::after {
+        right: calc(-1.5rem + 2px);
+        left: unset !important;
+    }
+}
+
+.customise-switch-lg {
+    .custom-control-label::before {
+        background-color: $border-color;
+    }
+    .custom-control-label::after {
+        background-color: $white; 
+    }
+}
+@include media-breakpoint-up (lg) {
+    .customise-switch-lg {
+        .custom-switch .custom-control-label::before {
+            width: 3.4rem;
+            height: 1.7rem;
+            left: -3.3rem;
+            top: 0.1rem;
+            border-radius: 3.5rem;
+        }
+        .custom-switch .custom-control-label::after {
+            width: calc(1.8rem - 4px);
+            height: calc(1.8rem - 4px);
+            border-radius: 1.8rem;
+            top: calc(0.17rem + 0px);
+            left: calc(-3.33rem + 2px);
+        }
+        .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+            background-color: #fff;
+            transform: translateX(1.7rem);
+        }
+    }
+    
+}
+
+
+
+.type-one-label,
+.type-two-label {
+    color: $gray-600;
+    text-transform: capitalize;
+    font-size: 400;
+    font-size: 18px;
+}
+.type-one-label {
+    margin-right: 20px;
+}
+.type-two-label {
+    margin-left: 10px;
+}
+.type-label-active {
+    color: $blue;
+}

@@ -1,0 +1,39 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #CACACA;
+    border-radius: 8px;
+    overflow: hidden;
+    &.card-inner {
+        border : 0px;
+        border-radius: 0px;
+    }
+}
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #CACACA;
+}
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+.card-footer:last-child {
+    border-radius: 0 0 8px 8px;
+}
+.card-footer {
+    padding: 0.75rem 1.25rem;
+    background-color: #fff;
+    border-top: 1px solid #CACACA;
+}
+.card-custom {
+    overflow: hidden;
+    border-radius: 0px;
+    border-top: 0px;
+}

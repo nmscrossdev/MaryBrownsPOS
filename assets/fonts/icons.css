@@ -1,0 +1,164 @@
+@font-face {
+    font-family: "icons";
+  src: url("theme.eot");
+  src: url("theme.eot?#iefix") format("embedded-opentype"),
+  url("theme.woff2") format("woff2"),
+  url("theme.woff") format("woff"),
+  url("theme.ttf") format("truetype"),
+  url("theme.svg#font") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+        font-family: "icons";
+    	src: url("theme.svg#icons") format("svg");
+  }
+}
+
+[data-icons8]:before { content: attr(data-icons8); }
+
+
+.icons8-login,
+.icons8-logout-rounded-left,
+.icons8-menu-vertical,
+.icons8-menu,
+.icons8-menulist,
+.icons8-minus,
+.icons8-oliver,
+.icons8-plus,
+.icons8-remove,
+.icons8-restart,
+.icons8-road-closure,
+.icons8-roundbutton,
+.icons8-search-more,
+.icons8-task,
+.icons8-tick,
+.icons8-time-machine,
+.icons8-undo,
+.icons8-add-user-male,
+.icons8-addnew,
+.icons8-back-arrow,
+.icons8-bell,
+.icons8-cancel,
+.icons8-cash-register,
+.icons8-cloud-link,
+.icons8-cloud-sync,
+.icons8-discount,
+.icons8-down-button,
+.icons8-extensions,
+.icons8-gear,
+.icons8-go-back {
+  line-height: 0;
+}
+.home-tab-menus i.icons8-down-button,
+.home-tab-menus .icons8-down-button:before ,
+.home-tab-menus .icons8-cancel,
+.home-tab-menus .icons8-cancel:before{
+  line-height: 0 !important;
+}
+
+.icons8-login:before,
+.icons8-logout-rounded-left:before,
+.icons8-menu-vertical:before,
+.icons8-menu:before,
+.icons8-menulist:before,
+.icons8-minus:before,
+.icons8-oliver:before,
+.icons8-plus:before,
+.icons8-remove:before,
+.icons8-restart:before,
+.icons8-road-closure:before,
+.icons8-roundbutton:before,
+.icons8-search-more:before,
+.icons8-task:before,
+.icons8-tick:before,
+.icons8-time-machine:before,
+.icons8-undo:before,
+.icons8-add-user-male:before,
+.icons8-addnew:before,
+.icons8-back-arrow:before,
+.icons8-bell:before,
+.icons8-cancel:before,
+.icons8-cash-register:before,
+.icons8-cloud-link:before,
+.icons8-cloud-sync:before,
+.icons8-discount:before,
+.icons8-down-button:before,
+.icons8-extensions:before,
+.icons8-gear:before,
+.icons8-go-back:before,
+.icons8,
+[data-icons8]:before {
+  display: inline-block;
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: normal;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+
+.icons8-menu-vertical:before {content: "\f100";}
+.icons8-menu:before {content: "\f101";}
+.icons8-menulist:before {content: "\f102";}
+.icons8-minus:before {content: "\f103";}
+.icons8-oliver:before {content: "\f104";}
+.icons8-plus:before {content: "\f105";}
+.icons8-remove:before {content: "\f106";}
+.icons8-restart:before {content: "\f107";}
+.icons8-road-closure:before {content: "\f108";}
+.icons8-roundbutton:before {content: "\f109";}
+.icons8-search-more:before {content: "\f10a";}
+.icons8-task:before {content: "\f10b";}
+.icons8-tick:before {content: "\f10c";}
+.icons8-time-machine:before {content: "\f10d";}
+.icons8-undo:before {content: "\f10e";}
+.icons8-add-user-male:before {content: "\f10f";}
+.icons8-addnew:before {content: "\f110";}
+.icons8-addnew2:before {content: "\f111";}
+.icons8-back-arrow:before {content: "\f112";}
+.icons8-bell:before {content: "\f113";}
+.icons8-cancel:before {content: "\f114";}
+.icons8-cash-register:before {content: "\f115";}
+.icons8-cloud-link:before {content: "\f116";}
+.icons8-cloud-sync:before {content: "\f117";}
+.icons8-discount:before {content: "\f118";}
+.icons8-down-button:before {content: "\f119";}
+.icons8-extensions:before {content: "\f11a";}
+.icons8-gear:before {content: "\f11b";}
+.icons8-go-back:before {content: "\f11c";}
+.icons8-login:before {content: "\f11d";}
+.icons8-logout-rounded-left:before {content: "\f11e";}
+.modal-md2 {
+  width: 512px !important;
+  padding: 30px
+}
+.plan-info {
+  text-align: center;
+}
+.plan-info i {
+  color: #D4E50B;
+  font-size: 96px;
+}
+.plan-info h4 {
+  color: #4B4B4B;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+.plan-info p {
+  color: #747373;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+

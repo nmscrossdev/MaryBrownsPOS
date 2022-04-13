@@ -1,0 +1,135 @@
+.web_header {
+    background: $primary;
+    height: 57px;
+    overflow: hidden;
+}
+.headerSeparation
+{
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    color: $white;
+    .headerSeparationPartOne,
+    .headerSeparationPartTwo {
+        display: flex;
+        align-items: center;
+    }
+    .headerSeparationPartOne {
+        width: calc(100% - 380px);
+        @media screen and (max-width: 1024px) {
+            width: calc(100% - 300px);
+        }
+    }
+    .headerSeparationPartTwo {
+        width: 380px;
+        @media screen and (max-width: 1024px) {
+            width: 300px;
+        }
+    }   
+    &.HeaderSwitchSeparation {
+        .headerSeparationPartOne
+        {
+            order: 2;
+        }
+    }
+}
+
+.menu_brand {
+    color: #fff;
+    font-size: 25px;
+    padding: 0px;
+    border: 0px;
+    padding-left: 15px;
+    &:hover {
+        color: opacify($color: #FFFFFF, $amount: 0.5);
+    }
+}
+
+.nav-main {
+    .nav-item {
+        margin-left: 25px;
+        @media screen and (max-width: 1024px) {
+            margin-left: 20px;   
+        }
+        @media screen and (max-width: 980px) {
+            margin-left: 15px;   
+        }
+        @media screen and (max-width: 800px) {
+            margin-left: 10px;   
+        }
+        .nav-link {
+            font-size: 14px;
+            color: #FFFFFF;
+            padding: 0px 17px;
+            border-radius: 20px;
+            &.active {
+                border: 1px solid #fff;
+            }
+        }
+    }
+}
+
+.header-menu {
+    display: flex;
+    align-items: center;
+}
+.form-header
+{
+
+    .form-control {
+        height: 35px;
+        font-size: 14px;
+        background-color: rgba(255,255,255,0.7);
+        border: 0px;
+        color: #4B4B4B;
+        &::placeholder {
+            color: #4B4B4B;
+            opacity: 0.5;
+          }
+          
+          &:-ms-input-placeholder {
+            color: #4B4B4B;
+            opacity: 0.5;
+          }
+          
+          &::-ms-input-placeholder { 
+            color: #4B4B4B;
+            opacity: 0.5;
+          }
+    }
+    input[type="search"]::-webkit-search-cancel-button {
+        display: none;
+      }
+}
+
+.header-title {
+    a {
+        color: $white;
+        display: flex;
+        align-items: center;
+    }
+    i,
+    img {
+        font-size: 28px;
+        line-height: 0px;
+        margin-right: 15px;
+        display: inline-block;
+    }
+    .icons8-back-arrow:before {
+        line-height: 0px;
+    }
+    button {
+        color: #fff;
+        padding: 0px;
+        border: 0px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        margin-left: 15px;
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+            color: rgba(255,255,255,0.7);
+        }    
+    }
+}

@@ -1,0 +1,195 @@
+.toggleSearchbox {
+    border-radius: 0px 4px 4px 0px;
+    margin-right: 8px;
+    font-size: 27px;
+}
+.toggleSearchbox label {
+    height: 55px;
+    width: 67px;
+    text-align: center;
+    line-height: 50px;
+}
+.toggleSearchbox label.label-close {
+    line-height: 55px;
+    font-size: 18px;
+    width: 75px;
+}
+
+.toggleSearchboxFull {
+    min-height: 55px;
+    background-color: #A9D47D;
+    align-items: center;
+    border-radius: 0px 5px 5px 0px;
+    margin-right: 10px;
+    margin-top: 10px;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    display: none;
+    &.fadeIn {
+        display: flex;
+    }
+    .searchbar-input-container {
+        position: relative;
+        display: flex;
+        flex-shrink: 1;
+        width: 100%;
+        align-items: center;
+    }
+    .searchbar-cancel-button-md, 
+    .searchbar-search-icon-md {
+        position: absolute;
+        background-repeat: no-repeat;
+        background-size: 20px;
+    }
+    .searchbar-search-icon-md {
+        display: none;
+    }
+    .searchbar-search-icon {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yNi44NjU0IDI1LjgwMDlMMTcuNjM0MiAxNi43ODA3QzE5LjIzNDIgMTUuMTAyNSAyMC4yMjE4IDEyLjg2MDIgMjAuMjIxOCAxMC4zOTE3QzIwLjIyMTggNS4yMTMwNSAxNS45MTA1IDEgMTAuNjEwMyAxQzUuMzEwNyAxIDEgNS4yMTMwNSAxIDEwLjM5MTdDMSAxNS41NjkyIDUuMzEwNyAxOS43ODI4IDEwLjYxMDMgMTkuNzgyOEMxMy4wNTM0IDE5Ljc4MjggMTUuMjc5MiAxOC44OCAxNi45NzcyIDE3LjQwNzdMMjYuMjE2NCAyNi40MzU2QzI2LjMwNTggMjYuNTIzIDI2LjQyMzQgMjYuNTY2NyAyNi41NDE1IDI2LjU2NjdDMjYuNjU4NSAyNi41NjY3IDI2Ljc3NTQgMjYuNTIzIDI2Ljg2NTQgMjYuNDM1NkMyNy4wNDQ5IDI2LjI2MDMgMjcuMDQ0OSAyNS45NzYyIDI2Ljg2NTQgMjUuODAwOVpNMTAuNjEwMyAxOC44ODU0QzUuODE3MDkgMTguODg1NCAxLjkxODQ3IDE1LjA3NDQgMS45MTg0NyAxMC4zOTE3QzEuOTE4NDcgNS43MDc4MiA1LjgxNzA5IDEuODk3NDEgMTAuNjEwMyAxLjg5NzQxQzE1LjQwMzUgMS44OTc0MSAxOS4zMDMzIDUuNzA3ODIgMTkuMzAzMyAxMC4zOTE3QzE5LjMwMzMgMTUuMDc0NCAxNS40MDM1IDE4Ljg4NTQgMTAuNjEwMyAxOC44ODU0WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE3LjYzNDIgMTYuNzgwN0wxNy4yNzIzIDE2LjQzNTdMMTYuOTMxNSAxNi43OTMxTDE3LjI4NDcgMTcuMTM4M0wxNy42MzQyIDE2Ljc4MDdaTTE2Ljk3NzIgMTcuNDA3N0wxNy4zMjY2IDE3LjA1MDFMMTYuOTk3NCAxNi43Mjg0TDE2LjY0OTYgMTcuMDI5OUwxNi45NzcyIDE3LjQwNzdaTTI2LjIxNjQgMjYuNDM1NkwyNS44NjY5IDI2Ljc5MzNMMjUuODY3IDI2Ljc5MzNMMjYuMjE2NCAyNi40MzU2Wk0yNi44NjU0IDI2LjQzNTZMMjcuMjEzNyAyNi43OTQ1TDI3LjIxNDkgMjYuNzkzM0wyNi44NjU0IDI2LjQzNTZaTTI3LjIxNDkgMjUuNDQzM0wxNy45ODM2IDE2LjQyMzFMMTcuMjg0NyAxNy4xMzgzTDI2LjUxNiAyNi4xNTg1TDI3LjIxNDkgMjUuNDQzM1pNMTcuOTk2MSAxNy4xMjU3QzE5LjY3ODcgMTUuMzYwOSAyMC43MjE4IDEyLjk5NzEgMjAuNzIxOCAxMC4zOTE3SDE5LjcyMThDMTkuNzIxOCAxMi43MjMzIDE4Ljc4OTYgMTQuODQ0MiAxNy4yNzIzIDE2LjQzNTdMMTcuOTk2MSAxNy4xMjU3Wk0yMC43MjE4IDEwLjM5MTdDMjAuNzIxOCA0LjkyNjA4IDE2LjE3NTcgMC41IDEwLjYxMDMgMC41VjEuNUMxNS42NDUzIDEuNSAxOS43MjE4IDUuNTAwMDIgMTkuNzIxOCAxMC4zOTE3SDIwLjcyMThaTTEwLjYxMDMgMC41QzUuMDQ1NDUgMC41IDAuNSA0LjkyNjE0IDAuNSAxMC4zOTE3SDEuNUMxLjUgNS40OTk5NiA1LjU3NTk1IDEuNSAxMC42MTAzIDEuNVYwLjVaTTAuNSAxMC4zOTE3QzAuNSAxNS44NTYxIDUuMDQ1NDUgMjAuMjgyOCAxMC42MTAzIDIwLjI4MjhWMTkuMjgyOEM1LjU3NTk1IDE5LjI4MjggMS41IDE1LjI4MjMgMS41IDEwLjM5MTdIMC41Wk0xMC42MTAzIDIwLjI4MjhDMTMuMTc4OSAyMC4yODI4IDE1LjUxOTggMTkuMzMzMiAxNy4zMDQ3IDE3Ljc4NTRMMTYuNjQ5NiAxNy4wMjk5QzE1LjAzODYgMTguNDI2OSAxMi45MjggMTkuMjgyOCAxMC42MTAzIDE5LjI4MjhWMjAuMjgyOFpNMTYuNjI3NyAxNy43NjUzTDI1Ljg2NjkgMjYuNzkzM0wyNi41NjU4IDI2LjA3OEwxNy4zMjY2IDE3LjA1MDFMMTYuNjI3NyAxNy43NjUzWk0yNS44NjcgMjYuNzkzM0MyNi4wNTU0IDI2Ljk3NzQgMjYuMzAwOCAyNy4wNjY3IDI2LjU0MTUgMjcuMDY2N1YyNi4wNjY3QzI2LjU0MzggMjYuMDY2NyAyNi41NDczIDI2LjA2NzEgMjYuNTUxNyAyNi4wNjg4QzI2LjU1NjUgMjYuMDcwNyAyNi41NjE2IDI2LjA3MzggMjYuNTY1OCAyNi4wNzhMMjUuODY3IDI2Ljc5MzNaTTI2LjU0MTUgMjcuMDY2N0MyNi43ODI3IDI3LjA2NjcgMjcuMDI2MyAyNi45NzYzIDI3LjIxMzcgMjYuNzk0NUwyNi41MTcyIDI2LjA3NjhDMjYuNTIwNCAyNi4wNzM4IDI2LjUyNDcgMjYuMDcwOSAyNi41Mjk0IDI2LjA2OTFDMjYuNTMzOCAyNi4wNjczIDI2LjUzNzkgMjYuMDY2NyAyNi41NDE1IDI2LjA2NjdWMjcuMDY2N1pNMjcuMjE0OSAyNi43OTMzQzI3LjU5NSAyNi40MjE4IDI3LjU5NSAyNS44MTQ3IDI3LjIxNDkgMjUuNDQzMkwyNi41MTYgMjYuMTU4NUMyNi41MDY4IDI2LjE0OTUgMjYuNSAyNi4xMzQzIDI2LjUgMjYuMTE4M0MyNi41IDI2LjEwMjIgMjYuNTA2OCAyNi4wODcgMjYuNTE2IDI2LjA3OEwyNy4yMTQ5IDI2Ljc5MzNaTTEwLjYxMDMgMTguMzg1NEM2LjA4MjM1IDE4LjM4NTQgMi40MTg0NyAxNC43ODc1IDIuNDE4NDcgMTAuMzkxN0gxLjQxODQ3QzEuNDE4NDcgMTUuMzYxMyA1LjU1MTgzIDE5LjM4NTQgMTAuNjEwMyAxOS4zODU0VjE4LjM4NTRaTTIuNDE4NDcgMTAuMzkxN0MyLjQxODQ3IDUuOTk0NzIgNi4wODIzNSAyLjM5NzQxIDEwLjYxMDMgMi4zOTc0MVYxLjM5NzQxQzUuNTUxODMgMS4zOTc0MSAxLjQxODQ3IDUuNDIwOTIgMS40MTg0NyAxMC4zOTE3SDIuNDE4NDdaTTEwLjYxMDMgMi4zOTc0MUMxNS4xMzgzIDIuMzk3NDEgMTguODAzMyA1Ljk5NDgxIDE4LjgwMzMgMTAuMzkxN0gxOS44MDMzQzE5LjgwMzMgNS40MjA4MyAxNS42Njg3IDEuMzk3NDEgMTAuNjEwMyAxLjM5NzQxVjIuMzk3NDFaTTE4LjgwMzMgMTAuMzkxN0MxOC44MDMzIDE0Ljc4NzQgMTUuMTM4MyAxOC4zODU0IDEwLjYxMDMgMTguMzg1NFYxOS4zODU0QzE1LjY2ODcgMTkuMzg1NCAxOS44MDMzIDE1LjM2MTQgMTkuODAzMyAxMC4zOTE3SDE4LjgwMzNaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K");
+        width: 30px;
+        height: 30px;
+        background-size: 28px;
+        background-color: transparent;
+        box-shadow: none;
+        outline: none;
+        border: 0px;
+        margin-left: 10px;
+        margin-right: 10px;
+        background-repeat: no-repeat;
+    
+    }
+    .searchbar-input {
+        // if search icon show
+        // padding: 6px 0px 6px 55px;
+
+        padding: 3px 15px;
+        background-position: left 8px center;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 30px;
+        color: #262626;
+        background-color: #fff;
+        width: 100%;
+        height: 39px;
+        border: 0px;
+        border-radius: 0px 5px 5px 0px;
+        &:focus {
+            outline: none;
+        }
+        &::-webkit-input-placeholder{
+            color: #C5BFBF;
+        }
+        &::-moz-placeholder {
+            color: #C5BFBF;
+        }
+        &:-ms-input-placeholder{
+            color: #C5BFBF;
+        }
+        &:-moz-placeholder {
+            color: #C5BFBF;
+        }
+    }
+    // input[type="search"]::-webkit-input-placeholder,
+    // input[type="search"]::-moz-placeholder,
+    // input[type="search"]:-ms-input-placeholder,
+    // input[type="search"]:-moz-placeholder {
+    //     // color: #C5BFBF;
+    // }
+    input[type="search"]::-webkit-search-decoration,
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-results-button,
+    input[type="search"]::-webkit-search-results-decoration {
+      display: none;
+    }
+    .searchbar-clear-icon {
+        padding: 0px 11px;
+        width: 45px;
+        border: 0;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: 22px;
+        margin-top: -4px;
+    }
+}
+
+
+.fadeIn {
+    animation-name: fadeIn;
+    -webkit-animation-name: fadeIn;
+    animation-duration: 0.25s;
+    -webkit-animation-duration: 0.25s;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+    visibility: visible !important;
+    z-index: 1;
+}
+@keyframes fadeIn {
+    0% {
+        transform: scale(0);
+        opacity: 0.0;
+    }
+    /* 60% {
+        transform: scale(0.4);  
+    }
+    80% {
+        transform: scale(0.8);
+        opacity: 1; 
+    }    */
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadeIn {
+    0% {
+        -webkit-transform: scale(0);
+        opacity: 0.0;
+    }
+    /* 60% {
+        -webkit-transform: scale(0.4);
+    }
+    80% {
+        -webkit-transform: scale(0.8);
+        opacity: 1; 
+    } */
+    100% {
+        -webkit-transform: scale(1);
+        opacity: 1;
+    }
+}
+.fadeOut {
+    animation-name: fadeOut;
+    -webkit-animation-name: fadeOut;
+    animation-duration: 0.25s;
+    -webkit-animation-duration: 0.25s;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode:forwards;
+    /*Chrome 16+, Safari 4+*/
+    -moz-animation-fill-mode:forwards;
+    /*FF 5+*/
+    -o-animation-fill-mode:forwards;
+    /*Not implemented yet*/
+    -ms-animation-fill-mode:forwards;
+    /*IE 10+*/
+    animation-fill-mode:forwards;
+    /*when the spec is finished*/
+    visibility:visible;
+}
+@keyframes fadeOut {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+@-webkit-keyframes fadeOut {
+    0% {
+        -webkit-transform: scale(1);
+    }
+    100% {
+        -webkit-transform: scale(0);
+    }
+}

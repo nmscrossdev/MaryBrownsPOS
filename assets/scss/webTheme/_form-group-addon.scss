@@ -1,0 +1,167 @@
+input:focus {
+    outline: none;
+    outline-offset: 0px;
+}
+$font-size:14px;
+$none: none;
+$label-color : #4B4B4B;
+$mheight : 40px;
+$theight : 50px;
+$dheight : 65px;
+$tvheight : 75px;
+$border--radius: 8px;
+$border--color: #CACACA;
+
+.form-addon {
+    .input-group-addon {
+        background-color: #fff;
+        min-width: 135px;
+        text-align: left;
+        font-size: $font-size;
+        border-radius:  $border--radius 0 0 $border--radius;
+    }
+    .form-control {
+        border-radius:  0px $border--radius $border--radius 0px;
+        font-size: $font-size;
+        box-shadow: $none;
+        transition: $none;
+        @include tv {
+            height: $tvheight;
+        }
+        @include desktop {
+            height: $dheight;
+        }
+        @include tablet {
+            height: $theight;
+        }
+        @include mobile {
+            height: $mheight;
+        }
+        &:focus {
+            color: $label-color;
+            outline: 0;
+            box-shadow: 0px;
+            box-shadow: $none;
+            border-color: $border--color;
+        }
+    }
+   .input-group-checkbox {
+        position: relative;
+        border: 1px solid $border--color;
+        box-sizing: border-box;
+        border-radius: $border--radius;
+        color: $label-color;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: $font-size;
+        @include tv {
+            height: $tvheight;
+        }
+        @include desktop {
+            height: $dheight;
+        }
+        @include tablet {
+            height: $theight;
+        }
+        @include mobile {
+            height: $mheight;
+        }
+        .input-group-text {
+            padding: 0 15px;
+        }
+        .checkmark {
+            border-left: 1px solid $border--color;
+            width: 60px;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            &::after {
+                font-family: 'Nucleo';
+                content: "\ea09";
+                font-size: 36px;
+                font-weight: bold;
+                opacity: 0;
+            } 
+        }
+        input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            margin: 0px;
+            z-index: 2;
+        }
+        input:checked ~ .checkmark:after {
+                opacity: 1;
+        }
+        input:checked ~ .checkmark.checked:after {
+            opacity: 1;
+        }
+   }
+   .form-group {
+       &:last-child {
+           margin-bottom: 0px;
+       }
+   }
+   .form-addon-button {
+    @include tv {
+        height: $tvheight;
+    }
+    @include desktop {
+        height: $dheight;
+    }
+    @include tablet {
+        height: $theight;
+    }
+    @include mobile {
+        height: $mheight;
+    }
+   }
+}
+
+.input-group-no-border {
+    // margin-bottom: 0px;
+    .input-group-addon,
+    .form-control {
+        border: 0px;
+    }
+    .form-control {
+        height: $theight;
+        vertical-align: middle;
+        display: flex;
+        align-items: center;
+        &:read-only {
+            background-color: #fff;
+        }
+    }
+}
+.input-group-reverse {
+    .input-group-addon {
+        border-right: 1px solid $border--color;
+        border-radius: $border--radius $border--radius 0px 0px;
+        border-bottom: 0px;
+        height: $theight;
+    }
+    textarea {
+        border-radius: 0px 0px $border--radius $border--radius !important;
+        resize: none;
+        margin-bottom: 0px;
+        &.shorthight {
+            height: 180px !important;
+        }
+        &.fullheight {
+            height: 60vh !important;        
+        }
+    }
+}
+
+.btn-capitalize {
+    text-transform: capitalize !important;
+    font-weight: 500;
+}
+

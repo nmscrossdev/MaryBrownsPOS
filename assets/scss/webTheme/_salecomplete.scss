@@ -1,0 +1,242 @@
+.sale-complete {
+    background-color: $primary;
+    height: 100vh;
+    color: #747373;
+    .sale-complete-strached {
+        padding: 0px 73px;
+        display: flex;
+        align-self: stretch;
+        height: 100%;
+        @include mobile {
+            display: block;
+        }
+        .sale_complete {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            
+            @include mobile {
+                width: 100%;
+                // display: block;
+            }
+            @include tablet {
+                width: 300px;
+            }
+            @include desktop {
+                width: 350px;
+            }
+            width: 400px;
+
+            &::after {
+                content: '';
+                background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjc4IiBoZWlnaHQ9IjE4OSIgdmlld0JveD0iMCAwIDI3OCAxODkiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjQyLjMwNSA0OS41MzAzQzI0Mi43NzMgNTYuMTYyNSAyNDUuNTc4IDYzLjg1NDMgMjQ5Ljg3OCA2OC43Nzg5QzI3Mi4wMzMgOTQuMTY1NSAyNzcuMDM1IDEyNi43NyAyNjIuOTU4IDE1OC4xODVDMjYwLjk5NSAxNjIuNTY2IDI1OS4xNTIgMTY5LjIxIDI2MS4wMTggMTcyLjgxMUMyODUuNjMxIDIyMC4zMjYgMjc5LjI0OSAyNjguNjkgMjYzLjUxIDMxNi4yNzZDMjU2LjEwNyAzMzguNjU2IDI0My42ODYgMzUzLjg5OSAyMzEuODc2IDM3Ny43MThDMjEyLjc4MSAzNzcuNzE4IDYxLjg5MzUgMzc3LjcxOCA0NC45MTg3IDM3Ny43MThDMjIuMDk2IDM1MS4xNSAxMi4wNTcgMzIxLjg2NCA1LjU2Mzg0IDI4OC44ODZDLTIuMjQyNjIgMjQ5LjIzOCAtNC40NDc5NyAyMDkuNjI4IDE2LjYwNTIgMTcyLjM5NEMxOC4yNTQ4IDE2OS40NzkgMTcuNDU2MyAxNjMuOTc3IDE1LjkwMzIgMTYwLjU1NkMwLjc0MDc0IDEyNy4xNyA0LjI0NzY1IDk2LjcwNzcgMjguMTI2MiA2OC41NTY5QzMxLjQ5NTcgNjQuNTgyMyAzMy41NzUyIDU4LjMxNDEgMzMuNzk3NSA1My4wMDQ3QzM0LjUwNTMgMzUuOTkwNSAzNC4wNjA4IDE4LjkyNiAzNC4wNjA4IDAuNjUxMDkxQzEyNy42NzQgNzcuMzkxIDE3Ni45NDYgNTEuMTg0NiAyNDEuOTU3IDBDMjQxLjk1NyAxOC4zMzEyIDI0MS4yMTEgMzMuOTk1OCAyNDIuMzA1IDQ5LjUzMDNaTTEzMC41NyAxMjIuMTIxQzEzMC40MDYgOTguNzgyMyAxMTEuODk3IDc5Ljk1NjkgODguOTMxMyA3OS43NjE2QzY1LjYxNDMgNzkuNTYwMyA0NS43MDE4IDk5LjQ0MjMgNDUuOTA5NSAxMjIuNzE2QzQ2LjEwODQgMTQ1LjE3IDY1Ljc2MDUgMTY1LjA2IDg4LjEwOTQgMTY1LjQyN0MxMTEuMjggMTY1LjgwOSAxMzAuNzM2IDE0NS45NjMgMTMwLjU3IDEyMi4xMjFaTTE0Ny4xOCAxMjEuODQzQzE0Ni45MjIgMTQ1Ljc1NiAxNjUuOTUxIDE2NS40ODcgMTg5LjE2IDE2NS4zOEMyMTEuNzY5IDE2NS4yNzQgMjMwLjY1MiAxNDYuMTM0IDIzMC45NTcgMTIzLjAxOEMyMzEuMjcyIDk4Ljk0NTEgMjEyLjU0NSA3OS42ODc2IDE4OC44OTEgNzkuNzcwNUMxNjUuOTMxIDc5Ljg0NzQgMTQ3LjQyOCA5OC41MTMgMTQ3LjE4IDEyMS44NDNaTTE0MC4xMzEgMTgzLjU4MUMxNTUuMTQ3IDE2Ni4xMjMgMTU0LjgwMiAxNTcuOTcyIDEzOS4xNjMgMTQ0LjYwN0MxMjMuOTI3IDE1OS45ODUgMTIzLjk4IDE2Ny40NzggMTQwLjEzMSAxODMuNTgxWiIgZmlsbD0iI0E5RDQ3RCIgZmlsbC1vcGFjaXR5PSIwLjk1Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTg4Ljg1OSAxNjUuOTg4QzIxMi41NjMgMTY1Ljk4OCAyMzEuNzggMTQ2LjY3IDIzMS43OCAxMjIuODM5QzIzMS43OCA5OS4wMDc2IDIxMi41NjMgNzkuNjg4NyAxODguODU5IDc5LjY4ODdDMTY1LjE1NCA3OS42ODg3IDE0NS45MzggOTkuMDA3NiAxNDUuOTM4IDEyMi44MzlDMTQ1LjkzOCAxNDYuNjcgMTY1LjE1NCAxNjUuOTg4IDE4OC44NTkgMTY1Ljk4OFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNODcuNzA3OSAxNjUuNjEzQzExMS40MTMgMTY1LjYxMyAxMzAuNjI5IDE0Ni4yOTQgMTMwLjYyOSAxMjIuNDYzQzEzMC42MjkgOTguNjMyMiAxMTEuNDEzIDc5LjMxMzQgODcuNzA3OSA3OS4zMTM0QzY0LjAwMzQgNzkuMzEzNCA0NC43ODcgOTguNjMyMiA0NC43ODcgMTIyLjQ2M0M0NC43ODcgMTQ2LjI5NCA2NC4wMDM0IDE2NS42MTMgODcuNzA3OSAxNjUuNjEzWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04Ni45Nzk0IDE0My44MzNDOTguMzE2NCAxNDMuODMzIDEwNy41MDcgMTM0LjU5MyAxMDcuNTA3IDEyMy4xOTZDMTA3LjUwNyAxMTEuNzk5IDk4LjMxNjQgMTAyLjU1OSA4Ni45Nzk0IDEwMi41NTlDNzUuNjQyNCAxMDIuNTU5IDY2LjQ1MiAxMTEuNzk5IDY2LjQ1MiAxMjMuMTk2QzY2LjQ1MiAxMzQuNTkzIDc1LjY0MjQgMTQzLjgzMyA4Ni45Nzk0IDE0My44MzNaIiBmaWxsPSIjNDZBOUQ0Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTg4LjY5MiAxNDMuODMzQzIwMC4wMjkgMTQzLjgzMyAyMDkuMjIgMTM0LjU5MyAyMDkuMjIgMTIzLjE5NkMyMDkuMjIgMTExLjc5OSAyMDAuMDI5IDEwMi41NTkgMTg4LjY5MiAxMDIuNTU5QzE3Ny4zNTUgMTAyLjU1OSAxNjguMTY1IDExMS43OTkgMTY4LjE2NSAxMjMuMTk2QzE2OC4xNjUgMTM0LjU5MyAxNzcuMzU1IDE0My44MzMgMTg4LjY5MiAxNDMuODMzWiIgZmlsbD0iIzQ2QTlENCIvPgo8L3N2Zz4K');
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: bottom -1px center;
+                width: 100%;
+                height: 230px;
+                position: absolute;
+                bottom: 0px;
+                @media screen and (max-height: 600px) {
+                    height: 135px; 
+                }
+                @include mobile {
+                    display: none;
+                }
+            }
+        }
+        .sale__complete {
+            width: calc(100% - 400px);
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            padding-bottom: 25px;
+            padding-top: 70px;
+            @include mobile {
+                width: 100%;
+                padding-bottom: 25px;
+                padding-top: 25px;
+            }
+            @include tablet {
+             width: calc(100% - 300px);
+            }
+            @include desktop {
+                width: calc(100% - 350px);
+            }
+   
+
+            .sale__complete_inner {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                > div {
+                    width: 100%;
+                }
+                .sale__complete_inner_01 {
+                    margin-bottom: 24px;
+                }
+            }
+            .sale_panel {
+                background: #FFFFFF;
+                border: 1px solid #cacaca;
+                box-sizing: border-box;
+                border-radius: 8px;
+                overflow: hidden;
+                // min-height: 455px;
+                color: #747373;
+                // > div {
+                //     padding: 15px;
+                // }
+                .sale_panel_text {
+                    font-size: 20px;
+                    @media screen and (min-width: 1600px) {
+                        font-size: 24px;
+                    }
+                    color: #747373;
+                    font-family: $font-light;
+                    margin-bottom: 20px;
+                    text-align: center;
+                    margin-bottom: 20px;
+                } 
+                .sale_panel_in {
+                    text-align: center;
+                }
+                .sale_panel__in {
+                   
+                }
+            }
+        }
+        
+    }
+}
+// .wid-361 {
+//     width: 30%;
+// }
+.btn {
+    &.btn-sale {
+        min-width: 250px;
+        height: 55px;
+        margin-bottom: 10px;
+        &:focus:active {
+            background: $success;
+            border-color: $success;        
+        }
+        @media screen and (min-width: 1800px) {
+            height: 70px;
+            min-width: 300px;
+        }
+    }
+}
+.sale_light {
+    padding: 20px;
+    text-align: center;
+    @media screen and (max-width: 1400px) {
+        padding: 25px;
+    }
+}
+.sale-hightlight {
+    background: #F9F8F8;
+}
+
+.sale_form {
+    @include mobile {
+        padding-left: 0px;
+    }
+    @include tablet {
+        padding-left: 0px;
+    }
+    @include desktop {
+        padding-left: 20px;
+    }
+    @include tv {
+        padding-left: 25px;
+    }
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-align: left;
+    padding-right: 25px;
+    .sale-form-inner {
+        width: 100%
+    }
+    .sale_panel_text {
+        text-align: left !important;
+    }
+    .form_editinfo .input-group .form-control {
+        height: 60px;
+    }
+    .input-group-addon {
+        min-width: 120px;
+        @include tablet {
+            min-width: 80px;
+        }
+    }
+    .input-group-addon,
+    .form-control,
+    .btn {
+        font-size: 14px !important;
+    } 
+    .btn {
+        height: 50px;
+        margin-bottom: 15px; 
+    }
+    .form_editinfo .input-group .form-control, .form_editinfo .input-group-addon {
+        border-color: #cacaca;
+    }
+}
+
+.sale-product {
+    margin: 0px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    >* {
+        flex: 50%;
+        margin: 1px;
+        margin-bottom: 15px;
+        max-width: 47%;
+    }
+}
+
+.sale-waiting {
+    text-align: center;
+    font-size: 16px;
+    p , a {
+        font-family: $font-light;
+    }
+}
+
+@include tv {
+    .sale_form {
+        min-height: 500px;
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-addon .form-control,
+        .form-addon .input-group-checkbox,
+        .input-group-addon,
+        .btn,
+        .btn.btn-sale {
+            font-size: 30px !important;
+        }
+
+        .form-addon .form-control,
+        .form-addon .input-group-checkbox,
+        .form-addon .btn {
+            height: 100px;
+        }
+        .input-group-addon {
+            min-width: 200px;
+        }
+    }
+    // .btn.btn-sale {
+    //     height: 120px;
+    //     min-width: 400px;
+    // }
+}
+
+.sale-complete .sale-complete-strached .sale__complete .sale_panel .sale_panel_text {
+    @include tv {
+        font-size: 40px;
+    }
+}

@@ -1,0 +1,110 @@
+<html>
+<head>
+
+
+</head>
+<body>
+    <div>
+        <h1>ONLY TEST: Apply Tax to the cart</h1>
+        <div>
+            <p>Click on the button</p>
+            <!-- <button id="btnmobilpay" style="height:80px; width:120px;">Mobile pay</button> -->
+            <button id="btnAddDiscount">Apply Tax</button>
+            <br><br><br>
+            <div id="eventLogger"></div>
+        </div>
+    </div>
+
+    <div class="elementor-widget-container">
+      
+        </script>
+        <div id="dvRequest"></div>
+     <div id="dvResponse"></div>
+    
+
+<script type="text/javascript">
+    function AddEventLog(value) {
+        var output = ""; //"<div class=\"log-" + (typeof value) + "\">";
+        if (typeof value === "object") {
+            output += JSON.stringify(value);
+        } else {
+            output += value;
+        }
+        //output += "</div>";
+        document.getElementById("eventLogger").innerHTML += output + "<br /><br />";
+    }
+
+    AddEventLog("plateform detect: " + navigator.appVersion);
+    AddEventLog("=========================================");
+    //Register app commands for native Pateform Start
+    var AppEnv = window;
+    if (navigator.appVersion.includes('Android') || navigator.appVersion.includes('Mac')) {
+        window.postMessage = function (data) {
+            window.ReactNativeWebView.postMessage(data);
+            true;
+        };
+        AppEnv = document;
+    }
+    //Register app commands for native Pateform End
+    //Listen for message from Oliver POS
+    var checkoutData;
+
+    AddEventLog("you are in other OS with window listner");
+    //Add Listener to Retrive data from parent window
+    AppEnv.addEventListener('message', function (e) {
+        AddEventLog("Window Message listener call");
+        checkoutData = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+        AddEventLog("Window Message from Oliver POS:");
+        AddEventLog(checkoutData);
+    }, false);
+
+    //On load event
+     //Listen for message from Oliver POS  
+     var msgData = ''
+
+
+    AppEnv.addEventListener('DOMContentLoaded', (event) => {
+            AddEventLog("Window page content loaded");
+            setTimeout(() => {
+            var readyExtensionData = {
+                    command: 'appReady',
+                    version:"1.0",
+                    method: 'get'
+                }
+
+
+            AddEventLog("Window push data:" + JSON.stringify(readyExtensionData));
+            //push notification to parent window it is loaded now please send the usefull data
+            window.parent.postMessage(JSON.stringify(readyExtensionData), '*');
+        }, 1000);
+    });
+    
+    
+        //CustomerDetails Button click event-----------
+        var btnAddDiscount = document.getElementById('btnAddDiscount');
+        btnAddDiscount.addEventListener('click', function (e) {
+
+            var jsonMsg = {
+                command: "cartTaxes",
+                version:"1.0",
+                method: "post",       
+                tax_name: "Ontario HST/GST",               
+                amount: 13.00         
+            }
+            // document.getElementById('dvResponse').innerText = "";
+            // document.getElementById('dvRequest').innerText = "Request:" + JSON.stringify(jsonMsg,undefined,2);
+            AddEventLog("Window push data:" + JSON.stringify(jsonMsg,undefined,2));
+            window.parent.postMessage(JSON.stringify(jsonMsg), '*');
+            e.preventDefault();
+        });
+
+    function uuidv4() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+</script>
+    </div>
+</body>
+
+</html>

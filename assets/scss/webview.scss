@@ -1,0 +1,15 @@
+$border-color : #C5BFBF;
+$danger: #E0654C;
+$primary : #46A9D4;
+$success : #A9D47D;
+$transparent : transparent;
+.text-danger  {     color: $danger;         }
+.text-primary {     color: $primary;        }
+.text-success {     color: $success;        }
+/*----------------Web Veiw-----------*/
+@import "../scss/mixing";
+@import "../scss/reset";
+@import "color";
+@import "login";
+@import "position";
+@import "shared";
