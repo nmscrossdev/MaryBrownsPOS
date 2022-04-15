@@ -1,5 +1,4 @@
-//var HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack')
 
@@ -38,7 +37,7 @@ console.log("Build in development mode")
 module.exports = {
     
   devtool: 'source-map',
-    entry: ["regenerator-runtime/runtime.js", "index.js"],
+    entry: "index.js",
     //mode:  "production",
      mode:  "development",
     output: {
@@ -51,17 +50,47 @@ module.exports = {
         extensions: ['.Webpack.js', '.web.js', '.ts', '.js', '.jsx', '.tsx']
     },
     module: {
-      rules: [
+        rules: [
+            {
+                test: /\.tsx$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'ts-loader'
+                }
+            },
+            {test: /\.js$/,
+            // loader: 'babel-loader',
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    // babelrc: true,
+                    presets: ['react', 'stage-2']
+                    // plugins: ['react-hot-loader/babel']
+                }
+            },
+            // query: {
+            //     presets:[ 'es2015', 'react', 'stage-2' ]
+            // },
+            exclude: /node_modules/
+         },
          {
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-               presets: ["@babel/preset-env"]
-            }
-         }
-      ]
-   },
+            test: /\.css$/,
+            use: [
+              {
+                loader: 'style-loader'
+              },
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  camelCase: true,
+                  sourceMap: true
+                }
+              }
+            ]
+          }
+        ]
+    },
     plugins: [
         new webpack.DefinePlugin({
           __isBrowser__: "true"
@@ -69,19 +98,13 @@ module.exports = {
       ],
     plugins: [
         new webpack.DefinePlugin(envKeys)//
-        ,new HtmlWebPackPlugin({
-          title: 'webpack Boilerplate',
-          template: path.resolve('./index.html'),
-          filename: 'index.html', // output file
-          inject: 'body',
-        })
-       ],
+        ,new HtmlWebpackPlugin({
+        template: 'index.html',
+        filename: 'index.html',
+        inject: 'body',
+    })],
     devServer: {
         historyApiFallback: true,
-        open: true,
-    compress: true,
-    hot: true,
-    port: 3000,
     },
  
 

@@ -37,7 +37,7 @@ console.log("Build in devTest mode")
 module.exports = {
     
     devtool: 'source-map',
-    entry: ["regenerator-runtime/runtime.js", "index.js"],
+    entry: "index.js",
     mode: "development",
     output: {
         path: path.resolve(__dirname, 'dist'),
