@@ -1,0 +1,440 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400");
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	background-color: #0aacdb;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+	font-family: "Poppins", sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* --------------------Payment--------------------- */
+
+.margin-bottom-33 {
+	margin-bottom: 33px;
+}
+
+.margin-bottom-24 {
+	margin-bottom: 24px;
+}
+
+/* Payment Method */
+
+.payment-method {
+	box-sizing: border-box;
+	width: 800px;
+	height: 800px;
+	box-shadow: 0px 30px 100px rgba(0, 73, 95, 0.5);
+	border-radius: 20px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+}
+
+.payment-method > img {
+	margin-top: 100px;
+}
+
+.payment-method > div > p {
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 32px;
+	text-align: center;
+	color: #050505;
+}
+
+.payment-method > div > p.price {
+	font-family: Poppins;
+	font-size: 36px;
+	font-weight: 500;
+	line-height: 48px;
+	text-align: center;
+	color: #050505;
+}
+
+.payment-method > div > .row {
+	display: flex;
+	margin-right: -16px;
+	margin-bottom: 16px;
+}
+
+.payment-method > div > .row > button {
+	width: 347px;
+	height: 75px;
+	border: 0;
+	background-color: #e6702a;
+	margin-right: 16px;
+	border-radius: 8px;
+	font-family: Poppins;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 30px;
+	text-align: center;
+	color: #fff;
+}
+
+.payment-method > .back {
+	position: absolute;
+	top: 45px;
+	left: 45px;
+	width: 60px;
+	height: 60px;
+	background-color: #e6702a;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Payment Error */
+
+.payment-error {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 800px;
+	height: 800px;
+	background-color: #fff;
+	box-shadow: 0px 30px 100px rgba(0, 73, 95, 0.5);
+	border-radius: 20px;
+}
+
+.payment-error > img {
+	margin-top: 60px;
+}
+
+.payment-error > div > p.title {
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 32px;
+	text-align: center;
+	color: #050505;
+	margin-bottom: 15px;
+}
+
+.payment-error > div > p.text {
+	font-family: Poppins;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 24px;
+	text-align: center;
+	color: #050505;
+	margin: 0 90px;
+}
+
+.payment-error > .col {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 67px;
+}
+
+.payment-error > .col > button {
+	box-sizing: border-box;
+	width: 448px;
+	height: 75px;
+	border: 0;
+	background-color: #e6702a;
+	border-radius: 4px;
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 32px;
+	text-align: center;
+	color: #fff;
+	margin-bottom: 13px;
+}
+
+/* Payment Processing */
+
+.payment-processing {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 800px;
+	height: 800px;
+	background-color: #fff;
+	box-shadow: 0px 30px 100px rgba(0, 73, 95, 0.5);
+	border-radius: 20px;
+}
+
+.payment-processing > img.margin {
+	margin-top: 60px;
+}
+
+.payment-processing > p {
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 31px;
+	text-align: center;
+	color: #050505;
+	margin: 0 150px 50px 150px;
+}
+
+.payment-processing > button {
+	box-sizing: border-box;
+	width: 448px;
+	height: 75px;
+	border-radius: 4px;
+	background-color: #e6702a;
+	border: 0;
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 32px;
+	text-align: center;
+	color: #fff;
+	margin-bottom: 80px;
+}
+
+/* Payment Complete */
+
+.payment-complete {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 800px;
+	height: 1275px;
+	background-color: #fff;
+	box-shadow: 0px 30px 100px rgba(0, 73, 95, 0.5);
+	border-radius: 20px;
+}
+
+.payment-complete > img {
+	margin-top: 100px;
+}
+
+.payment-complete > .col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.payment-complete > .col > svg {
+	margin-bottom: 23px;
+}
+
+.payment-complete > .col > p.medium {
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 400;
+	line-height: 40px;
+	text-align: center;
+	color: #050505;
+}
+
+.payment-complete > .col > p.small {
+	font-family: Poppins;
+	font-size: 22px;
+	font-weight: 400;
+	line-height: 29px;
+	text-align: center;
+	color: #050505;
+}
+
+.payment-complete > .col > p.big {
+	font-family: Poppins;
+	font-size: 58px;
+	font-weight: 500;
+	line-height: 77px;
+	text-align: center;
+	color: #050505;
+}
+
+.payment-complete > .col > button {
+	box-sizing: border-box;
+	width: 488px;
+	height: 75px;
+	background-color: #e6702a;
+	border: 0;
+	border-radius: 4px;
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 32px;
+	text-align: center;
+	color: #fff;
+}
+
+.payment-complete > .row {
+	display: flex;
+	justify-content: center;
+	width: 488px;
+	border-top: 2px solid #e2e2e2;
+	margin-right: -41px;
+	margin-bottom: 100px;
+}
+
+.payment-complete > .row > .col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 28px;
+	margin-right: 41px;
+}
+
+.payment-complete > .row > .col > .icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	background-color: #0aacdb;
+	border-radius: 10px;
+}
+
+.payment-complete > .row > .col > p {
+	font-family: Poppins;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 24px;
+	text-align: center;
+	color: #0aacdb;
+}
+
+/* Payment Email */
+
+.payment-email {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 800px;
+	height: 800px;
+	background-color: #fff;
+	box-shadow: 0px 30px 100px rgba(0, 73, 95, 0.5);
+	border-radius: 20px;
+}
+
+.payment-email > img {
+	margin-bottom: 40px;
+}
+
+.payment-email > p {
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 32px;
+	letter-spacing: 0em;
+	text-align: center;
+	color: #050505;
+	margin-bottom: 12px;
+}
+
+.payment-email > input {
+	box-sizing: border-box;
+	width: 642px;
+	height: 68px;
+	border: 1px solid #e5e0eb;
+	outline: none;
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 34px;
+	text-align: left;
+	color: #050505;
+	padding: 0 12px;
+	margin-bottom: 18px;
+}
+
+.payment-email > input:focus {
+	border: 2px solid #0aacdb;
+}
+
+.payment-email > label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 69px;
+	font-family: Poppins;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #050505;
+}
+
+.payment-email > label > input {
+	display: none;
+}
+
+.payment-email > label > .custom-checkbox > svg {
+	display: none;
+}
+
+.payment-email > label > input:checked + .custom-checkbox > svg {
+	display: block;
+}
+
+.payment-email > label > .custom-checkbox {
+	box-sizing: border-box;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid #0aacdb;
+	border-radius: 8px;
+	margin-right: 12px;
+}
+
+.payment-email > button {
+	box-sizing: border-box;
+	width: 500px;
+	height: 75px;
+	border: 0;
+	border-radius: 4px;
+	background-color: #e6702a;
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 32px;
+	text-align: center;
+	color: #fff;
+}
+
+/* Oliver Logo */
+
+.oliver-logo {
+	position: fixed;
+	bottom: 32px;
+}
+
+/* Remove after show */
+.completeSale {
+	width: 200px;
+	height: 50px;
+	position: fixed;
+	bottom: 0;
+	background-color: #e6702a;
+}
+
+/* MUST BE AT BOTTOM */
+
+.hide {
+	display: none;
+}

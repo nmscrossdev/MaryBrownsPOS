@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { TileModel, NavbarPage, CommonProductPopupModal, CommonHeaderTwo, getTaxAllProduct, AllProduct, PopupShopStatus, CommonMsgModal, UpdateProductInventoryModal } from '../_components';
 import { cartProductActions, cloudPrinterActions } from '../_actions'
-import { FavouriteList, favouriteListActions } from '../ShopView/index';
+import {  favouriteListActions } from '../ShopView/index';
+import {FavouriteList} from '../SelfCheckout/components/FavouriteList';
 import { history } from '../_helpers';
 import { typeOfTax } from '../_components/TaxSetting';
 import { taxRateAction } from '../_actions';
@@ -37,6 +38,8 @@ import BarcodeReader from 'react-barcode-reader'
 import moment from 'moment';
 import { CommonInfoPopup } from '../_components/CommonInfoPopup';
 import { TickitDetailsPopupModal } from '../_components/TickitDetailsPopupModal/TickitDetailsPopupModal';
+import Categories from '../SelfCheckout/components/Categories';
+import Carasoul from '../SelfCheckout/components/Carasoul'
 class SelfCheckoutView extends React.Component {
     constructor(props) {
         super(props);
@@ -1065,207 +1068,232 @@ class SelfCheckoutView extends React.Component {
         const showSearchBar = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Search-Bar");
         const showFavouriteTile = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Tile");
         return (
-            <div>{
-                (openModalActive == "tile_modal" && isMobileOnly == true)?
-                <TileModel
-                    {...this.props}
-                    {...this.state}
-                    openModal={this.openModal}
-                    status={this.tileModalAddStatus}
-                    msg={this.CommonMsg}
-                    positionNum={this.state.posIndex}
-                />
-                :
-               (this.state.cartViewForMobile == true)?
-                <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
-                    showPopuponcartlistView={this.showPopuponcartlistView}
-                    discountType={this.state.discountType}
-                    ticketDetail={this.handleTicketDetail}
-                    msg={this.CommonMsg}
-                    openModal={this.openModal}
-                    onCancelOrderHandler ={this.onCancelOrderHandler}
-                    AllProductList={AllProductList}/>
-                :
-                (isMobileOnly == true) ?
-                    <div>
-                        <MobileShopView
-                            {...this.props}
-                            {...this.state}
-                            NavbarPage={NavbarPage}
-                            FavouriteList={FavouriteList}
-                            handleProductData={this.handleProductData}
-                            handletileFilterData={this.handletileFilterData}
-                            tileModalAddStatus={this.tileModalAddStatus}
-                            CommonMsg={this.CommonMsg}
-                            tilePosition={this.tilePosition}
-                            status={this.state.addFavouriteStatus}
-                            tileFilterData={this.handletileFilterData}
-                            addStatus={this.tileModalAddStatus}
-                            msg={this.CommonMsg}
-                            productData={this.handleProductData}
-                            onRef={ref => (this.tileProductFilter = ref)}
-                            simpleProductData={this.handleSimpleProduct}
-                            showPopuponcartlistView={this.showPopuponcartlistView}
-                            discountType={this.state.discountType}
-                            ticketDetail={this.handleTicketDetail}
-                            NotificationFilters={this.handleNotification}
-                            searchProductFilter={this.handletileFilterData}
-                            list={this.state.notifyList}
-                            AllProduct={AllProduct}
-                            openModal={this.openModal}
-                            CommonHeaderTwo={CommonHeaderTwo}
-                            viewOrderEvent={this.viewOrderEvent}
-                            onEventHandling={this.onHandleEventofCancelOrderPopup}
-                            onCancelOrderHandler={this.onCancelOrderHandler}
-                            onSinginselfcheckout={this.onSinginselfcheckout}/>
-                        <MCancalOrderPopup onCancelEvent={this.onHandleEventofCancelOrderPopup}/>
-                        <WarningMessage msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal}/>
-                        <MCommonPopup userProfilePopup={this.userProfilePopup}
-                                    createProfilePopup={this.createProfilePopup}/>
-                        <CommonSelfcheckoutProductPopupModal isLoadingMore={false} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
-                            inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
-                            getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
-                            msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} />
-                        <Singinselfcheckout/>                        
-                        <CreateProfile />
-                        <MobileSignInPopup />
-                        <MCancalOrderPopup onCancelEvent={this.onHandleEventofCancelOrderPopup}/>
-                        <MobilePopupDisplayMessage/>
-                    </div>
-                :                    
-                    <div>                
-                    {(isFavList !== null && isFavList === 'true') ?
-                        <div>    
-                            <div className="inner_content bg-light-white clearfix">
-                                <div className="content_wrapper">                                    
-                                    <FavouriteList {...this.props} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
-                                        status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
-                                        tilePosition={this.tilePosition} isShopView={false}/>
-                                </div>
-                            </div>
-                        </div>
-                        :
-                        <div>
-                        {style && style=="portrait" &&
-                            <div className="portrait">
-                                <div className="self-checkout-home">
-                                    {this.state.main_banner_image && this.state.main_banner_image !== '' ?
-                                        <div className="self-checkout-header background-cover background-no-repeat">
-                                            <img src={this.state.main_banner_image} className="img-reponsive object-fit h-100" alt="" />
-                                        </div>
-                                        :
-                                        ''}
-                                    <div className="self-checkout-content scroll-hidden">
-                                        <div className="self-checkout-grid pl-0">
-                                                {showFavouriteTile && showFavouriteTile.value == 'true' &&
-                                                    <div className="self-checkout-scroll-1 overflowscroll">
-                                                        <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
-                                                            status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
-                                                            tilePosition={this.tilePosition} isShopView={true}/>
-                                                    </div>
-                                                }
-                                                 <div className={showFavouriteTile && showFavouriteTile.value == 'true' ? "filter-pruduct h-100" : "filter-pruduct h-100 w-100"}>
-                                                    {showSearchBar && showSearchBar.value == 'true' &&
-                                                        <div className="widget-search"> 
-                                                            <input type="search" id="product_search_field_pro" className="form-control" name="search" onChange={() => this.filterProduct(style)}
-                                                                autoComplete="off" onClick={() => this.searchOpen()} placeholder={LocalizedLanguage.search} />
-                                                        </div>
-                                                    }
-                                                    <div className="self-checkout-scroll-2 overflowscroll">                                      
-                                                        <AllProduct productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
-                                                        showPopuponcartlistView={this.showPopuponcartlistView} style={style}/>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="self-checkout-footer border-top border-width-1">
-                                        <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
-                                            showPopuponcartlistView={this.showPopuponcartlistView}
-                                            discountType={this.state.discountType}
-                                            ticketDetail={this.handleTicketDetail}
-                                            msg={this.CommonMsg}
-                                            AllProductList={AllProductList} 
-                                            style="portrait"/>
-                                    </div>
-                                </div>
-                            </div>
-                        }   
-                        {style && style=="landscape" &&
-                            <div className="landscape">
-                                <div className="self-checkout-home">
-                                    <div className="self-checkout-content scroll-hidden">
-                                        <div className="self-checkout-grid pl-0">
-                                                {showFavouriteTile && showFavouriteTile.value == 'true' &&
-                                                    <div className="self-checkout-scroll-1 overflowscroll">
-                                                        <div>
-                                                            <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
-                                                                status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
-                                                                tilePosition={this.tilePosition} isShopView={true}/>
-                                                        </div>
-                                                    </div>
-                                                }
-                                                     <div className={showFavouriteTile && showFavouriteTile.value == 'true' ? "filter-pruduct h-100" : "filter-pruduct h-100 w-100"}>
-                                                    {showSearchBar && showSearchBar.value == 'true' &&
-                                                        <div className="widget-search">                                     
-                                                        <input type="search" id="product_search_field" className="form-control" name="search" onChange={() => this.filterProduct(style)}
-                                                            onClick={() => this.searchOpen()} placeholder={LocalizedLanguage.search} />
-                                                        </div>
-                                                    }
-                                                    <div className="self-checkout-scroll-22 overflowscroll scroll-auto">  
-                                                        <AllProduct productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
-                                                        showPopuponcartlistView={this.showPopuponcartlistView} style={style}/>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
-                                        showPopuponcartlistView={this.showPopuponcartlistView}
-                                        discountType={this.state.discountType}
-                                        ticketDetail={this.handleTicketDetail}
-                                        msg={this.CommonMsg}
-                                        AllProductList={AllProductList} 
-                                        style="landscape"/>
-                                </div>
-                            </div>               
-                        }
-                        </div>    
-                    }
-                    <TileModel status={this.tileModalAddStatus} msg={this.CommonMsg} positionNum={this.state.posIndex} />      
-                    <CommonProductPopupModal getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
-                    inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
-                    getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
-                    msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} 
-                    datetime={this.state.datetime}/>
-                    <UpdateProductInventoryModal />
-                    <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
-                    <CommonInfoPopup
-                        title = {LocalizedLanguage.noMatchingProductFound}
-                        subTitle = {this.state.common_Msg}
-                        buttonText = {LocalizedLanguage.continue}
-                        closeCommonPopup = {()=>this.handleCloseCommonPopup()}
-                        id = {'commonInfoPopup'}
-                        />
-                    <PopupShopStatus/> 
-                    <CreateProfile/> 
-                    <Singinselfcheckout/> 
-                    <OnboardingShopViewPopup
-                        title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
-                        subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
-                        subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
-                        onClickContinue={onBackTOLoginBtnClick}
-                        imageSrc={''}
-                        btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
-                        id={'firebaseRegisterAlreadyusedPopup'} />
-                    <PopupDisplayMessage />
-                </div>
-                }
-                <MCancalOrderPopup onCancelEvent={this.onHandleEventofCancelOrderPopup}/>
+            // <div>{
+            //     (openModalActive == "tile_modal" && isMobileOnly == true)?
+            //     <TileModel
+            //         {...this.props}
+            //         {...this.state}
+            //         openModal={this.openModal}
+            //         status={this.tileModalAddStatus}
+            //         msg={this.CommonMsg}
+            //         positionNum={this.state.posIndex}
+            //     />
+            //     :
+            //    (this.state.cartViewForMobile == true)?
+            //     <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
+            //         showPopuponcartlistView={this.showPopuponcartlistView}
+            //         discountType={this.state.discountType}
+            //         ticketDetail={this.handleTicketDetail}
+            //         msg={this.CommonMsg}
+            //         openModal={this.openModal}
+            //         onCancelOrderHandler ={this.onCancelOrderHandler}
+            //         AllProductList={AllProductList}/>
+            //     :
+            //     (isMobileOnly == true) ?
+            //         <div>
+            //             <MobileShopView
+            //                 {...this.props}
+            //                 {...this.state}
+            //                 NavbarPage={NavbarPage}
+            //                 FavouriteList={FavouriteList}
+            //                 handleProductData={this.handleProductData}
+            //                 handletileFilterData={this.handletileFilterData}
+            //                 tileModalAddStatus={this.tileModalAddStatus}
+            //                 CommonMsg={this.CommonMsg}
+            //                 tilePosition={this.tilePosition}
+            //                 status={this.state.addFavouriteStatus}
+            //                 tileFilterData={this.handletileFilterData}
+            //                 addStatus={this.tileModalAddStatus}
+            //                 msg={this.CommonMsg}
+            //                 productData={this.handleProductData}
+            //                 onRef={ref => (this.tileProductFilter = ref)}
+            //                 simpleProductData={this.handleSimpleProduct}
+            //                 showPopuponcartlistView={this.showPopuponcartlistView}
+            //                 discountType={this.state.discountType}
+            //                 ticketDetail={this.handleTicketDetail}
+            //                 NotificationFilters={this.handleNotification}
+            //                 searchProductFilter={this.handletileFilterData}
+            //                 list={this.state.notifyList}
+            //                 AllProduct={AllProduct}
+            //                 openModal={this.openModal}
+            //                 CommonHeaderTwo={CommonHeaderTwo}
+            //                 viewOrderEvent={this.viewOrderEvent}
+            //                 onEventHandling={this.onHandleEventofCancelOrderPopup}
+            //                 onCancelOrderHandler={this.onCancelOrderHandler}
+            //                 onSinginselfcheckout={this.onSinginselfcheckout}/>
+            //             <MCancalOrderPopup onCancelEvent={this.onHandleEventofCancelOrderPopup}/>
+            //             <WarningMessage msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal}/>
+            //             <MCommonPopup userProfilePopup={this.userProfilePopup}
+            //                         createProfilePopup={this.createProfilePopup}/>
+            //             <CommonSelfcheckoutProductPopupModal isLoadingMore={false} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
+            //                 inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
+            //                 getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
+            //                 msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} />
+            //             <Singinselfcheckout/>                        
+            //             <CreateProfile />
+            //             <MobileSignInPopup />
+            //             <MCancalOrderPopup onCancelEvent={this.onHandleEventofCancelOrderPopup}/>
+            //             <MobilePopupDisplayMessage/>
+            //         </div>
+            //     :                    
+            //         <div>                
+            //         {(isFavList !== null && isFavList === 'true') ?
+            //             <div>    
+            //                 <div className="inner_content bg-light-white clearfix">
+            //                     <div className="content_wrapper">                                    
+            //                         <FavouriteList {...this.props} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
+            //                             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
+            //                             tilePosition={this.tilePosition} isShopView={false}/>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //             :
+            //             <div>
+            //             {style && style=="portrait" &&
+            //                 <div className="portrait">
+            //                     <div className="self-checkout-home">
+            //                         {this.state.main_banner_image && this.state.main_banner_image !== '' ?
+            //                             <div className="self-checkout-header background-cover background-no-repeat">
+            //                                 <img src={this.state.main_banner_image} className="img-reponsive object-fit h-100" alt="" />
+            //                             </div>
+            //                             :
+            //                             ''}
+            //                         <div className="self-checkout-content scroll-hidden">
+            //                             <div className="self-checkout-grid pl-0">
+            //                                     {showFavouriteTile && showFavouriteTile.value == 'true' &&
+            //                                         <div className="self-checkout-scroll-1 overflowscroll">
+            //                                             <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
+            //                                                 status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
+            //                                                 tilePosition={this.tilePosition} isShopView={true}/>
+            //                                         </div>
+            //                                     }
+            //                                      <div className={showFavouriteTile && showFavouriteTile.value == 'true' ? "filter-pruduct h-100" : "filter-pruduct h-100 w-100"}>
+            //                                         {showSearchBar && showSearchBar.value == 'true' &&
+            //                                             <div className="widget-search"> 
+            //                                                 <input type="search" id="product_search_field_pro" className="form-control" name="search" onChange={() => this.filterProduct(style)}
+            //                                                     autoComplete="off" onClick={() => this.searchOpen()} placeholder={LocalizedLanguage.search} />
+            //                                             </div>
+            //                                         }
+            //                                         <div className="self-checkout-scroll-2 overflowscroll">                                      
+            //                                             <AllProduct productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
+            //                                             showPopuponcartlistView={this.showPopuponcartlistView} style={style}/>
+            //                                         </div>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                         <div className="self-checkout-footer border-top border-width-1">
+            //                             <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
+            //                                 showPopuponcartlistView={this.showPopuponcartlistView}
+            //                                 discountType={this.state.discountType}
+            //                                 ticketDetail={this.handleTicketDetail}
+            //                                 msg={this.CommonMsg}
+            //                                 AllProductList={AllProductList} 
+            //                                 style="portrait"/>
+            //                         </div>
+            //                     </div>
+            //                 </div>
+            //             }   
+            //             {style && style=="landscape" &&
+            //                 <div className="landscape">
+            //                     <div className="self-checkout-home">
+            //                         <div className="self-checkout-content scroll-hidden">
+            //                             <div className="self-checkout-grid pl-0">
+            //                                     {showFavouriteTile && showFavouriteTile.value == 'true' &&
+            //                                         <div className="self-checkout-scroll-1 overflowscroll">
+            //                                             <div>
+            //                                                 <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
+            //                                                     status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
+            //                                                     tilePosition={this.tilePosition} isShopView={true}/>
+            //                                             </div>
+            //                                         </div>
+            //                                     }
+            //                                          <div className={showFavouriteTile && showFavouriteTile.value == 'true' ? "filter-pruduct h-100" : "filter-pruduct h-100 w-100"}>
+            //                                         {showSearchBar && showSearchBar.value == 'true' &&
+            //                                             <div className="widget-search">                                     
+            //                                             <input type="search" id="product_search_field" className="form-control" name="search" onChange={() => this.filterProduct(style)}
+            //                                                 onClick={() => this.searchOpen()} placeholder={LocalizedLanguage.search} />
+            //                                             </div>
+            //                                         }
+            //                                         <div className="self-checkout-scroll-22 overflowscroll scroll-auto">  
+            //                                             <AllProduct productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
+            //                                             showPopuponcartlistView={this.showPopuponcartlistView} style={style}/>
+            //                                         </div>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                         <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
+            //                             showPopuponcartlistView={this.showPopuponcartlistView}
+            //                             discountType={this.state.discountType}
+            //                             ticketDetail={this.handleTicketDetail}
+            //                             msg={this.CommonMsg}
+            //                             AllProductList={AllProductList} 
+            //                             style="landscape"/>
+            //                     </div>
+            //                 </div>               
+            //             }
+            //             </div>    
+            //         }
+            //         <TileModel status={this.tileModalAddStatus} msg={this.CommonMsg} positionNum={this.state.posIndex} />      
+            //         <CommonProductPopupModal getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
+            //         inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
+            //         getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
+            //         msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} 
+            //         datetime={this.state.datetime}/>
+            //         <UpdateProductInventoryModal />
+            //         <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
+            //         <CommonInfoPopup
+            //             title = {LocalizedLanguage.noMatchingProductFound}
+            //             subTitle = {this.state.common_Msg}
+            //             buttonText = {LocalizedLanguage.continue}
+            //             closeCommonPopup = {()=>this.handleCloseCommonPopup()}
+            //             id = {'commonInfoPopup'}
+            //             />
+            //         <PopupShopStatus/> 
+            //         <CreateProfile/> 
+            //         <Singinselfcheckout/> 
+            //         <OnboardingShopViewPopup
+            //             title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
+            //             subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
+            //             subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
+            //             onClickContinue={onBackTOLoginBtnClick}
+            //             imageSrc={''}
+            //             btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
+            //             id={'firebaseRegisterAlreadyusedPopup'} />
+            //         <PopupDisplayMessage />
+            //     </div>
+            //     }
+            //     <MCancalOrderPopup onCancelEvent={this.onHandleEventofCancelOrderPopup}/>
 
-                <BarcodeReader
-                        onError={this.handleScan}
-                        onScan={this.handleScan}
-                    />
-            { ActiveUser.key.isSelfcheckout !== true && isMobileOnly !== true && <TickitDetailsPopupModal Ticket_Detail={this.state.Ticket_Detail} openModal={this.openModal} />}
+            //     <BarcodeReader
+            //             onError={this.handleScan}
+            //             onScan={this.handleScan}
+            //         />
+            // { ActiveUser.key.isSelfcheckout !== true && isMobileOnly !== true && <TickitDetailsPopupModal Ticket_Detail={this.state.Ticket_Detail} openModal={this.openModal} />}
+            // </div>
+            <div>
+            <Carasoul></Carasoul>
+            
+            <Categories></Categories>
+            <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
+            status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
+            tilePosition={this.tilePosition} isShopView={true}/>
+            <p className="title margin-bottom-20">Menu Items</p>  
+            <AllProduct productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} ></AllProduct>
+            {/* <TileModel status={this.tileModalAddStatus} msg={this.CommonMsg} positionNum={this.state.posIndex} />       */}
+            <CommonProductPopupModal getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
+            inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
+            getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
+            msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} 
+            datetime={this.state.datetime}/>
+            {/* <UpdateProductInventoryModal /> */}
+            <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
+            {/* <CommonInfoPopup
+                title = {LocalizedLanguage.noMatchingProductFound}
+                subTitle = {this.state.common_Msg}
+                buttonText = {LocalizedLanguage.continue}
+                closeCommonPopup = {()=>this.handleCloseCommonPopup()}
+                id = {'commonInfoPopup'}
+                /> */}
             </div>
         );
     }

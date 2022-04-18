@@ -713,37 +713,51 @@ class FavouriteList extends React.Component {
                                             var img = item.Image ? item.Image.split('/') : '';
                                             return (
                                                 item.attribute_slug && !item.parent_attribute ?
-                                                    <div key={"attribute" + item.id} className="app app-primary" data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`}>
-                                                        <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 1, "attribute")}>
-                                                            <h1 className="app-title text-truncate text-center">
-                                                                <Markup content={titleName}></Markup>
-                                                            </h1>
-                                                        </div>
-                                                    </div>
+                                                    // <div key={"attribute" + item.id} className="app app-primary" data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`}>
+                                                    //     <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 1, "attribute")}>
+                                                    //         <h1 className="app-title text-truncate text-center">
+                                                    //             <Markup content={titleName}></Markup>
+                                                    //         </h1>
+                                                    //     </div>
+                                                    // </div>
+                                                    <div className="category-tile grouped" key={"attribute" + item.id} data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} onClick={() => this.ActiveList(item, 1, "attribute")}>
+                                                    <p> <Markup content={titleName}></Markup></p>
+                                                </div>
                                                     : item.attribute_slug && item.parent_attribute ?
-                                                        <div key={"parent_attribute" + item.id} className="app app-primary" data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} data-parent-attribute={item.parent_attribute}>
-                                                            <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 3, "sub-attribute")}>
-                                                                <h1 className="app-title text-truncate text-center">
-                                                                    <Markup content={titleName}></Markup>
-                                                                </h1>
-                                                            </div>
-                                                        </div>
+                                                        
+                                                        // <div key={"parent_attribute" + item.id} className="app app-primary" data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} data-parent-attribute={item.parent_attribute}>
+                                                        //     <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 3, "sub-attribute")}>
+                                                        //         <h1 className="app-title text-truncate text-center">
+                                                        //             <Markup content={titleName}></Markup>
+                                                        //         </h1>
+                                                        //     </div>
+                                                        // </div>
+                                                         <div className="category-tile grouped" key={"parent_attribute" + item.id} data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} data-parent-attribute={item.parent_attribute} onClick={() => this.ActiveList(item, 3, "sub-attribute")}>
+                                                         <p> <Markup content={titleName}></Markup></p>
+                                                     </div>
                                                         : item.category_slug && !item.sub_category_type ?
-                                                            <div key={"category" + item.id} className="app app-primary" data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}>
-                                                                <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 2, "category")}>
-                                                                    <h1 className="app-title text-truncate text-center">
-                                                                         <Markup content={titleName}></Markup>
-                                                                    </h1>
-                                                                </div>
-                                                            </div>
+                                                            // <div key={"category" + item.id} className="app app-primary" data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}>
+                                                            //     <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 2, "category")}>
+                                                            //         <h1 className="app-title text-truncate text-center">
+                                                            //              <Markup content={titleName}></Markup>
+                                                            //         </h1>
+                                                            //     </div>
+                                                            // </div>
+                                                             <div className="category-tile grouped" key={"category" + item.id} data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug} onClick={() => this.ActiveList(item, 2, "category")}>
+                                                             <p> <Markup content={titleName}></Markup></p>
+                                                             </div>
                                                             : item.sub_category_type ?
-                                                                <div key={"sub_category_type" + item.id} className="app app-primary" data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}>
-                                                                    <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                                                                        <h1 className="app-title text-truncate text-center">
-                                                                             <Markup content={titleName}></Markup>
-                                                                        </h1>
-                                                                    </div>
-                                                                </div>
+                                                                // <div key={"sub_category_type" + item.id} className="app app-primary" data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}>
+                                                                //     <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 4, "sub-category")}>
+                                                                //         <h1 className="app-title text-truncate text-center">
+                                                                //              <Markup content={titleName}></Markup>
+                                                                //         </h1>
+                                                                //     </div>
+                                                                // </div>
+                                                                 <div className="category-tile grouped" key={"sub_category_type" + item.id} data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug} onClick={() => this.ActiveList(item, 4, "sub-category")}>
+                                                                 <p> <Markup content={titleName}></Markup></p>
+                                                                 </div>
+
                                                                 : ''
                                             )
                                         })

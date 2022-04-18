@@ -1,0 +1,804 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400");
+
+html,
+body {
+	height: 100%;
+	background-color: #e5e5e5;
+}
+
+body {
+	min-height: 100%;
+	margin: 0;
+	padding: 0 55px 0 55px;
+	box-sizing: border-box;
+	background-color: white;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+	font-family: "Poppins", sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.rowButton {
+	display: flex;
+	align-items: center;
+}
+
+.topmargin--25 {
+	margin-top: -25px;
+}
+
+.topmargin-25 {
+	margin-top: 25px;
+}
+
+.marginright--25 {
+	margin-right: -25px;
+}
+
+.marginright-25 {
+	margin-right: 25px;
+}
+
+.rightmargin--35 {
+	margin-right: -35px;
+}
+
+.rightmargin-35 {
+	margin-right: 35px;
+}
+
+.margin--25 {
+	margin-bottom: -25px;
+}
+
+.margin-20 {
+	margin-bottom: 20px;
+}
+
+.margin-25 {
+	margin-bottom: 25px;
+}
+
+.margin-30 {
+	margin-bottom: 30px;
+}
+
+.margin-65 {
+	margin-bottom: 65px;
+}
+
+.margin-68 {
+	margin-bottom: 68px;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.overflowX {
+	flex-shrink: 0;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	overflow-x: scroll;
+}
+
+.overflowX::-webkit-scrollbar {
+	display: none;
+}
+
+.overflowY {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	overflow-y: scroll;
+}
+
+.overflowY::-webkit-scrollbar {
+	display: none;
+}
+
+.inner-row {
+	display: flex;
+}
+
+p.bigbold {
+	font-size: 32px;
+	font-weight: 600;
+	line-height: 38px;
+	color: #050505;
+}
+
+button.default {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	border: 3px solid #e6702a;
+	background-color: #e6702a;
+	border-radius: 8px;
+	font-family: Poppins;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	color: #fff;
+}
+
+button.default svg {
+	margin-right: 16px;
+}
+
+.divider {
+	height: 1px;
+	width: 105px;
+	background-color: #0aacdb;
+}
+
+.icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	width: 40px;
+	height: 40px;
+	background-color: #e6702a;
+	border-radius: 10px;
+}
+
+.icon.big {
+	width: 58px;
+	height: 58px;
+	border-radius: 15px;
+}
+
+.icon.orange {
+	background-color: #e6702a;
+}
+
+.icon.blue {
+	background-color: #0aacdb;
+}
+
+.icon-label {
+	position: absolute;
+	top: calc(100% + 3px);
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	color: #e6702a;
+}
+
+.icon-notification {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	background-color: #ff525f;
+	border-radius: 100%;
+	bottom: 70%;
+	left: 70%;
+}
+
+.icon-notification p {
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 17px;
+	color: #ffffff;
+}
+
+/* pop up design */
+
+.popUp_body {
+	background-color: white;
+	width: 1000px;
+	height: 1670px;
+	border: 3px solid #f1f1f1;
+	box-sizing: border-box;
+	border-radius: 12px;
+	margin-top: -60px;
+}
+
+.popUp_item_container {
+	margin: 0 auto;
+	width: 920px;
+	height: 1200px;
+	border-radius: 12px;
+}
+
+.popUp_header {
+	padding: 32px 0px 24px 0px;
+	border-bottom: 1px solid #d4d2d5;
+	display: flex;
+	justify-content: space-between;
+}
+
+.popUp_header_title > p {
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 600;
+	font-size: 28px;
+	line-height: 120%;
+	color: #050505;
+}
+
+.item_info_section {
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 27px;
+	color: #050505;
+}
+
+.item_info {
+	padding-top: 31px;
+}
+
+.item_image {
+	float: left;
+}
+
+.item_options {
+	float: left;
+}
+
+.price_modify {
+	background-color: #e6702a;
+}
+
+.price_modify > p {
+	float: left;
+}
+
+.price_modify > button {
+	float: right;
+}
+
+.item_price {
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 28px;
+	line-height: 120%;
+	color: #e6702a;
+}
+
+.item_tax {
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 120%;
+	color: #aba7af;
+	padding-top: 10px;
+  margin-left: 10px;
+}
+
+.price_modify .button.secondary {
+	border: 1px solid #2797e8;
+	border-radius: 4px;
+	background-color: #fff;
+	color: #2797e8;
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 148%;
+	width: 205px;
+	height: 54px;
+	cursor: pointer;
+	margin-top: -10px;
+}
+
+.price_modify .button.secondary:hover {
+	border-color: #3d4c66;
+	color: #3d4c66;
+}
+
+.price_modify .button.secondary:active {
+	border-color: #243249;
+	color: #243249;
+}
+
+.price_modify .button.secondary:disabled {
+	border-color: #d4d2d5;
+	color: #d4d2d5;
+}
+
+/* number input */
+
+.area {
+	width: 10%;
+	border: none;
+	padding: 0;
+}
+
+.numberInput {
+	background: #fff;
+	color: black;
+	border-color: #d4d2d5;
+	border: 1px solid #d4d2d5;
+	background: url(https://shafkatoliver.github.io/images-for-components/-.png) no-repeat,
+		url(https://shafkatoliver.github.io/images-for-components/Plus.png) no-repeat;
+	background-position-x: 10%, 90%;
+	background-position-y: 50%, 50%;
+	text-align: center;
+	padding-left: 40px;
+	padding-right: 40px;
+	width: 70px;
+	height: 48px;
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 132%;
+	color: #050505;
+}
+
+.numberInput[type="text"] {
+	width: 2px;
+}
+
+.numberInput::placeholder {
+	color: #d4d2d5;
+}
+
+.numberInput:hover:not(.disabled) {
+	background: #fff;
+	color: black;
+	border-color: #2797e8;
+	background: url(https://shafkatoliver.github.io/images-for-components/-.png) no-repeat,
+		url(https://shafkatoliver.github.io/images-for-components/Plus.png) no-repeat;
+	background-position-x: 10%, 90%;
+	background-position-y: 50%, 50%;
+	cursor: pointer;
+}
+
+.numberInput:active:not(.disabled) {
+	background-color: #f8f7f8;
+	border: 1px solid #2797e8;
+	text-decoration: black;
+	background: url(https://shafkatoliver.github.io/images-for-components/-.png) no-repeat,
+		url(https://shafkatoliver.github.io/images-for-components/Plus.png) no-repeat;
+	background-position-x: 10%, 90%;
+	background-position-y: 50%, 50%;
+}
+
+.numberInput:focus {
+	background: #fff;
+	color: black;
+	border: 1px solid #2797e8;
+	outline: none;
+	background: url(https://shafkatoliver.github.io/images-for-components/-.png) no-repeat,
+		url(https://shafkatoliver.github.io/images-for-components/Plus.png) no-repeat;
+	background-position-x: 10%, 90%;
+	background-position-y: 50%, 50%;
+	background-origin: padding-box;
+}
+
+.disabled {
+	background: #d4d2d5;
+	border-color: #d4d2d5;
+}
+
+.disabled::placeholder {
+	color: #aba7af;
+}
+
+.numberInput.disabled {
+	color: #d4d2d5;
+	background: url(https://shafkatoliver.github.io/images-for-components/-Disable.png) no-repeat,
+		url(https://shafkatoliver.github.io/images-for-components/PlusDisable.png) no-repeat #d4d2d5;
+	background-position-x: 10%, 90%;
+	background-position-y: 50%, 50%;
+}
+
+/* --------------------Product Variants-------------------- */
+
+.variants {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.variants p {
+	margin: 0;
+	font-family: Poppins;
+	font-size: 20px;
+	line-height: 29px;
+	color: #3d4c66;
+}
+
+.variants .header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 65px;
+}
+
+.variants .header svg {
+	margin-right: 20px;
+}
+
+.variants .header svg:hover {
+	cursor: pointer;
+	fill: #2797e8;
+}
+
+.variants .header .left,
+.variants .header .right {
+	display: flex;
+	align-items: center;
+}
+
+.variants .header .right p {
+	font-family: Poppins;
+	font-size: 14px;
+	line-height: 20px;
+	color: #2797e8;
+}
+
+.variants .header .right:hover p {
+	color: #3d4c66;
+	cursor: pointer;
+}
+
+.variants .header .right:active p {
+	color: #243249;
+}
+
+.variants .rowButton {
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	margin-bottom: 43px;
+}
+
+.variants .rowButton .label {
+	top: 0%;
+	left: 0%;
+	position: absolute;
+	font-family: Poppins;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	transform: translateY(-35px);
+}
+
+.variants .rowButton input[type="radio"] {
+	display: none;
+}
+
+.variants .rowButton label {
+	box-sizing: border-box;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 24px;
+	color: #2797e8;
+	border: 1px solid #2797e8;
+	border-radius: 4px;
+	padding: 8px 40px;
+	margin: 0 12px 12px 0;
+}
+
+.variants .rowButton label:hover {
+	color: #3d4c66;
+	border-color: #3d4c66;
+	cursor: pointer;
+}
+
+.variants .rowButton input[type="radio"]:checked + label {
+	border-color: #2797e8;
+	background-color: #2797e8;
+	color: #fff;
+}
+
+/* add note */
+
+.add_note_section {
+	text-align: center;
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 132%;
+	color: #050505;
+	margin-top: 206px;
+}
+
+.add_note_button .button.secondary {
+	border: 1px solid #2797e8;
+	border-radius: 4px;
+	background-color: #fff;
+	color: #2797e8;
+	font-family: "Poppins";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 148%;
+	width: 920px;
+	height: 54px;
+	cursor: pointer;
+	margin-top: 24px;
+}
+
+.add_note_button .button.secondary:hover {
+	border-color: #3d4c66;
+	color: #3d4c66;
+}
+
+.add_note_button .button.secondary:active {
+	border-color: #243249;
+	color: #243249;
+}
+
+.add_note_button .button.secondary:disabled {
+	border-color: #d4d2d5;
+	color: #d4d2d5;
+}
+
+/*------ recomandations ------*/
+
+.recommendations {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 330px;
+	/* margin-left: -55px; */
+	border-radius: 4px;
+	background-color: #f3fbfd;
+	padding-right: 50px;
+	padding-left: 55px;
+	margin-left: -55px;
+	margin-top: 32px;
+}
+
+.recommendations > p {
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 31px;
+	letter-spacing: 0em;
+	text-align: left;
+	color: #050505;
+	margin-bottom: 20px;
+}
+
+.recommendations > .row {
+	display: flex;
+	margin-right: -24px;
+}
+
+.recommendations > .row > .item {
+	width: 203px;
+	height: 211px;
+	box-sizing: border-box;
+	border: 2px solid #e2e2e2;
+	border-radius: 8px;
+	background-color: #fff;
+	margin-right: 24px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.recommendations > .row > .item > img {
+	max-width: 144px;
+	max-height: 105px;
+	width: auto;
+	height: auto;
+}
+
+.recommendations > .row > .item > p.prod-name {
+	font-family: Poppins;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;
+	text-align: center;
+	color: #050505;
+	margin-bottom: 5px;
+}
+
+.recommendations > .row > .item > p.price {
+	font-family: Poppins;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;
+	text-align: center;
+	color: #e6702a;
+	margin-bottom: 65px;
+}
+
+.recommendations > .row > .item > button {
+	position: absolute;
+	bottom: 10px;
+	box-sizing: border-box;
+	width: 180px;
+	height: 42px;
+	background-color: #0aacdb;
+	border: 0;
+	border-radius: 4px;
+	font-family: Poppins;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.recommendations > .row > .item > button > svg {
+	margin-right: 6px;
+}
+
+/*----- cart button -----*/
+
+.view-cart {
+	box-sizing: border-box;
+	bottom: 40px;
+	width: 920px;
+	height: 75px;
+	border-radius: 8px;
+	background-color: #e6702a;
+	border: 1px solid #e6702a;
+	margin-top: 65px;
+
+	font-family: Poppins;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 32px;
+	text-align: center;
+	color: #fff;
+}
+
+.view-cart:disabled {
+	opacity: 0.3;
+}
+
+/* Modify Ingredients */
+
+.cover {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background-color: #7d7068;
+	opacity: 0.7;
+	mix-blend-mode: multiply;
+}
+
+.modify {
+	z-index: 11;
+	width: 800px;
+	height: fit-content;
+	box-sizing: border-box;
+	padding: 45px;
+	border-radius: 20px;
+	background-color: #fff;
+	position: fixed;
+	left: calc(50% - 400px);
+}
+
+.modify > p.title {
+	width: fit-content;
+	font-family: Poppins;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 32px;
+	text-align: left;
+	color: #050505;
+	padding-bottom: 6px;
+	border-bottom: 3px solid #0aacdb;
+	margin-bottom: 26px;
+}
+
+.modify > p.description {
+	font-family: Poppins;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 24px;
+	text-align: left;
+	color: #050505;
+	margin-bottom: 43px;
+}
+
+.modify > p.ingredient {
+	font-family: Poppins;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 26px;
+	text-align: left;
+	color: #050505;
+	margin: 0 0 8px 20px;
+}
+
+.modify > .flex-row {
+	display: flex;
+	margin: 0 -10px 28px 20px;
+}
+
+.modify > .flex-row > label {
+	margin-right: 10px;
+}
+
+.modify > .flex-row > label:hover {
+	cursor: pointer;
+}
+
+.modify > .flex-row > label > input {
+	display: none;
+}
+
+.modify > .flex-row > label > .custom-radio {
+	width: 90px;
+	height: 54px;
+	border: 1px solid #0aacdb;
+	border-radius: 4px;
+	background-color: #fff;
+	font-family: Poppins;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 27px;
+	text-align: center;
+	color: #0aacdb;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modify > .flex-row > label > input:checked + .custom-radio {
+	background-color: #0aacdb;
+	color: #fff;
+}
+
+.modify > button {
+	width: 312px;
+	height: 53px;
+	background-color: #e6702a;
+	border: 0;
+	border-radius: 8px;
+	font-family: Poppins;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	text-align: left;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: translateX(199px);
+	margin-top: 70px;
+}
+
+.modify > button:hover {
+	cursor: pointer;
+}
+
+.hide {
+	display: none;
+}
