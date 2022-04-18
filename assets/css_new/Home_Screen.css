@@ -404,6 +404,7 @@ a.current_dot {
 /* --------------------View Cart Button-------------------- */
 
 .view-cart {
+	z-index: 99;
 	box-sizing: border-box;
 	position: fixed;
 	bottom: 40px;

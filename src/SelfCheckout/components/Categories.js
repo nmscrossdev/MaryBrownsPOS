@@ -3,7 +3,9 @@ import React from 'react';
 const changeURL=(a)=>
 {}
 const toggleApp=(a)=>
-{}
+{
+    
+}
 const Categories=(props)=> {
     return (
         <div>
@@ -103,12 +105,10 @@ const Categories=(props)=> {
             </div>
         </section>
     </div> */}
-    <p className="title margin-bottom-20">Menu Categories</p>
-   
-    
-    <button onClick={changeURL('./Order_Summary.html')} className="view-cart">
+
+    {/* <button onClick={changeURL('./Order_Summary.html')} className="view-cart">
         View Cart $10.00
-    </button>
+    </button> */}
     <div className="cover hide"></div>
     <div className="app nutrition-info hide">
         <div onClick={toggleApp()} className="close">
