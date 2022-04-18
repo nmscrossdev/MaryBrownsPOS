@@ -709,31 +709,35 @@ class FavouriteList extends React.Component {
         }) : [];
         //const { favovrArrayList } = this.state;
         return (
-            <div className="category-tile-group">
-                {(isShopView === true)? 
-                   
-                    status == true ? <LoadingModal /> : ""+
-                    active != true ?
-                      status == false && favDelete_status == false && arr.map((item, index) => {
-                                        var _itemOrdrIn24 = favovrArrayList.find(itm => itm.Order == item)
-                                        var _itemOrdrNotIn24 = null;
-                                        _itemOrdrNotIn24 = (!_itemOrdrIn24) && ArrNotIn24 && ArrNotIn24.length > 0 ? ArrNotIn24[0] : null;
-                                        (!_itemOrdrIn24) && ArrNotIn24 && ArrNotIn24.length > 0 ? ArrNotIn24.splice(ArrNotIn24, 1) : null;
+            <div className="category-tile-group" >
+                {
+                //(isShopView === true)? 
+                    // status == true ? 
+                    // <LoadingModal /> :
+                    //  ""+
+                    active != true 
+                    ?
+                    // status == false && favDelete_status == false && arr.map((item, index) => {
+                    //                     var _itemOrdrIn24 = favovrArrayList.find(itm => itm.Order == item)
+                    //                     var _itemOrdrNotIn24 = null;
+                    //                     _itemOrdrNotIn24 = (!_itemOrdrIn24) && ArrNotIn24 && ArrNotIn24.length > 0 ? ArrNotIn24[0] : null;
+                    //                     (!_itemOrdrIn24) && ArrNotIn24 && ArrNotIn24.length > 0 ? ArrNotIn24.splice(ArrNotIn24, 1) : null;
 
-                                        return (
-                                            _itemOrdrIn24 ?
-                                                this.favProductDiv(_itemOrdrIn24)
-                                                : _itemOrdrNotIn24 && _itemOrdrNotIn24 != null ?
-                                                    this.favProductDiv(_itemOrdrNotIn24)
-                                                    : null//this.favProductStaticDiv(item)
-                                        )
-                                    })
+                    //                     return (
+                    //                         _itemOrdrIn24 ?
+                    //                             this.favProductDiv(_itemOrdrIn24)
+                    //                             : _itemOrdrNotIn24 && _itemOrdrNotIn24 != null ?
+                    //                                 this.favProductDiv(_itemOrdrNotIn24)
+                    //                                 : null//this.favProductStaticDiv(item)
+                    //                     )
+                    //                 })
                                 
-                            // </div>
-                        // </div>
-                        :
-                        (
-                            num == 1 ?
+                    //         // </div>
+                    //     // </div>
+                    null
+                         :
+                        
+                            (num == 1 ?
                                 <FavouriteItemView
                                     SubAttributeList={favouritesSubAttributeList ? favouritesSubAttributeList : null}
                                     tileFilter={this.tileProductListFilter} updateActiveStateOnRef={this.updateActiveStateOnRef}
@@ -754,10 +758,10 @@ class FavouriteList extends React.Component {
                                                 subchildCategory={this.state.item ? item : null}
                                                 setSubCategoryList={this.setSubCategoryList} tileFilter={this.tileProductListFilter} updateActiveStateOnRef={this.updateActiveStateOnRef}
                                             /> :
-                                            null
-                        )
-                    :
-                        <div className="app-list-view app-list-responsive">
+                                            null)
+                }
+                   
+                        {/* <div className="app-list-view app-list-responsive"> */}
                         {/* <div  key={"attribute" + "All"} className="app app-primary" data-attribute-id="All">                                
                         <div className="app-body app-body-content"  onClick={clearall}>
                             <h1 className="app-title text-truncate text-center">
@@ -765,72 +769,39 @@ class FavouriteList extends React.Component {
                             </h1>
                         </div>
                         </div> */}
+                         {active!=true?
                         <div className="category-tile grouped" key={"attribute" + "All"} data-attribute-id="All">
                         <p>{LocalizedLanguage.showall}</p>
-                        </div>
+                        </div>:null
+                        }
                         {
+                            active!=true?
                         favovrArrayList.map((item, index) => {                 
                             var titleName = item.attribute_slug ? item.attribute_slug : item.parent_attribute ? item.attribute_slug + "/" + item.parent_attribute.replace("pa_", "") : item.category_slug ? item.name : item.Type ? item.Title : ''
-                            var img = item.Image ? item.Image.split('/') : '';
+                            //var img = item.Image ? item.Image.split('/') : '';
                             return (
-                                item.attribute_slug && !item.parent_attribute ?
-
-                            <div className="category-tile grouped" key={"attribute" + item.id} data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} onClick={() => this.ActiveList(item, 1, "attribute")}>
-                           <p>{titleName}</p>
-                            </div>
-
-                            // <div  key={"attribute" + item.id} className="app app-primary" data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`}>
-                            //     <div className="app-body app-body-content"  onClick={() => this.ActiveList(item, 1, "attribute")}>
-                            //         <h1 className="app-title text-truncate text-center">
-                            //         {titleName}
-                            //         </h1>
-                            //     </div>
-                            // </div>
-                        : item.attribute_slug && item.parent_attribute ?
-                            // <div   key={"parent_attribute" + item.id} className="app app-primary"   data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} data-parent-attribute={item.parent_attribute}>
-                            //     <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 3, "sub-attribute")}>
-                            //         <h1 className="app-title text-truncate text-center">
-                            //         {titleName}
-                            //         </h1>
-                            //     </div>
-                            // </div>
-            
-                            <div className="category-tile grouped" key={"parent_attribute" + item.id}  data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} data-parent-attribute={item.parent_attribute} onClick={() => this.ActiveList(item, 3, "sub-attribute")}>
-                            <p>{titleName}</p>
-                            </div>
-
+                            item.attribute_slug && !item.parent_attribute ?
+                                <div className="category-tile grouped" key={"attribute" + item.id} data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} onClick={() => this.ActiveList(item, 1, "attribute")}>
+                                <p>{titleName}</p>
+                                </div>
+                            : item.attribute_slug && item.parent_attribute ?
+                                <div className="category-tile grouped" key={"parent_attribute" + item.id}  data-attribute-id={item.attribute_id} data-id={`attr_${item.id}`} data-parent-attribute={item.parent_attribute} onClick={() => this.ActiveList(item, 3, "sub-attribute")}>
+                                <p>{titleName}</p>
+                                </div>
                             : item.category_slug && !item.sub_category_type ?
-                                // <div  key={"category" + item.id} className="app app-primary"  data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}>
-                                //     <div className="app-body app-body-content"  onClick={() => this.ActiveList(item, 2, "category")}>
-                                //         <h1 className="app-title text-truncate text-center">
-                                //         {titleName}
-                                //         </h1>
-                                //     </div>
-                                // </div>
-
-                            <div className="category-tile grouped"  key={"category" + item.id} data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}  onClick={() => this.ActiveList(item, 2, "category")}>
-                            <p>{titleName}</p>
-                            </div>
-                                : item.sub_category_type ?
-                                    // <div  key={"sub_category_type" + item.id}  className="app app-primary"   data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}>
-                                    //     {/* <button className="app-delete" onClick={() => this.RemoveFavProduct(item)}>
-                                    //         <img src="/assets/img/closenew.svg" alt=""/>
-                                    //     </button> */}
-                                    //     <div className="app-body app-body-content" onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                                    //         <h1 className="app-title text-truncate text-center">
-                                    //         {titleName}
-                                    //         </h1>
-                                    //     </div>
-                                    // </div>
-                            <div className="category-tile grouped" key={"sub_category_type" + item.id} data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug} onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                          <p>{titleName}</p>
-                            </div>
-                                            : ''
+                                <div className="category-tile grouped"  key={"category" + item.id} data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug}  onClick={() => this.ActiveList(item, 2, "category")}>
+                                <p>{titleName}</p>
+                                </div>
+                            : item.sub_category_type ?
+                                <div className="category-tile grouped" key={"sub_category_type" + item.id} data-category-id={item.category_id} data-id={`attr_${item.id}`} data-category-slug={item.category_slug} onClick={() => this.ActiveList(item, 4, "sub-category")}>
+                                <p>{titleName}</p>
+                                </div>
+                            : ''
                             )
-                        })
+                        }):null
                         }
-                        </div>
-                }
+                        {/* </div> */}
+                
             </div>
       )
     }

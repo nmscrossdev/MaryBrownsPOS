@@ -747,8 +747,6 @@ class AllProduct extends React.Component {
             }
             this.addvariableProducttoCart(product);
         }
-
-
     }
 
     productOutOfStock(title) {

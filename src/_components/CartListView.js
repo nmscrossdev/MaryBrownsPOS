@@ -75,15 +75,15 @@ class CartListView extends React.Component {
 
     checkSubscriptionType(ListItem) {
         this.checkout(ListItem)
-        if (localStorage.getItem("AdCusDetail")) {
-            var AdCusDetail = localStorage.getItem("AdCusDetail");
-            var customer = AdCusDetail.content ? AdCusDetail.content : "";
-            if (customer && customer.UID) {
-                sessionStorage.setItem("CUSTOMER_ID", customer.UID);
-            }
-        }
+        // if (localStorage.getItem("AdCusDetail")) {
+        //     var AdCusDetail = localStorage.getItem("AdCusDetail");
+        //     var customer = AdCusDetail.content ? AdCusDetail.content : "";
+        //     if (customer && customer.UID) {
+        //         sessionStorage.setItem("CUSTOMER_ID", customer.UID);
+        //     }
+        // }
         //Android Call----------------------------
-        androidDisplayScreen("Checkout", 0, 0, "checkout");
+        //androidDisplayScreen("Checkout", 0, 0, "checkout");
         //-----------------------------------------
     }
 
@@ -891,349 +891,357 @@ class CartListView extends React.Component {
         
     }
     render() {
-        var totalPrice = 0;
-        const { taxRateList, defaultTaxStatus } = this.state;
+        // var totalPrice = 0;
+        // const { taxRateList, defaultTaxStatus } = this.state;
         var ListItem = this.props.cartproductlist ? this.props.cartproductlist : [];
-        var productxList = localStorage.getItem('PRODUCTX_DATA') ? JSON.parse(localStorage.getItem('PRODUCTX_DATA')) : "";
-        var Addcust = localStorage.getItem('AdCusDetail') ? JSON.parse(localStorage.getItem('AdCusDetail')) : [];
-        var selected_tax_list = this.props.selectedTaxList ? this.props.selectedTaxList : localStorage.getItem('SELECTED_TAX') ? JSON.parse(localStorage.getItem('SELECTED_TAX')) : null;
-        var UpdateTaxRateList = this.props.updateTaxRateList ? this.props.updateTaxRateList : taxRateList;
-        var type_of_tax = typeOfTax();
-        var multipleTaxSupport = this.props.multiple_tax_support ? this.props.multiple_tax_support : false;
-        var defutTaxStatus = localStorage.getItem('DEFAULT_TAX_STATUS') ? localStorage.getItem('DEFAULT_TAX_STATUS') : defaultTaxStatus;
-        var subscriptionClientDetail = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail')) : '';;
-        var defaultTaxData = localStorage.getItem('APPLY_DEFAULT_TAX') ? JSON.parse(localStorage.getItem("APPLY_DEFAULT_TAX")) : null;
+        // var productxList = localStorage.getItem('PRODUCTX_DATA') ? JSON.parse(localStorage.getItem('PRODUCTX_DATA')) : "";
+        // var Addcust = localStorage.getItem('AdCusDetail') ? JSON.parse(localStorage.getItem('AdCusDetail')) : [];
+        // var selected_tax_list = this.props.selectedTaxList ? this.props.selectedTaxList : localStorage.getItem('SELECTED_TAX') ? JSON.parse(localStorage.getItem('SELECTED_TAX')) : null;
+        // var UpdateTaxRateList = this.props.updateTaxRateList ? this.props.updateTaxRateList : taxRateList;
+        // var type_of_tax = typeOfTax();
+        // var multipleTaxSupport = this.props.multiple_tax_support ? this.props.multiple_tax_support : false;
+        // var defutTaxStatus = localStorage.getItem('DEFAULT_TAX_STATUS') ? localStorage.getItem('DEFAULT_TAX_STATUS') : defaultTaxStatus;
+        // var subscriptionClientDetail = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail')) : '';;
+        // var defaultTaxData = localStorage.getItem('APPLY_DEFAULT_TAX') ? JSON.parse(localStorage.getItem("APPLY_DEFAULT_TAX")) : null;
        
-        var selectedGroupSale=localStorage.getItem('selectedGroupSale') ? JSON.parse(localStorage.getItem('selectedGroupSale')).Label : ""; 
-        var user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : "";
-        return (
-            (ActiveUser.key.isSelfcheckout == true && isMobileOnly == true)?
-                <div>
-                    {this.state.isLoading == true ? <AndroidAndIOSLoader /> : ''}
-                    <CartList
-                        {...this.props}
-                        {...this.state}
-                        ListItem={ListItem}
-                        Addcust={Addcust}
-                        selected_tax_list={selected_tax_list}
-                        UpdateTaxRateList={UpdateTaxRateList}
-                        type_of_tax={type_of_tax}
-                        multipleTaxSupport={multipleTaxSupport}
-                        defutTaxStatus={defutTaxStatus}
-                        Markup={Markup}
-                        NumberFormat={NumberFormat}
-                        LocalizedLanguage={LocalizedLanguage}
-                        checkSubscriptionType={this.checkSubscriptionType}
-                        defaultTaxApply={this.defaultTaxStatus}
-                        cardProductDiscount={this.cardProductDiscount}
-                        extensionArray={this.extensionArray}
-                        singleProductDiscount={this.singleProductDiscount}
-                        handleChange={this.handleChange}
-                        deleteProduct={this.deleteProduct}
-                        openTaxlist={this.openTaxlist}
-                        tickit_Details={this.tickit_Details}
-                        productxList={productxList}
-                        trialSubscriptionFree={this.trialSubscriptionFree}
-                        subscriptionClientDetail={subscriptionClientDetail}
-                        ClearCartList={this.props.onCancelOrderHandler}
-                        openModal={this.props.openModal}/>
-                </div>
-            :
-            (ActiveUser.key.isSelfcheckout == true)?
-                <div>
-                    {this.state.isLoading == true ? <LoadingModal /> : ''}                   
-                    <CartListSelfCheckout 
-                        {...this.props}
-                        {...this.state}
-                        ListItem={ListItem}
-                        Addcust={Addcust}
-                        selected_tax_list={selected_tax_list}
-                        UpdateTaxRateList={UpdateTaxRateList}
-                        type_of_tax={type_of_tax}
-                        multipleTaxSupport={multipleTaxSupport}
-                        defutTaxStatus={defutTaxStatus}
-                        Markup={Markup}
-                        NumberFormat={NumberFormat}
-                        LocalizedLanguage={LocalizedLanguage}
-                        checkSubscriptionType={this.checkSubscriptionType}
-                        defaultTaxApply={this.defaultTaxStatus}
-                        cardProductDiscount={this.cardProductDiscount}
-                        extensionArray={this.extensionArray}
-                        singleProductDiscount={this.singleProductDiscount}
-                        handleChange={this.handleChange}
-                        deleteProduct={this.deleteProduct}
-                        openTaxlist={this.openTaxlist}
-                        tickit_Details={this.tickit_Details}
-                        productxList={productxList}
-                        AllProductList={this.props.AllProductList}
-                        trialSubscriptionFree={this.trialSubscriptionFree}
-                        subscriptionClientDetail={subscriptionClientDetail}
-                        ClearCartList={this.removeCheckOutList}/>   
-                </div>
-            :
-            isMobileOnly == true ?
-                this.props.openModalActive == "notes" || this.props.openModalActive == "show_notes_popup" ?
-                    <MobileOption
-                        {...this.props}
-                        addCustomer={this.addCustomer}
-                        deleteAddCust={this.deleteAddCust}
-                        Addcust={Addcust}
-                        Footer={Footer} />
-                    :
-                    <CartList
-                        {...this.props}
-                        {...this.state}
-                        ListItem={ListItem}
-                        Addcust={Addcust}
-                        selected_tax_list={selected_tax_list}
-                        UpdateTaxRateList={UpdateTaxRateList}
-                        type_of_tax={type_of_tax}
-                        multipleTaxSupport={multipleTaxSupport}
-                        defutTaxStatus={defutTaxStatus}
-                        Markup={Markup}
-                        NumberFormat={NumberFormat}
-                        LocalizedLanguage={LocalizedLanguage}
-                        checkSubscriptionType={this.checkSubscriptionType}
-                        defaultTaxApply={this.defaultTaxStatus}
-                        cardProductDiscount={this.cardProductDiscount}
-                        extensionArray={this.extensionArray}
-                        singleProductDiscount={this.singleProductDiscount}
-                        handleChange={this.handleChange}
-                        deleteProduct={this.deleteProduct}
-                        openTaxlist={this.openTaxlist}
-                        tickit_Details={this.tickit_Details}
-                        productxList={productxList}
-                        trialSubscriptionFree={this.trialSubscriptionFree}
-                        subscriptionClientDetail={subscriptionClientDetail}
-                    />
-                :                
-                <div className="col-lg-3 col-sm-4 col-xs-4 pr-0  plr-8">
-                    {this.state.isLoading == true ? <LoadingModal /> : ""}
-                    <div className="panel panel-default panel-right-side bb-0 r0 bg-white overflow-unset">
-                        {Addcust.content && Addcust.content !== null && Addcust.content !== "" && Addcust.content !== "undefined"?
-                            <div className="panel-heading bg-white nav-section-heading">
-                             <div className="div-length-heading"> {Addcust &&
-                              Addcust.content.FirstName !== null &&
-                               Addcust.content.FirstName !== undefined &&
-                                Addcust.content.FirstName !=="" ?
-                                 Addcust.content.FirstName :
-                                 Addcust && 
-                                 Addcust.content &&
-                                  Addcust.content.Email &&
-                                   Addcust.content.Email !==null &&
-                                    Addcust.content.Email !== undefined ?
-                                     Addcust.content.Email.substring(0, 30) :
-                                      '' + (Addcust && Addcust.content && Addcust.content.Email && Addcust.content.Email.length>30 && "...")}{" "} {Addcust.content.LastName && Addcust.content.LastName !=="" ? Addcust.content.LastName : ""}</div>
-                                    <img src="assets/img/Close.svg" className="pull-right fs29" onClick={() => this.deleteAddCust()}/>
-                             </div>
-                            : <div className="panel-heading bg-white nav-section-heading ">
-                                {LocalizedLanguage.addCustomerTitle}
-                                <img className="pull-right fs29" onClick={(e) => this.addCustomer()} src="assets/images/add.svg" width="35" />
-                            </div>
-                        }
-                        {/* group_sales div */}
-                        {
-                        selectedGroupSale && selectedGroupSale !==""?
-                        <div className="panel-heading bg-white nav-section-heading optiontablebtn" id="optiontablebtn">
-                        <div className="div-length-heading"> {selectedGroupSale }</div>
-                                    <img src="assets/img/Close.svg" className="pull-right fs29" onClick={() => this.DeleteGroupSale()}/>
-                             </div>
-                             :
-                        user.group_sales && user.group_sales !== null && user.group_sales !== "" && user.group_sales !== "undefined" ?
-                            <div className="panel-heading bg-white nav-section-heading optiontablebtn"id="optiontablebtn">
-                                     { "Add "+user.group_sales_by}
-                                                <img className="pull-right fs29" onClick={(e) => this.AddGroupSale()} 
-                                                src="assets/images/add.svg" width="35" />
-                                      </div> : null}
-
-                        <div className="panel-body p-0 overflowscroll bg-white" id="cart_product_list">
-                            <div className="table-responsive">
-                                <table className="table CartProductTable">
-                                    <tbody>
-                                        {ListItem && ListItem.map((item, index) => {
-                                            var isProdAddonsType = CommonJs.checkForProductXAddons(item.product_id);// check for productX is Addons type products
-                                            var rowclass = item.ticket_status && item.ticket_status == true ? "no-border-ticket" : "";
-                                            var _order_Meta= item.addons_meta_data && item.addons_meta_data.length>0 ? CommonJs.showAddons("",item.addons_meta_data):""
-                                           return (
-                                                <tr className="" key={index}>
-                                                    <td className="p-0">
-                                                        <table className="table CartProductTable no-border">
-                                                            <tbody id="messagewindow">
-                                                                <tr>
-                                                                    <td align="center" onClick={() => this.singlProductDiscount(item, index)}>{item.quantity ? item.quantity : (item.customTags && (typeof item.customTags !== 'undefined')) ? "" : 1 || (item.customExtFee && (typeof item.customExtFee !== 'undefined')) ? "" : 1}</td>
-                                                                    <td align="left" onClick={() => this.singlProductDiscount(item, index)}>
-                                                                    {item.Title && item.Title !== "" ? <Markup content={(item.Title).replace(" - ", "-")} /> : (item.Sku && item.Sku !== "" && item.Sku !== "False") ? item.Sku : 'N/A' }
-                                                                    {/* <Markup content={(item.Title).replace(" - ", "-")} /> */}
-                                                                        {/* <span className="comman_subtitle">Red</span> */}
-                                                                        {_order_Meta && _order_Meta !=="" ?<div className="comman_subtitle" ><Markup content={ _order_Meta} /></div>:""}
-                                                                      
-                                                                       {(productxList && productxList.length > 0) && CommonModuleJS.productxArray(item.product_id, this.props.AllProductList,"",item.strProductX)}
-                                                                        {(item.customTags && (typeof item.customTags !== 'undefined')) ?
-                                                                            this.extensionArray(item.customTags)
-                                                                            :
-                                                                            (item.customExtFee && (typeof item.customExtFee !== 'undefined')) ?
-                                                                                <span className="comman_subtitle">{item.customExtFee}</span>
-                                                                                : null
-                                                                        }
-                                                                        {/* ADDING PRODUCT SUMMARY (ATTRIBUTES) HERE 09FEB2022 */}
-                                                                        {item.psummary && typeof item.psummary!="undefined" && item.psummary!=""?<div style={{textTransform: 'capitalize',textAlign:'left',fontSize:12,color:'grey'}}>{item.psummary}</div>:null}
-                                                                    </td>
-                                                                    {(typeof item.product_id !== 'undefined') ?
-                                                                        <td align="right" onClick={() => this.singlProductDiscount(item, index)}>
-                                                                            {/* quantity commented for addons */}
-                                                                            <span>{parseFloat(item.product_discount_amount) !== 0.00 ? <NumberFormat value={item.discount_type == "Number" ? item.Price - (item.product_discount_amount):item.Price - (item.product_discount_amount *(isProdAddonsType && isProdAddonsType==true ? 1 : item.quantity))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /> : null}</span>
-                                                                            <NumberFormat className={parseFloat(item.product_discount_amount) == 0.00 ? '' : 'comman_delete'} value={item.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                                        </td>
-                                                                        :
-                                                                        <td align="right">
-                                                                            <NumberFormat value={item.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                                        </td>
-                                                                    }
-                                                                    <td className="pr-0" align="right">
-                                                                       <button className="btn_trash" onClick={() => this.deleteProduct(item)}>
-                                                                       <i className="icons8-remove pointer" ></i> 
-                                                                       </button>
-                                                                    </td>
-                                                                </tr>
-                                                                
-                                                                {item.ticket_status == true ?
-                                                                    <tr>
-                                                                        <td colSpan="4" className="pr-2">
-                                                                            {item.ticket_status == true && (item.ticket_info === '' || item.ticket_info.length === 0) ?
-                                                                                <div className="w-100-block button_with_checkbox p-0">
-                                                                                    <input type="radio" id={`add-details${index}`} name="radio-group" />
-                                                                                    <label htmlFor={`add-details${index}`} className="label_select_button" onClick={() => this.tickit_Details('create', item)} >
-                                                                                        {LocalizedLanguage.add} <span className="hide_small">{LocalizedLanguage.details}</span></label>
-                                                                                </div>
-                                                                                :
-                                                                                <div className="w-100-block button_with_checkbox p-0 ">
-                                                                                    <input type="radio" id={`add-details${index}`} name="radio-group" />
-                                                                                    <label htmlFor={`add-details${index}`} className="label_select_button" onClick={() => this.tickit_Details('edit', item)}>{LocalizedLanguage.change} <span className="hide_small"> {LocalizedLanguage.details}</span></label>
-                                                                                </div>
-                                                                            }
-                                                                        </td>
-                                                                    </tr>
-                                                                  : <tr />
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="panel-footer p-0 bg-white">
-                            <div className="table-calculate-price">
-                                <table className="table ShopViewCalculator">
-                                    <tbody>
-                                        <tr>
-                                            <th className="">{LocalizedLanguage.subTotal}</th>
-                                            <th align="right" className="">
-                                                <span className="pull-right">
-                                                    {
-                                                        ListItem && ListItem.length > 0 && ListItem.map((item, index) => {
-                                                            totalPrice += item.Price- (item.product_discount_amount *item.quantity)
-                                                        })
-                                                    }
-                                                    <NumberFormat value={this.state.subTotal} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                </span>
-                                            </th>
-                                        </tr>
-                                        {/* 
-                                           ==========Start============
-                                         Created By   : Shakuntala Jatav
-                                         Created Date : 06-06-2019
-                                         Description  : show selected tax when exclisive tax apply and add more tax on clck edit tax.
-                                         
-                                     */}
-                                        <tr>
-                                            <th className='w-50 bl-1'>
-                                                <span className="" >
-                                                    {this.state.showTaxStaus}:
-                                             </span>
-                                                <div id="notCloseTaxPopup" onClick={() => this.trialSubscriptionFree()} className={`${subscriptionClientDetail && subscriptionClientDetail.subscription_detail && subscriptionClientDetail.subscription_detail.subscription_type == "oliverpos-free" ? "" : type_of_tax !== 'incl' && multipleTaxSupport == true ? "dropup tax-dropdown" : ''}  value pull-right`} style={{ display: "inline-block" }}>
-                                                    <span style={{ fontWeight: 100 }} className="pointer dropdown-toggle " data-toggle="dropdown">
-                                                        <NumberFormat value={this.state.taxAmount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                    </span>
-                                                  { 
-                                                   
-                                                     (subscriptionClientDetail && subscriptionClientDetail.subscription_detail &&  subscriptionClientDetail.subscription_detail.subscription_type !== "oliverpos-free") &&
-                                                      
-                                                    <ul className="dropdown-menu p-0 dropdown-menu-right cursor-text">
-                                                        <li className="dropdown-header">{LocalizedLanguage.selectTax}</li>
-                                                        <li className="plr-15 dropdown-menu-hide">
-                                                                        {defaultTaxData ? <div className="center-center space-between">
-                                                                            {LocalizedLanguage.defaultTax}
-                                                                            <div className={`flat-toggle flat-toggle-tax ${((defaultTaxStatus == true || defaultTaxStatus == "true") && defutTaxStatus == "true") ?
-                                                                                'on' : ''}`} onClick={() => this.defaultTaxStatus()}>
-                                                                                <input type="hidden" defaultValue={defutTaxStatus == "true" ? true : false} />
-                                                                                <span></span>
-                                                                            </div>
-                                                                        </div> : <div className="center-center space-between">
-                                                                            {'No tax applied'}
-                                                                        </div>}
-
-                                                                    </li>
-                                                        {selected_tax_list && selected_tax_list.map((item, index) => {
-                                                            var checkStatus = false;
-                                                            if (UpdateTaxRateList && UpdateTaxRateList.length > 0) {
-                                                                var updatedTax = UpdateTaxRateList.find(items => parseInt(items.TaxId) == parseInt(item.TaxId));
-                                                                if (updatedTax && updatedTax.check_is == true) {
-
-                                                                    checkStatus = true;
-                                                                }
-                                                            }
-                                                            return (
-                                                                <li className={`stopdropdownhide ${((defaultTaxStatus == true || defaultTaxStatus == "true") && defutTaxStatus == "true") ?
-                                                                    'list-disabled' : ''}`} key={index}>
-                                                                    <div className="radio-button">
-                                                                        <input type="checkbox" id={item.TaxId} data-tax-class={item.TaxClass} data-id={item.TaxId} data-country={item.Country} data-state={item.State} name={`tax_${item.TaxId}`} data-name={item.TaxName} value={item.TaxRate} checked={checkStatus == true ? 'checked' : ''} onChange={this.handleChange} />
-                                                                        <label htmlFor={item.TaxId}>{item.TaxName == "N/A" ? LocalizedLanguage.locationTax : item.TaxName}</label>
-                                                                    </div>
-                                                                </li>
-                                                            )
-                                                        })}
-                                                        {selected_tax_list && selected_tax_list.length ?  <li className={`dropdown-footer  ${((defaultTaxStatus == true || defaultTaxStatus == "true") && defutTaxStatus == "true") ?
-                                                            'list-disabled' : 'pointer'}`} onClick={() => this.openTaxlist()} data-toggle="modal" href="#firstTaxPopup">
-                                                            {LocalizedLanguage.editQuickTax}
-                                                        </li> : null}
-                                                    </ul>
-                                               }
-                                                </div>
-                                            </th>
-                                            <th className="bl-1" align="right">
-                                                {LocalizedLanguage.discount}:
-                                            <span className="value pull-right pointer text-info" data-toggle="modal" onClick={() => this.cardProductDiscount()}>
-                                                    {
-                                                        (this.state.cartDiscountAmount > 0) ? (
-                                                            <NumberFormat value={this.state.cartDiscountAmount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />) : LocalizedLanguage.discountAdd
-                                                    }
-                                                </span>
-                                            </th>
-                                        </tr>
-                                        {/*  ==========End============ */}
-                                        <tr>
-                                            <th colSpan="2" className="p-0">
-                                               <button className="btn btn-block btn-primary checkout-items" onClick={() => this.checkSubscriptionType(ListItem)}>
-                                                    <span className="pull-left">
-                                                        {LocalizedLanguage.checkout}
-                                                    </span>
-                                                    <span className="pull-right">
-                                                        <NumberFormat value={this.state.totalAmount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                    </span>
-                                                </button>
-                                            </th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>                
+        // var selectedGroupSale=localStorage.getItem('selectedGroupSale') ? JSON.parse(localStorage.getItem('selectedGroupSale')).Label : ""; 
+        // var user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : "";
+        return(
+        <div>
+        <button className="view-cart" onClick={() => this.checkSubscriptionType(ListItem)}>
+        View Cart {this.state.totalAmount}
+        </button>
+          {this.state.isLoading == true ? <LoadingModal /> : ''}
+        </div>
         )
+        // return (
+        //     (ActiveUser.key.isSelfcheckout == true && isMobileOnly == true)?
+        //         <div>
+        //             {this.state.isLoading == true ? <AndroidAndIOSLoader /> : ''}
+        //             <CartList
+        //                 {...this.props}
+        //                 {...this.state}
+        //                 ListItem={ListItem}
+        //                 Addcust={Addcust}
+        //                 selected_tax_list={selected_tax_list}
+        //                 UpdateTaxRateList={UpdateTaxRateList}
+        //                 type_of_tax={type_of_tax}
+        //                 multipleTaxSupport={multipleTaxSupport}
+        //                 defutTaxStatus={defutTaxStatus}
+        //                 Markup={Markup}
+        //                 NumberFormat={NumberFormat}
+        //                 LocalizedLanguage={LocalizedLanguage}
+        //                 checkSubscriptionType={this.checkSubscriptionType}
+        //                 defaultTaxApply={this.defaultTaxStatus}
+        //                 cardProductDiscount={this.cardProductDiscount}
+        //                 extensionArray={this.extensionArray}
+        //                 singleProductDiscount={this.singleProductDiscount}
+        //                 handleChange={this.handleChange}
+        //                 deleteProduct={this.deleteProduct}
+        //                 openTaxlist={this.openTaxlist}
+        //                 tickit_Details={this.tickit_Details}
+        //                 productxList={productxList}
+        //                 trialSubscriptionFree={this.trialSubscriptionFree}
+        //                 subscriptionClientDetail={subscriptionClientDetail}
+        //                 ClearCartList={this.props.onCancelOrderHandler}
+        //                 openModal={this.props.openModal}/>
+        //         </div>
+        //     :
+        //     (ActiveUser.key.isSelfcheckout == true)?
+        //         <div>
+        //             {this.state.isLoading == true ? <LoadingModal /> : ''}                   
+        //             <CartListSelfCheckout 
+        //                 {...this.props}
+        //                 {...this.state}
+        //                 ListItem={ListItem}
+        //                 Addcust={Addcust}
+        //                 selected_tax_list={selected_tax_list}
+        //                 UpdateTaxRateList={UpdateTaxRateList}
+        //                 type_of_tax={type_of_tax}
+        //                 multipleTaxSupport={multipleTaxSupport}
+        //                 defutTaxStatus={defutTaxStatus}
+        //                 Markup={Markup}
+        //                 NumberFormat={NumberFormat}
+        //                 LocalizedLanguage={LocalizedLanguage}
+        //                 checkSubscriptionType={this.checkSubscriptionType}
+        //                 defaultTaxApply={this.defaultTaxStatus}
+        //                 cardProductDiscount={this.cardProductDiscount}
+        //                 extensionArray={this.extensionArray}
+        //                 singleProductDiscount={this.singleProductDiscount}
+        //                 handleChange={this.handleChange}
+        //                 deleteProduct={this.deleteProduct}
+        //                 openTaxlist={this.openTaxlist}
+        //                 tickit_Details={this.tickit_Details}
+        //                 productxList={productxList}
+        //                 AllProductList={this.props.AllProductList}
+        //                 trialSubscriptionFree={this.trialSubscriptionFree}
+        //                 subscriptionClientDetail={subscriptionClientDetail}
+        //                 ClearCartList={this.removeCheckOutList}/>   
+        //         </div>
+        //     :
+        //     isMobileOnly == true ?
+        //         this.props.openModalActive == "notes" || this.props.openModalActive == "show_notes_popup" ?
+        //             <MobileOption
+        //                 {...this.props}
+        //                 addCustomer={this.addCustomer}
+        //                 deleteAddCust={this.deleteAddCust}
+        //                 Addcust={Addcust}
+        //                 Footer={Footer} />
+        //             :
+        //             <CartList
+        //                 {...this.props}
+        //                 {...this.state}
+        //                 ListItem={ListItem}
+        //                 Addcust={Addcust}
+        //                 selected_tax_list={selected_tax_list}
+        //                 UpdateTaxRateList={UpdateTaxRateList}
+        //                 type_of_tax={type_of_tax}
+        //                 multipleTaxSupport={multipleTaxSupport}
+        //                 defutTaxStatus={defutTaxStatus}
+        //                 Markup={Markup}
+        //                 NumberFormat={NumberFormat}
+        //                 LocalizedLanguage={LocalizedLanguage}
+        //                 checkSubscriptionType={this.checkSubscriptionType}
+        //                 defaultTaxApply={this.defaultTaxStatus}
+        //                 cardProductDiscount={this.cardProductDiscount}
+        //                 extensionArray={this.extensionArray}
+        //                 singleProductDiscount={this.singleProductDiscount}
+        //                 handleChange={this.handleChange}
+        //                 deleteProduct={this.deleteProduct}
+        //                 openTaxlist={this.openTaxlist}
+        //                 tickit_Details={this.tickit_Details}
+        //                 productxList={productxList}
+        //                 trialSubscriptionFree={this.trialSubscriptionFree}
+        //                 subscriptionClientDetail={subscriptionClientDetail}
+        //             />
+        //         :                
+        //         <div className="col-lg-3 col-sm-4 col-xs-4 pr-0  plr-8">
+        //             {this.state.isLoading == true ? <LoadingModal /> : ""}
+        //             <div className="panel panel-default panel-right-side bb-0 r0 bg-white overflow-unset">
+        //                 {Addcust.content && Addcust.content !== null && Addcust.content !== "" && Addcust.content !== "undefined"?
+        //                     <div className="panel-heading bg-white nav-section-heading">
+        //                      <div className="div-length-heading"> {Addcust &&
+        //                       Addcust.content.FirstName !== null &&
+        //                        Addcust.content.FirstName !== undefined &&
+        //                         Addcust.content.FirstName !=="" ?
+        //                          Addcust.content.FirstName :
+        //                          Addcust && 
+        //                          Addcust.content &&
+        //                           Addcust.content.Email &&
+        //                            Addcust.content.Email !==null &&
+        //                             Addcust.content.Email !== undefined ?
+        //                              Addcust.content.Email.substring(0, 30) :
+        //                               '' + (Addcust && Addcust.content && Addcust.content.Email && Addcust.content.Email.length>30 && "...")}{" "} {Addcust.content.LastName && Addcust.content.LastName !=="" ? Addcust.content.LastName : ""}</div>
+        //                             <img src="assets/img/Close.svg" className="pull-right fs29" onClick={() => this.deleteAddCust()}/>
+        //                      </div>
+        //                     : <div className="panel-heading bg-white nav-section-heading ">
+        //                         {LocalizedLanguage.addCustomerTitle}
+        //                         <img className="pull-right fs29" onClick={(e) => this.addCustomer()} src="assets/images/add.svg" width="35" />
+        //                     </div>
+        //                 }
+        //                 {/* group_sales div */}
+        //                 {
+        //                 selectedGroupSale && selectedGroupSale !==""?
+        //                 <div className="panel-heading bg-white nav-section-heading optiontablebtn" id="optiontablebtn">
+        //                 <div className="div-length-heading"> {selectedGroupSale }</div>
+        //                             <img src="assets/img/Close.svg" className="pull-right fs29" onClick={() => this.DeleteGroupSale()}/>
+        //                      </div>
+        //                      :
+        //                 user.group_sales && user.group_sales !== null && user.group_sales !== "" && user.group_sales !== "undefined" ?
+        //                     <div className="panel-heading bg-white nav-section-heading optiontablebtn"id="optiontablebtn">
+        //                              { "Add "+user.group_sales_by}
+        //                                         <img className="pull-right fs29" onClick={(e) => this.AddGroupSale()} 
+        //                                         src="assets/images/add.svg" width="35" />
+        //                               </div> : null}
+
+        //                 <div className="panel-body p-0 overflowscroll bg-white" id="cart_product_list">
+        //                     <div className="table-responsive">
+        //                         <table className="table CartProductTable">
+        //                             <tbody>
+        //                                 {ListItem && ListItem.map((item, index) => {
+        //                                     var isProdAddonsType = CommonJs.checkForProductXAddons(item.product_id);// check for productX is Addons type products
+        //                                     var rowclass = item.ticket_status && item.ticket_status == true ? "no-border-ticket" : "";
+        //                                     var _order_Meta= item.addons_meta_data && item.addons_meta_data.length>0 ? CommonJs.showAddons("",item.addons_meta_data):""
+        //                                    return (
+        //                                         <tr className="" key={index}>
+        //                                             <td className="p-0">
+        //                                                 <table className="table CartProductTable no-border">
+        //                                                     <tbody id="messagewindow">
+        //                                                         <tr>
+        //                                                             <td align="center" onClick={() => this.singlProductDiscount(item, index)}>{item.quantity ? item.quantity : (item.customTags && (typeof item.customTags !== 'undefined')) ? "" : 1 || (item.customExtFee && (typeof item.customExtFee !== 'undefined')) ? "" : 1}</td>
+        //                                                             <td align="left" onClick={() => this.singlProductDiscount(item, index)}>
+        //                                                             {item.Title && item.Title !== "" ? <Markup content={(item.Title).replace(" - ", "-")} /> : (item.Sku && item.Sku !== "" && item.Sku !== "False") ? item.Sku : 'N/A' }
+        //                                                             {/* <Markup content={(item.Title).replace(" - ", "-")} /> */}
+        //                                                                 {/* <span className="comman_subtitle">Red</span> */}
+        //                                                                 {_order_Meta && _order_Meta !=="" ?<div className="comman_subtitle" ><Markup content={ _order_Meta} /></div>:""}
+                                                                      
+        //                                                                {(productxList && productxList.length > 0) && CommonModuleJS.productxArray(item.product_id, this.props.AllProductList,"",item.strProductX)}
+        //                                                                 {(item.customTags && (typeof item.customTags !== 'undefined')) ?
+        //                                                                     this.extensionArray(item.customTags)
+        //                                                                     :
+        //                                                                     (item.customExtFee && (typeof item.customExtFee !== 'undefined')) ?
+        //                                                                         <span className="comman_subtitle">{item.customExtFee}</span>
+        //                                                                         : null
+        //                                                                 }
+        //                                                                 {/* ADDING PRODUCT SUMMARY (ATTRIBUTES) HERE 09FEB2022 */}
+        //                                                                 {item.psummary && typeof item.psummary!="undefined" && item.psummary!=""?<div style={{textTransform: 'capitalize',textAlign:'left',fontSize:12,color:'grey'}}>{item.psummary}</div>:null}
+        //                                                             </td>
+        //                                                             {(typeof item.product_id !== 'undefined') ?
+        //                                                                 <td align="right" onClick={() => this.singlProductDiscount(item, index)}>
+        //                                                                     {/* quantity commented for addons */}
+        //                                                                     <span>{parseFloat(item.product_discount_amount) !== 0.00 ? <NumberFormat value={item.discount_type == "Number" ? item.Price - (item.product_discount_amount):item.Price - (item.product_discount_amount *(isProdAddonsType && isProdAddonsType==true ? 1 : item.quantity))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /> : null}</span>
+        //                                                                     <NumberFormat className={parseFloat(item.product_discount_amount) == 0.00 ? '' : 'comman_delete'} value={item.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        //                                                                 </td>
+        //                                                                 :
+        //                                                                 <td align="right">
+        //                                                                     <NumberFormat value={item.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        //                                                                 </td>
+        //                                                             }
+        //                                                             <td className="pr-0" align="right">
+        //                                                                <button className="btn_trash" onClick={() => this.deleteProduct(item)}>
+        //                                                                <i className="icons8-remove pointer" ></i> 
+        //                                                                </button>
+        //                                                             </td>
+        //                                                         </tr>
+                                                                
+        //                                                         {item.ticket_status == true ?
+        //                                                             <tr>
+        //                                                                 <td colSpan="4" className="pr-2">
+        //                                                                     {item.ticket_status == true && (item.ticket_info === '' || item.ticket_info.length === 0) ?
+        //                                                                         <div className="w-100-block button_with_checkbox p-0">
+        //                                                                             <input type="radio" id={`add-details${index}`} name="radio-group" />
+        //                                                                             <label htmlFor={`add-details${index}`} className="label_select_button" onClick={() => this.tickit_Details('create', item)} >
+        //                                                                                 {LocalizedLanguage.add} <span className="hide_small">{LocalizedLanguage.details}</span></label>
+        //                                                                         </div>
+        //                                                                         :
+        //                                                                         <div className="w-100-block button_with_checkbox p-0 ">
+        //                                                                             <input type="radio" id={`add-details${index}`} name="radio-group" />
+        //                                                                             <label htmlFor={`add-details${index}`} className="label_select_button" onClick={() => this.tickit_Details('edit', item)}>{LocalizedLanguage.change} <span className="hide_small"> {LocalizedLanguage.details}</span></label>
+        //                                                                         </div>
+        //                                                                     }
+        //                                                                 </td>
+        //                                                             </tr>
+        //                                                           : <tr />
+        //                                                         }
+        //                                                     </tbody>
+        //                                                 </table>
+        //                                             </td>
+        //                                         </tr>
+        //                                     )
+        //                                 })}
+        //                             </tbody>
+        //                         </table>
+        //                     </div>
+        //                 </div>
+        //                 <div className="panel-footer p-0 bg-white">
+        //                     <div className="table-calculate-price">
+        //                         <table className="table ShopViewCalculator">
+        //                             <tbody>
+        //                                 <tr>
+        //                                     <th className="">{LocalizedLanguage.subTotal}</th>
+        //                                     <th align="right" className="">
+        //                                         <span className="pull-right">
+        //                                             {
+        //                                                 ListItem && ListItem.length > 0 && ListItem.map((item, index) => {
+        //                                                     totalPrice += item.Price- (item.product_discount_amount *item.quantity)
+        //                                                 })
+        //                                             }
+        //                                             <NumberFormat value={this.state.subTotal} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        //                                         </span>
+        //                                     </th>
+        //                                 </tr>
+        //                                 {/* 
+        //                                    ==========Start============
+        //                                  Created By   : Shakuntala Jatav
+        //                                  Created Date : 06-06-2019
+        //                                  Description  : show selected tax when exclisive tax apply and add more tax on clck edit tax.
+                                         
+        //                              */}
+        //                                 <tr>
+        //                                     <th className='w-50 bl-1'>
+        //                                         <span className="" >
+        //                                             {this.state.showTaxStaus}:
+        //                                      </span>
+        //                                         <div id="notCloseTaxPopup" onClick={() => this.trialSubscriptionFree()} className={`${subscriptionClientDetail && subscriptionClientDetail.subscription_detail && subscriptionClientDetail.subscription_detail.subscription_type == "oliverpos-free" ? "" : type_of_tax !== 'incl' && multipleTaxSupport == true ? "dropup tax-dropdown" : ''}  value pull-right`} style={{ display: "inline-block" }}>
+        //                                             <span style={{ fontWeight: 100 }} className="pointer dropdown-toggle " data-toggle="dropdown">
+        //                                                 <NumberFormat value={this.state.taxAmount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        //                                             </span>
+        //                                           { 
+                                                   
+        //                                              (subscriptionClientDetail && subscriptionClientDetail.subscription_detail &&  subscriptionClientDetail.subscription_detail.subscription_type !== "oliverpos-free") &&
+                                                      
+        //                                             <ul className="dropdown-menu p-0 dropdown-menu-right cursor-text">
+        //                                                 <li className="dropdown-header">{LocalizedLanguage.selectTax}</li>
+        //                                                 <li className="plr-15 dropdown-menu-hide">
+        //                                                                 {defaultTaxData ? <div className="center-center space-between">
+        //                                                                     {LocalizedLanguage.defaultTax}
+        //                                                                     <div className={`flat-toggle flat-toggle-tax ${((defaultTaxStatus == true || defaultTaxStatus == "true") && defutTaxStatus == "true") ?
+        //                                                                         'on' : ''}`} onClick={() => this.defaultTaxStatus()}>
+        //                                                                         <input type="hidden" defaultValue={defutTaxStatus == "true" ? true : false} />
+        //                                                                         <span></span>
+        //                                                                     </div>
+        //                                                                 </div> : <div className="center-center space-between">
+        //                                                                     {'No tax applied'}
+        //                                                                 </div>}
+
+        //                                                             </li>
+        //                                                 {selected_tax_list && selected_tax_list.map((item, index) => {
+        //                                                     var checkStatus = false;
+        //                                                     if (UpdateTaxRateList && UpdateTaxRateList.length > 0) {
+        //                                                         var updatedTax = UpdateTaxRateList.find(items => parseInt(items.TaxId) == parseInt(item.TaxId));
+        //                                                         if (updatedTax && updatedTax.check_is == true) {
+
+        //                                                             checkStatus = true;
+        //                                                         }
+        //                                                     }
+        //                                                     return (
+        //                                                         <li className={`stopdropdownhide ${((defaultTaxStatus == true || defaultTaxStatus == "true") && defutTaxStatus == "true") ?
+        //                                                             'list-disabled' : ''}`} key={index}>
+        //                                                             <div className="radio-button">
+        //                                                                 <input type="checkbox" id={item.TaxId} data-tax-class={item.TaxClass} data-id={item.TaxId} data-country={item.Country} data-state={item.State} name={`tax_${item.TaxId}`} data-name={item.TaxName} value={item.TaxRate} checked={checkStatus == true ? 'checked' : ''} onChange={this.handleChange} />
+        //                                                                 <label htmlFor={item.TaxId}>{item.TaxName == "N/A" ? LocalizedLanguage.locationTax : item.TaxName}</label>
+        //                                                             </div>
+        //                                                         </li>
+        //                                                     )
+        //                                                 })}
+        //                                                 {selected_tax_list && selected_tax_list.length ?  <li className={`dropdown-footer  ${((defaultTaxStatus == true || defaultTaxStatus == "true") && defutTaxStatus == "true") ?
+        //                                                     'list-disabled' : 'pointer'}`} onClick={() => this.openTaxlist()} data-toggle="modal" href="#firstTaxPopup">
+        //                                                     {LocalizedLanguage.editQuickTax}
+        //                                                 </li> : null}
+        //                                             </ul>
+        //                                        }
+        //                                         </div>
+        //                                     </th>
+        //                                     <th className="bl-1" align="right">
+        //                                         {LocalizedLanguage.discount}:
+        //                                     <span className="value pull-right pointer text-info" data-toggle="modal" onClick={() => this.cardProductDiscount()}>
+        //                                             {
+        //                                                 (this.state.cartDiscountAmount > 0) ? (
+        //                                                     <NumberFormat value={this.state.cartDiscountAmount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />) : LocalizedLanguage.discountAdd
+        //                                             }
+        //                                         </span>
+        //                                     </th>
+        //                                 </tr>
+        //                                 {/*  ==========End============ */}
+        //                                 <tr>
+        //                                     <th colSpan="2" className="p-0">
+        //                                        <button className="btn btn-block btn-primary checkout-items" onClick={() => this.checkSubscriptionType(ListItem)}>
+        //                                             <span className="pull-left">
+        //                                                 {LocalizedLanguage.checkout}
+        //                                             </span>
+        //                                             <span className="pull-right">
+        //                                                 <NumberFormat value={this.state.totalAmount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+        //                                             </span>
+        //                                         </button>
+        //                                     </th>
+        //                                 </tr>
+        //                             </tbody>
+        //                         </table>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>                
+        // )
     }
 }
 function mapStateToProps(state) {
