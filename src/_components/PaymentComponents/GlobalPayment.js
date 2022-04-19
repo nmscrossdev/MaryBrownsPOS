@@ -55,11 +55,17 @@ class GlobalPayment extends React.Component {
         const { isOrderPaymentGlobal, color, Name, code, pay_amount, msg, styles } = this.props;
         return (
             (ActiveUser.key.isSelfcheckout == true && this.state.paymentButtonDisplay == true) ?
-                <div style={{ marginBottom: 15 }}>
-                    <button className={isMobileOnly == true ? "btn btn-light text-dark btn-block h-60 shadow-none fz-14" : "btn btn-default btn-block btn-90 btn-uppercase"} onClick={() => { this.handlePayDisplay(code) }}>{Name}
-                        <input type="hidden" value={code} id="pay_amount"></input>
-                    </button>
-                 </div>
+                
+            <div className="row">
+                <button onClick={() => { this.handlePayDisplay(code) }}>{Name}</button>
+                <input type="hidden" value={code} id="pay_amount"></input>
+            </div>
+
+                // <div style={{ marginBottom: 15 }}>
+                //     <button className={isMobileOnly == true ? "btn btn-light text-dark btn-block h-60 shadow-none fz-14" : "btn btn-default btn-block btn-90 btn-uppercase"} onClick={() => { this.handlePayDisplay(code) }}>{Name}
+                //         <input type="hidden" value={code} id="pay_amount"></input>
+                //     </button>
+                //  </div>
                 :
                 (isMobileOnly == true && this.state.paymentButtonDisplay == true) ?
                     // activeGlobalSplitDiv == false ?

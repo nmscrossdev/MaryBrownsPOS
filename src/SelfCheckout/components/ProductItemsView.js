@@ -6,7 +6,7 @@ const ProductItemsView = (props) => {
    
     return (      
   
-        <div className="item-card-group scroll" style={{maxHeight:"700px"}}>
+        <div className="item-card-group scroll" >
                 {    
                 (product_List && product_List.length !=0)?
                     product_List && product_List.map((item, index) => {
@@ -23,7 +23,7 @@ const ProductItemsView = (props) => {
                         return (  
                             <div className="item-card grouped" key={"product_"+index}>
                                 <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)}   className="scale"/>
-                                <p className="prod-name">{item.Title ? <Markup content={item.Title} /> : item.Sku ? item.Sku : 'N/A'}</p>
+                                <p className="prod-name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
                                 <p className="price">{item.Price}</p>
                                 <button key={index}
                             data-toggle={isVariableProduct ? "modal" : ""} href="javascript:void(0)"

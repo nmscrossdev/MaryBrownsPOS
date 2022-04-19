@@ -410,20 +410,23 @@ class StripePayment extends React.Component {
                 <button  ref="btn" type="submit" style={{ borderLeftColor: color, marginBottom: 15, marginTop: 15 }} className={ ActiveUser.key.isSelfcheckout == true ? "btn btn-light text-dark btn-block h-60 shadow-none fz-14" : "btn btn-default btn-lg btn-block btn-style-02"} onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
                 :
                 activeDisplayStatus !== true ?
-                    <div style={{ display: styles }}  ref="btn" onClick={() => this.hideTab(!activeDisplayStatus)} className={`white-background box-flex-shadow box-flex-border ${ActiveUser.key.isSelfcheckout == true ? 'mb-5' : 'mb-2'} round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0`}>
-                    <div className="section">
+                    // <div style={{ display: styles }}  ref="btn" onClick={() => this.hideTab(!activeDisplayStatus)} className={`white-background box-flex-shadow box-flex-border ${ActiveUser.key.isSelfcheckout == true ? 'mb-5' : 'mb-2'} round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0`}>
+                    /* <div className="section">
                                     <div className="accordion_header" data-isopen="false">
                                         <div className="pointer">
                                             <div style={{ borderColor: ActiveUser.key.isSelfcheckout == true ? 'white' : color }} id="others" value="other" name="payments-type"  className="d-flex box-flex box-flex-border-left box-flex-background-others border-dynamic">
-                                            {/* onClick={() => this.hideTab(code)} */}
                                                 <div className="box-flex-text-heading">
                                                     <h2>{Name}</h2>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                     </div>
+                                </div> */
+
+                                <div className="row" style={{ display: styles }}>
+                <button ref="btn" onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
+            </div>
+                    //  </div>
 
 
                             // <div style={isOrderPaymentOnline == false ? { display: styles, pointerEvents: 'none', borderColor: '#765b72', marginBottom: 15, opacity: 0.5 } : { display: styles }} className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0">

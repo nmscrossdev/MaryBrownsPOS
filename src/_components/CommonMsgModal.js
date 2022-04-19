@@ -19,7 +19,7 @@ export const CommonMsgModal = (props) => {
                         <h4 className="error_model_title modal-title" id="epos_error_model_title">{LocalizedLanguage.messageTitle}</h4>
                     </div>
                     <div className="modal-body p-0">
-                        <h3 id="epos_error_model_message" className="popup_payment_error_msg">{props.msg_text}</h3>
+                        <div id="epos_error_model_message" className="popup_payment_error_msg">{props.msg_text}</div>
                     </div>
                     <div className="modal-footer p-0" onClick={props.close_Msg_Modal}>
                         <button type="button" className="btn btn-primary btn-block h66" data-dismiss="modal" aria-hidden="true">{LocalizedLanguage.okTitle}</button>

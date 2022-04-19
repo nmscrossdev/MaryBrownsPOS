@@ -268,18 +268,21 @@ class CashPayment extends React.Component {
                     </div>
                 :
                 status !== true ?
-                    <div onClick={() => this.hideTab(!status)} style={{ display: styles }} className="white-background box-flex-shadow box-flex-border mb-2 round-8 d-none overflowHidden overflow-0" >
-                        <div className="section">
-                            <div className="" data-isopen="">
-                                <div className="pointer">
-                                    <div style={{ borderColor: color }} id="CheckPayment" className="d-flex box-flex box-flex-border-left box-flex-background-cash border-dynamic">
-                                        <div className="box-flex-text-heading">
-                                            <h2>{Name}</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    // <div onClick={() => this.hideTab(!status)} style={{ display: styles }} className="white-background box-flex-shadow box-flex-border mb-2 round-8 d-none overflowHidden overflow-0" >
+                    //     <div className="section">
+                    //         <div className="" data-isopen="">
+                    //             <div className="pointer">
+                    //                 <div style={{ borderColor: color }} id="CheckPayment" className="d-flex box-flex box-flex-border-left box-flex-background-cash border-dynamic">
+                    //                     <div className="box-flex-text-heading">
+                    //                         <h2>{Name}</h2>
+                    //                     </div>
+                    //                 </div>
+                    //             </div>
+                    //         </div>
+                    //     </div>
+                    // </div>
+                    <div className="row" style={{ display: styles }}>
+                         <button onClick={() => this.hideTab(!status)} >{Name}</button>
                     </div>
                     :
                     <div className="white-background box-flex-shadow box-flex-border mb-2 round-8 d-none overflowHidden overflow-0" >

@@ -270,13 +270,18 @@ class ManualPayment extends React.Component {
         const { isOrderPaymentOnline, color, Name, code, styles } = this.props;
         const { displaybuttonStyle, displayPopupStyle, popupClass, CustInfor } = this.state;
         return (
-            <div>
-                {ActiveUser.key.isSelfcheckout == true && isMobileOnly == true ?
+            // <div>
+                
+            displayPopupStyle=="none" ?ActiveUser.key.isSelfcheckout == true && isMobileOnly == true ?
                     <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 mb-15" onClick={() => this.handleCardPopup(code)}>{Name}</button>
                     : isMobileOnly == true ?
                         <button type="submit" style={{ borderLeftColor: color, marginBottom: 15 }} className="btn btn-default btn-lg btn-block btn-style-02" onClick={() => this.handleCardPopup(code)}>{Name}</button>
                         : ActiveUser.key.isSelfcheckout == true ?
-                            <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => this.handleCardPopup(code)}>{Name}</button>
+                        <div className="row">
+                          <button onClick={() => this.handleCardPopup(code)}>{Name}</button>
+                        </div>
+
+                            // <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => this.handleCardPopup(code)}>{Name}</button>
                             :
                             // <div>
                             <div style={isOrderPaymentOnline == false ? { display: styles, pointerEvents: 'none', borderColor: '#765b72', marginBottom: 15, opacity: 0.5 } : { display: styles }} className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0">
@@ -294,7 +299,7 @@ class ManualPayment extends React.Component {
                             </div>
                     // {/* show card popup */}
                     // </div>
-                }
+                :
                 <div className={popupClass == '' ? "modal fade popUpMid" : `modal fade popUpMid ${popupClass}`} id="manualcardentryin" role="dialog" style={{ display: displayPopupStyle }} >
                     {this.props.loading == true && isMobileOnly == true ? <AndroidAndIOSLoader /> : this.props.loading == true ? <LoadingModal /> : ''}
                     <div className={isMobileOnly == true ? 'modal-dialog modal-center-block text-black' : 'modal-dialog modal-sm modal-center-block'}>
@@ -408,9 +413,9 @@ class ManualPayment extends React.Component {
                 </div>
 
 
-                {/* for mobile view */}
+                /* for mobile view */
 
-                <div className="modal" id={`onlinePaymentPopup${code}`} tabIndex="-1" role="dialog" aria-labelledby="profileWizard"
+                /* <div className="modal" id={`onlinePaymentPopup${code}`} tabIndex="-1" role="dialog" aria-labelledby="profileWizard"
                     aria-hidden="true">
                     {this.props.loading == true ? <AndroidAndIOSLoader /> : ''}
                     <div className="modal-dialog modal-dialog-centered modal-sm text-primary text-left">
@@ -437,16 +442,7 @@ class ManualPayment extends React.Component {
                                             <div className="form-group">
                                                 <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.cardholderName}</label>
                                                 <input type="text" className="form-control shadow-none" id="cardHoldername" name="card_holder_name" placeholder={LocalizedLanguage.cardholderName} value={this.state.CardName} onChange={this.handleChange} />
-                                                {
-                                                    //     (hasNexted && !Email) ?
-                                                    //         // <div className="help-block" style={{ color: '#a94442' }}>{LocalizedLanguage.emailRequire}</div>
-                                                    // <small className="form-text text-danger">{LocalizedLanguage.emailRequire}</small>
-                                                    //         : (emailValid == 'email is Invalid') ?
-                                                    //             // <div className="help-block" style={{ color: '#a94442' }}>{emailValid}</div>
-                                                    //             <small className="form-text text-primary">{emailValid}</small>
-                                                    //             :
-                                                    //             null
-                                                }
+                                                
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.expiryMonth}</label>
@@ -486,9 +482,7 @@ class ManualPayment extends React.Component {
                                                     <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.addressTwo}</label>
                                                     <input type="text" className="form-control shadow-none" id="billingAddress2" name='billing_address2' placeholder={LocalizedLanguage.addressTwo}
                                                         value={this.state.BillAddress2} onChange={this.handleChange} />
-                                                    {/* {custmerPin == 'not accept' &&
-                                                    <div className="help-block" style={{ color: '#a94442' }}>{LocalizedLanguage.notAcceptZero}</div>
-                                                } */}
+                                                  
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.country}</label>
@@ -513,68 +507,11 @@ class ManualPayment extends React.Component {
                                                 <div className="form-group">
                                                     <div className="profile-action">
                                                         <button type="button" className="btn btn-light shadow-none text-dark" onClick={() => this.onCancel('cardInfo')}>{LocalizedLanguage.cancel}</button>
-                                                        {/* <button type="button" className="btn btn-success shadow-none ml-10" onClick={() => this.nextEventHandler('ConfirmInfo')}>{LocalizedLanguage.nextStep}</button> */}
                                                     </div>
                                                 </div>
                                             </div>
                                             :
                                             <div>
-                                                {/* <div className="text-primary text-center mb-20 fz-12">
-                                                <img className="img-fluid d-block mx-auto mb-1" src="assets/img/self-checkout/circle-user.svg" width="30" />
-                                                Confirm Information
-                                            </div>
-                                            <div className="form-group-view form-group-view-center">
-                                                <label htmlFor="">{LocalizedLanguage.name}</label>
-                                                <p>{FirstName}</p>
-                                            </div>
-                                            <div className="clearfix"></div>
-                                            <div className="space-20"></div>
-                                            <div>
-                                                <div className="form-group-view form-group-view-halfwidth">
-                                                    <label htmlFor="">{LocalizedLanguage.email}</label>
-                                                    <p className="text-truncate">{Email}</p>
-                                                    {isEmailExist && isEmailExist == true ?
-                                                    <small id="emailHelp" className="form-text text-danger">{LocalizedLanguage.givenemailalreadyexists}</small>
-                                                    :""}
-                                                </div>
-                                                <div className="form-group-view form-group-view-halfwidth">
-                                                    <label htmlFor="">{LocalizedLanguage.PhoneNo}</label>
-                                                    <p>{PhoneNumber}</p>
-                                                </div>
-                                                <div className="clearfix"></div>
-                                            </div>
-
-                                            <div className="space-20"></div>
-                                            <div>
-                                                <div className="form-group-view form-group-view-halfwidth">
-                                                    <label htmlFor="">{LocalizedLanguage.address}</label>
-                                                    <p>{Street_Address}</p>
-                                                </div>
-                                                <div className="form-group-view form-group-view-halfwidth">
-                                                    <label htmlFor="">{LocalizedLanguage.zippostalcode}</label>
-                                                    <p>{Pincode}</p>
-                                                </div>
-                                                <div className="clearfix"></div>
-                                            </div>
-                                            <div className="space-20"></div>
-                                            <div>
-                                                <div className="form-group-view form-group-view-halfwidth">
-                                                    <label htmlFor="">{LocalizedLanguage.country}</label>
-                                                    <p className="text-truncate">{country_name ? country_name.replace(/[^a-zA-Z]/g, ' ') : ''}</p>
-                                                </div>
-                                                <div className="form-group-view form-group-view-halfwidth">
-                                                    <label htmlFor="">{LocalizedLanguage.provinceState}</label>
-                                                    <p>{state_name ? state_name.replace(/[^a-zA-Z]/g, ' ') : ''}</p>
-                                                </div>
-                                                <div className="clearfix"></div>
-                                            </div>
-                                            <div className="space-20"></div>
-                                            <div className="form-group">
-                                                <div className="profile-action">
-                                                    <button type="button" className="btn btn-light shadow-none text-dark btn-first-child" onClick={() => onCancel('PrsnlInfo')}>{LocalizedLanguage.cancel}</button>
-                                                </div>
-                                            </div>
-                                         */}
                                             </div>
                                     }
                                 </form>
@@ -584,10 +521,10 @@ class ManualPayment extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */
 
 
-            </div>
+            /* </div> */
         )
     }
 }
