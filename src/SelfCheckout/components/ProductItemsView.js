@@ -27,7 +27,7 @@ const ProductItemsView = (props) => {
                                 <p className="price">{item.Price}</p>
                                 <button key={index}
                             data-toggle={isVariableProduct ? "modal" : ""} href="javascript:void(0)"
-                            onClick={isVariableProduct == true ? item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item) : null}>View Item</button>
+                            onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>View Item</button>
                             </div>
                             
                             
