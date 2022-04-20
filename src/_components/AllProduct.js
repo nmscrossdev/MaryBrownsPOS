@@ -721,9 +721,9 @@ class AllProduct extends React.Component {
             !== "False" && product.ParamLink !== null) {
                 this.props.showPopuponcartlistView(product, document.getElementById("qualityUpdater") ? document.getElementById("qualityUpdater").value : this.props.variationDefaultQunatity);
        }
-        else if (isMobileOnly !== true && type == "simple") {
-            this.addSimpleProducttoCart(product);
-        }
+        // else if (isMobileOnly !== true && type == "simple") {
+        //     this.addSimpleProducttoCart(product);
+        // }
          else {
             if ((type !== "simple" && type !== "variable") && (CommonModuleJS.showProductxModal() !== null && CommonModuleJS.showProductxModal() == false)) {
                 this.props.msg(LocalizedLanguage.productxOutOfStock);
@@ -1109,7 +1109,6 @@ class AllProduct extends React.Component {
                     Markup={Markup}
                     loadingData={this.loadingData}
                     loadingFilterData={this.loadingFilterData}
-                    LocalizedLanguage={LocalizedLanguage}
                     pStylenotFound={pStylenotFound} />
                 :
                 (ActiveUser.key.isSelfcheckout == true) ?

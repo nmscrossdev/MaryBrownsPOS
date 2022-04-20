@@ -41,7 +41,11 @@ class OtherPayment extends React.Component {
                 <button type="submit" style={{ borderLeftColor: color, marginBottom: 15 }} className="btn btn-default btn-lg btn-block btn-style-02" onClick={() => this.hideTab(code)}>{Name}</button>
                 :
                 (ActiveUser.key.isSelfcheckout == true) ?
-                    <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => this.hideTab(code)}>{Name}</button>
+                    <div className="row">
+                        <button onClick={() => this.hideTab(code)}>{Name}</button>
+                    </div>
+
+                    // <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => this.hideTab(code)}>{Name}</button>
                 :
                 <div style={{ display: styles }} className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0">
                     <div className="section">

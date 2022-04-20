@@ -1278,7 +1278,9 @@ class SelfCheckoutView extends React.Component {
             // </div>
             <div>
             <Navbar></Navbar>
+            {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             <Carasoul></Carasoul>
+            {/* :''} */}
             <p className="title margin-bottom-20">Menu Categories</p>
             <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}

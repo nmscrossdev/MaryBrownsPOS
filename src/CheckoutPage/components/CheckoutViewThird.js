@@ -18,6 +18,7 @@ import { trackOliverOrderPayment } from '../../_components/SegmentAnalytic'
 import { ManualPayment } from '../../_components/PaymentComponents/ManualPayment';
 import paymentsType from '../../settings/PaymentsType'
 import { UPIPayments } from '../../_components/PaymentComponents/UPIPayments';
+// import '../../../assets/css_new/Pagewise.css'
 //import { CommonExtensionPopup } from '../../_components/CommonExtensionPopup';
 var cash_rounding = ActiveUser.key.cash_rounding;
 
@@ -560,10 +561,19 @@ class CheckoutViewThird extends React.Component {
                 extension_views_field.map((ext, index) => {
                     return ext.viewManagement && ext.viewManagement !== [] && ext.viewManagement.map((type, ind) => {
                         return type && type.ViewSlug == 'Payment Types' ?  <React.Fragment key = {ind}>
-                            {counter == 1 ? <h6 className={ActiveUser.key.isSelfcheckout == true? isMobileOnly==true?'': "box-mid-heading-self": "box-mid-heading"} style={{ display: styles}}>{LocalizedLanguage.extensionPayments}</h6> : ''}
+                            {/* {counter == 1 ? <h6 className={ActiveUser.key.isSelfcheckout == true? isMobileOnly==true?'': "box-mid-heading-self": "box-mid-heading"} style={{ display: styles}}>{LocalizedLanguage.extensionPayments}</h6> : ''} */}
                             {/* incr counter to show zextension payment heading only once */}
-                            <p style ={{display : 'none'}}>{counter ++ }</p> 
-                            <div className= {isMobileOnly==true?"white-background box-flex-shadow box-flex-border mb-2 round-8 pointer overflowHidden no-outline w-100 p-0 overflow-0":"white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0"} style={{ display: styles }}>
+                            {/* <p style ={{display : 'none'}}>{counter ++ }</p>  */}
+                           
+                            <div className="row">
+                                <button onClick ={() =>this.OpenPxtensionPaymentPopup(ext.Id)}>{ext.Name}</button>
+                            </div>
+				
+			
+                            
+                            
+                            
+                            {/* <div className= {isMobileOnly==true?"white-background box-flex-shadow box-flex-border mb-2 round-8 pointer overflowHidden no-outline w-100 p-0 overflow-0":"white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0"} style={{ display: styles }}>
                                 <div className="section">
                                     <div className="accordion_header" data-isopen="false">
                                         <div className="pointer">
@@ -579,7 +589,7 @@ class CheckoutViewThird extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             </React.Fragment>
                             : null
                     })  
@@ -721,40 +731,83 @@ class CheckoutViewThird extends React.Component {
         var styles = activeDisplay == false || activeDisplay == 'undefined_true' ? '' : 'none';
         var Register_Permissions = localStorage.getItem("RegisterPermissions") ? JSON.parse(localStorage.getItem("RegisterPermissions")) : [];
         var register_content = Register_Permissions ? Register_Permissions.content : '';
-        var landingScreen = ActiveUser && ActiveUser.key.companyLogo ? ActiveUser.key.companyLogo : '';
+        //var landingScreen = ActiveUser && ActiveUser.key.companyLogo ? ActiveUser.key.companyLogo : '';
         var isStoreCredit = false
         if (checkoutList && typeof (checkoutList) !== undefined && checkoutList !== null) {
             if (checkoutList && checkoutList.store_credit !== '' && checkoutList.store_credit !== 0) {
                 isStoreCredit = true;
             }
         }
-        var isDemoUser = localStorage.getItem('demoUser') ? localStorage.getItem('demoUser') : false;
+        //var isDemoUser = localStorage.getItem('demoUser') ? localStorage.getItem('demoUser') : false;
         // if(this.props.showExtIframe==false){
         //     this.state.IsPaymentButtonClicked=false;
         // }
         return (
-            (ActiveUser.key.isSelfcheckout == true && (SelfCheckoutStatus == "sfcheckoutpayment" || isMobileOnly == true)) ?
-                <div>
-                    {(this.state.isPaymentStart == false || !global_payment) ?
-                        (isMobileOnly == true) ?
+            // (ActiveUser.key.isSelfcheckout == true && (SelfCheckoutStatus == "sfcheckoutpayment" || isMobileOnly == true)) ?
+              
+                    (this.state.isPaymentStart == false || !global_payment) ?
                             <div>
-                                <div className="sidenav-overlay" data-target="slide-out"></div>
-                                {this.state.loading == true ? <AndroidAndIOSLoader /> : ''}
-                                <div className="appHeader shadow-none">
-                                    <button className="btn btn-success btn-block rounded-0 h-100 shodow-none fz-13" onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")}>{LocalizedLanguage.goBack}</button>
+                                {this.state.loading == true ? <LoadingModal /> : ''}
+                                {/* <div className="payment-nav">
+                                    <button className="btn btn-success text-uppercase btn-14" onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")}>{LocalizedLanguage.goBack}</button>
+                                </div> */}
+                                        {/* <div className="payment-page-title">
+                                            <img src={landingScreen} className="mx-auto" alt="" />
+                                            <div className="spacer-40"></div>
+                                            <h1 className="h2-title text-center text-white font-light m-0 pb-3">{LocalizedLanguage.howWouldYouLikeToPay}</h1>
+                                        </div> */}
+                                        <div className="payment payment-method">
+                                        <div onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")} className="back">
+                                            <svg width="40" height="36" viewBox="0 0 40 36">
+                                                <path
+                                                    d="M37.5 15.5012H7.85L16.925 4.60118C17.3493 4.09064 17.5535 3.43243 17.4926 2.77137C17.4316 2.1103 17.1105 1.50052 16.6 1.07618C16.0895 0.651831 15.4313 0.447676 14.7702 0.508626C14.1091 0.569575 13.4993 0.890636 13.075 1.40118L0.575 16.4012C0.490902 16.5205 0.415698 16.6458 0.35 16.7762C0.35 16.9012 0.35 16.9762 0.175 17.1012C0.0616841 17.3878 0.0023528 17.693 0 18.0012C0.0023528 18.3094 0.0616841 18.6145 0.175 18.9012C0.175 19.0262 0.175 19.1012 0.35 19.2262C0.415698 19.3565 0.490902 19.4819 0.575 19.6012L13.075 34.6012C13.3101 34.8834 13.6044 35.1103 13.9371 35.2659C14.2698 35.4214 14.6327 35.5018 15 35.5012C15.5841 35.5023 16.1502 35.2989 16.6 34.9262C16.8531 34.7163 17.0624 34.4585 17.2158 34.1677C17.3692 33.8768 17.4637 33.5586 17.4938 33.2311C17.524 32.9037 17.4893 32.5735 17.3917 32.2595C17.2941 31.9455 17.1355 31.6538 16.925 31.4012L7.85 20.5012H37.5C38.163 20.5012 38.7989 20.2378 39.2678 19.7689C39.7366 19.3001 40 18.6642 40 18.0012C40 17.3381 39.7366 16.7023 39.2678 16.2334C38.7989 15.7646 38.163 15.5012 37.5 15.5012Z"
+                                                    fill="white"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <img src="../assets/image/mblogobig.png" alt="" />
+                                        <div>
+                                            <p>Your Total</p>
+                                            <p className="price">${this.props.checkList.totalPrice}</p>
+                                        </div>
+                                        <div className="margin-bottom-24 scroll">
+                                        <p className="margin-bottom-33">Please select a payment method:</p>
+        
+
+                                        {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null && register_content !== 'undefined' && register_content !== null ?
+                                            (typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
+                                            paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
+                                                { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
+                                                return (
+                                                        this.renderPaymentsType(pay_name, activeDisplay)                                                                       
+                                                )
+                                            })
+                                            :
+                                            paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
+                                                { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
+                                                return (
+                                                    register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
+                                                        if (itm.slug == pay_name.Code && itm.value == "true") {
+                                                            return (
+                                                                this.renderPaymentsType(pay_name, activeDisplay)                                                                       
+                                                            )
+                                                        }
+                                                    })
+                                                )
+                                            })
+                                            :
+                                            <div className="w-100">
+                                                <p className="text-white text-center payment-description">
+                                                    {LocalizedLanguage.noPaymenttypeavilable}
+                                                </p>
+                                            </div>
+                                            
+                                        }
+                                        {this.showExtensionPayments(styles)}
+                                    </div>
                                 </div>
-                                {/* <!-- App Content --> */}
-                                <div className="appCapsule bg-primary h-100 text-white fz-14 text-center vh-100" style={{ "paddingBottom": 122 }}>
-                                    <div className="content-center-center h-100 w-75 mx-auto">
-                                        {/* <img src="img/selfcheckout/logo.png" alt=""/> */}
-                                        <img src={landingScreen} className="mx-auto w-90" alt="" />
-                                        <div className="spacer-10"></div>
-                                        {/* Please follow the instructions on the pinpad display to complete payment */}
-                                        {LocalizedLanguage.howWouldYouLikeToPay}
-                                        <div className="spacer-20"></div>
-                                        <div className="w-100 overflow-auto scrollbar">
+                                        {/* <div className="payment-button-group overflowscroll payment-otp overflowscroll pb-0 pt-0">
                                             <div style={{ display: "none" }}>
-                                                {/* render normal keypade via function */}
                                                 {this.renderNoramlKeypad()}
                                             </div>
                                             {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null && register_content !== 'undefined' && register_content !== null ?
@@ -762,26 +815,17 @@ class CheckoutViewThird extends React.Component {
                                                 paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
                                                     { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
                                                     return (
-                                                         // register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
-                                                         //     if (itm.slug == pay_name.Code && itm.value == "true") {
-                                                         //         return (
-                                                                     // render payment types for selfCheckout web view                                                                            
-                                                                     this.renderPaymentsType(pay_name, activeDisplay)                                                                       
-                                                         //         )
-                                                         //     }
-                                                         // })
-                                                     )
-                                                })                                                
-                                                :                                                
+                                                            this.renderPaymentsType(pay_name, activeDisplay)                                                                       
+                                                    )
+                                                })
+                                                :
                                                 paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
-                                                    // {this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : ""}
+                                                    { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
                                                     return (
-                                                        //&& item.slug == pay_name.Code && item.value == true
                                                         register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
                                                             if (itm.slug == pay_name.Code && itm.value == "true") {
                                                                 return (
-                                                                    // render payment types for selfCheckout mobile view
-                                                                        this.renderPaymentsType(pay_name, activeDisplay)
+                                                                    this.renderPaymentsType(pay_name, activeDisplay)                                                                       
                                                                 )
                                                             }
                                                         })
@@ -794,172 +838,13 @@ class CheckoutViewThird extends React.Component {
                                                     </p>
                                                 </div>
                                             }
-                                            {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?this.showExtensionPayments(styles):null} */}
-                                            {/* {this.showExtensionPayments(styles)} */}
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* <!-- App Footer --> */}
-                                <div className="appBottomMenu h-auto bg-primary shadow-none">
-                                    <div className="text-white text-center pb-30">
-                                        {LocalizedLanguage.selfcheckoutby}
-                                        <br></br>
-                                        <img src="../../assets/img/images/logo-light.svg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            :
-                            <div>
-                                <div className="portrait">
-                                    <div className="page-payment scroll-hidden">
-                                        {this.state.loading == true ? <LoadingModal /> : ''}
-                                        <div className="payment-nav">
-                                            <button className="btn btn-success text-uppercase btn-14" onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")}>{LocalizedLanguage.goBack}</button>
-                                        </div>
-                                        <div className="payment-content">
-                                            <div className="w-100">
-                                                <div className="payment-page-title">
-                                                    <img src={landingScreen} className="mx-auto" alt="" />
-                                                    {/* <img src="../../assets/img/self-checkout/tic-tac-logo.png" className="mx-auto" alt=""/> */}
-                                                    <div className="spacer-40"></div>
-                                                    <h1 className="h2-title text-center text-white font-light m-0 pb-3">{LocalizedLanguage.howWouldYouLikeToPay}</h1>
-                                                </div>
-                                                <div className="payment-button-group overflowscroll payment-otp overflowscroll pb-0 pt-0">
-                                                    <div style={{ display: "none" }}>
-                                                        {/* render normal keypade via function */}
-                                                        {this.renderNoramlKeypad()}
-                                                    </div>
-                                                    {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null && register_content !== 'undefined' && register_content !== null ?
-                                                        (typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
-                                                        paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
-                                                            { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
-                                                            return (
-                                                                // register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
-                                                                //     if (itm.slug == pay_name.Code && itm.value == "true") {
-                                                                //         return (
-                                                                            // render payment types for selfCheckout web view                                                                            
-                                                                            this.renderPaymentsType(pay_name, activeDisplay)                                                                       
-                                                                //         )
-                                                                //     }
-                                                                // })
-                                                            )
-                                                        })
-                                                        :
-                                                        paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
-                                                            { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
-                                                            return (
-                                                                register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
-                                                                    if (itm.slug == pay_name.Code && itm.value == "true") {
-                                                                        return (
-                                                                            // render payment types for selfCheckout web view                                                                            
-                                                                            this.renderPaymentsType(pay_name, activeDisplay)                                                                       
-                                                                        )
-                                                                    }
-                                                                })
-                                                            )
-                                                        })
-                                                        :
-                                                        <div className="w-100">
-                                                            <p className="text-white text-center payment-description">
-                                                                {LocalizedLanguage.noPaymenttypeavilable}
-                                                            </p>
-                                                        </div>
-                                                    }
-                                                    {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?this.showExtensionPayments(styles):null} */}
-                                                    {this.showExtensionPayments(styles)}
-                                                </div>
-                                                {/* <h3 className="h7-title text-white text-center">TOTAL {paidAmount}</h3> */}
-                                            </div>
-                                        </div>
-                                        <div className="payment-footer text-center">
-                                            <p className="payment-copywright">{LocalizedLanguage.selfcheckoutby}</p>
-                                            {/* <img src="../../assets/im/logo-2-sm.png" alt=""/> */}
-                                            <img src="../../assets/img/images/logo-light.svg" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="landscape">
-                                    <div className="page-payment scroll-hidden">
-                                        {this.state.loading == true ? <LoadingModal /> : ''}
-                                        <div className="payment-nav">
-                                            <button className="btn btn-success text-uppercase btn-14" onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")}>{LocalizedLanguage.goBack}</button>
-                                        </div>
-                                        <div className="payment-content flex-columns">
-                                            <div className="w-100 row d-flex">
-                                                <div className="col-sm-5">
-                                                    <div className="payment-page-title">
-                                                        <img src={landingScreen} className="mx-auto" alt="" />
-                                                        {/* <img src="../../assets/img/self-checkout/tic-tac-logo.png" className="mx-auto" alt=""/> */}
-                                                        {landingScreen ? <h1 className="h2-title text-center text-white font-light m-0">{LocalizedLanguage.orderDetails}</h1> : null }
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-7">
-                                                    <div className="w-100">
-                                                        <div className="payment-page-title">
-                                                            <h1 className="h2-title text-center text-white font-light m-0 pb-3">{LocalizedLanguage.howWouldYouLikeToPay}</h1>
-                                                        </div>
-                                                        <div className="payment-button-group pb-0 payment-otp overflowscroll pt-0">
-                                                            <div style={{ display: "none" }}>
-                                                                {/* render normal keypade via function */}
-                                                                {this.renderNoramlKeypad()}
-                                                            </div>
-                                                            {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null && register_content !== 'undefined' && register_content !== null ?
-                                                                (typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
-                                                                paymentTypeName && paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
-                                                                    { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
-                                                                    return (
-                                                                        // register_content && register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
-                                                                        //     if (itm.slug == pay_name.Code && itm.value == "true") {
-                                                                        //         return (
-                                                                                    // render payment types for selfCheckout landscap view
-                                                                                    this.renderPaymentsType(pay_name, activeDisplay)
-                                                                        //         )
-                                                                        //     }
-                                                                        // })
-                                                                    )
-                                                                })
-                                                                :
-                                                                paymentTypeName && paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
-                                                                    { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
-                                                                    return (
-                                                                        register_content && register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
-                                                                            if (itm.slug == pay_name.Code && itm.value == "true") {
-                                                                                return (
-                                                                                    // render payment types for selfCheckout landscap view
-                                                                                    this.renderPaymentsType(pay_name, activeDisplay)
-                                                                                )
-                                                                            }
-                                                                        })
-                                                                    )
-                                                                })
-                                                                :
-                                                                <div className="w-100">
-                                                                    <p className="text-white text-center payment-description">
-                                                                        {LocalizedLanguage.noPaymenttypeavilable}
-                                                                    </p>
-                                                                </div>
-                                                            }
-                                                            {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?this.showExtensionPayments(styles):null} */}
-                                                            {this.showExtensionPayments(styles)}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="spacer-40"></div>
-                                            <div className="w-100 row d-flex align-items-center">
-                                                <div className="col-sm-5 col-xs-5">
-                                                    <div className="payment-footer text-center p-0">
-                                                        <p className="payment-copywright">{LocalizedLanguage.selfcheckoutby}</p>
-                                                        {/* <img src="../../assets/img/logo-2-sm.png" alt=""/> */}
-                                                        <img src="../../assets/img/images/logo-light.svg" alt="" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-7 col-xs-7">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            {this.showExtensionPayments(styles)}
+                                        </div> */}
+                                {/* <div className="payment-footer text-center">
+                                    <p className="payment-copywright">{LocalizedLanguage.selfcheckoutby}</p>
+                                    <img src="../../assets/img/images/logo-light.svg" alt="" />
+                                </div> */}
+                              
                                 {/* display the message terminal not connected */}
                                 <CommonMsgModal msg_text={LocalizedLanguage.terminalnotconnected} close_Msg_Modal={this.props.closeExtraPayModal} />
                             </div>
@@ -968,162 +853,76 @@ class CheckoutViewThird extends React.Component {
                             msg={this.props.global_payment ? this.props.global_payment.message : LocalizedLanguage.waitForTerminal}
                             pay_amount={(text) => this.pay_amount(text)}
                             closingTab={(status) => this.closingTab(status)} />
-                    }
-                </div>
-                :
-                isMobileOnly == true ?
-                    <div>
-                        {this.state.isPaymentStart && (!global_payment || !global_payment) ? <AndroidAndIOSLoader /> : ""}
-                        <CommonHeader paidAmount={paidAmount} {...this.props} openModal={this.props.changeComponent} parkOrder={() => { this.parkOrder("park_sale"); this.props.paymentType('park_sale'); }} />
-                        <NavbarPage {...this.props} />
-                        <div className={isDemoUser == true || isDemoUser == 'true' ? 'appCapsule h-100 overflow-auto vh-100 appCapsuleBoardingCheckout' : 'appCapsule h-100 overflow-auto vh-100'} style={{ paddingBottom: 143 }}>
-                            <div className="container-fluid pt-3">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null ?
-                                            paymentTypeName.map((pay_name, index) => {
-                                                return (
-                                                    <div key={index}>
-                                                        {
-                                                            // render payment types for mobile view
-                                                            this.renderPaymentsType(pay_name, activeDisplay)
-                                                        }
-                                                    </div>
-                                                )
-                                            })
-                                            : ''
-                                        }
-                                        <br />
-                                        <h6 style={{ textAlign: 'center' }}>{LocalizedLanguage.customerPayment}</h6>
-                                        <button type="submit" style={checkoutList ? { borderColor: '#46A9D4', marginBottom: 15 } : { borderColor: '#765b72', marginBottom: 15, opacity: 0.5 }} className="btn btn-default btn-lg btn-block btn-style-02" onClick={() => checkoutList ? this.parkOrder("lay_away") : this.props.extraPayAmount(LocalizedLanguage.activeButtonLayStore)}>{LocalizedLanguage.layAway}</button>
-                                        <button type="submit" style={checkoutList && checkoutList.StoreCredit !== '' && checkoutList.StoreCredit !== 0 ? { borderColor: '#46A9D4', marginBottom: 15 } : { borderColor: '#26627b', marginBottom: 15, opacity: 0.5 }} className="btn btn-default btn-lg btn-block btn-style-02" onClick={() => checkoutList && checkoutList.StoreCredit && checkoutList.StoreCredit !== '' && checkoutList.StoreCredit !== 0 ? this.storeCreditPayment(paymentsType.typeName.storeCredit, checkoutList ? checkoutList.StoreCredit : '') : checkoutList ? this.props.extraPayAmount(LocalizedLanguage.storeCreditAmountZero) : this.props.extraPayAmount(LocalizedLanguage.activeButtonLayStore)}>{LocalizedLanguage.storeCreditTitle}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {(activeCashSplitDiv == false && activeGlobalSplitDiv == false) &&
-                            <NormalKeypad
-                                paidAmount={paidAmount}
-                                parkOrder={() => { this.parkOrder("park_sale"); this.props.paymentType('park_sale'); }}
-                                paidAmountStatus={paidAmountStatus}
-                                placeholder={(typeof getRemainingPrice == 'undefined') ? '0.00' : parseFloat(RoundAmount(getRemainingPrice)).toFixed(2)}
-                                normapNUM={(text) => this.normapNUM(text)}
-                                closing_Tab={this.state.closingTab}
-                                closingTab={(text) => this.closingTab(text)}
-                                handleFocus={this.handleFocus}
-                                activeDisplay={(text) => this.activeDisplay(text)}
-                                styles={activeDisplay == false || activeDisplay == 'undefined_true' ? '' : 'none'}
-                                activeForCash={this.activeForCash}
-                                envType={this.props.env_type}
-                            />
-                        }
-
-                        {(activeCashSplitDiv == true && activeCashItems !== "" && (typeof activeCashItems !== "undefined")) &&
-                            <CashPayment
-                                color={activeCashItems.ColorCode}
-                                Name={activeCashItems.Name}
-                                paidAmounts={activeForCash == true ? paidAmount : ""}
-                                placeholder={parseFloat(getRemainingPriceForCash).toFixed(2)}
-                                pay_amount={(text) => this.pay_amount(text)}
-                                code={activeCashItems.Code}
-                                paidAmountStatus={paidAmountStatus}
-                                normapNUM={(text) => this.normapNUM(text)}
-                                cash_rounding={cash_rounding}
-                                closingTab={(text) => this.closingTab(text)}
-                                handleFocus={this.handleFocus}
-                                activeDisplay={(text) => this.activeDisplay(text)}
-                                styles={activeDisplay == false || activeDisplay == `${activeCashItems.Code}_true` ? '' : 'none'}
-                                activeForCash={this.activeForCash}
-                                envType={this.props.env_type}
-                                activeDivForCashPayment={this.activeDivForCashPayment}
-                                activeCashSplitDiv={activeCashSplitDiv}
-                            />}
-                        {/* {(activeGlobalSplitDiv == true && activeGlobalItems !== "" && (typeof activeGlobalItems !== "undefined")) &&
-                            <GlobalPayment
-                                color={activeGlobalItems.ColorCode}
-                                Name={activeGlobalItems.Name}
-                                code={activeGlobalItems.Code}
-                                pay_amount={this.pay_amount}
-                                msg={this.props.global_payment ? this.props.global_payment.message : ''}
-                                activeDisplay={(text) => this.activeDisplay(text)}
-                                styles={activeDisplay == false || activeDisplay == `${activeGlobalItems.Code}_true` ? '' : 'none'}
-                                closingTab={(text) => this.closingTab(text)}
-                                activeGlobalSplitDiv={activeGlobalSplitDiv}
-                                activeDivForGlobalPayment={this.activeDivForGlobalPayment} />
-                        } */}
-                        <Footer {...this.props} active="checkout" changeComponent={changeComponent} />
-                        <WarningMessage msg_text={this.props.msg_text} close_Msg_Modal={this.props.close_Msg_Modal} fl_VoidSale={this.props.voidSale} />
-                    </div>
-                    :
+                // :
                     // <div className= {payWithRedeemPoints && payWithRedeemPoints == true ?'col-lg-5 col-md-5 col-sm-6 col-xs-12 pt-4 plr-8 box-flex-disabled':'"col-lg-5 col-md-5 col-sm-6 col-xs-12 pt-4 plr-8'} onClick={() => this.toggalExtention(toggleExtentionStatus)}
-                    <div className={payWithRedeemPoints && payWithRedeemPoints == true ? 'col-lg-5 col-md-5 col-sm-6 col-xs-6 pt-4 plr-8 box-flex-disabled' : '"col-lg-5 col-md-5 col-sm-6 col-xs-6 pt-4 plr-8'} onClick={() => this.toggalExtention(toggleExtentionStatus)}
-                        style={{ pointerEvents: ((payWithRedeemPoints && payWithRedeemPoints == true) || appLock==true ) ? 'none' : 'all' }}>
-                        {/* <div 
-                        className={isDemoUser ? 
-                                    "block__box white-background round-8 full_height overflowscroll text-center pl-3 pr-3 pg-current-checkout-if_footer"
-                                    :"block__box white-background round-8 full_height overflowscroll text-center pl-3 pr-3"}> */}
+                    // <div className={payWithRedeemPoints && payWithRedeemPoints == true ? 'col-lg-5 col-md-5 col-sm-6 col-xs-6 pt-4 plr-8 box-flex-disabled' : '"col-lg-5 col-md-5 col-sm-6 col-xs-6 pt-4 plr-8'} onClick={() => this.toggalExtention(toggleExtentionStatus)}
+                    //     style={{ pointerEvents: ((payWithRedeemPoints && payWithRedeemPoints == true) || appLock==true ) ? 'none' : 'all' }}>
+                    //     {/* <div 
+                    //     className={isDemoUser ? 
+                    //                 "block__box white-background round-8 full_height overflowscroll text-center pl-3 pr-3 pg-current-checkout-if_footer"
+                    //                 :"block__box white-background round-8 full_height overflowscroll text-center pl-3 pr-3"}> */}
 
-                        <div className="block__box white-background round-8 full_height overflowscroll text-center pl-3 pr-3 pg-current-checkout-if_footer">
-                            <h2>{LocalizedLanguage.amountTendered}</h2>
-                            <div className={`wrapper_accordion ${toggleExtentionStatus == false && toggleExtentionStatus !== "" ? 'list-disabled' : ''}`}>
-                                {/* render normal keypade via function*/}
-                                {this.renderNoramlKeypad(activeDisplay)}
-                                {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null ?
-                                    paymentTypeName.map((pay_name, index) => {
-                                        return (
-                                            <div key={index}>
-                                                {this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : ""}
-                                                {
-                                                    this.renderPaymentsType(pay_name, activeDisplay)
-                                                }
-                                            </div>
-                                        )
-                                    })
-                                    : ''
-                                }
-                                {/* <br /> */}
+                    //     <div className="block__box white-background round-8 full_height overflowscroll text-center pl-3 pr-3 pg-current-checkout-if_footer">
+                    //         <h2>{LocalizedLanguage.amountTendered}</h2>
+                    //         <div className={`wrapper_accordion ${toggleExtentionStatus == false && toggleExtentionStatus !== "" ? 'list-disabled' : ''}`}>
+                    //             {/* render normal keypade via function*/}
+                    //             {this.renderNoramlKeypad(activeDisplay)}
+                    //             {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null ?
+                    //                 paymentTypeName.map((pay_name, index) => {
+                    //                     return (
+                    //                         <div key={index}>
+                    //                             {this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : ""}
+                    //                             {
+                    //                                 this.renderPaymentsType(pay_name, activeDisplay)
+                    //                             }
+                    //                         </div>
+                    //                     )
+                    //                 })
+                    //                 : ''
+                    //             }
+                    //             {/* <br /> */}
 
-                                {/* Extenssion payment types will show here */}
-                                {/* <h6 className="box-mid-heading">Extension Payments </h6> */}
-                                {this.showExtensionPayments(styles)}
-                                {/* Extenssion payment types end */}
+                    //             {/* Extenssion payment types will show here */}
+                    //             {/* <h6 className="box-mid-heading">Extension Payments </h6> */}
+                    //             {this.showExtensionPayments(styles)}
+                    //             {/* Extenssion payment types end */}
 
-                                <h6 className="box-mid-heading" style={{ display: styles }}>{LocalizedLanguage.customerPayment}</h6>
-                                <div className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0" style={{ display: styles }}>
-                                    <div className="section">
-                                        <div className="accordion_header" data-isopen="false">
-                                            <div className="pointer">
-                                                <div style={checkoutList ? { borderColor: '#46A9D4' } : { borderColor: '#765b72' }} id="others" value="other" name="payments-type" className={checkoutList ? 'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic' : 'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic box-flex-disabled'} onClick={() => checkoutList ? this.parkOrder("lay_away") : this.props.extraPayAmount(LocalizedLanguage.activeButtonLayStore)}>
-                                                    <div className="box-flex-text-heading" >
-                                                        <h2>{LocalizedLanguage.layAway}</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0" style={{ display: styles }}>
-                                    <div className="section">
-                                        <div className="accordion_header" data-isopen="false">
-                                            <div className="pointer">
-                                                <div style={isStoreCredit ? { borderColor: '#46A9D4' } : { borderColor: '#26627b' }}
-                                                    id="others" value="other" name="payments-type" className={typeof (checkoutList) !== undefined && checkoutList !== null ?
-                                                        'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic' :
-                                                        'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic box-flex-disabled'}
-                                                    onClick={() => isStoreCredit ? this.storeCreditPayment(paymentsType.typeName.storeCredit, isStoreCredit ? checkoutList.store_credit : '')
-                                                        : checkoutList ? this.props.extraPayAmount(LocalizedLanguage.storeCreditAmountZero)
-                                                            : this.props.extraPayAmount(LocalizedLanguage.activeButtonLayStore)}>
-                                                    <div className="box-flex-text-heading">
-                                                        <h2>{LocalizedLanguage.storeCreditTitle}</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    //             <h6 className="box-mid-heading" style={{ display: styles }}>{LocalizedLanguage.customerPayment}</h6>
+                    //             <div className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0" style={{ display: styles }}>
+                    //                 <div className="section">
+                    //                     <div className="accordion_header" data-isopen="false">
+                    //                         <div className="pointer">
+                    //                             <div style={checkoutList ? { borderColor: '#46A9D4' } : { borderColor: '#765b72' }} id="others" value="other" name="payments-type" className={checkoutList ? 'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic' : 'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic box-flex-disabled'} onClick={() => checkoutList ? this.parkOrder("lay_away") : this.props.extraPayAmount(LocalizedLanguage.activeButtonLayStore)}>
+                    //                                 <div className="box-flex-text-heading" >
+                    //                                     <h2>{LocalizedLanguage.layAway}</h2>
+                    //                                 </div>
+                    //                             </div>
+                    //                         </div>
+                    //                     </div>
+                    //                 </div>
+                    //             </div>
+                    //             <div className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0" style={{ display: styles }}>
+                    //                 <div className="section">
+                    //                     <div className="accordion_header" data-isopen="false">
+                    //                         <div className="pointer">
+                    //                             <div style={isStoreCredit ? { borderColor: '#46A9D4' } : { borderColor: '#26627b' }}
+                    //                                 id="others" value="other" name="payments-type" className={typeof (checkoutList) !== undefined && checkoutList !== null ?
+                    //                                     'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic' :
+                    //                                     'd-flex box-flex box-flex-border-left box-flex-background-others border-dynamic box-flex-disabled'}
+                    //                                 onClick={() => isStoreCredit ? this.storeCreditPayment(paymentsType.typeName.storeCredit, isStoreCredit ? checkoutList.store_credit : '')
+                    //                                     : checkoutList ? this.props.extraPayAmount(LocalizedLanguage.storeCreditAmountZero)
+                    //                                         : this.props.extraPayAmount(LocalizedLanguage.activeButtonLayStore)}>
+                    //                                 <div className="box-flex-text-heading">
+                    //                                     <h2>{LocalizedLanguage.storeCreditTitle}</h2>
+                    //                                 </div>
+                    //                             </div>
+                    //                         </div>
+                    //                     </div>
+                    //                 </div>
+                    //             </div>
+                    //         </div>
+                    //     </div>
+                    // </div>
         )
     }
 }

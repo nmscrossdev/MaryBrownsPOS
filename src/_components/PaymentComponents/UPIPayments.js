@@ -283,17 +283,21 @@ class UPIPayments extends React.Component {
         const { color, Name, code, pay_amount, styles } = this.props;
        return (
             (ActiveUser.key.isSelfcheckout == true && activeDisplayStatus !== true) ?
-                <div>
-                    <button
-                        style={{ borderLeftColor: color, marginBottom: isMobileOnly == true ?15:30 }}
-                        className={isMobileOnly == true ?
-                            "btn btn-light text-dark btn-block h-60 shadow-none fz-14" :
-                            "btn btn-default btn-block btn-90 btn-uppercase"}
-                        onClick={() => this.hideTab(!activeDisplayStatus)}>
-                        {Name}
-                        {/* <input type="hidden" value={code} id="pay_amount"></input> */}
-                    </button>
-                </div>
+                // <div>
+                //     <button
+                //         style={{ borderLeftColor: color, marginBottom: isMobileOnly == true ?15:30 }}
+                //         className={isMobileOnly == true ?
+                //             "btn btn-light text-dark btn-block h-60 shadow-none fz-14" :
+                //             "btn btn-default btn-block btn-90 btn-uppercase"}
+                //         onClick={() => this.hideTab(!activeDisplayStatus)}>
+                //         {Name}
+                //     </button>
+
+                    <div className="row">
+                          <button onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
+                        </div>
+
+                // </div>
                 :
                 (isMobileOnly == true) && activeDisplayStatus !== true ?
                     <button
