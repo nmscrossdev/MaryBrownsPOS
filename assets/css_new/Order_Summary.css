@@ -184,6 +184,9 @@ a {
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 4px;
+	padding-left: 7px;
+    padding-right: 7px;
+
 }
 
 .ordersummary-parret .number-input-container > input {
@@ -199,6 +202,8 @@ a {
 	color: #050505;
 	background-color: transparent;
 	caret-color: transparent;
+	border-left: 1px solid gainsboro;
+    border-right: 1px solid gainsboro
 }
 
 .ordersummary-parret .number-input-container > input:focus {

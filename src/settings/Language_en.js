@@ -2033,7 +2033,23 @@ const language_en = {
             "key": "sessionwillbeexpired",
             "value": "Session will be expired within minutes"
         },  
-      
+        {
+            "key": " ordersummary",
+            "value": " Order Summary"
+        },
+        {
+            "key": " gobacktomainmenu",
+            "value": " Go back to main menu"
+        },
+        {
+            "key": " reviewyourorder",
+            "value": " Review your order"
+        },
+        {
+            "key": " reviewyourorder",
+            "value": " Review your order"
+        }
+        
     ]
 }
 export default language_en;
