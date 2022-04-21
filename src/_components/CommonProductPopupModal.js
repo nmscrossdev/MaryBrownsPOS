@@ -1503,9 +1503,9 @@ updateActualStockQty(prd){
                                 <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0Ij48Zz48Zz48cGF0aCBmaWxsPSIjNGI0YjRiIiBkPSJNMTcuNDAzIDE2LjU0OFYxLjQyOGEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzaDE1LjEyMmEuNDI4LjQyOCAwIDAgMCAwLS44NTV6Ii8+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNGI0YjRiIiBzdHJva2UtbWl0ZXJsaW1pdD0iNTAiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE3LjQwMyAxNi41NDh2MC0xNS4xMmEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzdjBoMTUuMTIyYS40MjguNDI4IDAgMCAwIDAtLjg1NXoiLz48L2c+PC9nPjwvc3ZnPg=="/>
                             </button>
                             <div className="self-checkout-variation">
-                                <button className="btn btn-primary h-60" onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
+                                <button style={{backgroundColor:"#e6702a"}} className="btn btn-primary h-60" onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                     !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null}>                                                                  
-                                      {LocalizedLanguage.addToCart}  <NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+                                      {LocalizedLanguage.addToCart}  {tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))}
                                 </button>
                             </div>
                             <div style={{display:"none"}}>
