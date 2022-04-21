@@ -207,13 +207,13 @@ setDefaultQuantity(qty) {
                       <div className="row">
                         <label className="number-input-container">
                         <div  class="svg-container left">
-                          <svg width="16" height="2" viewBox="0 0 16 2">
+                          <svg width="16" height="2" viewBox="0 0 16 2" style={{width:"30px",paddingLeft:"10px"}}>
                             <rect width="16" height="2" fill="#758696" />
                           </svg>
                         </div>
                           <input type="number" defaultValue={1} />
                           <div  className="svg-container right">
-                            <svg width={16} height={16} viewBox="0 0 16 16">
+                            <svg width={16} height={16} viewBox="0 0 16 16" style={{width:"30px",paddingRight:"10px"}}>
                               <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                             </svg>
                           </div>
