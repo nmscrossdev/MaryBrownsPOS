@@ -746,7 +746,7 @@ class CheckoutViewThird extends React.Component {
             // (ActiveUser.key.isSelfcheckout == true && (SelfCheckoutStatus == "sfcheckoutpayment" || isMobileOnly == true)) ?
               
                     (this.state.isPaymentStart == false || !global_payment) ?
-                            <div>
+                            <div className='bodyCenter'>
                                 {this.state.loading == true ? <LoadingModal /> : ''}
                                 {/* <div className="payment-nav">
                                     <button className="btn btn-success text-uppercase btn-14" onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")}>{LocalizedLanguage.goBack}</button>

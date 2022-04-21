@@ -5,9 +5,12 @@ const toggleApp=(a)=>
 {
     
 }
+// const GoBack=()=>{
+//        window.location='/SelfCheckoutView';
+// }
 const Navbar=(props)=> {
     return ( <div>
-        <div className="topnav margin-bottom-24">
+        <div className={props.margin?props.margin:"topnav margin-bottom-24"}>
         <img src="assets/image/Mary_Browns_Logo.png" alt="" />
         <div className="topnav-row">
             <div className="topnav-col">
@@ -51,13 +54,34 @@ const Navbar=(props)=> {
                             fill="white"
                         />
                     </svg>
-                    <div className="topnav-indicator">
-                        <p>2</p>
-                    </div>
+                    {props.itemCount?<div className="topnav-indicator">
+                        <p>{props.itemCount}</p>
+                    </div>:null}
                 </div>
             </div>
         </div>
-    </div></div>);
+    </div>
+    {/* {props.catName?
+    <div class="category-header-row">
+			<div class="category-header-col">
+				<p class="path">Menu &#62;</p>
+				<p class="title">{props.catName}</p>
+			</div>
+			<button onClick={GoBack()}>
+				<svg width="22" height="20" viewBox="0 0 22 20">
+					<path
+						d="M9.7737 1.8335L1.3695 10.0002L9.7737 18.1668M1.3695 10.0002L20.5791 10.0002L1.3695 10.0002Z"
+						stroke="white"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						fill="transparent"
+					/>
+				</svg>
+				Go back to main menu
+			</button>
+		</div>:null} */}
+    </div>);
     }
 
     export default Navbar;

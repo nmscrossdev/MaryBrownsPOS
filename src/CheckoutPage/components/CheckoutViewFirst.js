@@ -54,6 +54,89 @@ class CheckoutViewFirst extends React.Component {
         this.setState({ cartDiscountAmount: _cartDiscountAmount })
     }
 
+    deleteProduct(item) {
+        // var product = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//
+        // var productx = localStorage.getItem("PRODUCTX_DATA") ? JSON.parse(localStorage.getItem("PRODUCTX_DATA")) : [];//
+        // var tikeraSelectedSeats = localStorage.getItem('TIKERA_SELECTED_SEATS') ? JSON.parse(localStorage.getItem('TIKERA_SELECTED_SEATS')) : [];
+        // if (tikeraSelectedSeats.length > 0) {
+        //     tikeraSelectedSeats.map((items, index) => {
+        //         if (parseInt(items.chart_id) == parseInt(item.product_id)) {
+        //             tikeraSelectedSeats.splice(index, 1);
+        //         }
+        //     })
+        //     localStorage.setItem('TIKERA_SELECTED_SEATS', JSON.stringify(tikeraSelectedSeats))
+        // }
+        // var i = 0;
+        // var index;
+        // for (i = 0; i < product.length; i++) {
+        //     if ((typeof item.product_id !== 'undefined') && item.product_id !== null) {
+        //         if (item.variation_id !== 0) {
+        //             if (product[i].variation_id == item.variation_id)
+        //                 index = i;
+        //         }
+        //         else {
+        //             if (product[i].product_id == item.product_id && product[i].strProductX == item.strProductX)
+        //                 index = i;
+        //         }
+
+        //     } else {
+        //         if (product[i].Title == item.Title) {
+        //             index = i;
+        //         }
+        //     }
+        // }
+        // product.splice(index, 1);
+        // //delete productx
+        // var j = 0;
+        // var xindex;
+        // for (j = 0; j < productx.length; j++) {
+        //     if ((typeof item.product_id !== 'undefined') && item.product_id !== null) { 
+        //         // we hvae added item.strProductX == undefined condistion for park sale edit case becs we dont have strProductX in cardProductList localstorage 
+        //         if (productx[j].product_id == item.product_id && (productx[j].strProductX == item.strProductX|| (item.strProductX == undefined && productx[j].strProductX == ""))) {
+        //             xindex = j;
+        //         }
+        //     }
+        // }
+        // xindex !== undefined && productx.splice(xindex, 1);
+
+        // if (product.length == 0) {
+        //     var checklist = localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))
+        //     if(checklist && (checklist.status == "pending" || checklist.status == "park_sale" || checklist.status == "lay_away" || checklist.status == "on-hold")){
+        //         var udid = get_UDid('UDID');
+        //         this.setState({ isLoading: true })
+        //          localStorage.removeItem('PENDING_PAYMENTS');
+        //         this.props.dispatch(checkoutActions.orderToCancelledSale(checklist.order_id, udid));
+        //     }
+        //     localStorage.removeItem('CHECKLIST');
+        //     localStorage.removeItem("CART");
+        //     localStorage.removeItem("PRODUCT");
+        //     localStorage.removeItem("SINGLE_PRODUCT");
+        //     localStorage.removeItem("CARD_PRODUCT_LIST");
+        //     localStorage.removeItem('TIKERA_SELECTED_SEATS');
+        //     localStorage.removeItem("PRODUCTX_DATA");
+        //     const { dispatch } = this.props;
+        //     if(dispatch){
+        //     dispatch(cartProductActions.addtoCartProduct(null));
+        //     dispatch(cartProductActions.singleProductDiscount())
+        //     dispatch(cartProductActions.showSelectedProduct(null));
+        //     dispatch(cartProductActions.addInventoryQuantity(null,null));
+        //     }
+        // } else {
+        //     const { dispatch } = this.props;
+        //     localStorage.setItem("PRODUCTX_DATA", JSON.stringify(productx));
+        //     if(dispatch){
+        //     dispatch(cartProductActions.addtoCartProduct(product));
+        //     dispatch(cartProductActions.showSelectedProduct(null));
+        //     dispatch(cartProductActions.addInventoryQuantity(null));
+        //     }
+        // }
+       // this.props.simpleProductData();
+
+        //Android Call----------------------------
+        //androidDisplayScreen(item.Title, 0, 0, "deleteproduct");
+        //-----------------------------------------
+    }
+
     componentWillReceiveProps(props) {
         setTimeout(function () {
             //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
@@ -207,6 +290,7 @@ class CheckoutViewFirst extends React.Component {
                 <CheckoutCart  
                     {...this.props}
                     {...this.state}
+                    deleteProduct={this.deleteProduct}
                     RoundAmount={RoundAmount}
                     NumberFormat={NumberFormat}
                     Markup={Markup}

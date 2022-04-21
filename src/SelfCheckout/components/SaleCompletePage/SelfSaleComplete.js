@@ -158,13 +158,14 @@ class SelfSaleComplete extends React.Component {
 			<div className="col">
 				<svg width="118" height="120" viewBox="0 0 118 120">
 					<path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="#3AB4D8" fill-opacity="0.1" stroke="#0AACDB" stroke-width="5"></path>
-					<path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3838" stroke="#0AACDB" stroke-width="8.625" stroke-linecap="round" stroke-linejoin="round" fill="transparent"></path>
+					<path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3838" stroke="#0AACDB" stroke-width="8.625" stroke-linecap="round" strokeLinejoin="round" fill="transparent"></path>
 				</svg>
 				<p className="medium">Your order is complete!</p>
 			</div>
 			<div className="col">
 				<p className="small">Your order number is</p>
-				<p className="big">{orderId!=""?orderId:tempOrderId}</p>
+				{/* <p className="big">{orderId!=""?orderId:tempOrderId}</p> */}
+                <p className="big">{tempOrderId}</p>
 			</div>
 			<div className="col">
 				<p className="small margin-bottom-24">How would you like to receive your reciept?</p>
