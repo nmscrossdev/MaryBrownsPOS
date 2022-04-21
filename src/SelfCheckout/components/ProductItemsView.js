@@ -6,7 +6,7 @@ const ProductItemsView = (props) => {
    
     return (      
   
-        <div className="item-card-group scroll" >
+        <div className="item-card-group scroll" style={{height:"781px"}} >
                 {    
                 (product_List && product_List.length !=0)?
                     product_List && product_List.map((item, index) => {
@@ -24,7 +24,7 @@ const ProductItemsView = (props) => {
                             <div className="item-card grouped" key={"product_"+index}>
                                 <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)}   className="scale"/>
                                 <p className="prod-name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
-                                <p className="price">{item.Price}</p>
+                                <p className="price">starting at $ {item.Price}</p>
                                 <button key={index}
                             data-toggle={isVariableProduct ? "modal" : ""} href="javascript:void(0)"
                             onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>View Item</button>

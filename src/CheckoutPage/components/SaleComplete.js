@@ -879,7 +879,7 @@ class SaleComplete extends React.Component {
             this.printReceipt()
         }
         return (
-            <div>               
+            <div className='bodyCenter'>               
                 {(ActiveUser.key.isSelfcheckout == true) ?
                     <SelfSaleComplete
                         printReceipt={this.handlePrintClick}
@@ -888,6 +888,7 @@ class SaleComplete extends React.Component {
                         baseurl={baseurl}
                         barcode_image={barcode_image}
                         tempOrderId={tempOrderId}
+                        orderId={this.state.orderId}
                         handleContinue={this.HandleContinue} />
                     :
                     (isMobileOnly == true) ?

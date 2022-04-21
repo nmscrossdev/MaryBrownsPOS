@@ -1276,8 +1276,8 @@ class SelfCheckoutView extends React.Component {
             //         />
             // { ActiveUser.key.isSelfcheckout !== true && isMobileOnly !== true && <TickitDetailsPopupModal Ticket_Detail={this.state.Ticket_Detail} openModal={this.openModal} />}
             // </div>
-            <div>
-            <Navbar></Navbar>
+            <div style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}>
+            <Navbar itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             <Carasoul></Carasoul>
             {/* :''} */}
