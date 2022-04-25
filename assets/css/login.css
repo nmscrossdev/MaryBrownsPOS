@@ -307,7 +307,7 @@ body {
 
 .user__login_footer {
   padding-top: 22px;
-  background-color: #FFF;
+  /* background-color: #FFF; */
 }
 
 .user_login_aside {

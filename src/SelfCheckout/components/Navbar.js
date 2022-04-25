@@ -8,6 +8,7 @@ const toggleApp=(a)=>
 // const GoBack=()=>{
 //        window.location='/SelfCheckoutView';
 // }
+
 const Navbar=(props)=> {
     return ( <div>
         <div className={props.margin?props.margin:"topnav margin-bottom-24"}>
@@ -61,13 +62,13 @@ const Navbar=(props)=> {
             </div>
         </div>
     </div>
-    {/* {props.catName?
-    <div class="category-header-row">
+    {props.catName || props.catPName?
+    <div class="category-header-row" onClick={props.GoBackhandleClick}>
 			<div class="category-header-col">
-				<p class="path">Menu &#62;</p>
-				<p class="title">{props.catName}</p>
+				<p style={{textTransform:"capitalize"}} class="path">Menu &#62; {(props.catName && props.catName!=""&& props.catPName && props.catPName!='')? props.catPName:''}</p>
+				<p style={{textTransform:"capitalize"}} class="title">{(props.catName==null || props.catName=="" && props.catPName && props.catPName!='')? props.catPName: props.catName}</p>
 			</div>
-			<button onClick={GoBack()}>
+			<button >
 				<svg width="22" height="20" viewBox="0 0 22 20">
 					<path
 						d="M9.7737 1.8335L1.3695 10.0002L9.7737 18.1668M1.3695 10.0002L20.5791 10.0002L1.3695 10.0002Z"
@@ -80,7 +81,7 @@ const Navbar=(props)=> {
 				</svg>
 				Go back to main menu
 			</button>
-		</div>:null} */}
+		</div>:null}
     </div>);
     }
 

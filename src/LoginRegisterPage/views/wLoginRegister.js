@@ -58,7 +58,7 @@ const WebLoginRegisterView = (props) => {
                                                                             (item.IsSelfCheckout == false || (item.IsSelfCheckout == true && loginDetails && loginDetails.subscription_permission && loginDetails.subscription_permission.AllowSelfCheckout == true)) ?
                                                                                 <li key={item.id} id={`loginRegisterTab${index}`} onClick={() => handleSubmit(item)} onKeyDown={handleBack} >
                                                                                     <div  className="user_choose-list-in" id={`div${item.id}`}>
-                                                                                        <span>{item.name}
+                                                                                        <span style={{marginBottom:"unset"}}>{item.name}
                                                                                         {/* .replace(/[^a-zA-Z]/g, ' ') */}
                                                                                             {fireBaseUsedRegister && fireBaseUsedRegister.length > 0 && fireBaseUsedRegister.map((firebaseItem, indx) => {
                                                                                                 if (inr == true) {

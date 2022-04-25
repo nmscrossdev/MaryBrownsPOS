@@ -7,6 +7,27 @@ const ProductItemsView = (props) => {
     return (      
   
         <div className="item-card-group scroll" style={{height:"781px"}} >
+            {props.showBackProduct==true?
+            <div className="item-card category grouped">
+				<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae nihil error rem
+					quam maxime iusto adipisci eaque? Dolor, reiciendis. Hic deleniti quos eveniet
+					nulla at quam culpa praesentium exercitationem dolorum?
+				</p>
+				<button >
+					<svg width="22" height="20" viewBox="0 0 22 20">
+						<path
+							d="M9.83301 1.83325L1.66634 9.99992L9.83301 18.1666M1.66634 9.99992L20.333 9.99992L1.66634 9.99992Z"
+							stroke="white"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							fill="transparent"
+						/>
+					</svg>
+					Go Back
+				</button>
+			</div>:null}
                 {    
                 (product_List && product_List.length !=0)?
                     product_List && product_List.map((item, index) => {

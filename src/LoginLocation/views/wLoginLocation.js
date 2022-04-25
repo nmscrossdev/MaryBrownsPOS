@@ -45,9 +45,9 @@ const WebLoginLocation = (props) => {
                                                         <ul>
                                                             {UserLocations && UserLocations.length > 0 ? UserLocations.map((item, index) => {
                                                                 return (
-                                                                    <li key={index} onClick={() => handleSubmit(item)} onKeyDown={handleBack} >
+                                                                    <li key={index} onClick={() => handleSubmit(item)} onKeyDown={handleBack} style={{marginBottom:"unset"}}>
                                                                         {/* <a href="javascript:void(0)" id={`loginLocationTab${index}`} > */}
-                                                                        <span id={`loginLocationTab${index}`} ><Markup content= {item && item.name }/></span>
+                                                                        <span id={`loginLocationTab${index}`} style={{marginBottom:"unset"}}><Markup content= {item && item.name } /></span>
                                                                         <img src="../assets/img/onboarding/left-chevron.svg" alt="" />
                                                                         {/*&& item.name.replace(/[^a-zA-Z]/g, ' ') */}
                                                                     </li>

@@ -221,7 +221,7 @@ class WebLoginView extends React.Component {
                                                         </div>
                                                         <div className="form-group user-form-group">
                                                             <label htmlFor="password">{Language.key.PASSWORD}</label>
-                                                            <input autoComplete="off" className="form-control" name="Email" placeholder="******" id="password"
+                                                            <input autoComplete="off" className="form-control"  placeholder="******" id="password"
                                                                 name="password" tabIndex="1" type="password" value={password} onChange={handleChange} onKeyDown={handleKey} />
                                                         </div>
                                                         {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?null:
@@ -248,7 +248,7 @@ class WebLoginView extends React.Component {
                                                                 onClick={handleSubmit} onKeyDown={handleKey}>
                                                                 Sign In
                                         </button>
-                                        {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?null:
+                                        {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?null:
                                                             <div><div className="user-login__divider">
                                                                 <div className="user-divider">
                                                                     <span></span>
@@ -258,23 +258,13 @@ class WebLoginView extends React.Component {
                                                             </div>
 
                                                             <div className="user_login__button user_login__button_fill">
-                                                                {/* <!-- user_login_gl react url  className use only in design --> */}
                                                                 <button type="submit" ref="googleLoginBtn" title="Log in using your Google account" className="btn btn-outline-secondary btn-block user_login__social user_login_gl_on"
-                                                                    // <button type="submit" ref="googleLoginBtn" title="Log in using your Google account" className="btn btn-outline-secondary btn-block user_login__social user_login_gl_on"
-                                                                    title="Log in using your Facebook account">
-                                                                    {/* <!-- <img src="../assets/img/onboarding/google.svg" alt="" className="fbb-icon"> --> */}
+                                                                   >
                                                                     <span> {LocalizedLanguage.SignupwithGoogle}</span>
                                                                 </button>
                                                             </div>
 
                                                             <div className="user_login__button user_login__button_fill">
-                                                                {/* <!-- <button type="submit" className="btn btn-outline-secondary btn-block user_login__social user_login_fb_on"
-                                                                title="Log in using your Facebook account">
-                                                                <span>Sign up with Facebook</span>
-                                                            </button> --> */}
-                                                             {/* fields="first_name, last_name,name,email,picture,gender,birthday,address,hometown,age_range,location"
-                                                                    scope="public_profile, email, user_birthday,user_gender,user_location,user_age_range,user_hometown" */}
-
 
                                                                 <FacebookLogin cssClass="btn btn-outline-secondary btn-block user_login__social user_login_fb_on"
                                                                     appId={Config.key.FACEBOOK_CLIENT_ID}
@@ -292,7 +282,7 @@ class WebLoginView extends React.Component {
                                                                 <span>Don’t have an account?</span><a href="#"
                                                                     onClick={handleSignInClick} className="user-login__account-link"><u> Sign Up Now!</u></a>
                                                             </div>
-                                                            </div>}
+                                                            </div>} */}
                                                         </div>
                                                     </div>
                                                 </div>
