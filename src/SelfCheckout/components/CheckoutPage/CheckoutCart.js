@@ -176,7 +176,7 @@ class CheckoutCart extends React.Component {
                       </div>
                       <div className="row">
                         <label className="number-input-container">
-                        <div  class="svg-container left">
+                        <div  className="svg-container left">
                           <svg width="16" height="2" viewBox="0 0 16 2" style={{width:"30px",paddingLeft:"10px"}}>
                             <rect width="16" height="2" fill="#758696" />
                           </svg>

@@ -37,13 +37,13 @@ const WebSiteLinkViewFirst = (props) => {
                                         return (
                                             link.subscription_detail.activated == true ?
                                                 <li key={`siteLinkTab${index}`} id={`siteLinkTab${index}`} onClick={() => handleSubmit(link)} onKeyDown={handleBack} >
-                                                    <span>{link.subscription_detail.host_name}</span>
+                                                    <span style={{marginBottom:"unset"}}>{link.subscription_detail.host_name}</span>
                                                     <img src="../assets/img/onboarding/left-chevron.svg"
                                                         alt="" />
                                                 </li>
                                                 :
                                                 <li  key={index} title="Site is not connected to bridge!" onClick ={showSubscriptionPopup}>
-                                                    <span>{link.subscription_detail.host_name}</span>
+                                                    <span style={{marginBottom:"unset"}}>{link.subscription_detail.host_name}</span>
                                                     <img src="../assets/img/onboarding/left-chevron.svg"
                                                         alt="" />
                                                 </li>
