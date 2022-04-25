@@ -37,7 +37,7 @@ class CheckoutCart extends React.Component {
   }
 
 
-  incrementDefaultQuantity = (item, index) => {
+  incrementDefaultQuantity = (item, index,action) => {
     this.getProductFromIndexDB();
     setTimeout(() => {
       var product = null;
@@ -79,10 +79,26 @@ class CheckoutCart extends React.Component {
           item['WPID'] = product.WPID;
           item['selectedIndex'] = index;
           product['ticket_info'] = item.ticket_info;
-          item['quantity'] = item.quantity + 1;
+
+          var new_excl_tax=item.excl_tax;
+          var new_incl_tax=item.incl_tax;
+          if(item.quantity > 1)
+          {
+            new_excl_tax=item.excl_tax/item.quantity;
+            new_incl_tax=item.incl_tax/item.quantity;
+          }
+          if(action==1)
+          {
+            item['quantity'] = item.quantity + 1;
+          }
+          else
+          {
+            item['quantity'] = item.quantity - 1;
+          }
+                
           item['Price'] = (item.quantity) * item.old_price
-          item['excl_tax'] = (item.quantity) * parseFloat(item.excl_tax)
-          item['incl_tax'] = (item.quantity) * parseFloat(item.incl_tax);
+          item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
+          item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
         } else {
           product !== null && product !== undefined && product.Variations && product.Variations.map(vartion => {
             if (vartion.WPID == item.variation_id) {
@@ -110,10 +126,26 @@ class CheckoutCart extends React.Component {
               item['WPID'] = vartion.WPID;
               item['selectedIndex'] = index;
               vartion['ticket_info'] = vartion.ticket_info;
-              item['quantity'] = item.quantity + 1;
+              
+              var new_excl_tax=item.excl_tax;
+              var new_incl_tax=item.incl_tax;
+              if(item.quantity > 1)
+              {
+                new_excl_tax=item.excl_tax/item.quantity;
+                new_incl_tax=item.incl_tax/item.quantity;
+              }
+              if(action==1)
+              {
+                item['quantity'] = item.quantity + 1;
+              }
+              else
+              {
+                item['quantity'] = item.quantity - 1;
+              }
+
               item['Price'] = (item.quantity) * item.old_price
-              item['excl_tax'] = (item.quantity) * parseFloat(item.excl_tax)
-              item['incl_tax'] = (item.quantity) * parseFloat(item.incl_tax);
+              item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
+              item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
             }
           })
         }
@@ -122,7 +154,7 @@ class CheckoutCart extends React.Component {
       cartItemList.push(item);
 
       const { dispatch } = this.props;
-      this.CartCalulation(cartItemList);
+     this.CartCalulation(cartItemList);
       // dispatch(cartProductActions.showSelectedProduct(item));
       // this.props.showPopuponcartlistView(product, item)
      dispatch(cartProductActions.addtoCartProduct(cartItemList));
@@ -179,9 +211,9 @@ class CheckoutCart extends React.Component {
         _wc_points_logged_redemption: CHECKLIST._wc_points_logged_redemption
     }
     console.log("CheckoutList-------->",CheckoutList)
-    setTimeout(function () {
+    //setTimeout(function () {
       localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList));
-  }, 1000)
+  //}, 1000)
   }
 
 
@@ -367,13 +399,13 @@ class CheckoutCart extends React.Component {
                       </div>
                       <div className="row">
                         <label className="number-input-container">
-                          <div onClick={() => this.decrementDefaultQuantity(product, index)} class="svg-container left">
+                          <div onClick={() => this.incrementDefaultQuantity(product, index,0)} class="svg-container left">
                             <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
                               <rect width="16" height="2" fill="#758696" />
                             </svg>
                           </div>
                           <input type="number" value={product.quantity}/>
-                          <div onClick={() => this.incrementDefaultQuantity(product, index)} className="svg-container right">
+                          <div onClick={() => this.incrementDefaultQuantity(product, index,1)} className="svg-container right">
                             <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
                               <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                             </svg>
