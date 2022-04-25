@@ -1328,7 +1328,7 @@ class SelfCheckoutView extends React.Component {
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>
             <p className="title margin-bottom-20">Menu Items</p>  
-            <AllProduct showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} ></AllProduct>
+            <AllProduct showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} ></AllProduct>
             
             <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
                                         showPopuponcartlistView={this.showPopuponcartlistView}
