@@ -1343,8 +1343,9 @@ class SelfCheckoutView extends React.Component {
             getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
             msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} 
             datetime={this.state.datetime}/>
-            {/* <UpdateProductInventoryModal /> */}
+            <UpdateProductInventoryModal />
             <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
+            
             {/* <CommonInfoPopup
                 title = {LocalizedLanguage.noMatchingProductFound}
                 subTitle = {this.state.common_Msg}

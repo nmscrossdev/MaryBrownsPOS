@@ -47,7 +47,7 @@ class UpdateProductInventoryModal extends React.Component {
                         <div className="modal-body p-0">
                             {blank_quntity.length > 0 ?
                                 <div>
-                                    <h3 id="epos_error_model_message" className="popup_payment_error_msg">{LocalizedLanguage.messageCartProductNotAvailable}</h3>
+                                    <div id="epos_error_model_message" className="popup_payment_error_msg">{LocalizedLanguage.messageCartProductNotAvailable}</div>
 
                                     <h5 id="epos_error_model_message" style={{ padding: 5 }} className="popup_payment_error_msg">
                                         {blank_quntity.map(name => {
@@ -58,7 +58,7 @@ class UpdateProductInventoryModal extends React.Component {
                                     </h5>
                                 </div>
                                 :
-                                <h3 id="epos_error_model_message" className="popup_payment_error_msg">{LocalizedLanguage.messageCartNoProduct}</h3>
+                                <div id="epos_error_model_message" className="popup_payment_error_msg">{LocalizedLanguage.messageCartNoProduct}</div>
                             }
                         </div>
                         <div className="modal-footer p-0">
