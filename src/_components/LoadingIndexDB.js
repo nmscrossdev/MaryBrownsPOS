@@ -28,7 +28,7 @@ class LoadingIndexDB extends React.Component {
         this.props.dispatch(checkoutActions.getOrderReceipt());
         localStorage.removeItem("tipsInfo"); 
         this.props.dispatch(tipsActions.getAll());
-        ActiveUser.key.isSelfcheckout = localStorage.getItem('selectedRegister') ? JSON.parse(localStorage.getItem('selectedRegister')).IsSelfCheckout : null
+        //ActiveUser.key.isSelfcheckout =  localStorage.getItem('selectedRegister') ? JSON.parse(localStorage.getItem('selectedRegister')).IsSelfCheckout : null
         this.getProductList = this.getProductList.bind(this);
     }
 
@@ -55,7 +55,7 @@ class LoadingIndexDB extends React.Component {
             redirectToURL()
             // history.push('/loginpin');
         }
-        var RedirectUrl = ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
+        var RedirectUrl ='/selfcheckout';// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
 
         var udid = get_UDid(localStorage.getItem("UDID"));
         var reloadCount = localStorage.getItem("ReloadCount") ? localStorage.getItem("ReloadCount") : 0;
@@ -173,13 +173,13 @@ class LoadingIndexDB extends React.Component {
                     }
                    
                 }
-                else {
-                    if(isMobileOnly == true){
-                        history.push('/shopview')
-                    }else{
-                        window.location = '/shopview';
-                    }
-                }
+                // else {
+                //     if(isMobileOnly == true){
+                //         history.push('/shopview')
+                //     }else{
+                //         window.location = '/shopview';
+                //     }
+                // }
             }
         })
 
@@ -195,7 +195,7 @@ class LoadingIndexDB extends React.Component {
 
         }
         //To Clear indexDB----------------------------
-        var RedirectUrl = ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
+        var RedirectUrl ='/selfcheckout'// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
         var udid = get_UDid(localStorage.getItem("UDID"));
         var pcount = localStorage.getItem('productcount');
         if(isDemoUser ==false){

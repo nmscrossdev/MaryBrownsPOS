@@ -14,7 +14,7 @@ import { SettingView } from '../SettingPage';
 import { SiteLinkView } from '../SiteLinkPage';
 import { LoginRegisterView } from '../LoginRegisterPage';
 import { PinPage } from '../PinPage/PinView';
-import { ShopView } from '../ShopView';
+// import { ShopView } from '../ShopView';
 import { ListView } from '../ListView';
 import { AppView } from '../AppView';
 import { LoginLocation } from '../LoginLocation';
@@ -330,7 +330,7 @@ class App extends React.Component {
                      />
 
                     <PrivateRoute exact path="/" component={LoadingIndexDB} />
-                    <PrivateRoute path="/shopview" component={ShopView} />
+                    {/* <PrivateRoute path="/shopview" component={ShopView} /> */}
                     <PrivateRoute path="/SelfCheckout" component={SelfCheckout} />
                     <PrivateRoute path="/customerview" component={CustomerView} />
                     <PrivateRoute path="/checkout" component={CheckoutView} />

@@ -66,9 +66,9 @@ function pinLogin(pin, userid) {
             localStorage.setItem("LANG", lang);
 
             //Reloading the component if new language set for the login user.                  
-            if (_lang && _lang !== lang) {
-              window.location = '/';
-            }
+            // if (_lang && _lang !== lang) {
+            //   window.location = '/';
+            // }           
             history.push('/')
           } else {
             dispatch(failure(user.toString()));

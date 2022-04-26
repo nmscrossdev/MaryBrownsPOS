@@ -56,7 +56,7 @@ const ShowCreatePin = props =>
         return (
             <li key ={ind}>
                 {/* <input style={props.style} key={ind} id={pinId} type={props.type} className={props.className} /> */}
-                <input type="number" key={ind + 1} id={pinId + 1} type={props.type} className={props.className} />
+                <input key={ind + 1} id={pinId + 1} type={props.type ?props.type :"number"} className={props.className} />
                 {/* className="if-show-only" */}
             </li>
         )

@@ -146,40 +146,40 @@ class LoginPage extends React.Component {
     componentWillReceiveProps(nextProps) {
 
 
-        // for demo user
-        if (nextProps && nextProps.oliverExternalLoginRes && nextProps.oliverExternalLoginRes.content && nextProps.oliverExternalLoginRes.content.UserToken) {
+    //     // for demo user
+    //     if (nextProps && nextProps.oliverExternalLoginRes && nextProps.oliverExternalLoginRes.content && nextProps.oliverExternalLoginRes.content.UserToken) {
 
-            var fbLoginData = localStorage.getItem('FGLoginData')
-            // var googleLoginData = localStorage.getItem('googleLoginData')  // Not implemeted yet
-            // if (fbLoginData && fbLoginData.length > 0 && nextProps.oliverExternalLoginRes.content.UserToken != '') {
-            //     localStorage.setItem('demoUser', true)
-            //     history.push(`/VisiterShopAccess?_u=${nextProps.oliverExternalLoginRes.content.UserToken}&_t=demo&_fg=true`);
-            // }
+    //         var fbLoginData = localStorage.getItem('FGLoginData')
+    //         // var googleLoginData = localStorage.getItem('googleLoginData')  // Not implemeted yet
+    //         // if (fbLoginData && fbLoginData.length > 0 && nextProps.oliverExternalLoginRes.content.UserToken != '') {
+    //         //     localStorage.setItem('demoUser', true)
+    //         //     history.push(`/VisiterShopAccess?_u=${nextProps.oliverExternalLoginRes.content.UserToken}&_t=demo&_fg=true`);
+    //         // }
 
-            if (fbLoginData && fbLoginData.length > 0 && nextProps.oliverExternalLoginRes.content) {
-                if (nextProps.oliverExternalLoginRes && nextProps.oliverExternalLoginRes !== undefined && nextProps.oliverExternalLoginRes.content && nextProps.oliverExternalLoginRes.content !== undefined && nextProps.oliverExternalLoginRes.content.subscriptions && nextProps.oliverExternalLoginRes.content.subscriptions !== undefined && nextProps.oliverExternalLoginRes.content.subscriptions.length > 0) {
-                   if(nextProps.oliverExternalLoginRes.content.subscriptions.length > 0){
-                        if (nextProps.oliverExternalLoginRes.content.GoToDemo == true) {
-                            //Redirect to sync page
-                            var _client_Id = nextProps.oliverExternalLoginRes.content.subscriptions && nextProps.oliverExternalLoginRes.content.subscriptions[0].subscription_detail.client_guid;
-                            var _token = nextProps.oliverExternalLoginRes.content.UserToken && nextProps.oliverExternalLoginRes.content.UserToken;
-                            // window.open(
-                            window.location.href = process.env.BRIDGE_DOMAIN + `/account/VerifyClient/?_client=${_client_Id}&_token=${_token}`;
-                            return;
-                        }
-                    }
-                }
-                else {
-                    localStorage.setItem('demoUser', true)
-                    window.location.href = `/VisiterShopAccess?_u=${nextProps.oliverExternalLoginRes.content.UserToken}&_t=demo&_fg=true`;
-                    return;
-                }
+    //         if (fbLoginData && fbLoginData.length > 0 && nextProps.oliverExternalLoginRes.content) {
+    //             if (nextProps.oliverExternalLoginRes && nextProps.oliverExternalLoginRes !== undefined && nextProps.oliverExternalLoginRes.content && nextProps.oliverExternalLoginRes.content !== undefined && nextProps.oliverExternalLoginRes.content.subscriptions && nextProps.oliverExternalLoginRes.content.subscriptions !== undefined && nextProps.oliverExternalLoginRes.content.subscriptions.length > 0) {
+    //                if(nextProps.oliverExternalLoginRes.content.subscriptions.length > 0){
+    //                     if (nextProps.oliverExternalLoginRes.content.GoToDemo == true) {
+    //                         //Redirect to sync page
+    //                         var _client_Id = nextProps.oliverExternalLoginRes.content.subscriptions && nextProps.oliverExternalLoginRes.content.subscriptions[0].subscription_detail.client_guid;
+    //                         var _token = nextProps.oliverExternalLoginRes.content.UserToken && nextProps.oliverExternalLoginRes.content.UserToken;
+    //                         // window.open(
+    //                         window.location.href = process.env.BRIDGE_DOMAIN + `/account/VerifyClient/?_client=${_client_Id}&_token=${_token}`;
+    //                         return;
+    //                     }
+    //                 }
+    //             }
+    //             else {
+    //                 localStorage.setItem('demoUser', true)
+    //                 window.location.href = `/VisiterShopAccess?_u=${nextProps.oliverExternalLoginRes.content.UserToken}&_t=demo&_fg=true`;
+    //                 return;
+    //             }
 
 
-            } else {
-                this.setState({ loading: false, wentWrongErr: 'Something went wrong' })
-            }
-        }
+    //         } else {
+    //             this.setState({ loading: false, wentWrongErr: 'Something went wrong' })
+    //         }
+    //     }
         if(nextProps.oliverExternalLoginRes && nextProps.oliverExternalLoginRes !== undefined && nextProps.oliverExternalLoginRes.exceptions && nextProps.oliverExternalLoginRes.exceptions.length>0  ){
             this.setState({
                 wentWrongErr: nextProps.oliverExternalLoginRes.exceptions.toString(),
@@ -222,7 +222,7 @@ class LoginPage extends React.Component {
             this.setState({ userProfileData: nextProps.GetUserProfile })
             console.log('----GetUserProfile----', nextProps.GetUserProfile);
         }
-        // end
+    //     // end
         // version check
         if (nextProps.getversioninfo) {
             if (nextProps.getversioninfo.HardBlockerVersion && nextProps.getversioninfo.HardBlockerVersion[0]) {
@@ -600,8 +600,8 @@ function mapStateToProps(state) {
     const { authentication, onboardingReducers, getversioninfo, GetUserProfile } = state;
     return {
         authentication,
-        oliverExternalLoginRes: onboardingReducers.oliverExternalLoginRes,
-        loading: onboardingReducers.loading,
+        oliverExternalLoginRes: onboardingReducers && onboardingReducers.oliverExternalLoginRes,
+        loading: onboardingReducers && onboardingReducers.loading,
         getversioninfo: getversioninfo.items,
         GetUserProfile: GetUserProfile && GetUserProfile.profileData
 
