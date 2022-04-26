@@ -622,22 +622,24 @@ export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
       else {
         var checklist=JSON.parse(localStorage.getItem("CHECKLIST"));
         var clientDetail=JSON.parse(localStorage.getItem("clientDetail"));
-        var tenderAmt= $('#my-input').val()
-       clientJSON= {
-              command: RequestData.command,
-              version:"1.0",
-              method: RequestData.method,
-              status: 200,
-              error: null,
-              data: {
-                sub_total: checklist && checklist.subTotal,
-                total_tax: checklist && checklist.tax,
-                discount: checklist && checklist.discountCalculated,
-                balance: checklist && checklist.totalPrice,
-                tender_amt: tenderAmt && tenderAmt,
-                currency: clientDetail && clientDetail.currency
-            }        
-        }       
+        //var tenderAmt= $('#my-input').val();
+
+        var tenderAmt=checklist && checklist.totalPrice;
+        clientJSON= {
+                command: RequestData.command,
+                version:"1.0",
+                method: RequestData.method,
+                status: 200,
+                error: null,
+                data: {
+                  sub_total: checklist && checklist.subTotal,
+                  total_tax: checklist && checklist.tax,
+                  discount: checklist && checklist.discountCalculated,
+                  balance: checklist && checklist.totalPrice,
+                  tender_amt: tenderAmt && tenderAmt,
+                  currency: clientDetail && clientDetail.currency
+              }        
+          }       
       }
       // const { single_cutomer_list } = this.props
       if (clientJSON !== "") {

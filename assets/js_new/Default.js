@@ -4,11 +4,14 @@ window.addEventListener("resize", scrollableHeight);
 function scrollableHeight() {
 	let scrolls = document.querySelectorAll(".scroll");
 	for (let i = 0; i < scrolls.length; i++) {
-		scrolls[i].style.maxHeight = `${
-			scrolls[i].nextElementSibling.getBoundingClientRect().top -
-			scrolls[i].getBoundingClientRect().top -
-			35
-		}px`;
+		if(scrolls[i].nextElementSibling)
+		{
+			scrolls[i].style.maxHeight = `${
+				scrolls[i].nextElementSibling.getBoundingClientRect().top -
+				scrolls[i].getBoundingClientRect().top -
+				35
+			}px`;
+		}
 	}
 }
 

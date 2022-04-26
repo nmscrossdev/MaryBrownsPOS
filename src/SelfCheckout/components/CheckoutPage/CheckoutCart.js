@@ -430,7 +430,7 @@ class CheckoutCart extends React.Component {
                       </div>
                       <div className="row">
                         <label className="number-input-container">
-                          <div onClick={() => this.incrementDefaultQuantity(product, index,0)} class="svg-container left">
+                          <div onClick={() => this.incrementDefaultQuantity(product, index,0)} className="svg-container left">
                             <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
                               <rect width="16" height="2" fill="#758696" />
                             </svg>
@@ -462,7 +462,7 @@ class CheckoutCart extends React.Component {
                   <div className="item note">
                   <div className="col">
                     <p className="prod-name">Note</p>
-                    <p className="description"><Markup content={product.Title} /></p>
+                    <p className="description">{product.Title} </p>
                   </div>
                   <div className="row" style={{ justifyContent: "center", paddingLeft: "26px" }}>
                     <div></div>
@@ -654,7 +654,7 @@ class CheckoutCart extends React.Component {
 
                     <div className="item">
                       <div className="col">
-                        <p className="prod-name"><Markup content={product.Title} /></p>
+                        <p className="prod-name">{product.Title} </p>
 
                         {/* <p className="description">Big Mary Sandwich</p>
                         <p className="description">Diet 7up</p>

@@ -1,6 +1,8 @@
 {
 	class SliderClip {
 		constructor(el) {
+			if(el==null || typeof el=="undefined")
+			{return;}
 			this.el = el;
 			this.Slides = Array.from(this.el.querySelectorAll("li"));
 			this.Nav = Array.from(this.el.querySelectorAll("nav a"));
