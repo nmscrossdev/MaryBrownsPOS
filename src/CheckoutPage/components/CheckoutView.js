@@ -2538,8 +2538,40 @@ class CheckoutView extends React.Component {
             activeComponent: component_name
         })
     }
-
+  
+    handleNote() {
+        var txtNote = jQuery("#orderInstrucions").val();
+        jQuery("#orderInstrucions").val('');
+        if (typeof txtNote!="undefined" && txtNote != "") {
+            var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
+            cartlist = cartlist == null ? [] : cartlist;
+            cartlist.push({ "Title": txtNote })
+            this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
+            var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+            if (list != null) {
+                const CheckoutList = {
+                    ListItem: cartlist,
+                    customerDetail: list.customerDetail,
+                    totalPrice: list.totalPrice,
+                    discountCalculated: list.discountCalculated,
+                    tax: list.tax,
+                    subTotal: list.subTotal,
+                    TaxId: list.TaxId,
+                    order_id: list.order_id !== 0 ? list.order_id : 0,
+                    showTaxStaus: list.showTaxStaus,
+                    _wc_points_redeemed: list._wc_points_redeemed,
+                    _wc_amount_redeemed: list._wc_amount_redeemed,
+                    _wc_points_logged_redemption: list._wc_points_logged_redemption
+                }
+                localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList));
+                this.setState({ checkList: CheckoutList })
+            }
+            
+        }
+    }
+    
     selfcheckoutstatusmanagingevnt(checkoutstatus) {
+        this.handleNote();
         if (checkoutstatus == "defaultcheckout") {
             if (isMobileOnly == true) {
                 history.push('../SelfCheckoutView');
