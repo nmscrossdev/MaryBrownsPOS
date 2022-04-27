@@ -2855,7 +2855,7 @@ class CheckoutView extends React.Component {
                 (ActiveUser.key.isSelfcheckout == true && this.state.SelfCheckoutStatus == "defaultcheckout") ?
                     <CheckoutViewFirst
                         onRef={ref => (this.orderCart = ref)}
-                        checkList={checkList}
+                        checkList={localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))}
                         paying_amount={paying_amount}
                         paying_type={paying_type}
                         SelfCheckoutStatus={this.state.SelfCheckoutStatus}
@@ -2873,7 +2873,7 @@ class CheckoutView extends React.Component {
                             typeStoreCreditPayment={typeStoreCreditPayment} active_true_diamond={active_true_diamond}
                             toggleExtentionStatus={toggleExtentionStatus} autoFocus={this.autoFocus} storeCredit={store_credit}
                             paymentType={this.paymentType} extraPayAmount={this.extraPayAmount} onRef={ref => (this.orderPayments = ref)}
-                            {...this.props} checkList={checkList} addPayment={this.getPayment} setOrderPartialPayments={this.setOrderPartialPayments}
+                            {...this.props} checkList={localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))} addPayment={this.getPayment} setOrderPartialPayments={this.setOrderPartialPayments}
                             orderPopup={this.openOrderPopup}
                             handleExtensionPaymentClick={this.handleExtensionPaymentClick} 
                             showExtIframe={this.state.extensionIframe}/>

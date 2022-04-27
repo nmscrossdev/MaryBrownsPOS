@@ -165,7 +165,7 @@ class SelfSaleComplete extends React.Component {
 			<div className="col">
 				<p className="small">Your order number is</p>
 				{/* <p className="big">{orderId!=""?orderId:tempOrderId}</p> */}
-                <p className="big">{tempOrderId}</p>
+                <p className="big">{tempOrderId?tempOrderId.substr(-4):""}</p>
 			</div>
 			<div className="col">
 				<p className="small margin-bottom-24">How would you like to receive your reciept?</p>
