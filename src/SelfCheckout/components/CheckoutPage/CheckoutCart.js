@@ -100,13 +100,15 @@ class CheckoutCart extends React.Component {
           {
             item['quantity'] =  1;
             item['Price'] =  item.old_price
+            
           }
           else
           {
             item['quantity'] = item['quantity'] - 1;
+            item['Price'] =  item['Price']- item.old_price
           }
                 
-         
+          
           // item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
           // item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
         } else {
@@ -145,16 +147,17 @@ class CheckoutCart extends React.Component {
               //   new_incl_tax=item.incl_tax/item.quantity;
               // }
               if(action==1)
-              {
-                item['quantity'] =  1;
-                item['Price'] =  item.old_price
-              }
-              else
-              {
-                item['quantity'] =   item['quantity']- 1;
-              }
-
-               
+          {
+            item['quantity'] =  1;
+            item['Price'] =  item.old_price
+            
+          }
+          else
+          {
+            item['quantity'] = item['quantity'] - 1;
+            item['Price'] =  item['Price']- item.old_price
+          }
+                           
               // item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
               // item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
             }
