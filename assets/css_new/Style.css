@@ -52,6 +52,45 @@ a {
 .attributesBottom{
 	margin-bottom: 300px;
 }
+.mainattributesselfcheckout{
+	font-family: Poppins;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    color: #050505;
+    margin-bottom: 7px;
+}
+.attributesrow{
+	margin-right: -15px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.subattributesBorder{
+	height: 54px;
+    padding: 0 40px;
+    box-sizing: border-box;
+    border: 1px solid #0aacdb;
+    border-radius: 4px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 310px;
+}
+.subattributetext{
+	font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    color: #0aacdb;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
 
 /* --------------------Top Navbar-------------------- */

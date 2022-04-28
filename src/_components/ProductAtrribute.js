@@ -48,7 +48,7 @@ class ProductAtrribute extends React.Component {
                 return (
                     attribute && attribute.Variation == true &&
                     <div key={index}>                        
-                        <p >{attribute.Name}</p>
+                        <p className='mainattributesselfcheckout' >{attribute.Name}</p>
                         <ProductSubAtrribute 
                             showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}
                             itemIndex={index}
@@ -71,8 +71,8 @@ class ProductAtrribute extends React.Component {
                 return (
                     attribute && attribute.Variation == true &&
                     <div key={index}>
-                        <p>{attribute.Name}</p>
-                        <div className="row">
+                        <p className='mainattributesselfcheckout'>{attribute.Name}</p>
+                        <div className="attributesrow">
                             <ProductSubAtrribute 
                                 showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}
                                 itemIndex={index}
