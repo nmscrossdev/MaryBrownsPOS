@@ -999,7 +999,7 @@ class CartListView extends React.Component {
         //                 multipleTaxSupport={multipleTaxSupport}
         //                 defutTaxStatus={defutTaxStatus}
         //                 Markup={Markup}
-        //                 NumberFormat={NumberFormat}
+        //                 ={NumberFormat}
         //                 LocalizedLanguage={LocalizedLanguage}
         //                 checkSubscriptionType={this.checkSubscriptionType}
         //                 defaultTaxApply={this.defaultTaxStatus}

@@ -4,6 +4,7 @@ import { pinLoginActions } from '.';
 import { history } from '../_helpers';
 import { checkShopSTatusAction, discountActions, attributesActions, cartProductActions,exchangerateActions } from '../_actions';
 import { favouriteListActions } from '../ShopView';
+import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 import { checkoutActions } from '../CheckoutPage';
 import { chunkArray } from '../ALL_localstorage';
 import LocalizedLanguage from '../settings/LocalizedLanguage';
@@ -102,6 +103,8 @@ class PinPage extends React.Component {
             this.props.dispatch(checkShopSTatusAction.getProductCount());
             this.props.dispatch(checkShopSTatusAction.getStatus());
             this.props.dispatch(favouriteListActions.userList());
+            this.props.dispatch(selfCheckoutActions.get_selfcheckout_setting());
+            
             this.props.dispatch(favouriteListActions.get_TickeraSetting());
             this.props.dispatch(checkoutActions.cashRounding());
             this.props.dispatch(checkoutActions.getOrderReceipt());

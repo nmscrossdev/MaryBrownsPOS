@@ -1,10 +1,13 @@
 import { alertActions } from '../../_actions';
 import { history } from '../../_helpers';
-import { selfcheckoutConstants, customerService } from '..'
+import {  customerService } from '..'
+import { selfcheckoutService } from '../services/selfcheckout.service';
+import { selfcheckoutConstants } from '../constants/selfcheckout.constants';
 import { GTM_OliverDemoUser } from '../../_components/CommonfunctionGTM';
 
 export const selfCheckoutActions = {    
-    save
+    save,
+    get_selfcheckout_setting
 };
 
 function save(customer, status, backUrl) {
@@ -129,4 +132,31 @@ function save(customer, status, backUrl) {
     function request() { return { type: customerConstants.INSERT_REQUEST } }
     function success(customer) { return { type: customerConstants.INSERT_SUCCESS, customer } }
     function failure(error) { return { type: customerConstants.INSERT_FAILURE, error } }
+}
+function get_selfcheckout_setting()
+{
+    return dispatch => {
+        dispatch(request());
+        selfcheckoutService.get_selfcheckout_setting().then(
+            self_settings => {
+                console.log("--------self checkout data setttings--->"+JSON.stringify(self_settings))
+                if(self_settings.is_success==true && self_settings.message=="Success")
+                {
+                    dispatch(success(self_settings));
+                    localStorage.setItem("selfcheckout_setting",JSON.stringify(self_settings.content) )
+                }
+                else
+                {
+                    dispatch(success(self_settings));
+                }
+            },
+            error => {
+                dispatch(failure(error.toString()));
+            }
+        );
+    };
+
+    function request() { return { type: selfcheckoutConstants.SELF_CHECKOUT_SETTING_REQUEST } }
+    function success(self_settings) { return { type: selfcheckoutConstants.SELF_CHECKOUT_SETTING_SUCCESS, self_settings } }
+    function failure(error) { return { type: selfcheckoutConstants.SELF_CHECKOUT_SETTING_FAILURE, error } }
 }
