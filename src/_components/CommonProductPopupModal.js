@@ -17,7 +17,8 @@ import { history } from '../_helpers';
 import { FetchIndexDB } from '../settings/FetchIndexDB';
 import $ from 'jquery';
 import SelfCheckoutVariatonPopup from '../SelfCheckout/components/selfcheckoutVariatonpopup';
-import {getProductSummery} from '../WrapperSettings/CommonWork';
+import RecommendedProduct from '../SelfCheckout/components/RecommendedProduct'
+import { getProductSummery } from '../WrapperSettings/CommonWork';
 import { allProductActions } from '../_actions'
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
@@ -49,10 +50,10 @@ class CommonProductPopupModal extends React.Component {
             selectedOptions: [],
             tcForSeating: "",
             TaxClass: '',
-            isFetchWarehouseQty:true,
-            isAttributeDelete:false,
+            isFetchWarehouseQty: true,
+            isAttributeDelete: false,
             //compositeProductActive:false
-            isRefereshIconInventory:false    // Syn icon inventory state
+            isRefereshIconInventory: false    // Syn icon inventory state
         }
         this.clicks = [];
         this.timeout;
@@ -73,7 +74,7 @@ class CommonProductPopupModal extends React.Component {
         this.setState({
             variationStockQunatity: '',
             variationTitle: '',
-            Sku:'',
+            Sku: '',
             variationImage: '',
             variationoptionArray: {},
             filteredAttribute: []
@@ -101,8 +102,8 @@ class CommonProductPopupModal extends React.Component {
                 }
                 if (qty > this.state.variationStockQunatity)
                     qty = this.state.variationStockQunatity;
-                
-                    this.setDefaultQuantity(qty);
+
+                this.setDefaultQuantity(qty);
             }
         } else {
             var maxQty = $("#txtInScock").text();
@@ -137,31 +138,31 @@ class CommonProductPopupModal extends React.Component {
             variationDefaultQunatity: qty,
         });
     }
-// Update the actual qty of variations --------------------------
-updateActualStockQty(prd){  
-    var idbKeyval = FetchIndexDB.fetchIndexDb();
-    idbKeyval.get('ProductList').then(val => {
-        if (val && val != "" && val.length >= 0  ) {                
+    // Update the actual qty of variations --------------------------
+    updateActualStockQty(prd) {
+        var idbKeyval = FetchIndexDB.fetchIndexDb();
+        idbKeyval.get('ProductList').then(val => {
+            if (val && val != "" && val.length >= 0) {
                 var found = val.find(function (indx) {
-                    return indx.WPID==  prd.WPID;
+                    return indx.WPID == prd.WPID;
                 });
-                if(found){
-                    prd["StockQuantity"]=found.StockQuantity;
+                if (found) {
+                    prd["StockQuantity"] = found.StockQuantity;
                 }
-        }
-    });
-    return prd;
-}
-//------------------------------------------------
+            }
+        });
+        return prd;
+    }
+    //------------------------------------------------
     /*Updated by- Aman Singhai, Updated date- 13/08/2020. Description- Added condition, when no attributes selected*/
     addVariationProductToCart() {
-        var filterLength = this.state.filterTerms && this.state.filterTerms.length;       
-        var productAttributsWithVariation =[];
+        var filterLength = this.state.filterTerms && this.state.filterTerms.length;
+        var productAttributsWithVariation = [];
         productAttributsWithVariation = this.props.getVariationProductData.ProductAttributes && this.props.getVariationProductData.ProductAttributes.filter(item => item.Variation == true);
         // var productAttributeLength = this.props.getVariationProductData && this.props.getVariationProductData.ProductAttributes && this.props.getVariationProductData.ProductAttributes.length;
         if ((!this.props.showSelectedProduct && filterLength !== productAttributsWithVariation.length)
-            ||(this.props.getVariationProductData.Type=='variable' && productAttributsWithVariation.length ==0 ) || (this.state.isAttributeDelete ==false)  ){
-            if(ActiveUser.key.isSelfcheckout == true){
+            || (this.props.getVariationProductData.Type == 'variable' && productAttributsWithVariation.length == 0) || (this.state.isAttributeDelete == false)) {
+            if (ActiveUser.key.isSelfcheckout == true) {
                 showModal('popupDisplayMessage');
             }
             showModal('popupDisplayMessage');
@@ -173,10 +174,10 @@ updateActualStockQty(prd){
             var tick_data = this.state.getVariationProductData && this.state.getVariationProductData.TicketInfo ? JSON.parse(this.state.getVariationProductData.TicketInfo) : '';
             var price = parseFloat(this.state.variationPrice);
             var data = null;
-            const {single_product} = this.props;
+            const { single_product } = this.props;
             if (cartlist.length > 0 && !single_product) {
                 cartlist.map(prdId => {
-                    if ( this.state.variationfound && this.state.variationfound.ParentId !== null && prdId.product_id === this.state.variationfound.ParentId && prdId.variation_id === this.state.variationfound.WPID) {
+                    if (this.state.variationfound && this.state.variationfound.ParentId !== null && prdId.product_id === this.state.variationfound.ParentId && prdId.variation_id === this.state.variationfound.WPID) {
                         this.state.variationfound['after_discount'] = prdId.after_discount;
                         this.state.variationfound['product_discount_amount'] = prdId.product_discount_amount;
                         this.state.variationfound['product_after_discount'] = prdId.product_after_discount;
@@ -214,27 +215,26 @@ updateActualStockQty(prd){
             });
 
             /* ADDING PRODUCT SUMMARY (ATTRIBUTES) HERE 09FEB2022 */
-            var psummary=""
-            if(productAttributsWithVariation && getVeriation)
-            {
-                psummary=  getProductSummery(productAttributsWithVariation,getVeriation);
+            var psummary = ""
+            if (productAttributsWithVariation && getVeriation) {
+                psummary = getProductSummery(productAttributsWithVariation, getVeriation);
             }
 
             if (getVeriation) {
                 this.state.variationfound["Price"] = getVeriation.Price;
                 this.state.variationfound["Sku"] = getVeriation.Sku;
-                
+
             }
             //---------------------------------------------------------------
             data = {
-                line_item_id:  this.state.variationfound && this.state.variationfound.line_item_id ? this.state.variationfound.line_item_id : 0,
+                line_item_id: this.state.variationfound && this.state.variationfound.line_item_id ? this.state.variationfound.line_item_id : 0,
                 quantity: this.state.variationDefaultQunatity,
-                Title:  this.state.variationfound && this.state.variationfound.Title && this.state.variationfound.Title != "" ? this.state.variationfound.Title : this.state.variationfound ? this.state.variationfound.Sku:'',
-                Sku:  this.state.variationfound && this.state.variationfound.Sku && this.state.variationfound.Sku != "" ? this.state.variationfound.Sku :'',
+                Title: this.state.variationfound && this.state.variationfound.Title && this.state.variationfound.Title != "" ? this.state.variationfound.Title : this.state.variationfound ? this.state.variationfound.Sku : '',
+                Sku: this.state.variationfound && this.state.variationfound.Sku && this.state.variationfound.Sku != "" ? this.state.variationfound.Sku : '',
 
                 Price: this.state.variationfound && this.state.variationfound.Price ? parseInt(this.state.variationDefaultQunatity) * this.state.variationfound.Price : parseInt(this.state.variationDefaultQunatity) * price,
                 product_id: this.state.variationfound && this.state.variationfound.ParentId ? this.state.variationfound.ParentId : null,
-                variation_id:  this.state.variationfound && this.state.variationfound.WPID ? this.state.variationfound.WPID : null,
+                variation_id: this.state.variationfound && this.state.variationfound.WPID ? this.state.variationfound.WPID : null,
                 isTaxable: this.state.variationIsTaxable,
                 old_price: this.state.variationfound ? this.state.variationfound.old_price ? this.state.variationfound.old_price : this.state.old_price : 0,
                 incl_tax: this.state.variationfound && this.state.variationfound.incl_tax ? this.state.variationfound.incl_tax : this.state.incl_tax,
@@ -243,33 +243,33 @@ updateActualStockQty(prd){
                 product_ticket: this.state.ticket_status == true ? ticket_Data ? ticket_Data : '' : '',
                 tick_event_id: this.state.ticket_status == true ? tick_data._event_name : null,
                 cart_after_discount: this.state.variationfound && this.state.variationfound.cart_after_discount ? this.state.variationfound.cart_after_discount : 0,
-                cart_discount_amount: this.state.variationfound &&  this.state.variationfound.cart_discount_amount ? this.state.variationfound.cart_discount_amount : 0,
+                cart_discount_amount: this.state.variationfound && this.state.variationfound.cart_discount_amount ? this.state.variationfound.cart_discount_amount : 0,
                 // after_discount: this.state.variationfound &&  this.state.variationfound.after_discount ? this.state.variationfound.after_discount : 0,
-                
+
                 // single_product.discount_type.toLowerCase()=="number" ?
                 after_discount: single_product ?
-                single_product.discount_type.toLowerCase()=="number" ?
-                                    (single_product.old_price * this.state.variationDefaultQunatity)-single_product.product_discount_amount -(single_product.incl_tax? single_product.incl_tax: single_product.excl_tax?single_product.excl_tax:0)
-                                 : single_product.after_discount
-                            :0,
-                            
-                discount_amount: this.state.variationfound &&  this.state.variationfound.discount_amount ? this.state.variationfound.discount_amount : 0,
-                product_after_discount: this.state.variationfound &&  this.state.variationfound.product_after_discount ? this.state.variationfound.product_after_discount : 0,
-                product_discount_amount: this.state.variationfound &&  this.state.variationfound.product_discount_amount ? this.state.variationfound.product_discount_amount : 0,
+                    single_product.discount_type.toLowerCase() == "number" ?
+                        (single_product.old_price * this.state.variationDefaultQunatity) - single_product.product_discount_amount - (single_product.incl_tax ? single_product.incl_tax : single_product.excl_tax ? single_product.excl_tax : 0)
+                        : single_product.after_discount
+                    : 0,
+
+                discount_amount: this.state.variationfound && this.state.variationfound.discount_amount ? this.state.variationfound.discount_amount : 0,
+                product_after_discount: this.state.variationfound && this.state.variationfound.product_after_discount ? this.state.variationfound.product_after_discount : 0,
+                product_discount_amount: this.state.variationfound && this.state.variationfound.product_discount_amount ? this.state.variationfound.product_discount_amount : 0,
                 discount_type: this.state.variationfound && this.state.variationfound.discount_type ? this.state.variationfound.discount_type : "",
-                new_product_discount_amount: this.state.variationfound &&  this.state.variationfound.new_product_discount_amount ? this.state.variationfound.new_product_discount_amount : 0,
+                new_product_discount_amount: this.state.variationfound && this.state.variationfound.new_product_discount_amount ? this.state.variationfound.new_product_discount_amount : 0,
                 TaxStatus: this.state.TaxStatus,
                 tcForSeating: this.state.tcForSeating,
                 TaxClass: this.state.variationfound ? this.state.variationfound.TaxClass : this.state.TaxClass,
-                psummary:psummary
+                psummary: psummary
             }
             var qty = 0;
             var product = this.state.getVariationProductData
             var variationfound = this.state.variationfound;
             var variationQantity = null;
-            if(variationfound !== null ){
+            if (variationfound !== null) {
                 variationQantity = (variationfound.StockStatus == "outofstock") ? "outofstock" :
-                (variationfound.StockStatus == null || variationfound.StockStatus == 'instock') && variationfound.ManagingStock == false ? "Unlimited" : (typeof variationfound.StockQuantity != 'undefined') && variationfound.StockQuantity != '' ? variationfound.StockQuantity - qty : '0'
+                    (variationfound.StockStatus == null || variationfound.StockStatus == 'instock') && variationfound.ManagingStock == false ? "Unlimited" : (typeof variationfound.StockQuantity != 'undefined') && variationfound.StockQuantity != '' ? variationfound.StockQuantity - qty : '0'
             }
             var cartItemList = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
             qty = qty + this.state.variationDefaultQunatity;
@@ -277,7 +277,7 @@ updateActualStockQty(prd){
             if (parseInt(txtPrdQuantity) <= 0) {
                 /* Created By:priyanka,Created Date:14/6/2019,Description:quantity msg poppup */
                 this.props.msg(LocalizedLanguage.productQty)
-               // $('#common_msg_popup').modal('show')
+                // $('#common_msg_popup').modal('show')
                 showModal('common_msg_popup');
                 return;
             } else if (variationQantity == 'Unlimited' || qty <= variationQantity || qty <= this.state.variationStockQunatity) {
@@ -315,11 +315,11 @@ updateActualStockQty(prd){
                 this.state.variationDefaultQunatity = 1;
                 this.state.variationfound = null;
                 //-----------------------------------------------------------------
-                var _variationProductdate=this.props.getVariationProductData;
-                _variationProductdate=this.updateActualStockQty(_variationProductdate);
+                var _variationProductdate = this.props.getVariationProductData;
+                _variationProductdate = this.updateActualStockQty(_variationProductdate);
                 this.setState({
                     variationTitle: this.props.getVariationProductData.Title && this.props.getVariationProductData.Title != "" ? this.props.getVariationProductData.Title : this.props.getVariationProductData.Sku,
-                    Sku:  this.props.getVariationProductData.Sku ? this.props.getVariationProductData.Sku:"",
+                    Sku: this.props.getVariationProductData.Sku ? this.props.getVariationProductData.Sku : "",
                     variationId: this.props.getVariationProductData.WPID,
                     variationParentId: this.props.getVariationProductData.ParentId,
                     variationPrice: this.props.getVariationProductData.Price,
@@ -339,15 +339,14 @@ updateActualStockQty(prd){
                     selectedOptions: []
                 });
                 $(".button_with_checkbox input").prop("checked", false);
-                this.state.variationStyles = {cursor: "no-drop", pointerEvents: "none"}
-                $("#add_variation_product_btn").css({"cursor": "no-drop", "pointer-events": "none"});
+                this.state.variationStyles = { cursor: "no-drop", pointerEvents: "none" }
+                $("#add_variation_product_btn").css({ "cursor": "no-drop", "pointer-events": "none" });
                 //--------------------------------------------------------------------
                 //   this.forceUpdate()
                 // $(".close").trigger("click");
                 hideModal('VariationPopUp');
                 //$('#VariationPopUp').modal('hide')
-                if(isMobileOnly == true && ActiveUser.key.isSelfcheckout == false)
-                {
+                if (isMobileOnly == true && ActiveUser.key.isSelfcheckout == false) {
                     hideModal('VariationPopUp');
                     // $('#VariationPopUp').modal('hide')
                 }
@@ -365,7 +364,7 @@ updateActualStockQty(prd){
                 showModal('common_msg_popup');
 
             }
-            this.setState({variationDefaultQunatity: 1})
+            this.setState({ variationDefaultQunatity: 1 })
             // $('#VariationPopUp').modal('hide')
             hideModal('VariationPopUp');
             if (isMobileOnly == true && ActiveUser.key.isSelfcheckout == false) {
@@ -419,19 +418,19 @@ updateActualStockQty(prd){
             cart_discount_amount: SingleProduct ? SingleProduct.cart_discount_amount : 0,
             // SingleProduct.discount_type.toLowerCase()=="number" ?
             after_discount: SingleProduct ?
-            SingleProduct.discount_type.toLowerCase()=="number"  ?
-                                    (SingleProduct.old_price * this.state.variationDefaultQunatity)-SingleProduct.product_discount_amount - (SingleProduct.incl_tax? SingleProduct.incl_tax: SingleProduct.excl_tax?SingleProduct.excl_tax:0)
-                                 : SingleProduct.after_discount
-                            :0,  
+                SingleProduct.discount_type.toLowerCase() == "number" ?
+                    (SingleProduct.old_price * this.state.variationDefaultQunatity) - SingleProduct.product_discount_amount - (SingleProduct.incl_tax ? SingleProduct.incl_tax : SingleProduct.excl_tax ? SingleProduct.excl_tax : 0)
+                    : SingleProduct.after_discount
+                : 0,
             discount_amount: SingleProduct ? SingleProduct.discount_amount : 0,
             product_after_discount: SingleProduct ? SingleProduct.product_after_discount : 0,
             product_discount_amount: SingleProduct ? SingleProduct.product_discount_amount : 0,
             quantity: productx_qty > 0 ? productx_qty : this.state.variationDefaultQunatity,
             Title: this.state.variationTitle,
             Price: productx_qty > 0 ? parseInt(productx_qty) * parseFloat(this.state.variationPrice) : parseInt(this.state.variationDefaultQunatity) * parseFloat(this.state.variationPrice),
-            product_id: this.state.getVariationProductData && this.state.getVariationProductData.WPID ? this.state.getVariationProductData.WPID : this.state.getVariationProductData && this.state.getVariationProductData.product_id?this.state.getVariationProductData.product_id:0,
+            product_id: this.state.getVariationProductData && this.state.getVariationProductData.WPID ? this.state.getVariationProductData.WPID : this.state.getVariationProductData && this.state.getVariationProductData.product_id ? this.state.getVariationProductData.product_id : 0,
             variation_id: 0,
-            isTaxable: this.state.variationIsTaxable ?this.state.variationIsTaxable: this.state.getVariationProductData.Taxable,
+            isTaxable: this.state.variationIsTaxable ? this.state.variationIsTaxable : this.state.getVariationProductData.Taxable,
             old_price: this.state.old_price,
             incl_tax: this.state.incl_tax,
             excl_tax: this.state.excl_tax,
@@ -444,7 +443,7 @@ updateActualStockQty(prd){
             tcForSeating: this.state.tcForSeating,
             TaxClass: this.state.TaxClass,
             ticket_info: this.state.getVariationProductData && this.state.getVariationProductData.ticket_info ? this.state.getVariationProductData.ticket_info : [],
-            Sku:  this.state.Sku
+            Sku: this.state.Sku
         }
         var product = this.state.getVariationProductData
         var qty = 0;
@@ -453,7 +452,7 @@ updateActualStockQty(prd){
                 qty = item.quantity;
             }
         })
-        var qytt = document.getElementById("qualityUpdater") ? document.getElementById("qualityUpdater").value :this.props.variationDefaultQunatity;
+        var qytt = document.getElementById("qualityUpdater") ? document.getElementById("qualityUpdater").value : this.props.variationDefaultQunatity;
         var txtPrdQuantity = (productx_qty > 0) ? productx_qty : qytt
         if (parseInt(txtPrdQuantity) <= 0) {
             /* Created By:priyanka,Created Date:14/6/2019,Description:quantity msg poppup */
@@ -503,12 +502,12 @@ updateActualStockQty(prd){
                 //$('#VariationPopUp').modal('hide');
             }
 
-            if (isMobileOnly == true && ActiveUser.key.isSelfcheckout==false) {
+            if (isMobileOnly == true && ActiveUser.key.isSelfcheckout == false) {
                 // window.location = '/shopview';
                 history.push('/shopview');
             }
         } else {
-            if (isMobileOnly == true && ActiveUser.key.isSelfcheckout==false) {
+            if (isMobileOnly == true && ActiveUser.key.isSelfcheckout == false) {
                 history.push('/shopview');
             }
             //$('#VariationPopUp').modal('hide');
@@ -536,8 +535,8 @@ updateActualStockQty(prd){
             }
         })
         //  this.setState({variationStockQunatity:this.state.variationStockQunatity == 'Unlimited'?this.state.variationStockQunatity:this.props.getVariationProductData.StockQuantity - qty })
-       var _variationData=this.props.getVariationProductData;
-       _variationData=this.updateActualStockQty(_variationData)
+        var _variationData = this.props.getVariationProductData;
+        _variationData = this.updateActualStockQty(_variationData)
         this.setState({
             variationStockQunatity: _variationData ?
                 (_variationData.StockStatus == null || _variationData.StockStatus == 'instock') && _variationData.ManagingStock == false ? "Unlimited" : (typeof _variationData.StockQuantity != 'undefined') && _variationData.StockQuantity != '' ? _variationData.StockQuantity - qty : '0' : '0',
@@ -552,12 +551,12 @@ updateActualStockQty(prd){
 
     componentDidMount() {
         KeyAppsDisplay.DisplayApps(["print_label"]);
-       setTimeout(() => {
+        setTimeout(() => {
             $(".button_with_checkbox input").prop("checked", false);
         }, 300);
-       
+
     }
-    
+
     /**
      * Created By: Shakuntala Jatav
      * Created Date : 11-02-2020
@@ -646,7 +645,7 @@ updateActualStockQty(prd){
     }
 
     optionClick(option, attribute, AttrIndex) {
-        
+
         var filterTerms = this.state.filterTerms;
         var optExist = false;
         filterTerms && filterTerms.map(opItem => {
@@ -776,7 +775,7 @@ updateActualStockQty(prd){
         this.state.filterTerms.map(itm => {
             var attribute_list = localStorage.getItem("attributelist") && Array.isArray(JSON.parse(localStorage.getItem("attributelist"))) === true ? JSON.parse(localStorage.getItem("attributelist")) : null;
             var sub_attribute;
-            if (attribute_list && attribute_list != undefined && attribute_list.length > 0){
+            if (attribute_list && attribute_list != undefined && attribute_list.length > 0) {
                 var found = attribute_list && attribute_list.find(function (element) {
                     return element.Code.toLowerCase() == itm.attribute.toLowerCase()
                 })
@@ -817,21 +816,21 @@ updateActualStockQty(prd){
                         return obj1.index - obj2.index;
                     })
                     sortArr && sortArr.map(filterattr => {
-                        var arrComb = element && element !== undefined && element.combination !== null && element.combination !==undefined && element.combination.split('~');
+                        var arrComb = element && element !== undefined && element.combination !== null && element.combination !== undefined && element.combination.split('~');
                         if (arrComb && arrComb.length > 0) {
                             var combinationAtindex = arrComb[filterattr.index];
                             if (combinationAtindex.toLowerCase() === filterattr.option.toLowerCase() || combinationAtindex == '**')  //variation exist for option to be displayed
                             {
-                                checkExist.push('match');                               
+                                checkExist.push('match');
                             } else {
-                                checkExist.push('mismatch');                                  
+                                checkExist.push('mismatch');
                             }
                         }
                     })
                     if (!checkExist.includes("mismatch")) {
                         return element;
                     }
-                   
+
 
                     // if product not found then--------------------------------
                     ///------check 'Any One' option --------------------------------    
@@ -868,7 +867,7 @@ updateActualStockQty(prd){
         })
 
         if (this.props.single_product) {
-            if ( found && this.props.single_product && found.WPID !== this.props.single_product.WPID) {
+            if (found && this.props.single_product && found.WPID !== this.props.single_product.WPID) {
                 localStorage.removeItem("PRODUCT");
                 localStorage.removeItem("SINGLE_PRODUCT")
                 this.props.dispatch(cartProductActions.singleProductDiscount());
@@ -898,8 +897,8 @@ updateActualStockQty(prd){
             //     var _addTaxFoundData = getVariatioModalProduct(found, selectedDefaultQty !== 0 ? selectedDefaultQty : 1);
             //     console.log("_addTaxFoundData", _addTaxFoundData);
             // }
-            if(found){ found=this.updateActualStockQty(found);}
-        
+            if (found) { found = this.updateActualStockQty(found); }
+
             this.setState({
                 variationTitle: found.Title && found.Title != "" ? found.Title : found.Sku,
                 Sku: found.Sku && found.Sku != "" ? found.Sku : '',
@@ -919,13 +918,13 @@ updateActualStockQty(prd){
             this.state.variationStyles = { cursor: "pointer", pointerEvents: "auto" }
             $("#add_variation_product_btn").css({ "cursor": "pointer", "pointer-events": "auto" });
             var _attribute = getVariationProductData.ProductAttributes.filter(item => item.Variation == true)
-            if(found && _fileterTerm.length == _attribute.length && found.ManagingStock == true){
-                this.setState({isFetchWarehouseQty:true  ,isRefereshIconInventory : true}) 
+            if (found && _fileterTerm.length == _attribute.length && found.ManagingStock == true) {
+                this.setState({ isFetchWarehouseQty: true, isRefereshIconInventory: true })
                 this.props.dispatch(allProductActions.productWarehouseQuantity(found.WPID));
             }
-            if( found.ManagingStock == false){  //check the product managing stock is false then we are not calling the productWarehouseQuantity api
-                this.state.isAttributeDelete=true;
-                this.setState({ isRefereshIconInventory : false })
+            if (found.ManagingStock == false) {  //check the product managing stock is false then we are not calling the productWarehouseQuantity api
+                this.state.isAttributeDelete = true;
+                this.setState({ isRefereshIconInventory: false })
             }
         } else {
             this.setState({
@@ -943,8 +942,8 @@ updateActualStockQty(prd){
     }
 
     componentWillReceiveProps(nextPros) {
-        console.log("nextPros   -----------> ",nextPros)
-       localStorage.removeItem("CART_QTY")
+        console.log("nextPros   -----------> ", nextPros)
+        localStorage.removeItem("CART_QTY")
         var cartItemList = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];
         var qty = 0;
         if (cartItemList && cartItemList.length > 0) {
@@ -955,7 +954,7 @@ updateActualStockQty(prd){
                     }
                 } else {
                     if (nextPros.getVariationProductData && nextPros.getVariationProductData.WPID == item.product_id) {
-                        var _variatopndata=nextPros.getVariationProductData;
+                        var _variatopndata = nextPros.getVariationProductData;
                         qty = item.quantity;
                         this.setState({
                             variationStockQunatity: _variatopndata ?
@@ -966,8 +965,8 @@ updateActualStockQty(prd){
                 }
             })
         }
-        
-       
+
+
         //  for current show name of product 
         if (nextPros.showSelectedProduct) {
             this.setState({
@@ -1011,11 +1010,11 @@ updateActualStockQty(prd){
                 this.setState({ variationfound: nextPros.single_product })
             }
         }
-        
+
 
         if (nextPros.getVariationProductData) {
             this.setState({
-                isTaxable:nextPros.getVariationProductData.Taxable,
+                isTaxable: nextPros.getVariationProductData.Taxable,
                 getVariationProductData: nextPros.getVariationProductData,
                 hasVariationProductData: true,
                 loadProductAttributeComponent: true,
@@ -1041,7 +1040,7 @@ updateActualStockQty(prd){
                 TaxClass: nextPros.getVariationProductData ? nextPros.getVariationProductData.TaxClass : '',
                 tcForSeating: nextPros.getVariationProductData.TicketInfo ? JSON.parse(nextPros.getVariationProductData.TicketInfo) : "",
                 //product_ticket:nextPros.getVariationProductData.IsTicket==true ? ticket_Data:''
-                
+
             });
             if (nextPros.showSelectedProduct || nextPros.single_product) {
                 var prd = nextPros.showSelectedProduct ? nextPros.showSelectedProduct : nextPros.single_product;
@@ -1082,28 +1081,28 @@ updateActualStockQty(prd){
                     }
                 }
             }
-            
+
         }
 
-        if (nextPros.get_single_inventory_quantity && this.state.showQantity==false) {
+        if (nextPros.get_single_inventory_quantity && this.state.showQantity == false) {
             if (nextPros.getVariationProductData && nextPros.getVariationProductData.Type == "variable") {
                 var FindItems = nextPros.getVariationProductData.Variations.find(item => item.WPID === nextPros.get_single_inventory_quantity.wpid)
-                if(!FindItems){//if varistion not found then assign the parent product
+                if (!FindItems) {//if varistion not found then assign the parent product
                     FindItems = nextPros.getVariationProductData
                 }
-               // nextPros.getVariationProductData && nextPros.getVariationProductData.Variations && nextPros.getVariationProductData.Variations.map(updateItem => {
-                if(FindItems){
+                // nextPros.getVariationProductData && nextPros.getVariationProductData.Variations && nextPros.getVariationProductData.Variations.map(updateItem => {
+                if (FindItems) {
                     if (FindItems.WPID == nextPros.get_single_inventory_quantity.wpid) {
                         FindItems['StockQuantity'] = nextPros.get_single_inventory_quantity.quantity;
-                                this.state.variationStockQunatity = nextPros.get_single_inventory_quantity.quantity;
-                                this.state.showQantity = true
-                                this.setState({ showQantity: true })
-                        }
+                        this.state.variationStockQunatity = nextPros.get_single_inventory_quantity.quantity;
+                        this.state.showQantity = true
+                        this.setState({ showQantity: true })
                     }
-                    //})
+                }
+                //})
 
-                var varProductId=nextPros.getVariationProductData.WPID;
-                if(varProductId == nextPros.get_single_inventory_quantity.wpid) {
+                var varProductId = nextPros.getVariationProductData.WPID;
+                if (varProductId == nextPros.get_single_inventory_quantity.wpid) {
                     nextPros.getVariationProductData['StockQuantity'] = nextPros.get_single_inventory_quantity.quantity;
                     this.state.variationStockQunatity = nextPros.get_single_inventory_quantity.quantity;
                     this.state.showQantity = true
@@ -1111,7 +1110,7 @@ updateActualStockQty(prd){
                 }
                 if (this.state.showQantity == true) {
                     var FindItems = nextPros.getVariationProductData.Variations.find(item => item.WPID === nextPros.get_single_inventory_quantity.wpid)
-                    if(!FindItems){//if varistion not found then assign the parent product
+                    if (!FindItems) {//if varistion not found then assign the parent product
                         FindItems = nextPros.getVariationProductData
                     }
                     this.state.variationTitle = (FindItems && FindItems.Title && FindItems.Title != "") ? FindItems.Title : FindItems && FindItems.Sku ? FindItems.Sku : "";
@@ -1120,18 +1119,18 @@ updateActualStockQty(prd){
                     this.state.variationPrice = FindItems && FindItems.Price ? FindItems.Price : '';
                     this.state.old_price = FindItems && FindItems.old_price ? FindItems.old_price : '';
                     this.state.ManagingStock = FindItems && FindItems.ManagingStock ? FindItems.ManagingStock : '';
-                    if(FindItems && FindItems.ParentId !==0){
-                    this.state.variationfound = FindItems ? FindItems : '';
+                    if (FindItems && FindItems.ParentId !== 0) {
+                        this.state.variationfound = FindItems ? FindItems : '';
                     }
                     this.state.variationStockQunatity = nextPros.get_single_inventory_quantity.quantity
                     this.setState({
                         variationTitle: FindItems && FindItems.Title && FindItems.Title != "" ? FindItems.Title : FindItems && FindItems.Sku ? FindItems.Sku : '',
-                        Sku : FindItems && FindItems.Sku ? FindItems.Sku : "",
+                        Sku: FindItems && FindItems.Sku ? FindItems.Sku : "",
                         variationImage: FindItems && FindItems.ProductImage ? FindItems.ProductImage : '',
                         variationPrice: FindItems && FindItems.Price ? FindItems.Price : '',
                         old_price: FindItems && FindItems.old_price ? FindItems.old_price : '',
                         ManagingStock: FindItems && FindItems.ManagingStock ? FindItems.ManagingStock : '',
-                       // variationfound: FindItems ? FindItems : '',
+                        // variationfound: FindItems ? FindItems : '',
                         variationStockQunatity: nextPros.get_single_inventory_quantity.quantity
                     })
                 }
@@ -1151,27 +1150,27 @@ updateActualStockQty(prd){
             }
         }
         // set response of the warehose inventory API
-        if (this.state.isFetchWarehouseQty==true && nextPros.productWarehouseQuantity && nextPros.productWarehouseQuantity.detail && nextPros.productWarehouseQuantity.detail.is_success==true   ) {
-            this.state.isAttributeDelete=true;
-            if(nextPros.productWarehouseQuantity.detail.content.length>0){
-                var warehouseID=localStorage.getItem("WarehouseId");
-                nextPros.productWarehouseQuantity.detail.content.map(item=>{                
-                     if(warehouseID ==item.warehouseId){
-                        this.setState({variationStockQunatity: item.Quantity,isFetchWarehouseQty:false, isRefereshIconInventory : false })
-                     }
+        if (this.state.isFetchWarehouseQty == true && nextPros.productWarehouseQuantity && nextPros.productWarehouseQuantity.detail && nextPros.productWarehouseQuantity.detail.is_success == true) {
+            this.state.isAttributeDelete = true;
+            if (nextPros.productWarehouseQuantity.detail.content.length > 0) {
+                var warehouseID = localStorage.getItem("WarehouseId");
+                nextPros.productWarehouseQuantity.detail.content.map(item => {
+                    if (warehouseID == item.warehouseId) {
+                        this.setState({ variationStockQunatity: item.Quantity, isFetchWarehouseQty: false, isRefereshIconInventory: false })
+                    }
                 })
-                this.state.isFetchWarehouseQty=false;
+                this.state.isFetchWarehouseQty = false;
             }
-        } else if( this.state.isFetchWarehouseQty==true &&nextPros.productWarehouseQuantity && nextPros.productWarehouseQuantity.detail && nextPros.productWarehouseQuantity.detail.is_success==false ){
-            this.state.isAttributeDelete=false;
-            var faildMsg = nextPros.productWarehouseQuantity&& nextPros.productWarehouseQuantity.detail.message;
+        } else if (this.state.isFetchWarehouseQty == true && nextPros.productWarehouseQuantity && nextPros.productWarehouseQuantity.detail && nextPros.productWarehouseQuantity.detail.is_success == false) {
+            this.state.isAttributeDelete = false;
+            var faildMsg = nextPros.productWarehouseQuantity && nextPros.productWarehouseQuantity.detail.message;
             this.props.msg(faildMsg);
             showModal('common_msg_popup')
-            this.state.isFetchWarehouseQty=false;
-            this.setState({ isRefereshIconInventory : false })
+            this.state.isFetchWarehouseQty = false;
+            this.setState({ isRefereshIconInventory: false })
         }
-        
-       
+
+
     }
 
     handleChange(e) {
@@ -1186,7 +1185,7 @@ updateActualStockQty(prd){
     }
 
     handleClose() {
-        this.state.isRefereshIconInventory=false;
+        this.state.isRefereshIconInventory = false;
         $(".button_with_checkbox input").prop("checked", false);
         this.props.productData(false);
         //this.props.handleSimpleProduct(false);
@@ -1237,24 +1236,24 @@ updateActualStockQty(prd){
         // if (Permissions.key.allowDiscount == false) {
         if (CommonModuleJS.permissionsForDiscount() == false) {
             this.props.msg(LocalizedLanguage.discountPermissionerror);
-           // $('#common_msg_popup').modal('show');
+            // $('#common_msg_popup').modal('show');
             showModal('common_msg_popup')
         } else {
             jQuery('#textDis').val(0)
             localStorage.removeItem("PRODUCT")
             localStorage.removeItem("SINGLE_PRODUCT")
             var VarSingleData = null;
-            if ( item && item.Type == "variable") {
+            if (item && item.Type == "variable") {
                 if (this.state.variationfound && this.state.variationfound.WPID !== null) {
                     VarSingleData = item.Variations.filter(items => items.WPID == this.state.variationfound.WPID);
                 }
             }
             if (item && item.Type == "variable") {
                 showModal('single_popup_discount')
-              //  $('#single_popup_discount').modal('show')
+                //  $('#single_popup_discount').modal('show')
             } else {
                 showModal('single_popup_discount')
-              //  $('#single_popup_discount').modal('show')
+                //  $('#single_popup_discount').modal('show')
             }
             var data = {
                 product: 'product',
@@ -1266,7 +1265,7 @@ updateActualStockQty(prd){
     }
 
     showProductDetail() {
-       // $('#displayproductdesciption').modal('show')
+        // $('#displayproductdesciption').modal('show')
         showModal('displayproductdesciption');
     }
 
@@ -1280,8 +1279,8 @@ updateActualStockQty(prd){
                 VarSingleData = this.state.variationfound
             } else if (this.state.variationfound) {
                 VarSingleData = item.Variations.filter(items => items.WPID == this.state.variationfound.WPID);
-            }else{
-               VarSingleData= this.state.getVariationProductData; //For Variation product when no variation selected
+            } else {
+                VarSingleData = this.state.getVariationProductData; //For Variation product when no variation selected
             }
         } else {
             VarSingleData = item
@@ -1337,13 +1336,13 @@ updateActualStockQty(prd){
      * Created date : 12-08-2020
      * Description : For Opening popup
      */
-    selectProductAttributePopup(){
+    selectProductAttributePopup() {
         showModal('attributeselection')
     }
 
     render() {
         const { getVariationProductData, hasVariationProductData, single_product, showSelectedProduct, isInventoryUpdate } = this.props;
-        var idbKeyval = FetchIndexDB.fetchIndexDb();        
+        var idbKeyval = FetchIndexDB.fetchIndexDb();
         // if(getVariationProductData && getVariationProductData.Type== "simple"){
         //     idbKeyval.get('ProductList').then(val => {
         //         if (val && val != "" && val.length >= 0  ) {                
@@ -1358,9 +1357,9 @@ updateActualStockQty(prd){
         //         }
         //     });
         // }
-    
-        const { variationfound, showSelectStatus, selectedOptionCode,isFetchWarehouseQty ,isAttributeDelete } = this.state;
-        const isNotProductX = getVariationProductData ?  (getVariationProductData.Type == "variable" || getVariationProductData.Type == "simple") ? true : false : "";
+
+        const { variationfound, showSelectStatus, selectedOptionCode, isFetchWarehouseQty, isAttributeDelete } = this.state;
+        const isNotProductX = getVariationProductData ? (getVariationProductData.Type == "variable" || getVariationProductData.Type == "simple") ? true : false : "";
         var HostUrl = (isNotProductX == false) ? getVariationProductData && getVariationProductData.ParamLink : "";
         //HostUrl ="";
         var img = this.state.variationImage ? this.state.variationImage.split('/') : '';
@@ -1393,141 +1392,29 @@ updateActualStockQty(prd){
         var cartDiscountType = localStorage.getItem('CART') ? JSON.parse(localStorage.getItem('CART')) : '';
         var statusForCartAndProductDiscount = variationfound && variationfound.cart_discount_amount > 0 && variationfound.product_discount_amount > 0 ? true : getVariationProductData && getVariationProductData.cart_discount_amount > 0 && getVariationProductData.product_discount_amount > 0 ? true : false;
         var tax_is = getVariationProductData && getVariatioModalProduct(single_product ? single_product : variationfound ? variationfound : getVariationProductData, this.state.variationDefaultQunatity);
-        var after_discount_total_price = tax_is && tax_is.product_discount_amount ? 
-                                            tax_is.product_discount_amount * (tax_is.discount_type !="Number"? tax_is.quantity?tax_is.quantity:this.state.variationDefaultQunatity:1 ) : 0;
+        var after_discount_total_price = tax_is && tax_is.product_discount_amount ?
+            tax_is.product_discount_amount * (tax_is.discount_type != "Number" ? tax_is.quantity ? tax_is.quantity : this.state.variationDefaultQunatity : 1) : 0;
         var product_price = getSettingCase() == 2 || getSettingCase() == 4 || getSettingCase() == 7 ? tax_is && cartPriceWithTax(tax_is.old_price, getSettingCase(), tax_is.TaxClass) : getSettingCase() == 6 ? tax_is && tax_is.old_price : tax_is && tax_is.old_price;
         var _Inventory = this.props.getQuantity ? this.props.getQuantity : variation_single_data ? (variation_single_data.StockStatus == null || variation_single_data.StockStatus == 'instock') && variation_single_data.ManagingStock == false ? LocalizedLanguage.unlimited : hasVariationProductData ? this.state.variationStockQunatity != 'Unlimited' ? this.state.variationStockQunatity : this.state.variationStockQunatity : 1 : hasVariationProductData ? this.state.variationStockQunatity != 'Unlimited' ? this.state.variationStockQunatity : this.state.variationStockQunatity : 1;
         var _IsUpdateInventory = localStorage.getItem('user') ?
             (JSON.parse(localStorage.getItem('user')).CanManageInventory == false) || ((this.state.variationStockQunatity && (this.state.variationStockQunatity == 'Unlimited') || (this.state.variationStockQunatity == 'outofstock')) || (showSelectedProduct && showSelectStatus == true && showSelectedProduct.ManagingStock == false)) ? false : true
-            : false; 
-            
-        var filterLength = this.state.filterTerms && this.state.filterTerms.length;       
-        var productAttributsWithVariation =[];
-        productAttributsWithVariation = this.props.getVariationProductData && this.props.getVariationProductData !== null && this.props.getVariationProductData.ProductAttributes && this.props.getVariationProductData.ProductAttributes.filter(item => item.Variation == true);
-       
-        
-            var AddtocartDisabled =  productAttributsWithVariation && productAttributsWithVariation !== null && productAttributsWithVariation.length !== 0 ? true : false;        
-            if ( isAttributeDelete == true &&  productAttributsWithVariation && (filterLength !== 0 && filterLength == productAttributsWithVariation.length) ){
-                AddtocartDisabled = false;
-            } 
-            
-       return (
-            <div className={(ActiveUser.key.isSelfcheckout == true ) ? "modal fade popUpMid" : "modal fade modal-fullscreen in"} id="VariationPopUp">            
-            {(ActiveUser.key.isSelfcheckout == true) ?
-                <div className="modal-dialog modal-center-block">
-                     {HostUrl !== "" ?
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
-                                    {hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => this.handleClose()}>
-                                    <span aria-hidden="true">
-                                        <img src="assets/img/ic_circle_delete.svg" />
-                                    </span>
-                                </button>
-                            </div>
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                sandbox="allow-scripts allow-same-origin allow-forms"
-                                //className="embed-responsive-item diamondSectionHeight"
-                                ref={(f) => this.ifr = f}
-                                src={HostUrl}
-                            />
-                        </div>
-                        :
-                <div className="modal-content">
-                    <div className="modal-header header-modal justify-start">
-                        <h1 className="h3-title text-single-line" title={this.props.proTitle}>
-                        {hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}
-                        </h1>
-                        <div className="data-dismiss" data-dismiss="modal">
-                            <img src="assets/img/closenew.svg" alt=""/>
-                        </div>
-                    </div>
-                    <div className="modal-body no-padding  scroll-auto">
-                        <div className="self-checkout-variation">
-                            <div className="widget-3 spacer-xy-25">
-                                <div className="widget-icon">
-                                    <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg"/>
-                                </div>                                  
-                                    {getVariationProductData && getVariationProductData.ShortDescription &&
-                                            getVariationProductData.ShortDescription !==""?
-                                     <div className="widget-decription">
-                                    <h4>Short Description</h4>                                      
-                                     <Markup content={getVariationProductData.ShortDescription} />                                     
-                                    </div>
-                                    : <div className="widget-decription"></div>
-                                    }
-                         </div>                             
-                         {getVariationProductData ? getVariationProductData.Type !== 'variable' ?
-                                <div className="spacer-xy-25">
-                                 <div className="spacer-t-20 spacer-b-30">
-                                     <div className="self-checkout-no-variation">{LocalizedLanguage.noAvailable} </div>
-                                 </div>
-                             </div>
-                                :
-                                 <div className="spacer-xy-25">
-                                     <div className="spacer-t-20 spacer-b-30">
-                                         <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
-                                         attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
-                                         optionClick={this.optionClick} filteredAttribute={this.state.filteredAttribute}
-                                         selectedAttribute={this.state.selectedAttribute} productVariations=
-                                         {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
-                                         selectedOptionCode={selectedOptionCode}
-                                         selectedOptions={this.state.selectedOptions} /> 
-                                     </div>                        
-                                 </div>
-                             : null}
-                         </div>
-                    </div>                      
-                    <div className="modal-footer no-padding border-top border-width-1">
-                        <div className="widget_quantity">
-                            <button className="btn btn-default" onClick={this.decrementDefaultQuantity}>
-                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzIiB2aWV3Qm94PSIwIDAgMzQgMyI+PGc+PGc+PHBhdGggZmlsbD0iIzRiNGI0YiIgZD0iTTE3LjQwMyAxLjA3M0gxLjQyOGEuNDI4LjQyOCAwIDAgMCAwIC44NTRoMzEuMDk3YS40MjguNDI4IDAgMCAwIDAtLjg1NHoiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiM0YjRiNGIiIHN0cm9rZS1taXRlcmxpbWl0PSI1MCIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNMTcuNDAzIDEuMDczdjBoLS44NTV2MEgxLjQyOGEuNDI4LjQyOCAwIDAgMCAwIC44NTRoMTUuMTJ2MGguODU1djBoMTUuMTIyYS40MjguNDI4IDAgMCAwIDAtLjg1NHoiLz48L2c+PC9nPjwvc3ZnPg=="/>
-                            </button>
-                            <div className="widget_quantiy_show">
-                                <div className="widget_quantity_addon">
-                                    <div className="widget_quantity_text">
-                                        Qty.
-                                    </div>
-                                    <input id="qualityUpdater" type="text" className="widget_quantity_text" name="qualityUpdater" 
-                                                             value={hasVariationProductData ? this.state.variationStockQunatity == 'outofstock' ? 0 : this.state.variationStockQunatity == 0 ? 
-                                                             (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity 
-                                                             : ''} onChange={this.handleChange.bind(this)} />
+            : false;
 
-                                                               
-                                </div>
-                            </div>
-                            <button className="btn btn-default"  onClick={this.incrementDefaultQuantity} >
-                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0Ij48Zz48Zz48cGF0aCBmaWxsPSIjNGI0YjRiIiBkPSJNMTcuNDAzIDE2LjU0OFYxLjQyOGEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzaDE1LjEyMmEuNDI4LjQyOCAwIDAgMCAwLS44NTV6Ii8+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNGI0YjRiIiBzdHJva2UtbWl0ZXJsaW1pdD0iNTAiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE3LjQwMyAxNi41NDh2MC0xNS4xMmEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzdjBoMTUuMTIyYS40MjguNDI4IDAgMCAwIDAtLjg1NXoiLz48L2c+PC9nPjwvc3ZnPg=="/>
-                            </button>
-                            <div className="self-checkout-variation">
-                                <button style={{backgroundColor:"#e6702a"}} className="btn btn-primary h-60" onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
-                                    !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null}>                                                                  
-                                      {LocalizedLanguage.addToCart}  {tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))}
-                                </button>
-                            </div>
-                            <div style={{display:"none"}}>
-                            { 
-                             (showSelectStatus == true && showSelectedProduct) ?
-                                 <span  id="txtInScock">{(showSelectedProduct.StockStatus == null || showSelectedProduct.StockStatus == 'instock') && showSelectedProduct.ManagingStock == false ? LocalizedLanguage.unlimited : showSelectedProduct.StockQuantity - showSelectedProduct.quantity}</span>
-                                 :                                    
-                                 <span id="txtInScock">{_Inventory}</span>   
-                                               
-                                 }
-                                 </div>
-                        </div>
-                    </div>
-                </div>
-            }
-            </div>
-                :
-                <div>
-                    {/* || isFetchWarehouseQty==true //remove due to client stuck in loader */}
-                    {(isInventoryUpdate == true ) ? <LoadingModal /> : ""}   
-                    <div className="modal-dialog modal-xl">
-                    {HostUrl !== "" ?
+        var filterLength = this.state.filterTerms && this.state.filterTerms.length;
+        var productAttributsWithVariation = [];
+        productAttributsWithVariation = this.props.getVariationProductData && this.props.getVariationProductData !== null && this.props.getVariationProductData.ProductAttributes && this.props.getVariationProductData.ProductAttributes.filter(item => item.Variation == true);
+
+
+        var AddtocartDisabled = productAttributsWithVariation && productAttributsWithVariation !== null && productAttributsWithVariation.length !== 0 ? true : false;
+        if (isAttributeDelete == true && productAttributsWithVariation && (filterLength !== 0 && filterLength == productAttributsWithVariation.length)) {
+            AddtocartDisabled = false;
+        }
+
+        return (
+            <div className={(ActiveUser.key.isSelfcheckout == true) ? "modal fade popUpMid" : "modal fade modal-fullscreen in"} id="VariationPopUp">
+                {(ActiveUser.key.isSelfcheckout == true) ?
+                    <div className="modal-dialog modal-center-block">
+                        {HostUrl !== "" ?
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
@@ -1548,212 +1435,319 @@ updateActualStockQty(prd){
                                 />
                             </div>
                             :
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
-                                    {hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => { this.handleClose() }}>
-                                    <span aria-hidden="true"><img src="assets/img/Close.svg" /></span>
-                                </button>
-                            </div>
-                            <div className="modal-body p-0">
-                                <div className="container-fluid">
-                                    <div className="row row-flex">
-                                        <div className="col-sm-7 col-lg-7 p-0 variation-border-right position-relative">
-                                            <div className="variation-wrapper">
-                                                {/* simlple start */}
-                                                {getVariationProductData ?
-                                                    getVariationProductData.Type !== 'variable' ?
-                                                        <p className="text-alert-record"> {LocalizedLanguage.noAvailable} </p>
-                                                        :
+                                <div className="modal-content" style={{width :'150%'}} >
+                                    <div className="product">
+                                        <div className="close" data-dismiss="modal">
+                                            <svg width={22} height={21} viewBox="0 0 22 21">
+                                                <path d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z" fill="#050505" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p className="prod-name" title={this.props.proTitle} >{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
+                                          <div className="divider" />
+                                            <div className="row">
+                                                <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg" />
+                                                <div className="col">
+                                                    <p>
+                                                        {/* <Markup content={getVariationProductData.ShortDescription} /> */}
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, reiciendis hic,
+                                                        rem deserunt enim quisquam alias nulla obcaecati harum commodi possimus. Laudantium
+                                                        nulla omnis magni ea dolore totam? Dolores, unde.:
+
+                                                    </p>
+                                                    <p>Serves 1</p>
+                                                    <div className="inner-row margin">
+                                                        <div className="text-group">
+                                                            <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
+                                                            <p className="subtext">(plus tax)</p>
+                                                        </div>
+                                                        <button onclick="toggleModify()">Modify Ingredients</button>
+                                                    </div>
+                                                    <div className="inner-row">
+                                                        <label className="number-input-container productvinput">
+                                                            <div onClick={this.decrementDefaultQuantity} className="svg-container left productv2p">
+                                                                <svg width={16} height={2} viewBox="0 0 16 2">
+                                                                    <rect width={16} height={2} fill="#758696" />
+                                                                </svg>
+                                                            </div>
+                                                            <input type="number" value={hasVariationProductData ? this.state.variationStockQunatity == 'outofstock' ? 0 : this.state.variationStockQunatity == 0 ?
+                                                                (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity
+                                                                : ''} onChange={this.handleChange.bind(this)} />
+
+                                                            <div  onClick={this.incrementDefaultQuantity} className="svg-container right">
+                                                                <svg  width={16} height={16} viewBox="0 0 16 16">
+                                                                    <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
+                                                                </svg>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           </div>
+                                        <div>
+                                            {getVariationProductData ? getVariationProductData.Type !== 'variable' ?
+                                                <div className='attributesBottom'>
+                                                        <div>{LocalizedLanguage.noAvailable} </div>
+                                                </div>
+                                                :
+                                                <div className='attributesBottom'>
                                                         <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
                                                             attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
                                                             optionClick={this.optionClick} filteredAttribute={this.state.filteredAttribute}
-                                                            selectedAttribute={this.state.selectedAttribute} 
-                                                            productVariations={this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
+                                                            selectedAttribute={this.state.selectedAttribute} productVariations=
+                                                            {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
                                                             selectedOptionCode={selectedOptionCode}
                                                             selectedOptions={this.state.selectedOptions} />
-                                                    : null}
-                                            </div>
+                                                </div>
+                                                : null}
+                                        </div>
+                                        <div>
+                                            <p className="bottom">Add a note to your order</p>
+                                            <button className="bottom">Add Note</button>
+                                        </div>
+                                    </div>
+                                    <RecommendedProduct />
+                                    <div className='addtocardproductv'>
+                                    <button className="view-cart addcardproductview" >Add Item to Cart</button>
+                                    </div>  
 
-                                            <div className="w-100">
-                                                {getVariationProductData && getVariationProductData.Type == "variable" && <p className='clearvariation' onClick={() => this.clearCheckedField()} >CLEAR SELECTION</p>}
-                                                <div className="container-fluid variation-footer">
-                                                    <div className="row">
-                                                        <div className="col-sm-12 p-0">
-                                                            <div className="variation_quality">
-                                                                <div className="input-group bootstrap-touchspin">
-                                                                    <span className="input-group-btn input-group-prepend bootstrap-touchspin-injected">
-                                                                        <button onClick={this.decrementDefaultQuantity} className="btn btn-primary bootstrap-touchspin-down" type="button">
-                                                                            <img className="verticle_align-middle" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzIiB2aWV3Qm94PSIwIDAgMzQgMyI+PGc+PGc+PHBhdGggZmlsbD0iIzRiNGI0YiIgZD0iTTE3LjQwMyAxLjA3M0gxLjQyOGEuNDI4LjQyOCAwIDAgMCAwIC44NTRoMzEuMDk3YS40MjguNDI4IDAgMCAwIDAtLjg1NHoiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiM0YjRiNGIiIHN0cm9rZS1taXRlcmxpbWl0PSI1MCIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNMTcuNDAzIDEuMDczdjBoLS44NTV2MEgxLjQyOGEuNDI4LjQyOCAwIDAgMCAwIC44NTRoMTUuMTJ2MGguODU1djBoMTUuMTIyYS40MjguNDI4IDAgMCAwIDAtLjg1NHoiLz48L2c+PC9nPjwvc3ZnPg==" />
-                                                                        </button>
-                                                                    </span>
-                                                                    <span className="input-group-addon input-group-prepend bootstrap-touchspin-prefix input-group-prepend bootstrap-touchspin-injected pr-0">
-                                                                        <span className="input-group-text">Qty.</span>
-                                                                    </span>
-                                                                    <input id="qualityUpdater" type="text" className="form-control no-outline pl-2" name="qualityUpdater" 
-                                                                    value={hasVariationProductData ? this.state.variationStockQunatity == 'outofstock' ? 0 : this.state.variationStockQunatity == 0 ? 
-                                                                    (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity 
-                                                                    : ''} onChange={this.handleChange.bind(this)} />
-                                                                    <span className="input-group-btn input-group-append bootstrap-touchspin-injected">
-                                                                        <button onClick={this.incrementDefaultQuantity} className="btn btn-primary bootstrap-touchspin-up" type="button">
-                                                                            <img className="verticle_align-middle" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0Ij48Zz48Zz48cGF0aCBmaWxsPSIjNGI0YjRiIiBkPSJNMTcuNDAzIDE2LjU0OFYxLjQyOGEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzaDE1LjEyMmEuNDI4LjQyOCAwIDAgMCAwLS44NTV6Ii8+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNGI0YjRiIiBzdHJva2UtbWl0ZXJsaW1pdD0iNTAiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE3LjQwMyAxNi41NDh2MC0xNS4xMmEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzdjBoMTUuMTIyYS40MjguNDI4IDAgMCAwIDAtLjg1NXoiLz48L2c+PC9nPjwvc3ZnPg==" />
-                                                                        </button>
-                                                                    </span>
+                           </div>  
+                        }
+                    </div>
+                    :
+                    <div>
+                        {/* || isFetchWarehouseQty==true //remove due to client stuck in loader */}
+                        {(isInventoryUpdate == true) ? <LoadingModal /> : ""}
+                        <div className="modal-dialog modal-xl">
+                            {HostUrl !== "" ?
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
+                                            {hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</h5>
+                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => this.handleClose()}>
+                                            <span aria-hidden="true">
+                                                <img src="assets/img/ic_circle_delete.svg" />
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        sandbox="allow-scripts allow-same-origin allow-forms"
+                                        //className="embed-responsive-item diamondSectionHeight"
+                                        ref={(f) => this.ifr = f}
+                                        src={HostUrl}
+                                    />
+                                </div>
+                                :
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
+                                            {hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</h5>
+                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => { this.handleClose() }}>
+                                            <span aria-hidden="true"><img src="assets/img/Close.svg" /></span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body p-0">
+                                        <div className="container-fluid">
+                                            <div className="row row-flex">
+                                                <div className="col-sm-7 col-lg-7 p-0 variation-border-right position-relative">
+                                                    <div className="variation-wrapper">
+                                                        {/* simlple start */}
+                                                        {getVariationProductData ?
+                                                            getVariationProductData.Type !== 'variable' ?
+                                                                <p className="text-alert-record"> {LocalizedLanguage.noAvailable} </p>
+                                                                :
+                                                                <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
+                                                                    attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
+                                                                    optionClick={this.optionClick} filteredAttribute={this.state.filteredAttribute}
+                                                                    selectedAttribute={this.state.selectedAttribute}
+                                                                    productVariations={this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
+                                                                    selectedOptionCode={selectedOptionCode}
+                                                                    selectedOptions={this.state.selectedOptions} />
+                                                            : null}
+                                                    </div>
+
+                                                    <div className="w-100">
+                                                        {getVariationProductData && getVariationProductData.Type == "variable" && <p className='clearvariation' onClick={() => this.clearCheckedField()} >CLEAR SELECTION</p>}
+                                                        <div className="container-fluid variation-footer">
+                                                            <div className="row">
+                                                                <div className="col-sm-12 p-0">
+                                                                    <div className="variation_quality">
+                                                                        <div className="input-group bootstrap-touchspin">
+                                                                            <span className="input-group-btn input-group-prepend bootstrap-touchspin-injected">
+                                                                                <button onClick={this.decrementDefaultQuantity} className="btn btn-primary bootstrap-touchspin-down" type="button">
+                                                                                    <img className="verticle_align-middle" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzIiB2aWV3Qm94PSIwIDAgMzQgMyI+PGc+PGc+PHBhdGggZmlsbD0iIzRiNGI0YiIgZD0iTTE3LjQwMyAxLjA3M0gxLjQyOGEuNDI4LjQyOCAwIDAgMCAwIC44NTRoMzEuMDk3YS40MjguNDI4IDAgMCAwIDAtLjg1NHoiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiM0YjRiNGIiIHN0cm9rZS1taXRlcmxpbWl0PSI1MCIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNMTcuNDAzIDEuMDczdjBoLS44NTV2MEgxLjQyOGEuNDI4LjQyOCAwIDAgMCAwIC44NTRoMTUuMTJ2MGguODU1djBoMTUuMTIyYS40MjguNDI4IDAgMCAwIDAtLjg1NHoiLz48L2c+PC9nPjwvc3ZnPg==" />
+                                                                                </button>
+                                                                            </span>
+                                                                            <span className="input-group-addon input-group-prepend bootstrap-touchspin-prefix input-group-prepend bootstrap-touchspin-injected pr-0">
+                                                                                <span className="input-group-text">Qty.</span>
+                                                                            </span>
+                                                                            <input id="qualityUpdater" type="text" className="form-control no-outline pl-2" name="qualityUpdater"
+                                                                                value={hasVariationProductData ? this.state.variationStockQunatity == 'outofstock' ? 0 : this.state.variationStockQunatity == 0 ?
+                                                                                    (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity
+                                                                                    : ''} onChange={this.handleChange.bind(this)} />
+                                                                            <span className="input-group-btn input-group-append bootstrap-touchspin-injected">
+                                                                                <button onClick={this.incrementDefaultQuantity} className="btn btn-primary bootstrap-touchspin-up" type="button">
+                                                                                    <img className="verticle_align-middle" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0Ij48Zz48Zz48cGF0aCBmaWxsPSIjNGI0YjRiIiBkPSJNMTcuNDAzIDE2LjU0OFYxLjQyOGEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzaDE1LjEyMmEuNDI4LjQyOCAwIDAgMCAwLS44NTV6Ii8+PHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNGI0YjRiIiBzdHJva2UtbWl0ZXJsaW1pdD0iNTAiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE3LjQwMyAxNi41NDh2MC0xNS4xMmEuNDI4LjQyOCAwIDAgMC0uODU1IDB2MTUuMTJIMS40MjhhLjQyOC40MjggMCAwIDAgMCAuODU1aDE1LjEydjE1LjEyMmEuNDI4LjQyOCAwIDAgMCAuODU1IDBWMTcuNDAzdjBoMTUuMTIyYS40MjguNDI4IDAgMCAwIDAtLjg1NXoiLz48L2c+PC9nPjwvc3ZnPg==" />
+                                                                                </button>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-5 col-lg-5 p-0">
-                                            <div className="flex-row">
-                                                <div className="variation-product-details">
-                                                    <div className="variation-product-image">
-                                                        <img src={hasVariationProductData ? this.state.variationImage ?
-                                                            img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} 
-                                                            onError={(e) => { e.target.onerror = null; 
-                                                            e.target.src = "assets/img/placeholder.png" }} id="prdImg" />
-                                                    </div>
-                                                    <div className="variation-product-description p-3"  >
-                                                        <div className="product-description-pop " >
-                                                            <h6 style={{ textAlign: 'center', 'verticalAlign': 'text-top', fontWeight: 'normal' }} className="mb-3">{LocalizedLanguage.apps}</h6>
-                                                            <div className="AppModal">
-                                                                <AppMenuList showProductDetail={this.showProductDetail} isdisabled={false} />
+                                                <div className="col-sm-5 col-lg-5 p-0">
+                                                    <div className="flex-row">
+                                                        <div className="variation-product-details">
+                                                            <div className="variation-product-image">
+                                                                <img src={hasVariationProductData ? this.state.variationImage ?
+                                                                    img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''}
+                                                                    onError={(e) => {
+                                                                        e.target.onerror = null;
+                                                                        e.target.src = "assets/img/placeholder.png"
+                                                                    }} id="prdImg" />
+                                                            </div>
+                                                            <div className="variation-product-description p-3"  >
+                                                                <div className="product-description-pop " >
+                                                                    <h6 style={{ textAlign: 'center', 'verticalAlign': 'text-top', fontWeight: 'normal' }} className="mb-3">{LocalizedLanguage.apps}</h6>
+                                                                    <div className="AppModal">
+                                                                        <AppMenuList showProductDetail={this.showProductDetail} isdisabled={false} />
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div className="table-calculate-price">
-                                                    <table className="table ShopViewCalculator">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th className="bt-0">{LocalizedLanguage.inventory}</th>
-                                                                <td align="right" className="bt-0">
-                                                                 {  this.state.isRefereshIconInventory && this.state.isRefereshIconInventory  == true   ? 
-                                                                    <span className="notification-alter"> <i style={{ 
-                                                                            color: '#3d4c66',
-                                                                             }} className="icon icon-refresh icon-spin" ></i> </span>
-                                                                            :
-                                                                            (showSelectStatus == true && showSelectedProduct) ?
-                                                                            <span className="value pull-right" id="txtInScock">{(showSelectedProduct.StockStatus == null || showSelectedProduct.StockStatus == 'instock') && showSelectedProduct.ManagingStock == false ? LocalizedLanguage.unlimited : showSelectedProduct.StockQuantity - showSelectedProduct.quantity}</span>
-                                                                            :
-                                                                            // <div className="block__box_text_price" id="txtInScock">{get_single_inventory_quantity && ((get_single_inventory_quantity.wpid == this.state.variationId) || variationfound && (get_single_inventory_quantity.wpid == variationfound.WPID) || (get_single_inventory_quantity.wpid == getVariationProductData.WPID)) ? get_single_inventory_quantity.quantity : variation_single_data ? variation_single_data ? (variation_single_data.StockStatus == null || variation_single_data.StockStatus == 'instock') && variation_single_data.ManagingStock == false ? LocalizedLanguage.unlimited" : variation_single_data.StockQuantity : '0' : hasVariationProductData ? this.state.variationStockQunatity != LocalizedLanguage.unlimited ? this.state.variationStockQunatity : this.state.variationStockQunatity : 1}</div>
-                                                                             _IsUpdateInventory == true ?
-                                                                                <span className="value pull-right" id="txtInScock" onClick={() => this.inventoryUpdate(getVariationProductData ? getVariationProductData : null)}>{_Inventory}</span>
-                                                                                :   
-                                                                                <span className="value pull-right" id="txtInScock">{_Inventory==0?"OutOfStock":_Inventory}</span>
-                                                                 }  
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>
-                                                                    {typeOfTax() == "incl" ? LocalizedLanguage.inclTax : LocalizedLanguage.exclTax}:
-                                                                <span className="value pull-right">
-                                                                        {/* {tax_is && tax_is.excl_tax && tax_is.excl_tax !== 0 ? RoundAmount(tax_is.excl_tax) : tax_is && tax_is.incl_tax ? RoundAmount(tax_is.incl_tax) : 0.00} */}
-                                                                        <NumberFormat value={tax_is && tax_is.excl_tax && tax_is.excl_tax !== 0 ? RoundAmount(tax_is.excl_tax) : tax_is && tax_is.incl_tax ? RoundAmount(tax_is.incl_tax) : 0.00} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                                    </span>
-                                                                </th>
-                                                                <th className="bl-1" align="right">
-                                                                    <div className="d-flex space-between align-items-center w-100">
-                                                                        {LocalizedLanguage.discount}:
-                                                                    <span className="value pull-right pointer">
-                                                                            <div className="section" onClick={() => { variationfound ? variationfound.Price == 0 ? null : this.discountModal(getVariationProductData ? getVariationProductData : null) : this.discountModal(getVariationProductData ? getVariationProductData : null) }}>
-                                                                                <div className="text-right">
-                                                                                   <span className="text-info">{LocalizedLanguage.discountAdd}</span> 
-                                                                                    {!variation_single_data ?
-                                                                                        variationfound && variationfound.discount_amount ?
-                                                                                            statusForCartAndProductDiscount == true ?
-                                                                                                <p className="org-discount">
-                                                                                                    ({variationfound.discount_type == "Number" ? `$${variationfound.new_product_discount_amount} ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}` : `${variationfound.new_product_discount_amount}%  ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}`}) {LocalizedLanguage.discountAdded}
-                                                                                                </p>
-                                                                                                :
-                                                                                                variationfound.cart_discount_amount > 0 ?
-                                                                                                    <p className="org-discount">
-                                                                                                        ({cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount}  ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}%  ${LocalizedLanguage.overall}`}) {LocalizedLanguage.discountAdded}
-                                                                                                    </p> :
-                                                                                                    <p className="org-discount">
-                                                                                                        {variationfound.discount_type == "Number" ? "$" : ""}
-                                                                                                        <NumberFormat value={variationfound.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                                                                        {variationfound.discount_type !== "Number" ? "%" : ""} {LocalizedLanguage.discountAdded} </p>
-                                                                                            :
-                                                                                            (getVariationProductData && (typeof getVariationProductData.discount_amount !== 'undefined') && getVariationProductData.discount_amount !== 0) ?
-                                                                                                statusForCartAndProductDiscount == true ?
-                                                                                                    <p className="org-discount">
-                                                                                                        ({getVariationProductData.discount_type == "Number" ? `$${getVariationProductData.new_product_discount_amount} ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}` : `${getVariationProductData.new_product_discount_amount}%  ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}`}) {LocalizedLanguage.discountAdded}
-                                                                                                    </p> :
-                                                                                                    getVariationProductData.cart_discount_amount > 0 ?
+                                                        <div className="table-calculate-price">
+                                                            <table className="table ShopViewCalculator">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th className="bt-0">{LocalizedLanguage.inventory}</th>
+                                                                        <td align="right" className="bt-0">
+                                                                            {this.state.isRefereshIconInventory && this.state.isRefereshIconInventory == true ?
+                                                                                <span className="notification-alter"> <i style={{
+                                                                                    color: '#3d4c66',
+                                                                                }} className="icon icon-refresh icon-spin" ></i> </span>
+                                                                                :
+                                                                                (showSelectStatus == true && showSelectedProduct) ?
+                                                                                    <span className="value pull-right" id="txtInScock">{(showSelectedProduct.StockStatus == null || showSelectedProduct.StockStatus == 'instock') && showSelectedProduct.ManagingStock == false ? LocalizedLanguage.unlimited : showSelectedProduct.StockQuantity - showSelectedProduct.quantity}</span>
+                                                                                    :
+                                                                                    // <div className="block__box_text_price" id="txtInScock">{get_single_inventory_quantity && ((get_single_inventory_quantity.wpid == this.state.variationId) || variationfound && (get_single_inventory_quantity.wpid == variationfound.WPID) || (get_single_inventory_quantity.wpid == getVariationProductData.WPID)) ? get_single_inventory_quantity.quantity : variation_single_data ? variation_single_data ? (variation_single_data.StockStatus == null || variation_single_data.StockStatus == 'instock') && variation_single_data.ManagingStock == false ? LocalizedLanguage.unlimited" : variation_single_data.StockQuantity : '0' : hasVariationProductData ? this.state.variationStockQunatity != LocalizedLanguage.unlimited ? this.state.variationStockQunatity : this.state.variationStockQunatity : 1}</div>
+                                                                                    _IsUpdateInventory == true ?
+                                                                                        <span className="value pull-right" id="txtInScock" onClick={() => this.inventoryUpdate(getVariationProductData ? getVariationProductData : null)}>{_Inventory}</span>
+                                                                                        :
+                                                                                        <span className="value pull-right" id="txtInScock">{_Inventory == 0 ? "OutOfStock" : _Inventory}</span>
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>
+                                                                            {typeOfTax() == "incl" ? LocalizedLanguage.inclTax : LocalizedLanguage.exclTax}:
+                                                                            <span className="value pull-right">
+                                                                                {/* {tax_is && tax_is.excl_tax && tax_is.excl_tax !== 0 ? RoundAmount(tax_is.excl_tax) : tax_is && tax_is.incl_tax ? RoundAmount(tax_is.incl_tax) : 0.00} */}
+                                                                                <NumberFormat value={tax_is && tax_is.excl_tax && tax_is.excl_tax !== 0 ? RoundAmount(tax_is.excl_tax) : tax_is && tax_is.incl_tax ? RoundAmount(tax_is.incl_tax) : 0.00} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+                                                                            </span>
+                                                                        </th>
+                                                                        <th className="bl-1" align="right">
+                                                                            <div className="d-flex space-between align-items-center w-100">
+                                                                                {LocalizedLanguage.discount}:
+                                                                                <span className="value pull-right pointer">
+                                                                                    <div className="section" onClick={() => { variationfound ? variationfound.Price == 0 ? null : this.discountModal(getVariationProductData ? getVariationProductData : null) : this.discountModal(getVariationProductData ? getVariationProductData : null) }}>
+                                                                                        <div className="text-right">
+                                                                                            <span className="text-info">{LocalizedLanguage.discountAdd}</span>
+                                                                                            {!variation_single_data ?
+                                                                                                variationfound && variationfound.discount_amount ?
+                                                                                                    statusForCartAndProductDiscount == true ?
                                                                                                         <p className="org-discount">
-                                                                                                            ({cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount}  ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}%  ${LocalizedLanguage.overall}`}) {LocalizedLanguage.discountAdded}
+                                                                                                            ({variationfound.discount_type == "Number" ? `$${variationfound.new_product_discount_amount} ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}` : `${variationfound.new_product_discount_amount}%  ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}`}) {LocalizedLanguage.discountAdded}
                                                                                                         </p>
                                                                                                         :
-                                                                                                        <p className="org-discount">
-                                                                                                            {getVariationProductData.discount_type == "Number" ? "$" : ''}
-                                                                                                            <NumberFormat value={getVariationProductData.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />{getVariationProductData.discount_type !== "Number" ? "%" : ''} {LocalizedLanguage.discountAdded} </p>
-                                                                                                :
-                                                                                                (showSelectStatus == true && showSelectedProduct && showSelectedProduct.discount_amount !== 0) ?
-                                                                                                    <p> <NumberFormat value={showSelectedProduct.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />{showSelectedProduct.discount_type == "Number" ? "$" : "%"} {LocalizedLanguage.discountAdded} </p>
+                                                                                                        variationfound.cart_discount_amount > 0 ?
+                                                                                                            <p className="org-discount">
+                                                                                                                ({cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount}  ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}%  ${LocalizedLanguage.overall}`}) {LocalizedLanguage.discountAdded}
+                                                                                                            </p> :
+                                                                                                            <p className="org-discount">
+                                                                                                                {variationfound.discount_type == "Number" ? "$" : ""}
+                                                                                                                <NumberFormat value={variationfound.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+                                                                                                                {variationfound.discount_type !== "Number" ? "%" : ""} {LocalizedLanguage.discountAdded} </p>
                                                                                                     :
+                                                                                                    (getVariationProductData && (typeof getVariationProductData.discount_amount !== 'undefined') && getVariationProductData.discount_amount !== 0) ?
+                                                                                                        statusForCartAndProductDiscount == true ?
+                                                                                                            <p className="org-discount">
+                                                                                                                ({getVariationProductData.discount_type == "Number" ? `$${getVariationProductData.new_product_discount_amount} ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}` : `${getVariationProductData.new_product_discount_amount}%  ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}`}) {LocalizedLanguage.discountAdded}
+                                                                                                            </p> :
+                                                                                                            getVariationProductData.cart_discount_amount > 0 ?
+                                                                                                                <p className="org-discount">
+                                                                                                                    ({cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount}  ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}%  ${LocalizedLanguage.overall}`}) {LocalizedLanguage.discountAdded}
+                                                                                                                </p>
+                                                                                                                :
+                                                                                                                <p className="org-discount">
+                                                                                                                    {getVariationProductData.discount_type == "Number" ? "$" : ''}
+                                                                                                                    <NumberFormat value={getVariationProductData.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />{getVariationProductData.discount_type !== "Number" ? "%" : ''} {LocalizedLanguage.discountAdded} </p>
+                                                                                                        :
+                                                                                                        (showSelectStatus == true && showSelectedProduct && showSelectedProduct.discount_amount !== 0) ?
+                                                                                                            <p> <NumberFormat value={showSelectedProduct.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />{showSelectedProduct.discount_type == "Number" ? "$" : "%"} {LocalizedLanguage.discountAdded} </p>
+                                                                                                            :
+                                                                                                            ""
+                                                                                                : variation_single_data !== null && variation_single_data.discount_amount == 0 ?
                                                                                                     ""
-                                                                                        : variation_single_data !== null && variation_single_data.discount_amount == 0 ?
-                                                                                            ""
-                                                                                            :
-                                                                                            variation_single_data.cart_discount_amount > 0 && variation_single_data.product_discount_amount > 0 ?
-                                                                                                <p className="org-discount">
-                                                                                                    ({variation_single_data.discount_type == "Number" ? `$${variation_single_data.new_product_discount_amount} ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}` : `${variation_single_data.new_product_discount_amount}%  ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}`}) {LocalizedLanguage.discountAdded}
-                                                                                                </p> :
-                                                                                                cartDiscountType && variation_single_data.product_discount_amount <= 0 ?
-                                                                                                    <p className="org-discount">
-                                                                                                        ({cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount}  ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}%  ${LocalizedLanguage.overall}`}) {LocalizedLanguage.discountAdded}
-                                                                                                    </p>
                                                                                                     :
-                                                                                                    <p className="org-discount">
-                                                                                                        {variation_single_data.discount_type == "Number" ? "$" : ""}
-                                                                                                        <NumberFormat value={variation_single_data.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />{variation_single_data.discount_type !== "Number" ? "%" : ""} {LocalizedLanguage.discountAdded} </p>
-                                                                                    }
-                                                                                </div>
+                                                                                                    variation_single_data.cart_discount_amount > 0 && variation_single_data.product_discount_amount > 0 ?
+                                                                                                        <p className="org-discount">
+                                                                                                            ({variation_single_data.discount_type == "Number" ? `$${variation_single_data.new_product_discount_amount} ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}` : `${variation_single_data.new_product_discount_amount}%  ${LocalizedLanguage.individual} +  ${cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount} ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}% ${LocalizedLanguage.overall}`}`}) {LocalizedLanguage.discountAdded}
+                                                                                                        </p> :
+                                                                                                        cartDiscountType && variation_single_data.product_discount_amount <= 0 ?
+                                                                                                            <p className="org-discount">
+                                                                                                                ({cartDiscountType && cartDiscountType.discountType == "Number" ? `$${cartDiscountType.discount_amount}  ${LocalizedLanguage.overall}` : `${cartDiscountType.discount_amount}%  ${LocalizedLanguage.overall}`}) {LocalizedLanguage.discountAdded}
+                                                                                                            </p>
+                                                                                                            :
+                                                                                                            <p className="org-discount">
+                                                                                                                {variation_single_data.discount_type == "Number" ? "$" : ""}
+                                                                                                                <NumberFormat value={variation_single_data.new_product_discount_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />{variation_single_data.discount_type !== "Number" ? "%" : ""} {LocalizedLanguage.discountAdded} </p>
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </span>
                                                                             </div>
-                                                                        </span>
-                                                                    </div>
-                                                                </th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th colSpan="2" className="p-0">
-                                                                        {/* style={getVariationProductData ?
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th colSpan="2" className="p-0">
+                                                                            {/* style={getVariationProductData ?
                                                                         getVariationProductData.Type !== 'variable' ? { cursor: "pointer", pointerEvents: "auto" } : this.state.variationStyles : null} /> */}
-                                                                    <button className="btn btn-block btn-primary checkout-items" style={      AddtocartDisabled == true  ||  this.state.variationStockQunatity <= 0 ? {backgroundColor :'#C4C4C4'} : null}
-                                                                        onClick={getVariationProductData ?
-                                                                            getVariationProductData.Type !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} >
-                                                                        <span className="pull-left">
-                                                                            {this.props.showSelectedProduct ? LocalizedLanguage.cartUpdate : LocalizedLanguage.addToCart}
-                                                                        </span>
-                                                                        <span className="pull-right">
-                                                                            {/* {tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} */}
-                                                                            <NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                                        </span>
-                                                                    </button>
-                                                                </th>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                                            <button className="btn btn-block btn-primary checkout-items" style={AddtocartDisabled == true || this.state.variationStockQunatity <= 0 ? { backgroundColor: '#C4C4C4' } : null}
+                                                                                onClick={getVariationProductData ?
+                                                                                    getVariationProductData.Type !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} >
+                                                                                <span className="pull-left">
+                                                                                    {this.props.showSelectedProduct ? LocalizedLanguage.cartUpdate : LocalizedLanguage.addToCart}
+                                                                                </span>
+                                                                                <span className="pull-right">
+                                                                                    {/* {tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} */}
+                                                                                    <NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+                                                                                </span>
+                                                                            </button>
+                                                                        </th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </div>
-                }
                     </div>
-                </div>
-            } 
-        </div>  
+                }
+            </div>
         )
     }
 }
 function mapStateToProps(state) {
-    const { categorylist, productlist, attributelist, single_product, get_single_inventory_quantity, showSelectedProduct,productWarehouseQuantity } = state;
+    const { categorylist, productlist, attributelist, single_product, get_single_inventory_quantity, showSelectedProduct, productWarehouseQuantity } = state;
     return {
         categorylist: categorylist,
         productlist: productlist,
@@ -1761,7 +1755,7 @@ function mapStateToProps(state) {
         single_product: single_product.items,
         get_single_inventory_quantity: get_single_inventory_quantity.items,
         showSelectedProduct: showSelectedProduct.items,
-        productWarehouseQuantity:productWarehouseQuantity
+        productWarehouseQuantity: productWarehouseQuantity
     };
 }
 const connectedCommonProductPopupModal = connect(mapStateToProps)(CommonProductPopupModal);

@@ -48,7 +48,7 @@ class ProductAtrribute extends React.Component {
                 return (
                     attribute && attribute.Variation == true &&
                     <div key={index}>                        
-                        <h6 className="card-title text-center fz-12">{attribute.Name}</h6>
+                        <p >{attribute.Name}</p>
                         <ProductSubAtrribute 
                             showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}
                             itemIndex={index}
@@ -71,7 +71,7 @@ class ProductAtrribute extends React.Component {
                 return (
                     attribute && attribute.Variation == true &&
                     <div key={index}>
-                        <h4 className="h5-title text-dark text-center mb-3">{attribute.Name}</h4>
+                        <p>{attribute.Name}</p>
                         <div className="row">
                             <ProductSubAtrribute 
                                 showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}

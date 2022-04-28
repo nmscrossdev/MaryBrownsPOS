@@ -7,7 +7,7 @@ export default class RecommendedProduct extends Component {
     }
   render() {
     return (
-        <div className="recommendations">
+        <div className="recommendations recommendationsFotter">
         <p>Recommendations</p>
         <div className="row">
             <div className="item">
