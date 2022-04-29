@@ -424,66 +424,66 @@ class AllProduct extends React.Component {
     filterProductByTile(type, item, parent) {
         this.setState({ pageNumber: 0 })
         switch (type) {
-            case "attribute":
-                this.filterProductForAttribute(item);
-                break;
-            case "sub-attribute":
-                this.filterProductForSubAttribute(item);
-                break;
+            // case "attribute":
+            //     this.filterProductForAttribute(item);
+            //     break;
+            // case "sub-attribute":
+            //     this.filterProductForSubAttribute(item);
+            //     break;
             case "category":
-                this.filterProductForCateGory(item);
+                this.filterProductForCateGory(item,parent);
                 break;
             case "sub-category":
-                this.filterProductForSubCateGory(item);
+                this.filterProductForSubCateGory(item,parent);
                 break;
-            case "inner-sub-attribute":
-                this.productDataSearch(item, 4, parent)
-                break;
-            case "inner-sub-category":
-                this.productDataSearch(item, 2)
-                break;
-            case "product-search":
-                this.productDataSearch(item, 0)
-                break;
-            case "product":
-                this.loadingData()
-                break;
+            // case "inner-sub-attribute":
+            //     this.productDataSearch(item, 4, parent)
+            //     break;
+            // case "inner-sub-category":
+            //     this.productDataSearch(item, 2)
+            //     break;
+            // case "product-search":
+            //     this.productDataSearch(item, 0)
+            //     break;
+            // case "product":
+            //     this.loadingData()
+            //     break;
 
         }
     }
 
-    filterProductForAttribute(item) {
-        this.productDataSearch(item.attribute_slug, 1)
-    }
+    // filterProductForAttribute(item) {
+    //     this.productDataSearch(item.attribute_slug, 1)
+    // }
 
-    filterProductForSubAttribute(item) {
-        this.productDataSearch(item.attribute_slug, 3, item.parent_attribute.replace("pa_", ""));
-    }
+    // filterProductForSubAttribute(item) {
+    //     this.productDataSearch(item.attribute_slug, 3, item.parent_attribute.replace("pa_", ""));
+    // }
 
     filterProductForCateGory(item) {
-        this.productDataSearch(item.category_slug, 2)
+        this.productDataSearch(item.Code, 2,item)
     }
 
     filterProductForSubCateGory(item) {
-        this.productDataSearch(item.category_slug, 2)
+        this.productDataSearch(item.Code, 2,item)
     }
 
     retrunItrateLoop(found, filterCategoryCode) {
-        var setSubCategory = localStorage.getItem("setSubCategory") ? JSON.parse(localStorage.getItem("setSubCategory")) : [];
-        filterCategoryCode.push(found.Code)
+        //var setSubCategory = localStorage.getItem("setSubCategory") ? JSON.parse(localStorage.getItem("setSubCategory")) : [];
+        //filterCategoryCode.push(found.Code)
         if (found && found.Subcategories && found.Subcategories.length > 0) {
             found.Subcategories.map(element => {
-                setSubCategory.push(element)
+                //setSubCategory.push(element)
                 filterCategoryCode.push(element.Code)
                 if (element && element.Subcategories && element.Subcategories.length > 0) {
                     this.retrunItrateLoop(element, filterCategoryCode)
                 }
             })
-            const arrayUniqueByKey = [...new Map(setSubCategory.map(item =>
-                [item['Code'], item])).values()];
+            // const arrayUniqueByKey = [...new Map(setSubCategory.map(item =>
+            //     [item['Code'], item])).values()];
             const arrayUniqueByKeyArray = [...new Map(filterCategoryCode.map(item =>
                 [item, item])).values()];
-            localStorage.setItem("setSubCategory", JSON.stringify(arrayUniqueByKey))
+            //localStorage.setItem("setSubCategory", JSON.stringify(arrayUniqueByKey))
             return arrayUniqueByKeyArray
         }
         return filterCategoryCode
@@ -506,56 +506,57 @@ class AllProduct extends React.Component {
             index = null
             this.loadingData()
         }
-        if (index == 0) {//product
-            var serchFromAll = AllProduct.filter((item) => (item.Title.toLowerCase().includes(value.toLowerCase()) || item.Barcode.toString().toLowerCase().includes(value.toLowerCase()) || item.Sku.toString().toLowerCase().includes(value.toLowerCase())))
-            //-------//Filter child and parent-------------
-            var parentArr = [];
-            serchFromAll && serchFromAll.map(item => {
-                if (item.ParentId != 0) {
-                    var parrentofChild = AllProduct.find(function (element) {
-                        return (element.WPID == item.ParentId)
-                    });
-                    if (parrentofChild)
-                        parentArr.push(parrentofChild);
-                }
-            })
-            serchFromAll = [...new Set([...serchFromAll, ...parentArr])];
-            if (!serchFromAll || serchFromAll.length > 0) {
-                var parentProduct = serchFromAll.filter(item => {
-                    return (item.ParentId == 0)
-                })
-                parentProduct = parentProduct ? parentProduct : []
-                filtered = [...new Set([...filtered, ...parentProduct])];
-            }
-            this.setState({
-                filteredProuctList: filtered,
-                totalRecords: filtered.length,
-                product_List: filtered,
+        // if (index == 0) {//product
+        //     var serchFromAll = AllProduct.filter((item) => (item.Title.toLowerCase().includes(value.toLowerCase()) || item.Barcode.toString().toLowerCase().includes(value.toLowerCase()) || item.Sku.toString().toLowerCase().includes(value.toLowerCase())))
+        //     //-------//Filter child and parent-------------
+        //     var parentArr = [];
+        //     serchFromAll && serchFromAll.map(item => {
+        //         if (item.ParentId != 0) {
+        //             var parrentofChild = AllProduct.find(function (element) {
+        //                 return (element.WPID == item.ParentId)
+        //             });
+        //             if (parrentofChild)
+        //                 parentArr.push(parrentofChild);
+        //         }
+        //     })
+        //     serchFromAll = [...new Set([...serchFromAll, ...parentArr])];
+        //     if (!serchFromAll || serchFromAll.length > 0) {
+        //         var parentProduct = serchFromAll.filter(item => {
+        //             return (item.ParentId == 0)
+        //         })
+        //         parentProduct = parentProduct ? parentProduct : []
+        //         filtered = [...new Set([...filtered, ...parentProduct])];
+        //     }
+        //     this.setState({
+        //         filteredProuctList: filtered,
+        //         totalRecords: filtered.length,
+        //         product_List: filtered,
 
-            })
-            this.state.filteredProuctList = filtered;
-            this.state.totalRecords = filtered.length;
-            this.loadingFilterData()
-        }
-        if (index == 1) { //attribute
-            ParentProductList && ParentProductList.map((item) => {
-                item.ProductAttributes && item.ProductAttributes.map(attri => {
-                    if (String(attri.Slug).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1 ||
-                        String(attri.Name).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1) {
-                        filtered.push(item)
-                    }
-                })
-            })
-            this.setState({
-                filteredProuctList: filtered,
-                totalRecords: filtered.length
-            })
-            this.state.filteredProuctList = filtered;
-            this.state.totalRecords = filtered.length;
-            this.state.product_List = filtered;
-            this.loadingFilterData()
-        }
-        else if (index == 2) {
+        //     })
+        //     this.state.filteredProuctList = filtered;
+        //     this.state.totalRecords = filtered.length;
+        //     this.loadingFilterData()
+        // }
+        // if (index == 1) { //attribute
+        //     ParentProductList && ParentProductList.map((item) => {
+        //         item.ProductAttributes && item.ProductAttributes.map(attri => {
+        //             if (String(attri.Slug).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1 ||
+        //                 String(attri.Name).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1) {
+        //                 filtered.push(item)
+        //             }
+        //         })
+        //     })
+        //     this.setState({
+        //         filteredProuctList: filtered,
+        //         totalRecords: filtered.length
+        //     })
+        //     this.state.filteredProuctList = filtered;
+        //     this.state.totalRecords = filtered.length;
+        //     this.state.product_List = filtered;
+        //     this.loadingFilterData()
+        // }
+        //else 
+        if (index == 2) {
             // category
             ///------Get Subcategory Code------------------------------------------------ 
             var filterCategoryCode = []
@@ -566,12 +567,12 @@ class AllProduct extends React.Component {
             if (categoryList) {
                 var category_list = categoryList;
                 var found;
-                var setSubCategory = localStorage.getItem("setSubCategory") ? JSON.parse(localStorage.getItem("setSubCategory")) : [];
+                //var setSubCategory = localStorage.getItem("setSubCategory") ? JSON.parse(localStorage.getItem("setSubCategory")) : [];
                if (category_list && category_list !== undefined && category_list.length > 0) {
                     found = category_list.find(item => item.Code.replace(/-/g, "").toLowerCase() == value.replace(/-/g, "").toLowerCase());
-                    if (!found && setSubCategory) {
-                        found = setSubCategory && setSubCategory.find(item => item.Code.replace(/-/g, "").toLowerCase() == value.replace(/-/g, "").toLowerCase());
-                    }
+                    // if (!found && setSubCategory) {
+                    //     found = setSubCategory && setSubCategory.find(item => item.Code.replace(/-/g, "").toLowerCase() == value.replace(/-/g, "").toLowerCase());
+                    // }
                     if (found) {
                         filterCategoryCode = this.retrunItrateLoop(found, filterCategoryCode)
                     }
@@ -598,68 +599,69 @@ class AllProduct extends React.Component {
             this.state.totalRecords = filtered.length;
             this.state.product_List = filtered
             this.loadingFilterData();
-        } else if (index == 3) {
-            ///------Get attribute Code------------------------------------------------ 
-            var filterAttribyteCode = []
-            filterAttribyteCode.push(value);
-            var attributelist = [];
-            if (localStorage.getItem("attributelist") && Array.isArray(JSON.parse(localStorage.getItem("attributelist"))) === true)
-                attributelist = JSON.parse(localStorage.getItem("attributelist"))
-            if (attributelist && attributelist !== undefined && attributelist.length > 0 ) {
-                var found = attributelist.find(function (element) {
-                    return (element.Code.replace(/-/g, "").toLowerCase() == value.replace(/-/g, "").toLowerCase())
-                });
-                if (found) {
-                    found.SubAttributes.map(item => {
-                        filterAttribyteCode.push(item.Code);
-                    })
-                }
-            }
-            ParentProductList && ParentProductList.map((item) => {
-                item.ProductAttributes && item.ProductAttributes.map(proAtt => {
-                    var dataSplitArycomma = proAtt.Option.split(',');
-                    dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(opt => {
-                        filterAttribyteCode !== undefined && filterAttribyteCode.map(filterAttribute => {
-                            opt = opt.replace(/-/g, "");
-                            value = filterAttribute.replace(/-/g, ""); // value.replace(/-/g, ""); 
-                            if (opt.toString().toUpperCase() === String(value).toUpperCase() && String(proAtt.Slug).toUpperCase() === String(parentAttribute).toUpperCase()) {
-                                if (filtered.indexOf(item) === -1) {
-                                    filtered.push(item)
-                                }
-                            }
-                        })
-                    })
-                })
-            })
-            this.setState({
-                filteredProuctList: filtered,
-                totalRecords: filtered.length
-            })
-            this.state.product_List = filtered
-            this.state.filteredProuctList = filtered;
-            this.state.totalRecords = filtered.length;
-            this.loadingFilterData();
-        } else if (index == 4) {
-            ParentProductList && ParentProductList !== undefined && ParentProductList.map((item) => {
-                var dataSplitAry = item.ProductAttributes && item.ProductAttributes !== undefined && item.ProductAttributes.map(Opt => {
-                    var dataSplitArycomma = Opt.Option.split(',');
-                    dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(optValve => {
-                        var itemCode = this.getAttributeCode(optValve, parent);
-                        if (itemCode !== null && itemCode !== undefined && itemCode.toString().toUpperCase() === String(value).toUpperCase()) {
-                            filtered.push(item)
-                        }
-                    })
-                })
-            })
-            this.setState({
-                filteredProuctList: filtered,
-                totalRecords: filtered.length
-            })
-            this.state.product_List = filtered
-            this.state.filteredProuctList = filtered;
-            this.state.totalRecords = filtered.length;
-            this.loadingFilterData()
         }
+        //  else if (index == 3) {
+        //     ///------Get attribute Code------------------------------------------------ 
+        //     var filterAttribyteCode = []
+        //     filterAttribyteCode.push(value);
+        //     var attributelist = [];
+        //     if (localStorage.getItem("attributelist") && Array.isArray(JSON.parse(localStorage.getItem("attributelist"))) === true)
+        //         attributelist = JSON.parse(localStorage.getItem("attributelist"))
+        //     if (attributelist && attributelist !== undefined && attributelist.length > 0 ) {
+        //         var found = attributelist.find(function (element) {
+        //             return (element.Code.replace(/-/g, "").toLowerCase() == value.replace(/-/g, "").toLowerCase())
+        //         });
+        //         if (found) {
+        //             found.SubAttributes.map(item => {
+        //                 filterAttribyteCode.push(item.Code);
+        //             })
+        //         }
+        //     }
+        //     ParentProductList && ParentProductList.map((item) => {
+        //         item.ProductAttributes && item.ProductAttributes.map(proAtt => {
+        //             var dataSplitArycomma = proAtt.Option.split(',');
+        //             dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(opt => {
+        //                 filterAttribyteCode !== undefined && filterAttribyteCode.map(filterAttribute => {
+        //                     opt = opt.replace(/-/g, "");
+        //                     value = filterAttribute.replace(/-/g, ""); // value.replace(/-/g, ""); 
+        //                     if (opt.toString().toUpperCase() === String(value).toUpperCase() && String(proAtt.Slug).toUpperCase() === String(parentAttribute).toUpperCase()) {
+        //                         if (filtered.indexOf(item) === -1) {
+        //                             filtered.push(item)
+        //                         }
+        //                     }
+        //                 })
+        //             })
+        //         })
+        //     })
+        //     this.setState({
+        //         filteredProuctList: filtered,
+        //         totalRecords: filtered.length
+        //     })
+        //     this.state.product_List = filtered
+        //     this.state.filteredProuctList = filtered;
+        //     this.state.totalRecords = filtered.length;
+        //     this.loadingFilterData();
+        // } else if (index == 4) {
+        //     ParentProductList && ParentProductList !== undefined && ParentProductList.map((item) => {
+        //         var dataSplitAry = item.ProductAttributes && item.ProductAttributes !== undefined && item.ProductAttributes.map(Opt => {
+        //             var dataSplitArycomma = Opt.Option.split(',');
+        //             dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(optValve => {
+        //                 var itemCode = this.getAttributeCode(optValve, parent);
+        //                 if (itemCode !== null && itemCode !== undefined && itemCode.toString().toUpperCase() === String(value).toUpperCase()) {
+        //                     filtered.push(item)
+        //                 }
+        //             })
+        //         })
+        //     })
+        //     this.setState({
+        //         filteredProuctList: filtered,
+        //         totalRecords: filtered.length
+        //     })
+        //     this.state.product_List = filtered
+        //     this.state.filteredProuctList = filtered;
+        //     this.state.totalRecords = filtered.length;
+        //     this.loadingFilterData()
+        // }
         this.setState({ isLoading: false });
     }
 

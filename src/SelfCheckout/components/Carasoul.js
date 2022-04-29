@@ -1,26 +1,20 @@
 import React from 'react';
+import Config from '../../Config';
 const Carasoul=(props)=> {
-    return (
-		
-<div className="slider-container margin-bottom-67">
+	if(props.banners!=null)
+	{
+    	return (
+		<div className="slider-container margin-bottom-67">
 			<section className="intro">
 				<div className="slider">
 					<ul>
-						<li
-							style={{backgroundImage: "url(https://www.canadiansavers.ca/wp-content/uploads/2022/01/mary-brow-big-mary-monday-combo.jpg)"}}>
+						{props.banners.map((element, index) => {
+							<li key={index} style={{backgroundImage: "url("+Config.key.RECIEPT_IMAGE_DOMAIN +element.Path+")"}}>
 							<div className="center-y"></div>
-						</li>
-						<li
-							style={{backgroundImage: "url(https://www.canadiansavers.ca/wp-content/uploads/2022/01/maru-brown.jpg)"}}>
-							<div className="center-y"></div>
-						</li>
-						<li
-							style={{backgroundImage: "url(https://smartcanucks.ca/wp-content/uploads/2019/02/Mary-Browns-Coupon.png)"}}>
-							<div className="center-y"></div>
-						</li>
-						<li
-							style={{backgroundImage: "url(https://pbs.twimg.com/media/Djn9vFbU8AEejGt.jpg)"}}>
-							<div className="center-y"></div>
+							</li>
+						})}
+						<li>
+						<div className="center-y"></div>
 						</li>
 					</ul>
 					<ul>
@@ -33,6 +27,8 @@ const Carasoul=(props)=> {
 					</ul>
 				</div>
 			</section>
-		</div>)}
-          export default Carasoul;
+		</div>)
+	}
+}
+export default Carasoul;
         

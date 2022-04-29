@@ -4,6 +4,7 @@ import { TileModel, NavbarPage, CommonProductPopupModal, CommonHeaderTwo, getTax
 import { cartProductActions, cloudPrinterActions } from '../_actions'
 import {  favouriteListActions } from '../ShopView/index';
 import {FavouriteList} from '../SelfCheckout/components/FavouriteList';
+import {CategoriesList} from '../SelfCheckout/components/CategoriesList';
 import { history } from '../_helpers';
 import { typeOfTax } from '../_components/TaxSetting';
 import { taxRateAction } from '../_actions';
@@ -40,7 +41,9 @@ import { CommonInfoPopup } from '../_components/CommonInfoPopup';
 import { TickitDetailsPopupModal } from '../_components/TickitDetailsPopupModal/TickitDetailsPopupModal';
 import Categories from '../SelfCheckout/components/Categories';
 import Navbar from '../SelfCheckout/components/Navbar';
-import Carasoul from '../SelfCheckout/components/Carasoul'
+import Carasoul from '../SelfCheckout/components/Carasoul';
+import {_key,getTitle,getBanners,getCategories} from '../settings/SelfCheckoutSettings';
+
 class SelfCheckoutView extends React.Component {
     constructor(props) {
         super(props);
@@ -62,7 +65,6 @@ class SelfCheckoutView extends React.Component {
             addStatus: '',
             posIndex: '',
             addFavouriteStatus: false,
-            openModalActive: false,
             favList: "",
             main_banner_image: '',
             pageWidth: null,
@@ -70,7 +72,9 @@ class SelfCheckoutView extends React.Component {
             datetime:Date.now(),//to open product into iframe,
             favFilterSelect:'',
             favFilterPSelect:'',
-            showBackProduct:false
+            showBackProduct:false,
+            banners:null,
+            categories:[]
         }
         this.onHandleEventofCancelOrderPopup = this.onHandleEventofCancelOrderPopup.bind(this);
         this.onCancelOrderHandler = this.onCancelOrderHandler.bind(this);
@@ -87,8 +91,6 @@ class SelfCheckoutView extends React.Component {
         this.closeMsgModal = this.closeMsgModal.bind(this)
         this.handleNotification = this.handleNotification.bind(this);
         this.tilePosition = this.tilePosition.bind(this);
-        this.openModal = this.openModal.bind(this);
-        this.clearData = this.clearData.bind(this);
         this.clearData = this.clearData.bind(this);
         this.onCancelOrderHandler = this.onCancelOrderHandler.bind(this);
         this.viewOrderEvent = this.viewOrderEvent.bind(this);
@@ -127,6 +129,8 @@ class SelfCheckoutView extends React.Component {
         });
          dispatch(customerActions.getCountry())
          dispatch(customerActions.getState())
+         console.log("------THEME_SECONDARY_COLOR----"+  getTitle(_key.TITLE_FOR_CATEGORY_SECTION));
+        
         /* Created By:priyanka,Created Date:13/06/2019,Description:using tickera for check default field*/
     }
   // Created By: 
@@ -496,7 +500,7 @@ class SelfCheckoutView extends React.Component {
         }, 500);
 
         var Register_Permissions = localStorage.getItem("RegisterPermissions") ? JSON.parse(localStorage.getItem("RegisterPermissions")) : [];
-        var register_content = Register_Permissions ? Register_Permissions.content : '';
+        //var register_content = Register_Permissions ? Register_Permissions.content : '';
         // console.log("register_content", register_content);
         var banner_image = '';
         if (Register_Permissions) {
@@ -525,6 +529,17 @@ class SelfCheckoutView extends React.Component {
                 image.src = banner_image;
         }
         //-----------------------------------------------------------------------
+        var banners= getBanners(_key.DISPLAY_CUSTOM_HOMEPAGE_BANNER);	
+        if(banners!=null && banners.Banners)
+        {
+            this.setState({banners:banners.Banners});
+        }
+        var catData = getCategories(_key.DISPLAY_CATEGORY_TILES);
+        if(catData!=null && catData)
+        {
+            this.setState({categories:catData});
+        }
+
     }
 
     onSinginselfcheckout()
@@ -626,13 +641,7 @@ class SelfCheckoutView extends React.Component {
         {
             if(typeof data === 'object' && data !== null)
             {
-                var titleName = 
-                 data.attribute_slug ? data.attribute_slug 
-                :data.parent_attribute ? data.attribute_slug + "/" + data.parent_attribute?data.parent_attribute.replace("pa_", "")
-                :'' 
-                : data.category_slug ? data.name 
-                : data.Type ? data.Title 
-                : ''
+                var titleName = data.Value;
                 this.setState({favFilterPSelect:titleName});
             }
             else
@@ -1104,15 +1113,9 @@ class SelfCheckoutView extends React.Component {
      **/
     render() {
         const { width } = this.props;
-        var height = this.state.pageHeight;
         const { getVariationProductData, getSimpleProductData, hasVariationProductData, hasSimpleProductData, openModalActive, AllProductList } = this.state;
-        //    console.log("openModalActive",openModalActive)
-        var isFavList = localStorage.getItem("favlist");
-        var style = width > height ? "landscape" : "portrait";
-        const registerPermisions = localStorage.getItem('RegisterPermissions') ? JSON.parse(localStorage.getItem('RegisterPermissions')) : '';
-        const registerPermsContent = registerPermisions && registerPermisions.content;
-        const showSearchBar = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Search-Bar");
-        const showFavouriteTile = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Tile");
+    
+
         return (
             // <div>{
             //     (openModalActive == "tile_modal" && isMobileOnly == true)?
@@ -1320,15 +1323,18 @@ class SelfCheckoutView extends React.Component {
             <Navbar itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
-            <Carasoul></Carasoul>
+            <Carasoul banners={this.state.banners}></Carasoul>
             :null}
             {/* :''} */}
-            <p className="title margin-bottom-20">Menu Categories</p>
-            <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
+            <p className="title margin-bottom-20">{getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+            {/* <FavouriteList clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
+            status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
+            tilePosition={this.tilePosition} isShopView={true}/> */}
+            <CategoriesList categories={this.state.categories} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>
-            <p className="title margin-bottom-20">Menu Items</p>  
-            <AllProduct showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} ></AllProduct>
+            <p className="title margin-bottom-20">{getTitle(_key.TITLE_FOR_PRODUCT_SECTION)}</p>  
+            <AllProduct categories={this.state.categories} showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} ></AllProduct>
             
             <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
                                         showPopuponcartlistView={this.showPopuponcartlistView}
