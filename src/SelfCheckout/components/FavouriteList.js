@@ -363,97 +363,99 @@ class FavouriteList extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        const { favProductDelete, favouritesProductAdd, status } = props;
-        if (favProductDelete && favProductDelete && favProductDelete.is_success == true && this.state.favDelete_status == true) {
-            const register_Id = localStorage.getItem('register');
-            this.state.favovrArrayList = [];
-            this.setState({ favDelete_status: false, favovrArrayList: [] })
-            this.getFavListApi()
-        }
-        if (favouritesProductAdd && favouritesProductAdd && favouritesProductAdd.is_success == true && status == true) {
-            const { addStatus } = this.props;
-            this.state.favovrArrayList = [];
-            const register_Id = localStorage.getItem('register');
-            /// dispatch(favouriteListActions.getAll(udid, register_Id));
-            addStatus(false);
-            this.setState({ favovrArrayList: [] })
-            this.getFavListApi()
-        }
-        //if ($('#PopupShopStatus')) {
-        this.checkStatus();
+
+        //console.log("favouritesChildCategoryList",props&& props.favouritesChildCategoryList)
+        // const { favProductDelete, favouritesProductAdd, status } = props;
+        // if (favProductDelete && favProductDelete && favProductDelete.is_success == true && this.state.favDelete_status == true) {
+        //     const register_Id = localStorage.getItem('register');
+        //     this.state.favovrArrayList = [];
+        //     this.setState({ favDelete_status: false, favovrArrayList: [] })
+        //     this.getFavListApi()
         // }
-        var ticket_Data = localStorage.getItem('ticket_list') ? JSON.parse(localStorage.getItem('ticket_list')) : ''
-        var tick_data = this.state.ticket_Product_status == true ? JSON.parse(this.state.ticket_Product[0].TicketInfo) : ''
-        var form_id = tick_data._owner_form_template
+        // if (favouritesProductAdd && favouritesProductAdd && favouritesProductAdd.is_success == true && status == true) {
+        //     const { addStatus } = this.props;
+        //     this.state.favovrArrayList = [];
+        //     const register_Id = localStorage.getItem('register');
+        //     /// dispatch(favouriteListActions.getAll(udid, register_Id));
+        //     addStatus(false);
+        //     this.setState({ favovrArrayList: [] })
+        //     this.getFavListApi()
+        // }
+        // //if ($('#PopupShopStatus')) {
+        // this.checkStatus();
+        // // }
+        // var ticket_Data = localStorage.getItem('ticket_list') ? JSON.parse(localStorage.getItem('ticket_list')) : ''
+        // var tick_data = this.state.ticket_Product_status == true ? JSON.parse(this.state.ticket_Product[0].TicketInfo) : ''
+        // var form_id = tick_data._owner_form_template
 
-        if (localStorage.getItem('ticket_list') && localStorage.getItem('ticket_list') !== 'null' && localStorage.getItem('ticket_list') !== '' && this.state.ticket_Product_status == true && this.state.tick_type == 'simpleadd' || form_id == -1 || form_id == '' && this.state.ticket_Product_status == true && this.state.tick_type == 'simpleadd') {
-            this.setState({ ticket_Product_status: false })
-            var index = null;
-            var type = null;
-            this.ActiveList(this.state.ticket_Product[0], index = null, type = null, localStorage.getItem('ticket_list') ? JSON.parse(localStorage.getItem('ticket_list')) : '')
-        }
-        if (props.favourites) {
-            const favouritesItemsProduct = props.favourites && props.favourites.FavProduct ? getTaxAllProduct(props.favourites.FavProduct) : null;
+        // if (localStorage.getItem('ticket_list') && localStorage.getItem('ticket_list') !== 'null' && localStorage.getItem('ticket_list') !== '' && this.state.ticket_Product_status == true && this.state.tick_type == 'simpleadd' || form_id == -1 || form_id == '' && this.state.ticket_Product_status == true && this.state.tick_type == 'simpleadd') {
+        //     this.setState({ ticket_Product_status: false })
+        //     var index = null;
+        //     var type = null;
+        //     this.ActiveList(this.state.ticket_Product[0], index = null, type = null, localStorage.getItem('ticket_list') ? JSON.parse(localStorage.getItem('ticket_list')) : '')
+        // }
+        // if (props.favourites) {
+        //     const favouritesItemsProduct = props.favourites && props.favourites.FavProduct ? getTaxAllProduct(props.favourites.FavProduct) : null;
 
-            this.state.favouritesItemsProduct = favouritesItemsProduct
-            this.setState({ favouritesItemsProduct: favouritesItemsProduct })
-        }
-        var prdList = [];
-        this.state.favouritesItemsProduct && this.state.favouritesItemsProduct.map((item, index) => {
-            var getfilterTicketProduct = []
-            if (this.state.productlist && this.state.productlist.length > 0) {
-                this.state.productlist.filter(prodlist => prodlist.WPID == item.Product_Id);
-            }
-            if (getfilterTicketProduct) {
-                getfilterTicketProduct && getfilterTicketProduct.map((prod, index) => {
-                    var isExpired = false;
-                    if (prod.IsTicket && prod.IsTicket == true) {
-                        var ticketInfo = JSON.parse(prod.TicketInfo);
-                        if (ticketInfo._ticket_availability.toLowerCase() == 'range' && (ticketInfo._ticket_availability_to_date)) {
-                            var dt = new Date(ticketInfo._ticket_availability_to_date);
-                            var expirationDate = dt.setDate(dt.getDate() + 1);
-                            var currentDate = new Date();// moment.utc(new Date)
-                            if (currentDate > expirationDate) {
-                                isExpired = true;
-                            }
-                        }
-                    }
-                    if (isExpired == false) {
-                        var data = {
-                            Id: item.Id,
-                            Image: prod.ProductImage,
-                            InStock: prod.InStock,
-                            ManagingStock: prod.ManagingStock,
-                            Price: prod.Price,
-                            Product_Id: prod.WPID,
-                            Stock: prod.StockQuantity,
-                            Title: prod.Title,
-                            Type: prod.Type,
-                            old_price: prod.old_price,
-                            TaxStatus: prod.TaxStatus,
-                            incl_tax: prod.incl_tax,
-                            excl_tax: prod.excl_tax,
-                            discount_type: prod.discount_type ? prod.discount_type : "",
-                            new_product_discount_amount: prod ? prod.new_product_discount_amount : 0,
-                            TaxClass: prod ? prod.TaxClass : '',
-                            isTaxable: prod.Taxable
-                        }
-                        prdList.push(data)
-                    }
-                })
-            }
-        })
-        var _favrList = props.favourites;
-        if (prdList.length > 0) {
-            _favrList.FavProduct = prdList;
-            //this.state.favouritesItemsProduct = prdList;
-            //this.setState({ favouritesItemsProduct: prdList })
-        }
+        //     this.state.favouritesItemsProduct = favouritesItemsProduct
+        //     this.setState({ favouritesItemsProduct: favouritesItemsProduct })
+        // }
+        // var prdList = [];
+        // this.state.favouritesItemsProduct && this.state.favouritesItemsProduct.map((item, index) => {
+        //     var getfilterTicketProduct = []
+        //     if (this.state.productlist && this.state.productlist.length > 0) {
+        //         this.state.productlist.filter(prodlist => prodlist.WPID == item.Product_Id);
+        //     }
+        //     if (getfilterTicketProduct) {
+        //         getfilterTicketProduct && getfilterTicketProduct.map((prod, index) => {
+        //             var isExpired = false;
+        //             if (prod.IsTicket && prod.IsTicket == true) {
+        //                 var ticketInfo = JSON.parse(prod.TicketInfo);
+        //                 if (ticketInfo._ticket_availability.toLowerCase() == 'range' && (ticketInfo._ticket_availability_to_date)) {
+        //                     var dt = new Date(ticketInfo._ticket_availability_to_date);
+        //                     var expirationDate = dt.setDate(dt.getDate() + 1);
+        //                     var currentDate = new Date();// moment.utc(new Date)
+        //                     if (currentDate > expirationDate) {
+        //                         isExpired = true;
+        //                     }
+        //                 }
+        //             }
+        //             if (isExpired == false) {
+        //                 var data = {
+        //                     Id: item.Id,
+        //                     Image: prod.ProductImage,
+        //                     InStock: prod.InStock,
+        //                     ManagingStock: prod.ManagingStock,
+        //                     Price: prod.Price,
+        //                     Product_Id: prod.WPID,
+        //                     Stock: prod.StockQuantity,
+        //                     Title: prod.Title,
+        //                     Type: prod.Type,
+        //                     old_price: prod.old_price,
+        //                     TaxStatus: prod.TaxStatus,
+        //                     incl_tax: prod.incl_tax,
+        //                     excl_tax: prod.excl_tax,
+        //                     discount_type: prod.discount_type ? prod.discount_type : "",
+        //                     new_product_discount_amount: prod ? prod.new_product_discount_amount : 0,
+        //                     TaxClass: prod ? prod.TaxClass : '',
+        //                     isTaxable: prod.Taxable
+        //                 }
+        //                 prdList.push(data)
+        //             }
+        //         })
+        //     }
+        // })
+        // var _favrList = props.favourites;
+        // if (prdList.length > 0) {
+        //     _favrList.FavProduct = prdList;
+        //     //this.state.favouritesItemsProduct = prdList;
+        //     //this.setState({ favouritesItemsProduct: prdList })
+        // }
 
-        if (props.favourites !== this.props.favourites) {
-            this.preparefavList(_favrList);
-            // this.preparefavList(props.favourites)
-        }
+        // if (props.favourites !== this.props.favourites) {
+        //     this.preparefavList(_favrList);
+        //     // this.preparefavList(props.favourites)
+        // }
 
     }
 

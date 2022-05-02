@@ -10,7 +10,7 @@ import Navbar from '../../../SelfCheckout/components/Navbar'
 import { FetchIndexDB } from '../../../settings/FetchIndexDB'
 import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
-
+import {_key,isDisplay} from '../../../settings/SelfCheckoutSettings';
 class CheckoutCart extends React.Component {
   constructor(props) {
     super(props);
@@ -397,6 +397,8 @@ class CheckoutCart extends React.Component {
   }
   render() {
     const { checkList, cash_round, payments, count, paid_amount, Markup, NumberFormat, RoundAmount, RemoveCustomer, cartDiscountAmount, selfcheckoutstatusmanagingevnt, SelfCheckoutStatus } = this.props;
+    
+    var display_rec_products=isDisplay(_key.DISPLAY_PRODUCT_RECOMMENDATIONS_ON_CART_PAGE)
     //var landingScreen = '';
     // var Register_Permissions = localStorage.getItem("RegisterPermissions") ? JSON.parse(localStorage.getItem("RegisterPermissions")) : [];
     //var register_content = Register_Permissions ? Register_Permissions.content : '';
@@ -613,8 +615,9 @@ class CheckoutCart extends React.Component {
           </div>
           <p className="instructions">Order instructions</p>
           <textarea name="orderInstrucions" id="orderInstrucions" className="order-instructions" placeholder="Enter your instructions" defaultValue={""} />
-
-          <RecommendedProduct />
+          {display_rec_products=="true"?
+          <RecommendedProduct page={"cart"}/>
+          :<div></div>}
 
           <div className='continuecard'>
             <button onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart" >{LocalizedLanguage.continueToPayment}</button>
