@@ -102,8 +102,8 @@ class CommonProductPopupModal extends React.Component {
                 }
                 if (qty > this.state.variationStockQunatity)
                     qty = this.state.variationStockQunatity;
-
-                this.setDefaultQuantity(qty);
+                
+                    this.setDefaultQuantity(qty);
             }
         } else {
             var maxQty = $("#txtInScock").text();
@@ -1435,83 +1435,166 @@ class CommonProductPopupModal extends React.Component {
                                 />
                             </div>
                             :
-                                <div className="modal-content" style={{width :'150%'}} >
-                                    <div className="product">
-                                        <div className="close" data-dismiss="modal">
-                                            <svg width={22} height={21} viewBox="0 0 22 21">
-                                                <path d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z" fill="#050505" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p className="prod-name" title={this.props.proTitle} >{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
-                                          <div className="divider" />
-                                            <div className="row">
-                                                <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg" />
-                                                <div className="col">
-                                                    <p>
-                                                        {/* <Markup content={getVariationProductData.ShortDescription} /> */}
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, reiciendis hic,
-                                                        rem deserunt enim quisquam alias nulla obcaecati harum commodi possimus. Laudantium
-                                                        nulla omnis magni ea dolore totam? Dolores, unde.:
+                            <div className="modal-content" style={{ width: '165%',height:'90%' }} >
+                                <div className="product">
+                                    <div className="close" data-dismiss="modal">
+                                        <svg width={22} height={21} viewBox="0 0 22 21">
+                                            <path d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z" fill="#050505" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p className="prod-name" title={this.props.proTitle} >{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
+                                        <div className="divider" />
+                                        <div className="row">
+                                            <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg" />
+                                            <div className="col">
+                                                <p>
+                                                    {/* <Markup content={getVariationProductData.ShortDescription} /> */}
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, reiciendis hic,
+                                                    rem deserunt enim quisquam alias nulla obcaecati harum commodi possimus. Laudantium
+                                                    nulla omnis magni ea dolore totam? Dolores, unde.:
 
-                                                    </p>
-                                                    <p>Serves 1</p>
-                                                    <div className="inner-row margin">
-                                                        <div className="text-group">
-                                                            <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
-                                                            <p className="subtext">(plus tax)</p>
+                                                </p>
+                                                <p>Serves 1</p>
+                                                <div className="inner-row margin">
+                                                    <div className="text-group">
+                                                        <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
+                                                        <p className="subtext">(plus tax)</p>
+                                                    </div>
+                                                    <button onclick="toggleModify()">Modify Ingredients</button>
+                                                </div>
+                                                <div className="inner-row">
+                                                    <label className="number-input-container productvinput">
+                                                        <div onClick={this.decrementDefaultQuantity} className="svg-container left productv2p">
+                                                            <svg width={16} height={2} viewBox="0 0 16 2">
+                                                                <rect width={16} height={2} fill="#758696" />
+                                                            </svg>
                                                         </div>
-                                                        <button onclick="toggleModify()">Modify Ingredients</button>
-                                                    </div>
-                                                    <div className="inner-row">
-                                                        <label className="number-input-container productvinput">
-                                                            <div onClick={this.decrementDefaultQuantity} className="svg-container left productv2p">
-                                                                <svg width={16} height={2} viewBox="0 0 16 2">
-                                                                    <rect width={16} height={2} fill="#758696" />
-                                                                </svg>
-                                                            </div>
-                                                            <input type="number" value={hasVariationProductData ? this.state.variationStockQunatity == 'outofstock' ? 0 : this.state.variationStockQunatity == 0 ?
-                                                                (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity
-                                                                : ''} onChange={this.handleChange.bind(this)} />
+                                                        <input id="qualityUpdater" type="text"  name="qualityUpdater" 
+                                                             value={hasVariationProductData ? this.state.variationStockQunatity == 'outofstock' ? 0 : this.state.variationStockQunatity == 0 ? 
+                                                             (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity 
+                                                             : ''} onChange={this.handleChange.bind(this)} />
 
-                                                            <div  onClick={this.incrementDefaultQuantity} className="svg-container right">
-                                                                <svg  width={16} height={16} viewBox="0 0 16 16">
-                                                                    <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
-                                                                </svg>
-                                                            </div>
-                                                        </label>
-                                                    </div>
+                                                        <div onClick = {this.incrementDefaultQuantity} className="svg-container right">
+                                                            <svg width={16} height={16} viewBox="0 0 16 16">
+                                                                <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
+                                                            </svg>
+                                                        </div>
+                                                    </label>
                                                 </div>
                                             </div>
-                                           </div>
-                                        <div>
-                                            {getVariationProductData ? getVariationProductData.Type !== 'variable' ?
-                                                <div className='attributesBottom'>
-                                                        <div>{LocalizedLanguage.noAvailable} </div>
-                                                </div>
-                                                :
-                                                <div className='attributesBottom'>
-                                                        <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
-                                                            attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
-                                                            optionClick={this.optionClick} filteredAttribute={this.state.filteredAttribute}
-                                                            selectedAttribute={this.state.selectedAttribute} productVariations=
-                                                            {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
-                                                            selectedOptionCode={selectedOptionCode}
-                                                            selectedOptions={this.state.selectedOptions} />
-                                                </div>
-                                                : null}
-                                        </div>
-                                        <div>
-                                            <p className="bottom">Add a note to your order</p>
-                                            <button className="bottom">Add Note</button>
                                         </div>
                                     </div>
-                                    <RecommendedProduct />
-                                    <div className='addtocardproductv'>
-                                    <button className="view-cart addcardproductview" >Add Item to Cart</button>
-                                    </div>  
+                                    <div>
+                                        {getVariationProductData ? getVariationProductData.Type !== 'variable' ?
+                                            <div className='attributesBottom'>
+                                                <div>{LocalizedLanguage.noAvailable} </div>
+                                            </div>
+                                            :
+                                            <div className='attributesBottom'>
+                                                <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
+                                                    attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
+                                                    optionClick={this.optionClick} filteredAttribute={this.state.filteredAttribute}
+                                                    selectedAttribute={this.state.selectedAttribute} productVariations=
+                                                    {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
+                                                    selectedOptionCode={selectedOptionCode}
+                                                    selectedOptions={this.state.selectedOptions} />
+                                            </div>
+                                            : null}
+                                    </div>
+                                    <div>
+                                        <p className="bottom">Add a note to your order</p>
+                                        <button className="bottom">Add Note</button>
+                                    </div>
+                                </div>
+                                <div class="recommendations">
+                                    <p>Recommendations</p>
+                                    <div class="row">
+                                        <div class="item">
+                                            <img src="../assets/image/bigmary.png" alt="" />
+                                            <p class="prod-name">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero ut mollitia
+                                                veritatis molestias, quas ipsa, excepturi dignissimos facere incidunt dicta
+                                                nihil, eius corporis? Ipsa tempora deleniti doloribus, libero nesciunt
+                                                animi!
+                                            </p>
+                                            <p class="price">$10.99</p>
+                                            <button>
+                                                <svg width="28" height="27" viewBox="0 0 28 27">
+                                                    <path
+                                                        d="M13.9085 3.375C19.5358 3.375 24.1399 7.93125 24.1399 13.5C24.1399 19.0688 19.5358 23.625 13.9085 23.625C8.28126 23.625 3.67715 19.0688 3.67715 13.5C3.67715 7.93125 8.28126 3.375 13.9085 3.375ZM13.9085 1.6875C7.34339 1.6875 1.97192 7.00313 1.97192 13.5C1.97192 19.9969 7.34339 25.3125 13.9085 25.3125C20.4736 25.3125 25.8451 19.9969 25.8451 13.5C25.8451 7.00313 20.4736 1.6875 13.9085 1.6875Z"
+                                                        fill="white"
+                                                    />
+                                                    <path
+                                                        d="M20.7295 12.6562H14.7612V6.75H13.0559V12.6562H7.08765V14.3438H13.0559V20.25H14.7612V14.3438H20.7295V12.6562Z"
+                                                        fill="white"
+                                                    />
+                                                </svg>
+                                                Add Item
+                                            </button>
+                                        </div>
+                                        <div class="item">
+                                            <img src="../assets/image/bigmary.png" alt="" />
+                                            <p class="prod-name">Big Mary</p>
+                                            <p class="price">$10.99</p>
+                                            <button>
+                                                <svg width="28" height="27" viewBox="0 0 28 27">
+                                                    <path
+                                                        d="M13.9085 3.375C19.5358 3.375 24.1399 7.93125 24.1399 13.5C24.1399 19.0688 19.5358 23.625 13.9085 23.625C8.28126 23.625 3.67715 19.0688 3.67715 13.5C3.67715 7.93125 8.28126 3.375 13.9085 3.375ZM13.9085 1.6875C7.34339 1.6875 1.97192 7.00313 1.97192 13.5C1.97192 19.9969 7.34339 25.3125 13.9085 25.3125C20.4736 25.3125 25.8451 19.9969 25.8451 13.5C25.8451 7.00313 20.4736 1.6875 13.9085 1.6875Z"
+                                                        fill="white"
+                                                    />
+                                                    <path
+                                                        d="M20.7295 12.6562H14.7612V6.75H13.0559V12.6562H7.08765V14.3438H13.0559V20.25H14.7612V14.3438H20.7295V12.6562Z"
+                                                        fill="white"
+                                                    />
+                                                </svg>
+                                                Add Item
+                                            </button>
+                                        </div>
+                                        <div class="item">
+                                            <img src="../assets/image/bigmary.png" alt="" />
+                                            <p class="prod-name">Big Mary</p>
+                                            <p class="price">$10.99</p>
+                                            <button>
+                                                <svg width="28" height="27" viewBox="0 0 28 27">
+                                                    <path
+                                                        d="M13.9085 3.375C19.5358 3.375 24.1399 7.93125 24.1399 13.5C24.1399 19.0688 19.5358 23.625 13.9085 23.625C8.28126 23.625 3.67715 19.0688 3.67715 13.5C3.67715 7.93125 8.28126 3.375 13.9085 3.375ZM13.9085 1.6875C7.34339 1.6875 1.97192 7.00313 1.97192 13.5C1.97192 19.9969 7.34339 25.3125 13.9085 25.3125C20.4736 25.3125 25.8451 19.9969 25.8451 13.5C25.8451 7.00313 20.4736 1.6875 13.9085 1.6875Z"
+                                                        fill="white"
+                                                    />
+                                                    <path
+                                                        d="M20.7295 12.6562H14.7612V6.75H13.0559V12.6562H7.08765V14.3438H13.0559V20.25H14.7612V14.3438H20.7295V12.6562Z"
+                                                        fill="white"
+                                                    />
+                                                </svg>
+                                                Add Item
+                                            </button>
+                                        </div>
+                                        <div class="item">
+                                            <img src="../assets/image/bigmary.png" alt="" />
+                                            <p class="prod-name">Big Mary</p>
+                                            <p class="price">$10.99</p>
+                                            <button>
+                                                <svg width="28" height="27" viewBox="0 0 28 27">
+                                                    <path
+                                                        d="M13.9085 3.375C19.5358 3.375 24.1399 7.93125 24.1399 13.5C24.1399 19.0688 19.5358 23.625 13.9085 23.625C8.28126 23.625 3.67715 19.0688 3.67715 13.5C3.67715 7.93125 8.28126 3.375 13.9085 3.375ZM13.9085 1.6875C7.34339 1.6875 1.97192 7.00313 1.97192 13.5C1.97192 19.9969 7.34339 25.3125 13.9085 25.3125C20.4736 25.3125 25.8451 19.9969 25.8451 13.5C25.8451 7.00313 20.4736 1.6875 13.9085 1.6875Z"
+                                                        fill="white"
+                                                    />
+                                                    <path
+                                                        d="M20.7295 12.6562H14.7612V6.75H13.0559V12.6562H7.08765V14.3438H13.0559V20.25H14.7612V14.3438H20.7295V12.6562Z"
+                                                        fill="white"
+                                                    />
+                                                </svg>
+                                                Add Item
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='addtocardproductv'>
+                                    <button onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
+                                    !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart addcardproductview" >{LocalizedLanguage.addToCart}</button>
+                                </div>
 
-                           </div>  
+                            </div>
                         }
                     </div>
                     :

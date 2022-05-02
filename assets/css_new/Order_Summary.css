@@ -28,6 +28,16 @@ a {
 
 /* --------------------Top Navbar-------------------- */
 
+.ordersummary-parret .continuecard  {
+text-align: center;
+position: absolute;
+bottom: 22px;
+width: 100%;
+padding-right: 100%;
+}
+
+
+
 .ordersummary-parret .topnav  {
 	display: flex;
 	justify-content: space-between;
@@ -193,7 +203,7 @@ a {
 	box-sizing: border-box;
 	border: 0;
 	width: 58px;
-	height: 20px;
+	height: 50px;
 	text-align: center;
 	font-family: Poppins;
 	font-size: 18px;
@@ -203,7 +213,9 @@ a {
 	background-color: transparent;
 	caret-color: transparent;
 	border-left: 1px solid gainsboro;
-    border-right: 1px solid gainsboro
+    border-right: 1px solid gainsboro;
+	padding-top: 5px;
+
 }
 
 .ordersummary-parret .number-input-container > input:focus {

@@ -5,10 +5,10 @@ import LocalizedLanguage from '../../../settings/LocalizedLanguage';
 import ActiveUser from '../../../settings/ActiveUser';
 import { OnboardingShopViewPopup } from '../../../onboarding/components/OnboardingShopViewPopup';
 import CommonJs, { onBackTOLoginBtnClick } from '../../../_components/CommonJS';
-import RecommendedProduct from '../../../SelfCheckout/components/RecommendedProduct';
+import RecommendedProduct from '../../../SelfCheckout/components/RecommendedProduct'
 import Navbar from '../../../SelfCheckout/components/Navbar'
 import { FetchIndexDB } from '../../../settings/FetchIndexDB'
-import  { getTaxAllProduct } from '../../../_components';
+import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
 
 class CheckoutCart extends React.Component {
@@ -17,7 +17,7 @@ class CheckoutCart extends React.Component {
     this.state = {
       productlist: [],
       checkList: localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [],
-      variationDefaultQunatity:1
+      variationDefaultQunatity: 1
     }
 
     this.GoBackhandleClick = this.GoBackhandleClick.bind(this);
@@ -41,9 +41,9 @@ class CheckoutCart extends React.Component {
   }
 
 
-  incrementDefaultQuantity = (item, index,action) => {
-    if(action==0 && item.quantity<=1)
-    {
+  incrementDefaultQuantity = (item, index, action) => {
+    if (action == 0 && item.quantity <= 1) {
+      alert("Item can not be decrese");
       return;
     }
     this.getProductFromIndexDB();
@@ -95,19 +95,17 @@ class CheckoutCart extends React.Component {
           //   new_excl_tax=item.excl_tax/item.quantity;
           //   new_incl_tax=item.incl_tax/item.quantity;
           // }
-          if(action==1)
-          {
-            item['quantity'] =  1;
-            item['Price'] =  item.old_price
-            
+          if (action == 1) {
+            item['quantity'] = 1;
+            item['Price'] = item.old_price
+
           }
-          else
-          {
+          else {
             item['quantity'] = item['quantity'] - 1;
-            item['Price'] =  item['Price']- item.old_price
+            item['Price'] = item['Price'] - item.old_price
           }
-                
-          
+
+
           // item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
           // item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
         } else {
@@ -137,7 +135,7 @@ class CheckoutCart extends React.Component {
               item['WPID'] = vartion.WPID;
               item['selectedIndex'] = index;
               vartion['ticket_info'] = vartion.ticket_info;
-              
+
               // var new_excl_tax=item.excl_tax;
               // var new_incl_tax=item.incl_tax;
               // if(item.quantity > 1)
@@ -145,18 +143,16 @@ class CheckoutCart extends React.Component {
               //   new_excl_tax=item.excl_tax/item.quantity;
               //   new_incl_tax=item.incl_tax/item.quantity;
               // }
-              if(action==1)
-          {
-            item['quantity'] =  1;
-            item['Price'] =  item.old_price
-            
-          }
-          else
-          {
-            item['quantity'] = item['quantity'] - 1;
-            item['Price'] =  item['Price']- item.old_price
-          }
-                           
+              if (action == 1) {
+                item['quantity'] = 1;
+                item['Price'] = item.old_price
+
+              }
+              else {
+                item['quantity'] = item['quantity'] - 1;
+                item['Price'] = item['Price'] - item.old_price
+              }
+
               // item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
               // item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
             }
@@ -168,25 +164,23 @@ class CheckoutCart extends React.Component {
       if (item && cartlist.length > 0) {
         var isItemFoundToUpdate = false;
         //var _index=0;
-        if(action==0)
-        {
+        if (action == 0) {
           cartlist.map((_item, _index) => {
             //if (typeof showSelectedProduct !== 'undefined' && showSelectedProduct !== null) {
-                //var _index = -1;
-                // if (item['selectedIndex'] >= 0) 
-                // { 
-                //   _index = parseInt(_item.selectedIndex) 
-                // }
-                if (item.selectedIndex == _index) {
-                    isItemFoundToUpdate = true;
-                    cartlist[index] = item;
-                }
+            //var _index = -1;
+            // if (item['selectedIndex'] >= 0) 
+            // { 
+            //   _index = parseInt(_item.selectedIndex) 
+            // }
+            if (item.selectedIndex == _index) {
+              isItemFoundToUpdate = true;
+              cartlist[index] = item;
+            }
             //}
-        })
+          })
         }
-       
-        if(isItemFoundToUpdate==false)
-        {
+
+        if (isItemFoundToUpdate == false) {
           cartlist.push(item);
         }
       }
@@ -201,14 +195,14 @@ class CheckoutCart extends React.Component {
       //this.CartCalulation(cartlist);
       // dispatch(cartProductActions.showSelectedProduct(item));
       // this.props.showPopuponcartlistView(product, item)
-     dispatch(cartProductActions.addtoCartProduct(cartlist));
+      dispatch(cartProductActions.addtoCartProduct(cartlist));
     }, 500);
 
   }
 
 
 
-  CartCalulation = (cartproductlist)=> {
+  CartCalulation = (cartproductlist) => {
     var _subtotal = 0.0;
     var _total = 0.0;
     var _taxAmount = 0.0;
@@ -221,44 +215,44 @@ class CheckoutCart extends React.Component {
     // this.setState({ extenstionDiscountStatus: false,UpdateCartByApp:false })
     var CHECKLIST = (typeof localStorage.getItem("CHECKLIST") !== 'undefined') ? JSON.parse(localStorage.getItem("CHECKLIST")) : null;
     cartproductlist && cartproductlist.map((item, index) => {
-        if (item.Price) {
-            _subtotalPrice += item.Price
-            _subtotalDiscount += parseFloat(item.discount_amount)
-            if (item.product_id) {//donothing
-                _exclTax += item.excl_tax ? item.excl_tax : 0,
-                    _inclTax += item.incl_tax ? item.incl_tax : 0
-            }
+      if (item.Price) {
+        _subtotalPrice += item.Price
+        _subtotalDiscount += parseFloat(item.discount_amount)
+        if (item.product_id) {//donothing
+          _exclTax += item.excl_tax ? item.excl_tax : 0,
+            _inclTax += item.incl_tax ? item.incl_tax : 0
         }
+      }
     })
     _subtotalDiscount = this.props.RoundAmount(_subtotalDiscount);
-    _exclTax =  this.props.RoundAmount(_exclTax);
-    _inclTax =  this.props.RoundAmount(_inclTax);
+    _exclTax = this.props.RoundAmount(_exclTax);
+    _inclTax = this.props.RoundAmount(_inclTax);
     _subtotal = _subtotalPrice - _subtotalDiscount;
     _totalDiscountedAmount = _subtotalDiscount;
     _taxAmount = parseFloat(_exclTax) + parseFloat(_inclTax);
     _total = parseFloat(_subtotal) + parseFloat(_exclTax);
-   // const { dispatch } = this.props;
+    // const { dispatch } = this.props;
     const CheckoutList = {
-        ListItem: cartproductlist,
-        customerDetail: CHECKLIST ? CHECKLIST.customerDetail : '',
-        totalPrice: _total,
-        discountCalculated: _totalDiscountedAmount,
-        tax: _taxAmount,
-        subTotal: _subtotal,
-        TaxId: CHECKLIST ? CHECKLIST.TaxId : 0,
-        TaxRate: CHECKLIST ? CHECKLIST.TaxRate : 0,
-        order_id: CHECKLIST && CHECKLIST !== null ? CHECKLIST.order_id : 0,
-        oliver_pos_receipt_id: CHECKLIST && CHECKLIST !== null && CHECKLIST.oliver_pos_receipt_id ? CHECKLIST.oliver_pos_receipt_id : 0,
-        showTaxStaus: CHECKLIST ? CHECKLIST.showTaxStaus : 'tax',
-        // _wc_points_redeemed: CHECKLIST._wc_points_redeemed,
-        // _wc_amount_redeemed: CHECKLIST._wc_amount_redeemed,
-        // _wc_points_logged_redemption: CHECKLIST._wc_points_logged_redemption
+      ListItem: cartproductlist,
+      customerDetail: CHECKLIST ? CHECKLIST.customerDetail : '',
+      totalPrice: _total,
+      discountCalculated: _totalDiscountedAmount,
+      tax: _taxAmount,
+      subTotal: _subtotal,
+      TaxId: CHECKLIST ? CHECKLIST.TaxId : 0,
+      TaxRate: CHECKLIST ? CHECKLIST.TaxRate : 0,
+      order_id: CHECKLIST && CHECKLIST !== null ? CHECKLIST.order_id : 0,
+      oliver_pos_receipt_id: CHECKLIST && CHECKLIST !== null && CHECKLIST.oliver_pos_receipt_id ? CHECKLIST.oliver_pos_receipt_id : 0,
+      showTaxStaus: CHECKLIST ? CHECKLIST.showTaxStaus : 'tax',
+      // _wc_points_redeemed: CHECKLIST._wc_points_redeemed,
+      // _wc_amount_redeemed: CHECKLIST._wc_amount_redeemed,
+      // _wc_points_logged_redemption: CHECKLIST._wc_points_logged_redemption
     }
-    console.log("CheckoutList-------->",CheckoutList)
+    console.log("CheckoutList-------->", CheckoutList)
     //setTimeout(function () {
     localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList));
-    this.setState({checkList:CheckoutList});
-  //}, 1000)
+    this.setState({ checkList: CheckoutList });
+    //}, 1000)
   }
 
 
@@ -275,26 +269,26 @@ class CheckoutCart extends React.Component {
 
 
 
-setDefaultQuantity(qty) {
+  setDefaultQuantity(qty) {
     this.setState({
-        variationDefaultQunatity: qty,
+      variationDefaultQunatity: qty,
     });
-}
-// Update the actual qty of variations --------------------------
-updateActualStockQty(prd){  
-var idbKeyval = FetchIndexDB.fetchIndexDb();
-idbKeyval.get('ProductList').then(val => {
-    if (val && val != "" && val.length >= 0  ) {                
-            var found = val.find(function (indx) {
-                return indx.WPID==  prd.WPID;
-            });
-            if(found){
-                prd["StockQuantity"]=found.StockQuantity;
-            }
-    }
-});
-return prd;
-}
+  }
+  // Update the actual qty of variations --------------------------
+  updateActualStockQty(prd) {
+    var idbKeyval = FetchIndexDB.fetchIndexDb();
+    idbKeyval.get('ProductList').then(val => {
+      if (val && val != "" && val.length >= 0) {
+        var found = val.find(function (indx) {
+          return indx.WPID == prd.WPID;
+        });
+        if (found) {
+          prd["StockQuantity"] = found.StockQuantity;
+        }
+      }
+    });
+    return prd;
+  }
 
 
   componentDidMount() {
@@ -308,21 +302,21 @@ return prd;
     history.push('/SelfCheckoutView');
     setTimeout(function () { selfCheckoutJs(); }, 100)
   }
-     
+
   componentWillReceiveProps(nextProps) {
 
     var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
     this.CartCalulation(cartlist)
     // if (nextProps.checkList && nextProps.checkList.ListItem)
     // {
-      
+
     // }
   }
-  deleteProduct=(item)=> {
+  deleteProduct = (item) => {
     console.log("deleteProduct calling-->")
-   
-     var product = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//
-     var productx = localStorage.getItem("PRODUCTX_DATA") ? JSON.parse(localStorage.getItem("PRODUCTX_DATA")) : [];//
+
+    var product = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//
+    var productx = localStorage.getItem("PRODUCTX_DATA") ? JSON.parse(localStorage.getItem("PRODUCTX_DATA")) : [];//
     // var tikeraSelectedSeats = localStorage.getItem('TIKERA_SELECTED_SEATS') ? JSON.parse(localStorage.getItem('TIKERA_SELECTED_SEATS')) : [];
     // if (tikeraSelectedSeats.length > 0) {
     //     tikeraSelectedSeats.map((items, index) => {
@@ -335,77 +329,76 @@ return prd;
     var i = 0;
     var index;
     for (i = 0; i < product.length; i++) {
-        if ((typeof item.product_id !== 'undefined') && item.product_id !== null) {
-            if (item.variation_id !== 0) {
-                if (product[i].variation_id == item.variation_id)
-                    index = i;
-            }
-            else {
-                if (product[i].product_id == item.product_id && product[i].strProductX == item.strProductX)
-                    index = i;
-            }
-
-        } else {
-            if (product[i].Title == item.Title) {
-                index = i;
-            }
+      if ((typeof item.product_id !== 'undefined') && item.product_id !== null) {
+        if (item.variation_id !== 0) {
+          if (product[i].variation_id == item.variation_id)
+            index = i;
         }
+        else {
+          if (product[i].product_id == item.product_id && product[i].strProductX == item.strProductX)
+            index = i;
+        }
+
+      } else {
+        if (product[i].Title == item.Title) {
+          index = i;
+        }
+      }
     }
     product.splice(index, 1);
     //delete productx
     var j = 0;
     var xindex;
     for (j = 0; j < productx.length; j++) {
-        if ((typeof item.product_id !== 'undefined') && item.product_id !== null) { 
-            // we hvae added item.strProductX == undefined condistion for park sale edit case becs we dont have strProductX in cardProductList localstorage 
-            if (productx[j].product_id == item.product_id && (productx[j].strProductX == item.strProductX|| (item.strProductX == undefined && productx[j].strProductX == ""))) {
-                xindex = j;
-            }
+      if ((typeof item.product_id !== 'undefined') && item.product_id !== null) {
+        // we hvae added item.strProductX == undefined condistion for park sale edit case becs we dont have strProductX in cardProductList localstorage 
+        if (productx[j].product_id == item.product_id && (productx[j].strProductX == item.strProductX || (item.strProductX == undefined && productx[j].strProductX == ""))) {
+          xindex = j;
         }
+      }
     }
     xindex !== undefined && productx.splice(xindex, 1);
 
     if (product.length == 0) {
-        //var checklist = localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))
-        // if(checklist && (checklist.status == "pending" || checklist.status == "park_sale" || checklist.status == "lay_away" || checklist.status == "on-hold")){
-        //     var udid = get_UDid('UDID');
-        //     this.setState({ isLoading: true })
-        //      localStorage.removeItem('PENDING_PAYMENTS');
-        //     this.props.dispatch(checkoutActions.orderToCancelledSale(checklist.order_id, udid));
-        // }
-        localStorage.removeItem('CHECKLIST');
-        localStorage.removeItem("CART");
-        localStorage.removeItem("PRODUCT");
-        localStorage.removeItem("SINGLE_PRODUCT");
-        localStorage.removeItem("CARD_PRODUCT_LIST");
-        localStorage.removeItem('TIKERA_SELECTED_SEATS');
-        localStorage.removeItem("PRODUCTX_DATA");
-        const { dispatch } = this.props;
-        if(dispatch){
+      //var checklist = localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))
+      // if(checklist && (checklist.status == "pending" || checklist.status == "park_sale" || checklist.status == "lay_away" || checklist.status == "on-hold")){
+      //     var udid = get_UDid('UDID');
+      //     this.setState({ isLoading: true })
+      //      localStorage.removeItem('PENDING_PAYMENTS');
+      //     this.props.dispatch(checkoutActions.orderToCancelledSale(checklist.order_id, udid));
+      // }
+      localStorage.removeItem('CHECKLIST');
+      localStorage.removeItem("CART");
+      localStorage.removeItem("PRODUCT");
+      localStorage.removeItem("SINGLE_PRODUCT");
+      localStorage.removeItem("CARD_PRODUCT_LIST");
+      localStorage.removeItem('TIKERA_SELECTED_SEATS');
+      localStorage.removeItem("PRODUCTX_DATA");
+      const { dispatch } = this.props;
+      if (dispatch) {
         dispatch(cartProductActions.addtoCartProduct(null));
         dispatch(cartProductActions.singleProductDiscount())
         dispatch(cartProductActions.showSelectedProduct(null));
-        //Quantity(null,null));
-        }
+      }
     } else {
-        const { dispatch } = this.props;
-        localStorage.setItem("PRODUCTX_DATA", JSON.stringify(productx));
-        if(dispatch){
+      const { dispatch } = this.props;
+      localStorage.setItem("PRODUCTX_DATA", JSON.stringify(productx));
+      if (dispatch) {
         dispatch(cartProductActions.addtoCartProduct(product));
         dispatch(cartProductActions.showSelectedProduct(null));
         //dispatch(cartProductActions.addInventoryQuantity(null));
-        }
+      }
     }
-   // this.props.simpleProductData();
+    // this.props.simpleProductData();
 
     //Android Call----------------------------
     //androidDisplayScreen(item.Title, 0, 0, "deleteproduct");
     //-----------------------------------------
-}
+  }
   render() {
     const { checkList, cash_round, payments, count, paid_amount, Markup, NumberFormat, RoundAmount, RemoveCustomer, cartDiscountAmount, selfcheckoutstatusmanagingevnt, SelfCheckoutStatus } = this.props;
     //var landingScreen = '';
-   // var Register_Permissions = localStorage.getItem("RegisterPermissions") ? JSON.parse(localStorage.getItem("RegisterPermissions")) : [];
+    // var Register_Permissions = localStorage.getItem("RegisterPermissions") ? JSON.parse(localStorage.getItem("RegisterPermissions")) : [];
     //var register_content = Register_Permissions ? Register_Permissions.content : '';
     //var landingScreen = ActiveUser && ActiveUser.key.companyLogo ? ActiveUser.key.companyLogo : '';
     // if (Register_Permissions) {
@@ -414,7 +407,7 @@ return prd;
     //     })
     // }
     var checkList1 = this.state.checkList;//localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
-    console.log("this.props---------->",checkList1)
+    console.log("this.props---------->", checkList1)
     return (
       <div className="portrait ">
         <div className='ordersummary-parret' style={{ padding: "35px 40px 0 40px", backgroundColor: '#f1f1f1' }}>
@@ -545,33 +538,33 @@ return prd;
                 {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
                   //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
                   return (
-                    product.Price!=null?
-                    <div className="item" key={index}>
-                      <div className="col">
-                        <p className="prod-name">{product.Title}</p>
-                      </div>
-                      <div className="row">
-                        <label className="number-input-container">
-                          <div onClick={() => this.incrementDefaultQuantity(product, index,0)} className="svg-container left">
-                            <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
-                              <rect width="16" height="2" fill="#758696" />
-                            </svg>
-                          </div>
-                          <input type="number" value={product.quantity}/>
-                          <div onClick={() => this.incrementDefaultQuantity(product, index,1)} className="svg-container right">
-                            <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
-                              <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
-                            </svg>
-                          </div>
-                        </label>
-                        <div className="inner-row">
-                          <p className="price" style={{ width: "100px",textAlign: "center"}}> {parseFloat(RoundAmount(product.Price))}</p>
-                          <svg width={15} height={15} viewBox="0 0 15 15" onClick={() => this.deleteProduct(product)}>
-                            <path d="M8.95004 7.8928L14.8187 2.03979C14.9347 1.90473 14.9953 1.73099 14.9884 1.5533C14.9816 1.37561 14.9077 1.20705 14.7816 1.08131C14.6555 0.95557 14.4865 0.881908 14.3084 0.875044C14.1302 0.868181 13.956 0.928622 13.8206 1.04429L7.95186 6.89729L2.08316 1.03723C1.94986 0.90428 1.76906 0.82959 1.58054 0.82959C1.39202 0.82959 1.21122 0.90428 1.07791 1.03723C0.944605 1.17018 0.869715 1.35049 0.869715 1.53851C0.869715 1.72653 0.944605 1.90684 1.07791 2.03979L6.95369 7.8928L1.07791 13.7458C1.0038 13.8091 0.943615 13.887 0.901123 13.9746C0.858631 14.0622 0.834753 14.1576 0.830987 14.2548C0.827221 14.352 0.843649 14.449 0.87924 14.5396C0.91483 14.6302 0.968815 14.7125 1.03781 14.7813C1.1068 14.8501 1.1893 14.9039 1.28015 14.9394C1.37099 14.9749 1.46821 14.9913 1.56571 14.9876C1.6632 14.9838 1.75887 14.96 1.8467 14.9176C1.93452 14.8752 2.01262 14.8152 2.07608 14.7413L7.95186 8.8883L13.8206 14.7413C13.956 14.857 14.1302 14.9174 14.3084 14.9105C14.4865 14.9037 14.6555 14.83 14.7816 14.7043C14.9077 14.5785 14.9816 14.41 14.9884 14.2323C14.9953 14.0546 14.9347 13.8809 14.8187 13.7458L8.95004 7.8928Z" fill="#D51A52" />
-                          </svg>
+                    product.Price != null ?
+                      <div className="item" key={index}>
+                        <div className="col">
+                          <p className="prod-name">{product.Title}</p>
                         </div>
-                      </div>
-                    </div>:null
+                        <div className="row">
+                          <label className="number-input-container">
+                            <div onClick={() => this.incrementDefaultQuantity(product, index, 0)} className="svg-container left">
+                              <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
+                                <rect width="16" height="2" fill="#758696" />
+                              </svg>
+                            </div>
+                            <input type="number" value={product.quantity} />
+                            <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="svg-container right">
+                              <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
+                                <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
+                              </svg>
+                            </div>
+                          </label>
+                          <div className="inner-row">
+                            <p className="price" style={{ width: '50px' }}> {product.Price}</p>
+                            <svg width={15} height={15} viewBox="0 0 15 15" onClick={() => this.deleteProduct(product)}>
+                              <path d="M8.95004 7.8928L14.8187 2.03979C14.9347 1.90473 14.9953 1.73099 14.9884 1.5533C14.9816 1.37561 14.9077 1.20705 14.7816 1.08131C14.6555 0.95557 14.4865 0.881908 14.3084 0.875044C14.1302 0.868181 13.956 0.928622 13.8206 1.04429L7.95186 6.89729L2.08316 1.03723C1.94986 0.90428 1.76906 0.82959 1.58054 0.82959C1.39202 0.82959 1.21122 0.90428 1.07791 1.03723C0.944605 1.17018 0.869715 1.35049 0.869715 1.53851C0.869715 1.72653 0.944605 1.90684 1.07791 2.03979L6.95369 7.8928L1.07791 13.7458C1.0038 13.8091 0.943615 13.887 0.901123 13.9746C0.858631 14.0622 0.834753 14.1576 0.830987 14.2548C0.827221 14.352 0.843649 14.449 0.87924 14.5396C0.91483 14.6302 0.968815 14.7125 1.03781 14.7813C1.1068 14.8501 1.1893 14.9039 1.28015 14.9394C1.37099 14.9749 1.46821 14.9913 1.56571 14.9876C1.6632 14.9838 1.75887 14.96 1.8467 14.9176C1.93452 14.8752 2.01262 14.8152 2.07608 14.7413L7.95186 8.8883L13.8206 14.7413C13.956 14.857 14.1302 14.9174 14.3084 14.9105C14.4865 14.9037 14.6555 14.83 14.7816 14.7043C14.9077 14.5785 14.9816 14.41 14.9884 14.2323C14.9953 14.0546 14.9347 13.8809 14.8187 13.7458L8.95004 7.8928Z" fill="#D51A52" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div> : null
                   )
                 })
                 }
@@ -579,23 +572,23 @@ return prd;
                 {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
                   //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
                   return (
-                  product.Price==null?
-                <div className="item note">
-                  <div className="col">
-                    <p className="prod-name">Note</p>
-                    <p className="description">{product.Title}</p>
-                  </div>
-                  <div className="row" style={{ justifyContent: "center", paddingLeft: "26px" }}>
-                    <div></div>
-                    <svg width={15} height={15} viewBox="0 0 15 15">
-                      <path d="M8.95004 7.8928L14.8187 2.03979C14.9347 1.90473 14.9953 1.73099 14.9884 1.5533C14.9816 1.37561 14.9077 1.20705 14.7816 1.08131C14.6555 0.95557 14.4865 0.881908 14.3084 0.875044C14.1302 0.868181 13.956 0.928622 13.8206 1.04429L7.95186 6.89729L2.08316 1.03723C1.94986 0.90428 1.76906 0.82959 1.58054 0.82959C1.39202 0.82959 1.21122 0.90428 1.07791 1.03723C0.944605 1.17018 0.869715 1.35049 0.869715 1.53851C0.869715 1.72653 0.944605 1.90684 1.07791 2.03979L6.95369 7.8928L1.07791 13.7458C1.0038 13.8091 0.943615 13.887 0.901123 13.9746C0.858631 14.0622 0.834753 14.1576 0.830987 14.2548C0.827221 14.352 0.843649 14.449 0.87924 14.5396C0.91483 14.6302 0.968815 14.7125 1.03781 14.7813C1.1068 14.8501 1.1893 14.9039 1.28015 14.9394C1.37099 14.9749 1.46821 14.9913 1.56571 14.9876C1.6632 14.9838 1.75887 14.96 1.8467 14.9176C1.93452 14.8752 2.01262 14.8152 2.07608 14.7413L7.95186 8.8883L13.8206 14.7413C13.956 14.857 14.1302 14.9174 14.3084 14.9105C14.4865 14.9037 14.6555 14.83 14.7816 14.7043C14.9077 14.5785 14.9816 14.41 14.9884 14.2323C14.9953 14.0546 14.9347 13.8809 14.8187 13.7458L8.95004 7.8928Z" fill="#D51A52" />
-                    </svg>
-                  </div>
-                </div>:null)
+                    product.Price == null ?
+                      <div className="item note">
+                        <div className="col">
+                          <p className="prod-name">Note</p>
+                          <p className="description">{product.Title}</p>
+                        </div>
+                        <div className="row" style={{ justifyContent: "center", paddingLeft: "26px" }}>
+                          <div></div>
+                          <svg width={15} height={15} viewBox="0 0 15 15">
+                            <path d="M8.95004 7.8928L14.8187 2.03979C14.9347 1.90473 14.9953 1.73099 14.9884 1.5533C14.9816 1.37561 14.9077 1.20705 14.7816 1.08131C14.6555 0.95557 14.4865 0.881908 14.3084 0.875044C14.1302 0.868181 13.956 0.928622 13.8206 1.04429L7.95186 6.89729L2.08316 1.03723C1.94986 0.90428 1.76906 0.82959 1.58054 0.82959C1.39202 0.82959 1.21122 0.90428 1.07791 1.03723C0.944605 1.17018 0.869715 1.35049 0.869715 1.53851C0.869715 1.72653 0.944605 1.90684 1.07791 2.03979L6.95369 7.8928L1.07791 13.7458C1.0038 13.8091 0.943615 13.887 0.901123 13.9746C0.858631 14.0622 0.834753 14.1576 0.830987 14.2548C0.827221 14.352 0.843649 14.449 0.87924 14.5396C0.91483 14.6302 0.968815 14.7125 1.03781 14.7813C1.1068 14.8501 1.1893 14.9039 1.28015 14.9394C1.37099 14.9749 1.46821 14.9913 1.56571 14.9876C1.6632 14.9838 1.75887 14.96 1.8467 14.9176C1.93452 14.8752 2.01262 14.8152 2.07608 14.7413L7.95186 8.8883L13.8206 14.7413C13.956 14.857 14.1302 14.9174 14.3084 14.9105C14.4865 14.9037 14.6555 14.83 14.7816 14.7043C14.9077 14.5785 14.9816 14.41 14.9884 14.2323C14.9953 14.0546 14.9347 13.8809 14.8187 13.7458L8.95004 7.8928Z" fill="#D51A52" />
+                          </svg>
+                        </div>
+                      </div> : null)
                 })
                 }
-               </div>
-               {/* <div className="empty hide">
+              </div>
+              {/* <div className="empty hide">
                 <p>Cart is Empty</p>
                </div> */}
               <div className="cart-total">
@@ -606,9 +599,9 @@ return prd;
                     <p>{LocalizedLanguage.tax}</p>
                   </div>
                   <div className="col">
-                    <p className="subtotal-amount right"> {parseFloat(RoundAmount(checkList1 && checkList1.subTotal))}</p>
+                    <p className="subtotal-amount right"> {checkList1 && checkList1.subTotal}</p>
                     {/* <p className="discount-amount right">$2.99</p> */}
-                    <p className="tax-amount right">{parseFloat(RoundAmount(checkList1 && checkList1.tax))} </p>
+                    <p className="tax-amount right">{checkList1 && checkList1.tax} </p>
                   </div>
                 </div>
                 <div className="total">
@@ -623,16 +616,10 @@ return prd;
 
           <RecommendedProduct />
 
-          <button onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart scroll-end">
-            {LocalizedLanguage.continueToPayment}
-          </button>
-
-
-
-
-
+          <div className='continuecard'>
+            <button onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart" >{LocalizedLanguage.continueToPayment}</button>
+            </div>
         </div>
-       
       </div>)
   }
 }
