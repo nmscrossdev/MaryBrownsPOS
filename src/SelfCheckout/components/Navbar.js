@@ -63,19 +63,19 @@ const Navbar=(props)=> {
         </div>
     </div>
     {props.catName || props.catPName?
-    <div class="category-header-row" onClick={props.GoBackhandleClick}>
-			<div class="category-header-col">
-				<p style={{textTransform:"capitalize"}} class="path">Menu &#62; {(props.catName && props.catName!=""&& props.catPName && props.catPName!='')? props.catPName:''}</p>
-				<p style={{textTransform:"capitalize"}} class="title">{(props.catName==null || props.catName=="" && props.catPName && props.catPName!='')? props.catPName: props.catName}</p>
+    <div className="category-header-row" onClick={props.GoBackhandleClick}>
+			<div className="category-header-col">
+				<p style={{textTransform:"capitalize"}} className="path">Menu &#62; {(props.catName && props.catName!=""&& props.catPName && props.catPName!='')? props.catPName:''}</p>
+				<p style={{textTransform:"capitalize"}} className="title">{(props.catName==null || props.catName=="" && props.catPName && props.catPName!='')? props.catPName: props.catName}</p>
 			</div>
 			<button >
 				<svg width="22" height="20" viewBox="0 0 22 20">
 					<path
 						d="M9.7737 1.8335L1.3695 10.0002L9.7737 18.1668M1.3695 10.0002L20.5791 10.0002L1.3695 10.0002Z"
 						stroke="white"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
 						fill="transparent"
 					/>
 				</svg>

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { pinLoginActions } from '.';
 import { history } from '../_helpers';
-import { checkShopSTatusAction, discountActions, attributesActions, cartProductActions,exchangerateActions } from '../_actions';
+import { checkShopSTatusAction, discountActions, attributesActions,categoriesActions, cartProductActions,exchangerateActions } from '../_actions';
 import { favouriteListActions } from '../ShopView';
 import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 import { checkoutActions } from '../CheckoutPage';
@@ -109,6 +109,7 @@ class PinPage extends React.Component {
             this.props.dispatch(checkoutActions.cashRounding());
             this.props.dispatch(checkoutActions.getOrderReceipt());
             this.props.dispatch(discountActions.getAll());
+            this.props.dispatch(categoriesActions.getAll());
             this.props.dispatch(attributesActions.getAll());
             this.props.dispatch(pinLoginActions.getBlockerInfo())
             this.props.dispatch(cartProductActions.getTaxRateList());
