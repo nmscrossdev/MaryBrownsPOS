@@ -1131,6 +1131,7 @@ class SelfCheckoutView extends React.Component {
             datetime={this.state.datetime}/>
             <UpdateProductInventoryModal />
             <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
+            <PopupDisplayMessage />
             
             {/* <CommonInfoPopup
                 title = {LocalizedLanguage.noMatchingProductFound}
