@@ -1491,7 +1491,7 @@ class CommonProductPopupModal extends React.Component {
                                                 <div>{LocalizedLanguage.noAvailable} </div>
                                             </div>
                                             :
-                                            <div className='attributesBottom'>
+                                            // <div className='attributesBottom'>
                                                 <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
                                                     attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
                                                     optionClick={this.optionClick} filteredAttribute={this.state.filteredAttribute}
@@ -1499,7 +1499,7 @@ class CommonProductPopupModal extends React.Component {
                                                     {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
                                                     selectedOptionCode={selectedOptionCode}
                                                     selectedOptions={this.state.selectedOptions} />
-                                            </div>
+                                            // </div>
                                             : null}
                                     </div>
                                     <div>
