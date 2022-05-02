@@ -1,3 +1,4 @@
+
 export const _key = {      
     TITLE_FOR_CATEGORY_SECTION:"title-for-category-section",
     TITLE_FOR_PRODUCT_SECTION:"title-for-product-section",
@@ -84,14 +85,35 @@ export  function getSettingByKey(key) {
 }
 export function getRecommendedProducts(key,page) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
-    if(settings && settings.length>0)
-    {
-       var found = settings.find(function (indx) {
-           return indx.Section ===  key && indx.SubSection==page;
-       });
-       return found?found:[];
-    }
-   
+    //var productlist=[];
+    // var idbKeyval = FetchIndexDB.fetchIndexDb();
+    //     idbKeyval.get('ProductList').then(val => {
+    //         if (!val || val.length == 0 || val == null || val == "") {
+    //         } 
+    //         else
+    //         {
+    //             var _productwithTax = getTaxAllProduct(val)
+    //             productlist = _productwithTax;
+                if(settings && settings.length>0)
+                    {
+                    var subsection= (page=="cart" ? "cart-page-options" :"");
+                    var found = settings.filter(function (indx) {
+                        return indx.InputType=="Select" && indx.Section ==  key && indx.SubSection== subsection;
+                    });
+                    const ids = found && found.map(rp => rp.Value);
+
+                    // const filter_products = productlist && productlist.filter(item =>{
+                    //     return ids.includes(`${item.WPID}`)
+                    // })
+                    // console.log("---getRecommendedProducts-"+JSON.stringify(filter_products))
+                    //return filter_products?filter_products:[];
+                    return ids;
+                }
+            
+        //});
+    
+    
+    return [];
 }
 export function getBanners(key) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
@@ -110,7 +132,6 @@ export function getBanners(key) {
        }
        return null;
     }
-   
 }
 
 export function getCategories(key) {

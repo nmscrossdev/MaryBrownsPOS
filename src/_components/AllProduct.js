@@ -21,6 +21,8 @@ import { LoadingSmallModal } from './LoadingSmallModal'
 import {typeOfTax} from '../_components/TaxSetting'
 import { callProductXWindow, sendMessageToComposite, getCompositeAddedToCart, getCompositeSetProductxData } from '../_components/CommonFunctionProductX';
 import {softkeyboardhandlingEvent} from '../WrapperSettings/CommonWork';
+import { getSearchInputLength } from '../_components/CommonJS';
+import $ from 'jquery';
 class AllProduct extends React.Component {
     constructor(props) {
         super(props);
@@ -420,8 +422,15 @@ class AllProduct extends React.Component {
             return;
         };
     }
+    filterProduct() {
+        var input = $("#product_search_field_pro").val();
+        var value = getSearchInputLength(input.length)
 
-    filterProductByTile(type, item, parent) {
+        if (value == true || input.length == 0) {
+            this.filterProductByTile("product-search",input);
+        }
+    }
+    filterProductByTile(type, item) {
         this.setState({ pageNumber: 0 })
         switch (type) {
             // case "attribute":
@@ -431,10 +440,10 @@ class AllProduct extends React.Component {
             //     this.filterProductForSubAttribute(item);
             //     break;
             case "category":
-                this.filterProductForCateGory(item,parent);
+                this.filterProductForCateGory(item);
                 break;
             case "sub-category":
-                this.filterProductForSubCateGory(item,parent);
+                this.filterProductForSubCateGory(item);
                 break;
             // case "inner-sub-attribute":
             //     this.productDataSearch(item, 4, parent)
@@ -442,12 +451,12 @@ class AllProduct extends React.Component {
             // case "inner-sub-category":
             //     this.productDataSearch(item, 2)
             //     break;
-            // case "product-search":
-            //     this.productDataSearch(item, 0)
-            //     break;
-            // case "product":
-            //     this.loadingData()
-            //     break;
+            case "product-search":
+                this.productDataSearch(item, 0,null)
+                break;
+            case "product":
+                this.loadingData()
+                break;
 
         }
     }
@@ -495,7 +504,7 @@ class AllProduct extends React.Component {
         this.setState({ isLoading: true });
         var filtered = []
         var value = item1;
-        var parentAttribute = parent;
+        //var parentAttribute = parent;
         this.state.product_List = [];
         this.setState({
             search: value,
@@ -506,37 +515,37 @@ class AllProduct extends React.Component {
             index = null
             this.loadingData()
         }
-        // if (index == 0) {//product
-        //     var serchFromAll = AllProduct.filter((item) => (item.Title.toLowerCase().includes(value.toLowerCase()) || item.Barcode.toString().toLowerCase().includes(value.toLowerCase()) || item.Sku.toString().toLowerCase().includes(value.toLowerCase())))
-        //     //-------//Filter child and parent-------------
-        //     var parentArr = [];
-        //     serchFromAll && serchFromAll.map(item => {
-        //         if (item.ParentId != 0) {
-        //             var parrentofChild = AllProduct.find(function (element) {
-        //                 return (element.WPID == item.ParentId)
-        //             });
-        //             if (parrentofChild)
-        //                 parentArr.push(parrentofChild);
-        //         }
-        //     })
-        //     serchFromAll = [...new Set([...serchFromAll, ...parentArr])];
-        //     if (!serchFromAll || serchFromAll.length > 0) {
-        //         var parentProduct = serchFromAll.filter(item => {
-        //             return (item.ParentId == 0)
-        //         })
-        //         parentProduct = parentProduct ? parentProduct : []
-        //         filtered = [...new Set([...filtered, ...parentProduct])];
-        //     }
-        //     this.setState({
-        //         filteredProuctList: filtered,
-        //         totalRecords: filtered.length,
-        //         product_List: filtered,
+        if (index == 0) {//product
+            var serchFromAll = AllProduct.filter((item) => (item.Title.toLowerCase().includes(value.toLowerCase()) || item.Barcode.toString().toLowerCase().includes(value.toLowerCase()) || item.Sku.toString().toLowerCase().includes(value.toLowerCase())))
+            //-------//Filter child and parent-------------
+            var parentArr = [];
+            serchFromAll && serchFromAll.map(item => {
+                if (item.ParentId != 0) {
+                    var parrentofChild = AllProduct.find(function (element) {
+                        return (element.WPID == item.ParentId)
+                    });
+                    if (parrentofChild)
+                        parentArr.push(parrentofChild);
+                }
+            })
+            serchFromAll = [...new Set([...serchFromAll, ...parentArr])];
+            if (!serchFromAll || serchFromAll.length > 0) {
+                var parentProduct = serchFromAll.filter(item => {
+                    return (item.ParentId == 0)
+                })
+                parentProduct = parentProduct ? parentProduct : []
+                filtered = [...new Set([...filtered, ...parentProduct])];
+            }
+            this.setState({
+                filteredProuctList: filtered,
+                totalRecords: filtered.length,
+                product_List: filtered,
 
-        //     })
-        //     this.state.filteredProuctList = filtered;
-        //     this.state.totalRecords = filtered.length;
-        //     this.loadingFilterData()
-        // }
+            })
+            this.state.filteredProuctList = filtered;
+            this.state.totalRecords = filtered.length;
+            this.loadingFilterData()
+        }
         // if (index == 1) { //attribute
         //     ParentProductList && ParentProductList.map((item) => {
         //         item.ProductAttributes && item.ProductAttributes.map(attri => {
@@ -1118,6 +1127,8 @@ class AllProduct extends React.Component {
                     <ProductItemsView
                         {...this.props}
                         {...this.state}
+
+                        filterProduct={this.filterProduct}
                         LocalizedLanguage={LocalizedLanguage}
                         productOutOfStock={this.productOutOfStock}
                         handleIsVariationProduct={this.handleIsVariationProduct}

@@ -1,12 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// filterProduct(style) {
+//     var input = '';
+//     if (style == "landscape")
+//         input = $("#product_search_field").val();
+//     if (style == "portrait")
+//         input = $("#product_search_field_pro").val();
+//         var value = getSearchInputLength(input.length)
+
+//     if (value == true || input.length == 0) {
+//         this.handletileFilterData(input, "product-search");
+//     }
+// }
 const ProductItemsView = (props) => {
     const { pStylenotFound, LocalizedLanguage, product_List, Markup, NumberFormat, handleIsVariationProduct, openModal, handleSimplePop, loadingFilterData, loadingData, search, totalRecords, chunk_size, pageNumber, productOutOfStock, imgError } = props;
-   
+    const registerPermisions = localStorage.getItem('RegisterPermissions') ? JSON.parse(localStorage.getItem('RegisterPermissions')) : '';
+    const registerPermsContent = registerPermisions && registerPermisions.content;
+    const showSearchBar = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Search-Bar");
     return (      
   
         <div className="item-card-group scroll" style={{height:"781px"}} >
+            {/* {showSearchBar && showSearchBar.value == 'true' && */}
+                {/* <div className="widget-search"> 
+                    <input type="search" id="product_search_field_pro" className="form-control" name="search" onChange={() => props.filterProduct()}
+                        autoComplete="off"  placeholder={LocalizedLanguage.search} />
+                </div> */}
+            {/* } */}
             {props.showBackProduct==true?
             <div className="item-card category grouped">
 				<p>
