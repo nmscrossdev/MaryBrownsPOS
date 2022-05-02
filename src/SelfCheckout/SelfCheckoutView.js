@@ -73,7 +73,7 @@ class SelfCheckoutView extends React.Component {
             favFilterSelect:'',
             favFilterPSelect:'',
             showBackProduct:false,
-            banners:null,
+            banners:[],
             categories:[]
         }
         this.onHandleEventofCancelOrderPopup = this.onHandleEventofCancelOrderPopup.bind(this);

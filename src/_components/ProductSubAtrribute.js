@@ -167,13 +167,21 @@ class ProductSubAtrribute extends React.Component {
                             </label>
                         :
                         _isSelfcheckout == true ?
-                            <div key={"subattr-" + index}>
-                                <div className="subattributesBorder">
-                                    <input type="radio" disabled={!isEnabled} checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} 
-                                    name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option}  onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
-                                    <label  className='subattributetext' htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} title={option}>{option}</label>
-                                </div>
-                            </div>
+                            // <div key={"subattr-" + index}>
+                            //     <div className="subattributesBorder">
+                            //         <input type="radio" disabled={!isEnabled} checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} 
+                            //         name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option}  onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
+                            //         <label  className='subattributetext' htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} title={option}>{option}</label>
+                            //     </div>
+                            // </div>
+
+<label key={"subattr-" + index} htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`}>
+<input disabled={!isEnabled} type="radio" id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)}/>
+<div className="custom-radio">
+    <p>{option}</p>
+</div>
+</label>
+
                               :
                             displayOption.length > 13 &&  displayOption.length < 26 ?
                             <div className="col-sm-8" key={"subattr-" + index} >

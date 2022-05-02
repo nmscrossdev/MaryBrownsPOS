@@ -70,9 +70,9 @@ class ProductAtrribute extends React.Component {
             (_DistictAttribute.map((attribute, index) => {
                 return (
                     attribute && attribute.Variation == true &&
-                    <div key={index}>
-                        <p className='mainattributesselfcheckout'>{attribute.Name}</p>
-                        <div className="attributesrow">
+                    <div className="col" key={index}>
+                        <p>{attribute.Name}</p>
+                        <div className="row">
                             <ProductSubAtrribute 
                                 showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}
                                 itemIndex={index}
