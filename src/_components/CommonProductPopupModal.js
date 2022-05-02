@@ -1593,6 +1593,15 @@ class CommonProductPopupModal extends React.Component {
                                     <button onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                     !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart addcardproductview" >{LocalizedLanguage.addToCart}</button>
                                 </div>
+                                <div style={{display:"none"}}>
+                            { 
+                             (showSelectStatus == true && showSelectedProduct) ?
+                                 <span  id="txtInScock">{(showSelectedProduct.StockStatus == null || showSelectedProduct.StockStatus == 'instock') && showSelectedProduct.ManagingStock == false ? LocalizedLanguage.unlimited : showSelectedProduct.StockQuantity - showSelectedProduct.quantity}</span>
+                                 :                                    
+                                 <span id="txtInScock">{_Inventory}</span>   
+                                               
+                                 }
+                                 </div>
 
                             </div>
                         }

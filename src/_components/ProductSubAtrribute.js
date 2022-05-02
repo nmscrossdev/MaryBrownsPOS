@@ -170,7 +170,7 @@ class ProductSubAtrribute extends React.Component {
                             <div key={"subattr-" + index}>
                                 <div className="subattributesBorder">
                                     <input type="radio" disabled={!isEnabled} checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} 
-                                    name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option}  onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)}/>
+                                    name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option}  onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
                                     <label  className='subattributetext' htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} title={option}>{option}</label>
                                 </div>
                             </div>

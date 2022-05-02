@@ -47,6 +47,7 @@ a {
 }
 .addcardproductview{
 	position: unset!important;
+	width: 97% !important;
 }
 
 .attributesBottom{
@@ -92,6 +93,12 @@ a {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.subattributesBorder input[type="radio"] {
+	display: none;
+  }  
+  .subattributesBorder[type="radio"]:checked+label {
+	background-color: #76cf9f;
+  }
 
 
 /* --------------------Top Navbar-------------------- */
@@ -1835,6 +1842,7 @@ input[type="number"] {
 	line-height: 24px;
 	text-align: center;
 	width: calc(100% - 80px);
+	padding-left: 93px
 }
 
 .product > div > button.bottom {
