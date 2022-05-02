@@ -1769,6 +1769,7 @@ input[type="number"] {
 	flex-wrap: wrap;
 	margin-right: -12px;
 	margin-bottom: 25px;
+	margin-left: 0px !important;
 }
 
 .product > div > .col > .row > button {
