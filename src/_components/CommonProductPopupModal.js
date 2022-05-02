@@ -1342,7 +1342,7 @@ class CommonProductPopupModal extends React.Component {
 
     render() {
         const { getVariationProductData, hasVariationProductData, single_product, showSelectedProduct, isInventoryUpdate } = this.props;
-        var idbKeyval = FetchIndexDB.fetchIndexDb();
+        //var idbKeyval = FetchIndexDB.fetchIndexDb();
         // if(getVariationProductData && getVariationProductData.Type== "simple"){
         //     idbKeyval.get('ProductList').then(val => {
         //         if (val && val != "" && val.length >= 0  ) {                
@@ -1449,7 +1449,7 @@ class CommonProductPopupModal extends React.Component {
                                             <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg" />
                                             <div className="col">
                                                 <p>
-                                                    {/* <Markup content={getVariationProductData.ShortDescription} /> */}
+                                                    {getVariationProductData.ShortDescription}
                                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, reiciendis hic,
                                                     rem deserunt enim quisquam alias nulla obcaecati harum commodi possimus. Laudantium
                                                     nulla omnis magni ea dolore totam? Dolores, unde.:
@@ -1461,7 +1461,7 @@ class CommonProductPopupModal extends React.Component {
                                                         <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
                                                         <p className="subtext">(plus tax)</p>
                                                     </div>
-                                                    <button onclick="toggleModify()">Modify Ingredients</button>
+                                                    <button >Modify Ingredients</button>
                                                 </div>
                                                 <div className="inner-row">
                                                     <label className="number-input-container productvinput">
@@ -1507,7 +1507,8 @@ class CommonProductPopupModal extends React.Component {
                                         <button className="bottom">Add Note</button>
                                     </div>
                                 </div>
-                                <div class="recommendations">
+                                <RecommendedProduct page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
+                                {/* <div class="recommendations">
                                     <p>Recommendations</p>
                                     <div class="row">
                                         <div class="item">
@@ -1588,7 +1589,7 @@ class CommonProductPopupModal extends React.Component {
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className='addtocardproductv'>
                                     <button onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                     !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart addcardproductview" >{LocalizedLanguage.addToCart}</button>
