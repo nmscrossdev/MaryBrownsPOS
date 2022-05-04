@@ -62,7 +62,7 @@ const ProductItemsView = (props) => {
                             }
                         }
                         return (  
-                            <div className="product-card" key={"product_"+index}>
+                            <div className="product-card" key={"product_"+index} style={{ marginRight:((index+1)%4==0)? "":"20px",marginBottom:"20px"}} >
                                 <div className="img-container">
                                 <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)} />
                                 </div>

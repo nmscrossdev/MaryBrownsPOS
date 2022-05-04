@@ -939,7 +939,6 @@ function mapStateToProps(state) {
         online_payment: online_payment.items,
         error: online_payment.error,
         onLinePaymentError: online_payment.error
-
     };
 }
 const connectedCheckoutViewThird = connect(mapStateToProps)(CheckoutViewThird);
