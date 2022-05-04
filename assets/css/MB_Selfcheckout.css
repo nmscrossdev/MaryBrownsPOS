@@ -1488,7 +1488,7 @@ body > .text-row > p.order-quantity {
 
 .payment-view {
 	box-sizing: border-box;
-	position: absolute;
+	/* position: absolute; */
 	border-radius: var(--border-radius-xLarge);
 	background-color: var(--white);
 	box-shadow: 0px 30px 100px rgba(0, 73, 95, 0.5);
