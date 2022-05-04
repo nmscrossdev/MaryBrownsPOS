@@ -141,25 +141,25 @@ class CategoriesList extends React.Component {
     render() {
         const { current_categories,item } = this.state;
         return (
-            <div className="category-tile-group" >
+            <div className="category-tile-container" >
                 {
                  item==null?null:
-                    <div className="category-tile grouped" style={{backgroundColor:"#a9d47d"}} onClick={() => this.updateActiveStateOnRef(false)}>
+                    <button className="category-tile" style={{backgroundColor:"#a9d47d"}} onClick={() => this.updateActiveStateOnRef(false)}>
                     <p>{LocalizedLanguage.back}</p>
-                    </div>
+                    </button>
                  }
                 {
                 current_categories && current_categories.map((item, index) => {                 
                         var titleName = item.Value
                         return (
                             item.parent==0 ?
-                            <div className="category-tile grouped"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
+                            <button className="category-tile"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
                             <p>{titleName}</p>
-                            </div>
+                            </button>
                         : item.parent!=0 ?
-                            <div className="category-tile grouped" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
+                            <button className="category-tile" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
                             <p>{titleName}</p>
-                            </div>
+                            </button>
                         : ''
                         )
                     })

@@ -4,29 +4,27 @@ const Carasoul=(props)=> {
 	if(props.banners!=null)
 	{
     	return (
-		<div className="slider-container margin-bottom-67">
-			<section className="intro">
+		<div className="slider-container m-b-35">
 				<div className="slider">
-					<ul>
 						{props.banners.map((element, index) => {
-							<li key={index} style={{backgroundImage: "url("+Config.key.RECIEPT_IMAGE_DOMAIN +element.Path+")"}}>
-							<div className="center-y"></div>
-							</li>
+							<img src={Config.key.RECIEPT_IMAGE_DOMAIN +element.Path} alt="" />
+							// <li key={index} style={{backgroundImage: "url("+Config.key.RECIEPT_IMAGE_DOMAIN +element.Path+")"}}>
+							// <div className="center-y"></div>
+							// </li>
 						})}
-						<li>
+						{/* <li>
 						<div className="center-y"></div>
-						</li>
-					</ul>
-					<ul>
+						</li> */}
+					{/* <ul>
 						<nav>
 							<a href="#"></a>
 							<a href="#"></a>
 							<a href="#"></a>
 							<a href="#"></a>
 						</nav>
-					</ul>
+					</ul> */}
+					<div className="slider-toggles"></div>
 				</div>
-			</section>
 		</div>)
 	}
 }

@@ -321,13 +321,13 @@ class App extends React.Component {
                 <div>
                     {/* when shops plan update the popup called  */}
                     {/* added here because need to call in every component  (it is common and same on all component) */}
-                    <CommonInfoPopup
+                    {/* <CommonInfoPopup
                      title = {LocalizedLanguage.planHasBeenUpdated}
                      subTitle = {LocalizedLanguage.planUpdateNeedToRelogin}
                      buttonText = {LocalizedLanguage.logOut}
                      closeCommonPopup = {()=>this.handleCloseCommonPopup()}
                      id = {'commonFirebaseNotificationPopup'}
-                     />
+                     /> */}
 
                     <PrivateRoute exact path="/" component={LoadingIndexDB} />
                     {/* <PrivateRoute path="/shopview" component={ShopView} /> */}

@@ -1108,21 +1108,21 @@ class AllProduct extends React.Component {
 
         return (
             // <div>
-            (ActiveUser.key.isSelfcheckout == true && isMobileOnly == true) ?
-                <MobileAllProductList
-                    {...this.props}
-                    {...this.state}
-                    LocalizedLanguage={LocalizedLanguage}
-                    productOutOfStock={this.productOutOfStock}
-                    handleIsVariationProduct={this.handleIsVariationProduct}
-                    handleSimplePop={this.handleSimplePop}
-                    NumberFormat={NumberFormat}
-                    Markup={Markup}
-                    loadingData={this.loadingData}
-                    loadingFilterData={this.loadingFilterData}
-                    pStylenotFound={pStylenotFound} />
-                :
-                (ActiveUser.key.isSelfcheckout == true) ?
+            // (ActiveUser.key.isSelfcheckout == true && isMobileOnly == true) ?
+            //     <MobileAllProductList
+            //         {...this.props}
+            //         {...this.state}
+            //         LocalizedLanguage={LocalizedLanguage}
+            //         productOutOfStock={this.productOutOfStock}
+            //         handleIsVariationProduct={this.handleIsVariationProduct}
+            //         handleSimplePop={this.handleSimplePop}
+            //         NumberFormat={NumberFormat}
+            //         Markup={Markup}
+            //         loadingData={this.loadingData}
+            //         loadingFilterData={this.loadingFilterData}
+            //         pStylenotFound={pStylenotFound} />
+            //     :
+            //     (ActiveUser.key.isSelfcheckout == true) ?
                  <div>
                     <ProductItemsView
                         {...this.props}
@@ -1152,109 +1152,109 @@ class AllProduct extends React.Component {
                                 :
                                 <div />} 
                    </div> 
-                    : (isMobileOnly == true) ?
-                        <MobileAllProductList
-                            {...this.props}
-                            {...this.state}
-                            LocalizedLanguage={LocalizedLanguage}
-                            productOutOfStock={this.productOutOfStock}
-                            handleIsVariationProduct={this.handleIsVariationProduct}
-                            handleSimplePop={this.handleSimplePop}
-                            NumberFormat={NumberFormat}
-                            Markup={Markup}
-                            loadingData={this.loadingData}
-                            loadingFilterData={this.loadingFilterData}
-                            pStylenotFound={pStylenotFound}
-                        />
-                        :
-                        <div className="items items-padding">
-                            <div className="panel panel-default round-8 p-0 overflow-hidden">
-                                <div className="overflowscroll" id="allProductHeight">
-                                    <div className="searchDiv" style={{ display: 'none' }}>
-                                        <input type="search" className="form-control nameSearch" id="product_search_field" placeholder={LocalizedLanguage.placeholderSearchAndScan}  onFocus={this.handleInputFocus()}/>
-                                    </div>
+                    // : (isMobileOnly == true) ?
+                    //     <MobileAllProductList
+                    //         {...this.props}
+                    //         {...this.state}
+                    //         LocalizedLanguage={LocalizedLanguage}
+                    //         productOutOfStock={this.productOutOfStock}
+                    //         handleIsVariationProduct={this.handleIsVariationProduct}
+                    //         handleSimplePop={this.handleSimplePop}
+                    //         NumberFormat={NumberFormat}
+                    //         Markup={Markup}
+                    //         loadingData={this.loadingData}
+                    //         loadingFilterData={this.loadingFilterData}
+                    //         pStylenotFound={pStylenotFound}
+                    //     />
+                    //     :
+                    //     <div className="items items-padding">
+                    //         <div className="panel panel-default round-8 p-0 overflow-hidden">
+                    //             <div className="overflowscroll" id="allProductHeight">
+                    //                 <div className="searchDiv" style={{ display: 'none' }}>
+                    //                     <input type="search" className="form-control nameSearch" id="product_search_field" placeholder={LocalizedLanguage.placeholderSearchAndScan}  onFocus={this.handleInputFocus()}/>
+                    //                 </div>
 
-                                    {this.props.parantPage && this.props.parantPage == 'list' ? <div className="pl-1 pr-4 previews_setting">
-                                        <a href="/listview" className="back-button d-flex align-items-center mt-0 mb-0" id="mainBack" onClick={() => this.goBack()}>
-                                            <i className="icons8-undo ml-2 mr-2 fs30 pointer"></i>
-                                            <span>{LocalizedLanguage.back}</span>
-                                        </a>
-                                    </div> : ""}
+                    //                 {this.props.parantPage && this.props.parantPage == 'list' ? <div className="pl-1 pr-4 previews_setting">
+                    //                     <a href="/listview" className="back-button d-flex align-items-center mt-0 mb-0" id="mainBack" onClick={() => this.goBack()}>
+                    //                         <i className="icons8-undo ml-2 mr-2 fs30 pointer"></i>
+                    //                         <span>{LocalizedLanguage.back}</span>
+                    //                     </a>
+                    //                 </div> : ""}
 
-                                    <table className="table ShopProductTable tile-view-product" id="all-product-list">
-                                        <colgroup>
-                                            <col style={{ width: '*' }} />
-                                        </colgroup>
-                                        <tbody>
-                                            {(this.state.isLoading == true && (!product_List || product_List == '')) ?
-                                                <tr>
-                                                    <td >
-                                                        <div className="no-product-find AppModal w-100" style={{ height: "70vh" }}>
-                                                            <LoadingSmallModal />
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                    //                 <table className="table ShopProductTable tile-view-product" id="all-product-list">
+                    //                     <colgroup>
+                    //                         <col style={{ width: '*' }} />
+                    //                     </colgroup>
+                    //                     <tbody>
+                    //                         {(this.state.isLoading == true && (!product_List || product_List == '')) ?
+                    //                             <tr>
+                    //                                 <td >
+                    //                                     <div className="no-product-find AppModal w-100" style={{ height: "70vh" }}>
+                    //                                         <LoadingSmallModal />
+                    //                                     </div>
+                    //                                 </td>
+                    //                             </tr>
                                                
-                                                : (!product_List || product_List == '') ?
-                                                    <tr>
-                                                        {/* {showModal('commonInfoPopup')} */}
-                                                        <td style={tdNotFound}><p style={pStylenotFound}>{LocalizedLanguage.noMatchingProductFound}</p></td>
-                                                    </tr>
-                                                    :
-                                                    product_List && product_List.map((item, index) => {
-                                                        var display_expireTicketTime;
+                    //                             : (!product_List || product_List == '') ?
+                    //                                 <tr>
+                    //                                     {/* {showModal('commonInfoPopup')} */}
+                    //                                     <td style={tdNotFound}><p style={pStylenotFound}>{LocalizedLanguage.noMatchingProductFound}</p></td>
+                    //                                 </tr>
+                    //                                 :
+                    //                                 product_List && product_List.map((item, index) => {
+                    //                                     var display_expireTicketTime;
 
-                                                        var taglist = item && item !== undefined ? item.Tags !== null && item.Tags !== undefined ? item.Tags !== "" ? item.Tags.split(",") : null : null : null;
-                                                        var isVariableProduct = (item.Type !== "simple") ? true : false;
-                                                        if (item.IsTicket && item.IsTicket == true) {
-                                                            var ticketInfo = JSON.parse(item.TicketInfo);
-                                                            if (ticketInfo._ticket_availability.toLowerCase() == 'range' && (ticketInfo._ticket_availability_to_date)) {
-                                                                var dt = new Date(ticketInfo._ticket_availability_to_date);
-                                                                display_expireTicketTime = moment(dt).format('LT');
-                                                            }
-                                                        }
-                                                        return (
-                                                            <tr className="pointer" key={index}
-                                                                data-toggle={isVariableProduct == true ? "modal" : ""} href="javascript:void(0)"
-                                                                // onClick={isVariableProduct == true ? item.StockStatus == "outofstock" ? this.productOutOfStock.bind(item.Title) : this.handleIsVariationProduct.bind(this, item.Type, item) : null} >
-                                                                onClick={isVariableProduct == true ? this.handleIsVariationProduct.bind(this, item.Type, item) : null}
-                                                            >
-                                                                <td className="pointer" onClick={this.handleSimplePop.bind(this, item.Type, item)}>{item.Title && item.Title !== "" ? <Markup content={item.Title} /> : item && (item.Sku && item.Sku !== "" && item.Sku !== "False") ? item.Sku : 'N/A'}
-                                                                    {display_expireTicketTime && display_expireTicketTime != '' &&
-                                                                        <label className='text-danger heading'>{LocalizedLanguage.validTill} {display_expireTicketTime} </label>
-                                                                    }
-                                                                </td>
-                                                                <td className="text-right pointer" onClick={isVariableProduct == true?this.handleIsVariationProduct.bind(this, item.Type, item) : this.handleSimplePop.bind(this, item.Type, item)}><NumberFormat value={item.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                                </td>
-                                                                {
-                                                                    // ((item.InStock == true || item.ManagingStock == false)) ? (
-                                                                    <td className="text-right pointer" >
-                                                                        <a className="fs30">
-                                                                            <img src="assets/images/add.svg" width="35" onClick={
-                                                                                (isVariableProduct == false && taglist && taglist !== null && taglist.includes('oliver_produt_x') == true)?this.handleSimplePop.bind(this, item.Type, item)
-                                                                                :this.handleIsVariationProduct.bind(this, item.Type, item)} style={{}}/>
-                                                                        </a>
-                                                                    </td>
-                                                                }
-                                                            </tr>
-                                                        )
-                                                    })}
-                                        </tbody>
-                                    </table>
-                                    {((!search) && totalRecords > chunk_size * pageNumber && totalRecords > chunk_size) ?
-                                        <div className="createnewcustomer">
-                                            <button type="button" className="btn btn-block btn-primary total_checkout" id='hideButton' onClick={() => this.loadingData()}>{LocalizedLanguage.loadMore}</button>
-                                        </div>
-                                        :
-                                        (search && totalRecords > chunk_size * pageNumber && totalRecords > chunk_size) ?
-                                            <div className="createnewcustomer">
-                                                <button type="button" className="btn btn-block btn-primary total_checkout" id='hideButton' onClick={() => this.loadingFilterData()}>{LocalizedLanguage.loadMore}</button>
-                                            </div>
-                                            :
-                                            <div />}
-                                </div>
-                            </div>
-                        </div>
+                    //                                     var taglist = item && item !== undefined ? item.Tags !== null && item.Tags !== undefined ? item.Tags !== "" ? item.Tags.split(",") : null : null : null;
+                    //                                     var isVariableProduct = (item.Type !== "simple") ? true : false;
+                    //                                     if (item.IsTicket && item.IsTicket == true) {
+                    //                                         var ticketInfo = JSON.parse(item.TicketInfo);
+                    //                                         if (ticketInfo._ticket_availability.toLowerCase() == 'range' && (ticketInfo._ticket_availability_to_date)) {
+                    //                                             var dt = new Date(ticketInfo._ticket_availability_to_date);
+                    //                                             display_expireTicketTime = moment(dt).format('LT');
+                    //                                         }
+                    //                                     }
+                    //                                     return (
+                    //                                         <tr className="pointer" key={index}
+                    //                                             data-toggle={isVariableProduct == true ? "modal" : ""} href="javascript:void(0)"
+                    //                                             // onClick={isVariableProduct == true ? item.StockStatus == "outofstock" ? this.productOutOfStock.bind(item.Title) : this.handleIsVariationProduct.bind(this, item.Type, item) : null} >
+                    //                                             onClick={isVariableProduct == true ? this.handleIsVariationProduct.bind(this, item.Type, item) : null}
+                    //                                         >
+                    //                                             <td className="pointer" onClick={this.handleSimplePop.bind(this, item.Type, item)}>{item.Title && item.Title !== "" ? <Markup content={item.Title} /> : item && (item.Sku && item.Sku !== "" && item.Sku !== "False") ? item.Sku : 'N/A'}
+                    //                                                 {display_expireTicketTime && display_expireTicketTime != '' &&
+                    //                                                     <label className='text-danger heading'>{LocalizedLanguage.validTill} {display_expireTicketTime} </label>
+                    //                                                 }
+                    //                                             </td>
+                    //                                             <td className="text-right pointer" onClick={isVariableProduct == true?this.handleIsVariationProduct.bind(this, item.Type, item) : this.handleSimplePop.bind(this, item.Type, item)}><NumberFormat value={item.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+                    //                                             </td>
+                    //                                             {
+                    //                                                 // ((item.InStock == true || item.ManagingStock == false)) ? (
+                    //                                                 <td className="text-right pointer" >
+                    //                                                     <a className="fs30">
+                    //                                                         <img src="assets/images/add.svg" width="35" onClick={
+                    //                                                             (isVariableProduct == false && taglist && taglist !== null && taglist.includes('oliver_produt_x') == true)?this.handleSimplePop.bind(this, item.Type, item)
+                    //                                                             :this.handleIsVariationProduct.bind(this, item.Type, item)} style={{}}/>
+                    //                                                     </a>
+                    //                                                 </td>
+                    //                                             }
+                    //                                         </tr>
+                    //                                     )
+                    //                                 })}
+                    //                     </tbody>
+                    //                 </table>
+                    //                 {((!search) && totalRecords > chunk_size * pageNumber && totalRecords > chunk_size) ?
+                    //                     <div className="createnewcustomer">
+                    //                         <button type="button" className="btn btn-block btn-primary total_checkout" id='hideButton' onClick={() => this.loadingData()}>{LocalizedLanguage.loadMore}</button>
+                    //                     </div>
+                    //                     :
+                    //                     (search && totalRecords > chunk_size * pageNumber && totalRecords > chunk_size) ?
+                    //                         <div className="createnewcustomer">
+                    //                             <button type="button" className="btn btn-block btn-primary total_checkout" id='hideButton' onClick={() => this.loadingFilterData()}>{LocalizedLanguage.loadMore}</button>
+                    //                         </div>
+                    //                         :
+                    //                         <div />}
+                    //             </div>
+                    //         </div>
+                    //     </div>
         )
     }
 }

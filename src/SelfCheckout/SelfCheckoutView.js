@@ -601,8 +601,7 @@ class SelfCheckoutView extends React.Component {
         this.props.dispatch(cartProductActions.showSelectedProduct(null));
     }
     handleProductData(productData) {
-
-        console.log("---handleProductData---"+JSON.stringify(productData))
+        // console.log("---handleProductData---"+JSON.stringify(productData))
         var filterdata = [];
         if (productData.item) {
             var variationProdect = this.state.AllProductList && this.state.AllProductList.filter(vitem => {
@@ -1103,18 +1102,18 @@ class SelfCheckoutView extends React.Component {
     
 
         return (
-            <div style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}>
+            <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
             <Navbar itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
             <Carasoul banners={this.state.banners}></Carasoul>
             :null}
             {/* :''} */}
-            <p className="title margin-bottom-20">{getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+            <p className="section">{getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
             <CategoriesList categories={this.state.categories} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>
-            <p className="title margin-bottom-20">{getTitle(_key.TITLE_FOR_PRODUCT_SECTION)}</p>  
+            <p className="section">{getTitle(_key.TITLE_FOR_PRODUCT_SECTION)}</p>  
             <AllProduct categories={this.state.categories} showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} ></AllProduct>
             <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
                                         showPopuponcartlistView={this.showPopuponcartlistView}
