@@ -1,4 +1,3 @@
-
 import { isMobileOnly } from 'react-device-detect'
 import { connect } from 'react-redux';
 import React from 'react';
@@ -9,6 +8,7 @@ import $ from 'jquery'
 import { OnboardingShopViewPopup } from '../../../onboarding/components/OnboardingShopViewPopup';
 import { onBackTOLoginBtnClick } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
+import SendMailComponent from './SendMailComponent;'
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 
@@ -25,205 +25,222 @@ function textToBase64Barcode(text) {
 class SelfSaleComplete extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            emailSend: false
+        }
+        this.sendMail = this.sendMail.bind(this);
     }
+
+
+
+
+
+    sendMail() {
+        console.log("hii there")
+        this.setState({emailSend:true})
+    }
+
     render() {
-        const{ printReceipt, sendMail, baseurl, barcode_image, orderId,tempOrderId,handleContinue} = this.props;
+        const { printReceipt, yur4, baseurl, barcode_image, orderId, tempOrderId, handleContinue } = this.props;
         return (
-            (isMobileOnly == true)?
-            <div className="h-100">
-                <div style={{ display: 'none' }}>
-                    <img src={baseurl} width="50px" />
-                </div>
-                <div style={{ display: 'none' }} >
-                    <img src={barcode_image} width="50px" />
-                </div>
-                <div style={{ display: 'none' }} >
-                    <img src={textToBase64Barcode(tempOrderId)} />
-                </div>
-                <div className="sidenav-overlay" data-target="slide-out"></div>
-                {/* <div className="appCapsule bg-primary h-100 text-white fz-14 text-center pt-0" style={{paddingBottom: '122px'}}> */}
-                <div className="appCapsule bg-primary h-100 text-white fz-14 text-center vh-100" style={{paddingBottom: '122px'}}>
-                    <div className="content-center-center h-100 w-75 mx-auto">
-                        <div className="page-title mx-auto">
-                            <img src="../../assets/img/checked.svg" alt="" className="w-80"/>
-                            <h1 className="h1 fz-18">{LocalizedLanguage.completeSale}</h1>
-                        </div>
-                        <div className="spacer-10"></div>
-                            {LocalizedLanguage.msgforreciept}                        
-                        <div className="spacer-20"></div>
-                        <div className="w-100 overflow-auto scrollbar">
-                            <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={sendMail} style={{display:"none"}} >{LocalizedLanguage.email}</button>
-                            <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={ printReceipt}>{LocalizedLanguage.print}</button>
-                            <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase"  onClick={() =>handleContinue()}>{LocalizedLanguage.Continue}</button>
+            (isMobileOnly == true) ?
+                <div className="h-100">
+                    <div style={{ display: 'none' }}>
+                        <img src={baseurl} width="50px" />
+                    </div>
+                    <div style={{ display: 'none' }} >
+                        <img src={barcode_image} width="50px" />
+                    </div>
+                    <div style={{ display: 'none' }} >
+                        <img src={textToBase64Barcode(tempOrderId)} />
+                    </div>
+                    <div className="sidenav-overlay" data-target="slide-out"></div>
+                    {/* <div className="appCapsule bg-primary h-100 text-white fz-14 text-center pt-0" style={{paddingBottom: '122px'}}> */}
+                    <div className="appCapsule bg-primary h-100 text-white fz-14 text-center vh-100" style={{ paddingBottom: '122px' }}>
+                        <div className="content-center-center h-100 w-75 mx-auto">
+                            <div className="page-title mx-auto">
+                                <img src="../../assets/img/checked.svg" alt="" className="w-80" />
+                                <h1 className="h1 fz-18">{LocalizedLanguage.completeSale}</h1>
+                            </div>
+                            <div className="spacer-10"></div>
+                            {LocalizedLanguage.msgforreciept}
+                            <div className="spacer-20"></div>
+                            <div className="w-100 overflow-auto scrollbar">
+                                <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={sendMail} style={{ display: "none" }} >{LocalizedLanguage.email}</button>
+                                <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={printReceipt}>{LocalizedLanguage.print}</button>
+                                <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
+                            </div>
                         </div>
                     </div>
-                </div>        
-                <div className="appBottomMenu h-auto bg-primary shadow-none">
-                    <div className="text-white text-center pb-30">
-                        {LocalizedLanguage.selfcheckout}<br></br>
-                        <small>{LocalizedLanguage.by}</small>
-                        <br></br>
-                        <img src="../../assets/img/images/logo-light.svg" alt=""/>
-                    </div>    
+                    <div className="appBottomMenu h-auto bg-primary shadow-none">
+                        <div className="text-white text-center pb-30">
+                            {LocalizedLanguage.selfcheckout}<br></br>
+                            <small>{LocalizedLanguage.by}</small>
+                            <br></br>
+                            <img src="../../assets/img/images/logo-light.svg" alt="" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-            :
-            // <div>
-            //     <div style={{ display: 'none' }}>
-            //         <img src={baseurl} width="50px" />
-            //     </div>
-            //     <div style={{ display: 'none' }} >
-            //         <img src={barcode_image} width="50px" />
-            //     </div>
-            //     <div style={{ display: 'none' }} >
-            //         <img src={textToBase64Barcode(tempOrderId)} />
-            //     </div>
-            //     <div className="portrait">
-            //         <div className="page-payment">
-            //             <div className="payment-content">
-            //                 <div className="w-100">
-            //                     <div className="payment-page-title">
-            //                         <img src="../../assets/img/Checked.svg" className="mx-auto" alt="" />
-            //                         <h3 className="h4-title text-center text-white font-light">{LocalizedLanguage.completeSale}</h3>
-            //                         <div className="spacer-40"></div>
-            //                         <h1 className="h2-title text-center text-white font-light m-0">{LocalizedLanguage.completeSale}</h1>
-            //                     </div>
-            //                     <div className="payment-button-group">
-            //                         <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => sendMail()}  style={{display:"none"}}>{LocalizedLanguage.email}</button>
-            //                         <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() =>  printReceipt()}>{LocalizedLanguage.print}</button>
-            //                         <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() =>  handleContinue()}>{LocalizedLanguage.Continue}</button>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div className="payment-footer text-center">
-            //                 <p className="payment-copywright">{LocalizedLanguage.selfcheckoutby}</p>
-            //                 {/* <img src="../../assets/img/logo-2-sm.png" alt="" /> */}
-            //                 <img src="../../assets/img/images/logo-light.svg" alt=""/>
-            //             </div>
-            //         </div>
-            //     </div>
-            //     <div className="landscape">
-            //         <div className="page-payment">
-            //             <div className="payment-content">
-            //                 <div className="w-100 d-flex">
-            //                     <div className="col-sm-6">
-            //                         <div className="payment-page-title">
-            //                             <img src="../../assets/img/Checked.svg" width="190" className="mx-auto" alt=""/>
-            //                             <h3 className="text-center text-white font-light text---xl">{LocalizedLanguage.completeSale}</h3>
-            //                         </div>
-            //                     </div>
-            //                     <div className="col-sm-6">
-            //                         <div className="spacer-40"></div>
-            //                         <h1 className="h2-title text-center text-white font-light m-0">{LocalizedLanguage.msgforreciept}</h1>
-            //                         <div className="self-checkout-receipt-product">
-            //                             <div className="payment-button-group pb-0">
-            //                                 <button className="btn btn-default btn-block btn-90 btn-uppercase" style={{display:"none"}}
-            //                                     onClick={() => sendMail()}>{LocalizedLanguage.email}</button>
-            //                                 <button className="btn btn-default btn-block btn-90 btn-uppercase"
-            //                                     onClick={() =>  printReceipt()}>{LocalizedLanguage.print}</button>
+                :
+                this.state.emailSend == true  ? <SendMailComponent /> : 
+                // <div>
+                //     <div style={{ display: 'none' }}>
+                //         <img src={baseurl} width="50px" />
+                //     </div>
+                //     <div style={{ display: 'none' }} >
+                //         <img src={barcode_image} width="50px" />
+                //     </div>
+                //     <div style={{ display: 'none' }} >
+                //         <img src={textToBase64Barcode(tempOrderId)} />
+                //     </div>
+                //     <div className="portrait">
+                //         <div className="page-payment">
+                //             <div className="payment-content">
+                //                 <div className="w-100">
+                //                     <div className="payment-page-title">
+                //                         <img src="../../assets/img/Checked.svg" className="mx-auto" alt="" />
+                //                         <h3 className="h4-title text-center text-white font-light">{LocalizedLanguage.completeSale}</h3>
+                //                         <div className="spacer-40"></div>
+                //                         <h1 className="h2-title text-center text-white font-light m-0">{LocalizedLanguage.completeSale}</h1>
+                //                     </div>
+                //                     <div className="payment-button-group">
+                //                         <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => sendMail()}  style={{display:"none"}}>{LocalizedLanguage.email}</button>
+                //                         <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() =>  printReceipt()}>{LocalizedLanguage.print}</button>
+                //                         <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() =>  handleContinue()}>{LocalizedLanguage.Continue}</button>
+                //                     </div>
+                //                 </div>
+                //             </div>
+                //             <div className="payment-footer text-center">
+                //                 <p className="payment-copywright">{LocalizedLanguage.selfcheckoutby}</p>
+                //                 {/* <img src="../../assets/img/logo-2-sm.png" alt="" /> */}
+                //                 <img src="../../assets/img/images/logo-light.svg" alt=""/>
+                //             </div>
+                //         </div>
+                //     </div>
+                //     <div className="landscape">
+                //         <div className="page-payment">
+                //             <div className="payment-content">
+                //                 <div className="w-100 d-flex">
+                //                     <div className="col-sm-6">
+                //                         <div className="payment-page-title">
+                //                             <img src="../../assets/img/Checked.svg" width="190" className="mx-auto" alt=""/>
+                //                             <h3 className="text-center text-white font-light text---xl">{LocalizedLanguage.completeSale}</h3>
+                //                         </div>
+                //                     </div>
+                //                     <div className="col-sm-6">
+                //                         <div className="spacer-40"></div>
+                //                         <h1 className="h2-title text-center text-white font-light m-0">{LocalizedLanguage.msgforreciept}</h1>
+                //                         <div className="self-checkout-receipt-product">
+                //                             <div className="payment-button-group pb-0">
+                //                                 <button className="btn btn-default btn-block btn-90 btn-uppercase" style={{display:"none"}}
+                //                                     onClick={() => sendMail()}>{LocalizedLanguage.email}</button>
+                //                                 <button className="btn btn-default btn-block btn-90 btn-uppercase"
+                //                                     onClick={() =>  printReceipt()}>{LocalizedLanguage.print}</button>
 
-            //                                 <button className="btn btn-default btn-block btn-90 btn-uppercase"
-            //                                     onClick={() =>  handleContinue()}>{LocalizedLanguage.Continue}</button>
-            //                             </div>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div className="spacer-40"></div>
-            //             <div className="d-flex align-items-center">
-            //                 <div className="col-sm-6 col-xs-6">
-            //                     <div className="payment-footer text-center p-0">
-            //                         <p className="payment-copywright">{LocalizedLanguage.selfcheckoutby}</p>
-            //                         {/* <img src="../../assets/img/logo-2-sm.png" alt=""/> */}
-            //                         <img src="../../assets/img/images/logo-light.svg" alt=""/>
-            //                     </div>
-            //                 </div>
-            //                 <div className="col-sm-6 col-xs-6">
-            //                 </div>
-            //             </div>
-            //         </div>
-            //     </div>
-            //     <OnboardingShopViewPopup
-            //             title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
-            //             subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
-            //             subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
-            //             onClickContinue={onBackTOLoginBtnClick}
-            //             imageSrc={''}
-            //             btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
-            //             id={'firebaseRegisterAlreadyusedPopup'}
-            //         />
-            // </div>
-            <div className="payment payment-complete">
-			<img src="../assets/image/mblogobig.png" alt=""/>
-			<div className="col">
-				<svg width="118" height="120" viewBox="0 0 118 120">
-					<path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="#3AB4D8" fillOpacity="0.1" stroke="#0AACDB" strokeWidth="5"></path>
-					<path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3838" stroke="#0AACDB" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" fill="transparent"></path>
-				</svg>
-				<p className="medium">Your order is complete!</p>
-			</div>
-			<div className="col">
-				<p className="small">Your order number is</p>
-				{/* <p className="big">{orderId!=""?orderId:tempOrderId}</p> */}
-                <p className="big">{tempOrderId?tempOrderId.substr(-4):""}</p>
-			</div>
-			<div className="col">
-				<p className="small margin-bottom-24">How would you like to receive your reciept?</p>
-				<button onClick={() =>  printReceipt()} className="margin-bottom-24">
-                {LocalizedLanguage.print}
-				</button>
-				<button onClick={() => sendMail()} className="margin-bottom-24">{LocalizedLanguage.email}</button>
-                <button  onClick={() =>  handleContinue()}>{LocalizedLanguage.Continue}</button>
-			</div>
-			<div className="row">
-				<div className="col">
-					<div className="icon">
-						<svg width="29" height="29" viewBox="0 0 29 29">
-							<path d="M26.1 0H2.9C1.305 0 0 1.305 0 2.9V29L5.8 23.2H26.1C27.695 23.2 29 21.895 29 20.3V2.9C29 1.305 27.695 0 26.1 0ZM26.1 20.3H5.8L2.9 23.2V2.9H26.1V20.3ZM7.25 10.15H10.15V13.05H7.25V10.15ZM13.05 10.15H15.95V13.05H13.05V10.15ZM18.85 10.15H21.75V13.05H18.85V10.15Z" fill="white"></path>
-						</svg>
-					</div>
-					<p>SMS</p>
-				</div>
-				<div className="col">
-					<div className="icon">
-						<svg width="32" height="31" viewBox="0 0 32 31">
-							<path d="M13.8134 18.9441C14.7554 18.9441 15.6589 19.3183 16.325 19.9844C16.9912 20.6506 17.3654 21.554 17.3654 22.4961V24.8673L17.3528 25.0378C16.8634 28.3956 13.8481 30.009 8.78847 30.009C3.74777 30.009 0.683565 28.4145 0.0221013 25.0962L0 24.8641V22.4961C0 21.554 0.374229 20.6506 1.04036 19.9844C1.70649 19.3183 2.60996 18.9441 3.55201 18.9441H13.8134ZM13.8134 21.3121H3.55201C3.238 21.3121 2.93684 21.4368 2.7148 21.6589C2.49275 21.8809 2.36801 22.1821 2.36801 22.4961V24.7378C2.81004 26.6322 4.81495 27.641 8.78847 27.641C12.7604 27.641 14.6769 26.6448 14.9974 24.7741V22.4961C14.9974 22.1821 14.8727 21.8809 14.6506 21.6589C14.4286 21.4368 14.1274 21.3121 13.8134 21.3121ZM8.6827 6.31469C9.4083 6.31469 10.1268 6.45761 10.7972 6.73529C11.4675 7.01296 12.0766 7.41996 12.5897 7.93303C13.1028 8.44611 13.5098 9.05522 13.7875 9.72559C14.0651 10.396 14.2081 11.1144 14.2081 11.84C14.2081 12.5656 14.0651 13.2841 13.7875 13.9545C13.5098 14.6249 13.1028 15.234 12.5897 15.7471C12.0766 16.2601 11.4675 16.6671 10.7972 16.9448C10.1268 17.2225 9.4083 17.3654 8.6827 17.3654C7.21729 17.3654 5.81189 16.7833 4.77569 15.7471C3.73948 14.7109 3.15735 13.3055 3.15735 11.84C3.15735 10.3746 3.73948 8.96924 4.77569 7.93303C5.81189 6.89683 7.21729 6.31469 8.6827 6.31469ZM28.0215 0C28.9635 0 29.867 0.374229 30.5331 1.04036C31.1992 1.70649 31.5735 2.60996 31.5735 3.55201V9.07737C31.5735 9.54383 31.4816 10.0057 31.3031 10.4367C31.1246 10.8676 30.8629 11.2592 30.5331 11.589C30.2033 11.9189 29.8117 12.1805 29.3807 12.359C28.9498 12.5375 28.4879 12.6294 28.0215 12.6294H25.7245L22.3051 16.0093C22.0283 16.2831 21.6768 16.4688 21.2947 16.5432C20.9126 16.6177 20.517 16.5774 20.1578 16.4276C19.7985 16.2777 19.4916 16.025 19.2756 15.7011C19.0597 15.3772 18.9443 14.9967 18.9441 14.6075V12.6073C18.0758 12.5102 17.2737 12.0965 16.6913 11.4453C16.1088 10.7941 15.7868 9.95107 15.7867 9.07737V3.55201C15.7867 2.60996 16.161 1.70649 16.8271 1.04036C17.4932 0.374229 18.3967 0 19.3387 0H28.0215ZM8.6827 8.6827C7.84532 8.6827 7.04224 9.01535 6.45012 9.60747C5.858 10.1996 5.52536 11.0027 5.52536 11.84C5.52536 12.6774 5.858 13.4805 6.45012 14.0726C7.04224 14.6647 7.84532 14.9974 8.6827 14.9974C9.52008 14.9974 10.3232 14.6647 10.9153 14.0726C11.5074 13.4805 11.84 12.6774 11.84 11.84C11.84 11.0027 11.5074 10.1996 10.9153 9.60747C10.3232 9.01535 9.52008 8.6827 8.6827 8.6827ZM28.0215 2.36801H19.3387C19.0247 2.36801 18.7236 2.49275 18.5015 2.7148C18.2795 2.93684 18.1547 3.238 18.1547 3.55201V9.07737C18.1547 9.73094 18.6852 10.2614 19.3387 10.2614H21.3105V13.6618L24.7536 10.2614H28.023C28.337 10.2614 28.6382 10.1366 28.8602 9.91459C29.0823 9.69254 29.207 9.39139 29.207 9.07737V3.55201C29.207 3.238 29.0823 2.93684 28.8602 2.7148C28.6382 2.49275 28.337 2.36801 28.023 2.36801H28.0215Z" fill="white"></path>
-						</svg>
-					</div>
-					<p>Feedback</p>
-				</div>
-				<div className="col">
-					<div className="icon">
-						<svg width="30" height="28" viewBox="0 0 30 28">
-							<path d="M2.94737 16.2091L16.2105 16.2105C16.9541 16.2103 17.6703 16.4911 18.2155 16.9967C18.7608 17.5023 19.0948 18.1954 19.1505 18.9368L19.1579 19.1579V21.3684C19.1564 26.5263 13.6817 28 9.57895 28C5.56758 28 0.243158 26.5912 0.00736859 21.7074L0 21.3684V19.1564C0 17.6032 1.20253 16.3299 2.72632 16.2164L2.94737 16.2105V16.2091ZM19.4821 16.2105H26.5263C27.2696 16.2107 27.9855 16.4917 28.5304 16.9972C29.0753 17.5028 29.4091 18.1956 29.4648 18.9368L29.4737 19.1579V20.6316C29.4722 25.144 25.2619 26.5263 22.1053 26.5263C21.0361 26.5288 19.9727 26.3688 18.9516 26.0518C19.4467 25.4829 19.8461 24.8331 20.1335 24.0962C20.7808 24.2409 21.442 24.3145 22.1053 24.3158L22.4987 24.3069C23.9503 24.2436 27.0465 23.772 27.2528 20.9337L27.2632 20.6316V19.1579C27.2629 18.9855 27.2024 18.8186 27.092 18.6862C26.9817 18.5538 26.8285 18.4642 26.6589 18.4328L26.5263 18.4211H20.5564C20.4346 17.6996 20.133 17.0205 19.6796 16.4463L19.4821 16.2105ZM2.94737 18.4196L2.8 18.4343C2.65856 18.4638 2.5286 18.5333 2.42568 18.6347C2.32426 18.737 2.25465 18.8665 2.22526 19.0076L2.21053 19.1564V21.3684C2.21053 22.8554 2.87368 23.9061 4.29874 24.6724C5.516 25.3282 7.25053 25.7246 9.11179 25.7821L9.57895 25.7895L10.0461 25.7821C11.9074 25.7246 13.6404 25.3282 14.8592 24.6724C16.1943 23.9533 16.8619 22.9851 16.94 21.6411L16.9474 21.3669V19.1579C16.9471 18.9855 16.8866 18.8186 16.7762 18.6862C16.6659 18.5538 16.5127 18.4642 16.3432 18.4328L16.2105 18.4211L2.94737 18.4196ZM9.57895 0C11.3378 0 13.0245 0.698682 14.2682 1.94234C15.5118 3.18601 16.2105 4.87278 16.2105 6.63158C16.2105 8.39038 15.5118 10.0772 14.2682 11.3208C13.0245 12.5645 11.3378 13.2632 9.57895 13.2632C7.82014 13.2632 6.13338 12.5645 4.88971 11.3208C3.64605 10.0772 2.94737 8.39038 2.94737 6.63158C2.94737 4.87278 3.64605 3.18601 4.88971 1.94234C6.13338 0.698682 7.82014 0 9.57895 0ZM22.8421 2.94737C24.2101 2.94737 25.522 3.49079 26.4893 4.45808C27.4566 5.42537 28 6.7373 28 8.10526C28 9.47322 27.4566 10.7852 26.4893 11.7524C25.522 12.7197 24.2101 13.2632 22.8421 13.2632C21.4741 13.2632 20.1622 12.7197 19.1949 11.7524C18.2276 10.7852 17.6842 9.47322 17.6842 8.10526C17.6842 6.7373 18.2276 5.42537 19.1949 4.45808C20.1622 3.49079 21.4741 2.94737 22.8421 2.94737ZM9.57895 2.21053C7.14147 2.21053 5.15789 4.19411 5.15789 6.63158C5.15789 9.06905 7.14147 11.0526 9.57895 11.0526C12.0164 11.0526 14 9.06905 14 6.63158C14 4.19411 12.0164 2.21053 9.57895 2.21053ZM22.8421 5.15789C21.2166 5.15789 19.8947 6.47979 19.8947 8.10526C19.8947 9.73074 21.2166 11.0526 22.8421 11.0526C24.4676 11.0526 25.7895 9.73074 25.7895 8.10526C25.7895 6.47979 24.4676 5.15789 22.8421 5.15789Z" fill="white"></path>
-						</svg>
-					</div>
-					<p>Careers</p>
-				</div>
-			</div>
-            <svg width="183" height="111" viewBox="0 0 183 111" className="payment oliver-logo">
-			<g opacity="0.8">
-				<path d="M127.532 95.9756C126.904 94.6418 125.094 93.5505 122.989 94.1859C121.983 94.4865 121.106 95.1311 120.5 96.0144C119.894 95.1311 119.016 94.4865 118.01 94.1859C115.901 93.5602 114.096 94.6418 113.468 95.9756C112.586 97.843 112.952 99.9431 114.555 102.218C115.812 103.998 117.607 105.802 120.214 107.897C120.296 107.964 120.398 108 120.502 108C120.607 108 120.708 107.964 120.791 107.897C123.393 105.807 125.193 104.017 126.449 102.218C128.048 99.9431 128.414 97.843 127.532 95.9756V95.9756Z" fill="white"></path>
-				<path d="M16.0932 100.114C16.0932 99.162 16.3079 98.308 16.7372 97.552C17.1665 96.7867 17.7499 96.1893 18.4872 95.76C19.2339 95.3307 20.0599 95.116 20.9652 95.116C22.0292 95.116 22.9579 95.3727 23.7512 95.886C24.5445 96.3993 25.1232 97.1273 25.4872 98.07H23.9612C23.6905 97.482 23.2985 97.0293 22.7852 96.712C22.2812 96.3947 21.6745 96.236 20.9652 96.236C20.2839 96.236 19.6725 96.3947 19.1312 96.712C18.5899 97.0293 18.1652 97.482 17.8572 98.07C17.5492 98.6487 17.3952 99.33 17.3952 100.114C17.3952 100.889 17.5492 101.57 17.8572 102.158C18.1652 102.737 18.5899 103.185 19.1312 103.502C19.6725 103.819 20.2839 103.978 20.9652 103.978C21.6745 103.978 22.2812 103.824 22.7852 103.516C23.2985 103.199 23.6905 102.746 23.9612 102.158H25.4872C25.1232 103.091 24.5445 103.815 23.7512 104.328C22.9579 104.832 22.0292 105.084 20.9652 105.084C20.0599 105.084 19.2339 104.874 18.4872 104.454C17.7499 104.025 17.1665 103.432 16.7372 102.676C16.3079 101.92 16.0932 101.066 16.0932 100.114ZM28.6577 98.574C28.8817 98.1353 29.199 97.7947 29.6097 97.552C30.0297 97.3093 30.5383 97.188 31.1357 97.188V98.504H30.7997C29.3717 98.504 28.6577 99.2787 28.6577 100.828V105H27.3837V97.328H28.6577V98.574ZM39.6063 100.87C39.6063 101.113 39.5923 101.369 39.5643 101.64H33.4323C33.479 102.396 33.7357 102.989 34.2023 103.418C34.6783 103.838 35.2523 104.048 35.9243 104.048C36.475 104.048 36.9323 103.922 37.2963 103.67C37.6697 103.409 37.931 103.063 38.0803 102.634H39.4523C39.247 103.371 38.8363 103.973 38.2203 104.44C37.6043 104.897 36.839 105.126 35.9243 105.126C35.1963 105.126 34.543 104.963 33.9643 104.636C33.395 104.309 32.947 103.847 32.6203 103.25C32.2937 102.643 32.1303 101.943 32.1303 101.15C32.1303 100.357 32.289 99.6613 32.6063 99.064C32.9237 98.4667 33.367 98.0093 33.9363 97.692C34.515 97.3653 35.1777 97.202 35.9243 97.202C36.6523 97.202 37.2963 97.3607 37.8563 97.678C38.4163 97.9953 38.8457 98.434 39.1443 98.994C39.4523 99.5447 39.6063 100.17 39.6063 100.87ZM38.2903 100.604C38.2903 100.119 38.183 99.7033 37.9683 99.358C37.7537 99.0033 37.4597 98.7373 37.0863 98.56C36.7223 98.3733 36.3163 98.28 35.8683 98.28C35.2243 98.28 34.6737 98.4853 34.2163 98.896C33.7683 99.3067 33.5117 99.876 33.4463 100.604H38.2903ZM40.812 101.136C40.812 100.352 40.9706 99.666 41.288 99.078C41.6053 98.4807 42.0393 98.0187 42.59 97.692C43.15 97.3653 43.7706 97.202 44.452 97.202C45.124 97.202 45.7073 97.3467 46.202 97.636C46.6966 97.9253 47.0653 98.2893 47.308 98.728V97.328H48.596V105H47.308V103.572C47.056 104.02 46.678 104.393 46.174 104.692C45.6793 104.981 45.1006 105.126 44.438 105.126C43.7566 105.126 43.1406 104.958 42.59 104.622C42.0393 104.286 41.6053 103.815 41.288 103.208C40.9706 102.601 40.812 101.911 40.812 101.136ZM47.308 101.15C47.308 100.571 47.1913 100.067 46.958 99.638C46.7246 99.2087 46.4073 98.882 46.006 98.658C45.614 98.4247 45.18 98.308 44.704 98.308C44.228 98.308 43.794 98.42 43.402 98.644C43.01 98.868 42.6973 99.1947 42.464 99.624C42.2306 100.053 42.114 100.557 42.114 101.136C42.114 101.724 42.2306 102.237 42.464 102.676C42.6973 103.105 43.01 103.437 43.402 103.67C43.794 103.894 44.228 104.006 44.704 104.006C45.18 104.006 45.614 103.894 46.006 103.67C46.4073 103.437 46.7246 103.105 46.958 102.676C47.1913 102.237 47.308 101.729 47.308 101.15ZM52.3029 98.378V102.9C52.3029 103.273 52.3822 103.539 52.5409 103.698C52.6996 103.847 52.9749 103.922 53.3669 103.922H54.3049V105H53.1569C52.4476 105 51.9156 104.837 51.5609 104.51C51.2062 104.183 51.0289 103.647 51.0289 102.9V98.378H50.0349V97.328H51.0289V95.396H52.3029V97.328H54.3049V98.378H52.3029ZM62.8485 100.87C62.8485 101.113 62.8345 101.369 62.8065 101.64H56.6745C56.7212 102.396 56.9778 102.989 57.4445 103.418C57.9205 103.838 58.4945 104.048 59.1665 104.048C59.7172 104.048 60.1745 103.922 60.5385 103.67C60.9118 103.409 61.1732 103.063 61.3225 102.634H62.6945C62.4892 103.371 62.0785 103.973 61.4625 104.44C60.8465 104.897 60.0812 105.126 59.1665 105.126C58.4385 105.126 57.7852 104.963 57.2065 104.636C56.6372 104.309 56.1892 103.847 55.8625 103.25C55.5358 102.643 55.3725 101.943 55.3725 101.15C55.3725 100.357 55.5312 99.6613 55.8485 99.064C56.1658 98.4667 56.6092 98.0093 57.1785 97.692C57.7572 97.3653 58.4198 97.202 59.1665 97.202C59.8945 97.202 60.5385 97.3607 61.0985 97.678C61.6585 97.9953 62.0878 98.434 62.3865 98.994C62.6945 99.5447 62.8485 100.17 62.8485 100.87ZM61.5325 100.604C61.5325 100.119 61.4252 99.7033 61.2105 99.358C60.9958 99.0033 60.7018 98.7373 60.3285 98.56C59.9645 98.3733 59.5585 98.28 59.1105 98.28C58.4665 98.28 57.9158 98.4853 57.4585 98.896C57.0105 99.3067 56.7538 99.876 56.6885 100.604H61.5325ZM64.0541 101.136C64.0541 100.352 64.2128 99.666 64.5301 99.078C64.8475 98.4807 65.2815 98.0187 65.8321 97.692C66.3921 97.3653 67.0175 97.202 67.7081 97.202C68.3055 97.202 68.8608 97.342 69.3741 97.622C69.8875 97.8927 70.2795 98.252 70.5501 98.7V94.64H71.8381V105H70.5501V103.558C70.2981 104.015 69.9248 104.393 69.4301 104.692C68.9355 104.981 68.3568 105.126 67.6941 105.126C67.0128 105.126 66.3921 104.958 65.8321 104.622C65.2815 104.286 64.8475 103.815 64.5301 103.208C64.2128 102.601 64.0541 101.911 64.0541 101.136ZM70.5501 101.15C70.5501 100.571 70.4335 100.067 70.2001 99.638C69.9668 99.2087 69.6495 98.882 69.2481 98.658C68.8561 98.4247 68.4221 98.308 67.9461 98.308C67.4701 98.308 67.0361 98.42 66.6441 98.644C66.2521 98.868 65.9395 99.1947 65.7061 99.624C65.4728 100.053 65.3561 100.557 65.3561 101.136C65.3561 101.724 65.4728 102.237 65.7061 102.676C65.9395 103.105 66.2521 103.437 66.6441 103.67C67.0361 103.894 67.4701 104.006 67.9461 104.006C68.4221 104.006 68.8561 103.894 69.2481 103.67C69.6495 103.437 69.9668 103.105 70.2001 102.676C70.4335 102.237 70.5501 101.729 70.5501 101.15ZM87.9435 97.328L85.5495 105H84.2335L82.3855 98.91L80.5375 105H79.2215L76.8135 97.328H78.1155L79.8795 103.768L81.7835 97.328H83.0855L84.9475 103.782L86.6835 97.328H87.9435ZM89.8659 96.082C89.6232 96.082 89.4179 95.998 89.2499 95.83C89.0819 95.662 88.9979 95.4567 88.9979 95.214C88.9979 94.9713 89.0819 94.766 89.2499 94.598C89.4179 94.43 89.6232 94.346 89.8659 94.346C90.0992 94.346 90.2952 94.43 90.4539 94.598C90.6219 94.766 90.7059 94.9713 90.7059 95.214C90.7059 95.4567 90.6219 95.662 90.4539 95.83C90.2952 95.998 90.0992 96.082 89.8659 96.082ZM90.4819 97.328V105H89.2079V97.328H90.4819ZM94.2072 98.378V102.9C94.2072 103.273 94.2865 103.539 94.4452 103.698C94.6039 103.847 94.8792 103.922 95.2712 103.922H96.2092V105H95.0612C94.3519 105 93.8199 104.837 93.4652 104.51C93.1105 104.183 92.9332 103.647 92.9332 102.9V98.378H91.9392V97.328H92.9332V95.396H94.2072V97.328H96.2092V98.378H94.2072ZM101.561 97.188C102.139 97.188 102.662 97.314 103.129 97.566C103.595 97.8087 103.959 98.1773 104.221 98.672C104.491 99.1667 104.627 99.7687 104.627 100.478V105H103.367V100.66C103.367 99.8947 103.175 99.3113 102.793 98.91C102.41 98.4993 101.887 98.294 101.225 98.294C100.553 98.294 100.016 98.504 99.6148 98.924C99.2228 99.344 99.0268 99.9553 99.0268 100.758V105H97.7528V94.64H99.0268V98.42C99.2788 98.028 99.6241 97.7247 100.063 97.51C100.511 97.2953 101.01 97.188 101.561 97.188ZM137.225 96.082C136.983 96.082 136.777 95.998 136.609 95.83C136.441 95.662 136.357 95.4567 136.357 95.214C136.357 94.9713 136.441 94.766 136.609 94.598C136.777 94.43 136.983 94.346 137.225 94.346C137.459 94.346 137.655 94.43 137.813 94.598C137.981 94.766 138.065 94.9713 138.065 95.214C138.065 95.4567 137.981 95.662 137.813 95.83C137.655 95.998 137.459 96.082 137.225 96.082ZM137.841 97.328V105H136.567V97.328H137.841ZM143.751 97.188C144.684 97.188 145.44 97.4727 146.019 98.042C146.597 98.602 146.887 99.414 146.887 100.478V105H145.627V100.66C145.627 99.8947 145.435 99.3113 145.053 98.91C144.67 98.4993 144.147 98.294 143.485 98.294C142.813 98.294 142.276 98.504 141.875 98.924C141.483 99.344 141.287 99.9553 141.287 100.758V105H140.013V97.328H141.287V98.42C141.539 98.028 141.879 97.7247 142.309 97.51C142.747 97.2953 143.228 97.188 143.751 97.188ZM160.372 105H159.098L153.974 97.23V105H152.7V95.228H153.974L159.098 102.984V95.228H160.372V105ZM163.818 103.964H167.234V105H162.544V95.242H163.818V103.964Z" fill="white"></path>
-			</g>
-			<g opacity="0.8">
-				<path d="M99.4136 4.07642H83.564V19.8726H99.4136V4.07642Z" fill="white"></path>
-				<path d="M82.5415 4.07642C74.3348 4.67733 67.7867 11.4196 67.2031 19.8726H82.5415V4.07642Z" fill="white"></path>
-				<path d="M82.5415 20.8916H67.2031V36.6878H82.5415V20.8916Z" fill="white"></path>
-				<path d="M116.286 20.8916H100.436V36.6878H116.286V20.8916Z" fill="white"></path>
-				<path d="M100.436 52.9937C108.919 52.4148 115.683 45.8888 116.286 37.707H100.436V52.9937V52.9937Z" fill="white"></path>
-				<path d="M99.4136 37.707H83.564V52.9937H99.4136V37.707Z" fill="white"></path>
-				<path d="M82.5415 37.707H67.2031C67.7839 45.8916 74.3292 52.4148 82.5415 52.9937V37.707Z" fill="white"></path>
-				<path d="M102.993 0.509521V16.8153H119.354C119.351 7.8099 112.026 0.509521 102.993 0.509521Z" fill="white"></path>
-				<path d="M62.335 78.8761C60.9796 78.1269 59.9178 77.0947 59.1515 75.7776C58.3852 74.4625 58 72.982 58 71.34C58 69.6981 58.3832 68.2176 59.1515 66.9025C59.9178 65.5874 60.9796 64.5552 62.335 63.804C63.6903 63.0548 65.2127 62.6802 66.9023 62.6802C68.5918 62.6802 70.1102 63.0548 71.4573 63.804C72.8045 64.5532 73.8663 65.5854 74.6408 66.9025C75.4153 68.2176 75.8025 69.6981 75.8025 71.34C75.8025 72.982 75.4153 74.4625 74.6408 75.7776C73.8663 77.0927 72.8045 78.1269 71.4573 78.8761C70.1102 79.6253 68.5898 79.9999 66.9023 79.9999C65.2147 79.9999 63.6923 79.6253 62.335 78.8761ZM69.5864 76.1602C70.3853 75.6919 71.011 75.0383 71.4675 74.1994C71.922 73.3606 72.1503 72.4081 72.1503 71.34C72.1503 70.272 71.922 69.3176 71.4675 68.4807C71.013 67.6418 70.3853 66.9882 69.5864 66.5199C68.7875 66.0517 67.8928 65.8165 66.9023 65.8165C65.9118 65.8165 65.0171 66.0517 64.2202 66.5199C63.4212 66.9882 62.7956 67.6418 62.339 68.4807C61.8825 69.3195 61.6563 70.272 61.6563 71.34C61.6563 72.4081 61.8845 73.3625 62.339 74.1994C62.7935 75.0383 63.4212 75.6919 64.2202 76.1602C65.0191 76.6284 65.9138 76.8636 66.9023 76.8636C67.8928 76.8616 68.7875 76.6284 69.5864 76.1602Z" fill="white"></path>
-				<path d="M77.8467 61.9011H81.3399V79.723H77.8467V61.9011Z" fill="white"></path>
-				<path d="M84.5885 67.321H88.0817V79.723H84.5885V67.321ZM88.4465 63.6685C88.4241 65.1152 86.3066 66.522 86.3066 66.522C86.3066 66.522 84.1503 65.0773 84.1666 63.6685C84.1788 62.5866 85.1245 61.656 86.3066 61.656C87.4886 61.656 88.4628 62.5866 88.4465 63.6685Z" fill="white"></path>
-				<path d="M103.29 67.321L98.205 79.723H94.5997L89.5371 67.321H93.1424L96.4788 75.7577L99.9272 67.321H103.29V67.321Z" fill="white"></path>
-				<path d="M116.124 74.5362H107.009C107.174 75.3054 107.562 75.9111 108.173 76.3575C108.785 76.8038 109.547 77.027 110.458 77.027C111.086 77.027 111.642 76.9314 112.127 76.7381C112.612 76.5468 113.064 76.2419 113.482 75.8275L115.341 77.9018C114.206 79.2388 112.549 79.9063 110.368 79.9063C109.009 79.9063 107.806 79.6333 106.763 79.0874C105.717 78.5414 104.91 77.7842 104.344 76.8178C103.775 75.8494 103.492 74.7514 103.492 73.522C103.492 72.3085 103.771 71.2126 104.331 70.2382C104.892 69.2618 105.66 68.5026 106.638 67.9567C107.617 67.4107 108.711 67.1377 109.92 67.1377C111.1 67.1377 112.168 67.3987 113.124 67.9208C114.079 68.4429 114.829 69.1921 115.374 70.1685C115.918 71.1448 116.191 72.2766 116.191 73.5678C116.191 73.6137 116.168 73.9365 116.124 74.5362ZM107.949 70.549C107.411 71.0093 107.083 71.641 106.963 72.44H112.897C112.777 71.6569 112.449 71.0293 111.911 70.561C111.373 70.0927 110.717 69.8576 109.94 69.8576C109.151 69.8576 108.487 70.0887 107.949 70.549Z" fill="white"></path>
-				<path d="M123.548 67.598C124.257 67.2911 125.075 67.1377 126 67.1377V70.4574C125.611 70.4275 125.35 70.4115 125.215 70.4115C124.214 70.4115 123.43 70.7005 122.863 71.2763C122.295 71.8522 122.011 72.717 122.011 73.8687V79.723H118.518V67.321H121.854V68.9569C122.276 68.3592 122.839 67.9068 123.548 67.598Z" fill="white"></path>
-			</g>
-		</svg>
-		</div>
+                //                                 <button className="btn btn-default btn-block btn-90 btn-uppercase"
+                //                                     onClick={() =>  handleContinue()}>{LocalizedLanguage.Continue}</button>
+                //                             </div>
+                //                         </div>
+                //                     </div>
+                //                 </div>
+                //             </div>
+                //             <div className="spacer-40"></div>
+                //             <div className="d-flex align-items-center">
+                //                 <div className="col-sm-6 col-xs-6">
+                //                     <div className="payment-footer text-center p-0">
+                //                         <p className="payment-copywright">{LocalizedLanguage.selfcheckoutby}</p>
+                //                         {/* <img src="../../assets/img/logo-2-sm.png" alt=""/> */}
+                //                         <img src="../../assets/img/images/logo-light.svg" alt=""/>
+                //                     </div>
+                //                 </div>
+                //                 <div className="col-sm-6 col-xs-6">
+                //                 </div>
+                //             </div>
+                //         </div>
+                //     </div>
+                //     <OnboardingShopViewPopup
+                //             title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
+                //             subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
+                //             subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
+                //             onClickContinue={onBackTOLoginBtnClick}
+                //             imageSrc={''}
+                //             btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
+                //             id={'firebaseRegisterAlreadyusedPopup'}
+                //         />
+                // </div>
+                <div className="payment payment-complete">
+                    <img src="../assets/image/mblogobig.png" alt="" />
+                    <div className="col">
+                        <svg width="118" height="120" viewBox="0 0 118 120">
+                            <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="#3AB4D8" fillOpacity="0.1" stroke="#0AACDB" strokeWidth="5"></path>
+                            <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3838" stroke="#0AACDB" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" fill="transparent"></path>
+                        </svg>
+                        <p className="medium">Your order is complete!</p>
+                    </div>
+                    <div className="col">
+                        <p className="small">Your order number is</p>
+                        {/* <p className="big">{orderId!=""?orderId:tempOrderId}</p> */}
+                        <p className="big">{tempOrderId ? tempOrderId.substr(-4) : ""}</p>
+                    </div>
+                    <div className="col">
+                        <p className="small margin-bottom-24">How would you like to receive your reciept?</p>
+                        <button onClick={() => printReceipt()} className="margin-bottom-24">
+                            {LocalizedLanguage.print}
+                        </button>
+                        <button onClick={() => this.sendMail()} className="margin-bottom-24">{LocalizedLanguage.email}</button>
+                        <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
+                    </div>
+                    <div className="row">
+                        <div className="col">
+                            <div className="icon">
+                                <svg width="29" height="29" viewBox="0 0 29 29">
+                                    <path d="M26.1 0H2.9C1.305 0 0 1.305 0 2.9V29L5.8 23.2H26.1C27.695 23.2 29 21.895 29 20.3V2.9C29 1.305 27.695 0 26.1 0ZM26.1 20.3H5.8L2.9 23.2V2.9H26.1V20.3ZM7.25 10.15H10.15V13.05H7.25V10.15ZM13.05 10.15H15.95V13.05H13.05V10.15ZM18.85 10.15H21.75V13.05H18.85V10.15Z" fill="white"></path>
+                                </svg>
+                            </div>
+                            <p>SMS</p>
+                        </div>
+                        <div className="col">
+                            <div className="icon">
+                                <svg width="32" height="31" viewBox="0 0 32 31">
+                                    <path d="M13.8134 18.9441C14.7554 18.9441 15.6589 19.3183 16.325 19.9844C16.9912 20.6506 17.3654 21.554 17.3654 22.4961V24.8673L17.3528 25.0378C16.8634 28.3956 13.8481 30.009 8.78847 30.009C3.74777 30.009 0.683565 28.4145 0.0221013 25.0962L0 24.8641V22.4961C0 21.554 0.374229 20.6506 1.04036 19.9844C1.70649 19.3183 2.60996 18.9441 3.55201 18.9441H13.8134ZM13.8134 21.3121H3.55201C3.238 21.3121 2.93684 21.4368 2.7148 21.6589C2.49275 21.8809 2.36801 22.1821 2.36801 22.4961V24.7378C2.81004 26.6322 4.81495 27.641 8.78847 27.641C12.7604 27.641 14.6769 26.6448 14.9974 24.7741V22.4961C14.9974 22.1821 14.8727 21.8809 14.6506 21.6589C14.4286 21.4368 14.1274 21.3121 13.8134 21.3121ZM8.6827 6.31469C9.4083 6.31469 10.1268 6.45761 10.7972 6.73529C11.4675 7.01296 12.0766 7.41996 12.5897 7.93303C13.1028 8.44611 13.5098 9.05522 13.7875 9.72559C14.0651 10.396 14.2081 11.1144 14.2081 11.84C14.2081 12.5656 14.0651 13.2841 13.7875 13.9545C13.5098 14.6249 13.1028 15.234 12.5897 15.7471C12.0766 16.2601 11.4675 16.6671 10.7972 16.9448C10.1268 17.2225 9.4083 17.3654 8.6827 17.3654C7.21729 17.3654 5.81189 16.7833 4.77569 15.7471C3.73948 14.7109 3.15735 13.3055 3.15735 11.84C3.15735 10.3746 3.73948 8.96924 4.77569 7.93303C5.81189 6.89683 7.21729 6.31469 8.6827 6.31469ZM28.0215 0C28.9635 0 29.867 0.374229 30.5331 1.04036C31.1992 1.70649 31.5735 2.60996 31.5735 3.55201V9.07737C31.5735 9.54383 31.4816 10.0057 31.3031 10.4367C31.1246 10.8676 30.8629 11.2592 30.5331 11.589C30.2033 11.9189 29.8117 12.1805 29.3807 12.359C28.9498 12.5375 28.4879 12.6294 28.0215 12.6294H25.7245L22.3051 16.0093C22.0283 16.2831 21.6768 16.4688 21.2947 16.5432C20.9126 16.6177 20.517 16.5774 20.1578 16.4276C19.7985 16.2777 19.4916 16.025 19.2756 15.7011C19.0597 15.3772 18.9443 14.9967 18.9441 14.6075V12.6073C18.0758 12.5102 17.2737 12.0965 16.6913 11.4453C16.1088 10.7941 15.7868 9.95107 15.7867 9.07737V3.55201C15.7867 2.60996 16.161 1.70649 16.8271 1.04036C17.4932 0.374229 18.3967 0 19.3387 0H28.0215ZM8.6827 8.6827C7.84532 8.6827 7.04224 9.01535 6.45012 9.60747C5.858 10.1996 5.52536 11.0027 5.52536 11.84C5.52536 12.6774 5.858 13.4805 6.45012 14.0726C7.04224 14.6647 7.84532 14.9974 8.6827 14.9974C9.52008 14.9974 10.3232 14.6647 10.9153 14.0726C11.5074 13.4805 11.84 12.6774 11.84 11.84C11.84 11.0027 11.5074 10.1996 10.9153 9.60747C10.3232 9.01535 9.52008 8.6827 8.6827 8.6827ZM28.0215 2.36801H19.3387C19.0247 2.36801 18.7236 2.49275 18.5015 2.7148C18.2795 2.93684 18.1547 3.238 18.1547 3.55201V9.07737C18.1547 9.73094 18.6852 10.2614 19.3387 10.2614H21.3105V13.6618L24.7536 10.2614H28.023C28.337 10.2614 28.6382 10.1366 28.8602 9.91459C29.0823 9.69254 29.207 9.39139 29.207 9.07737V3.55201C29.207 3.238 29.0823 2.93684 28.8602 2.7148C28.6382 2.49275 28.337 2.36801 28.023 2.36801H28.0215Z" fill="white"></path>
+                                </svg>
+                            </div>
+                            <p>Feedback</p>
+                        </div>
+                        <div className="col">
+                            <div className="icon">
+                                <svg width="30" height="28" viewBox="0 0 30 28">
+                                    <path d="M2.94737 16.2091L16.2105 16.2105C16.9541 16.2103 17.6703 16.4911 18.2155 16.9967C18.7608 17.5023 19.0948 18.1954 19.1505 18.9368L19.1579 19.1579V21.3684C19.1564 26.5263 13.6817 28 9.57895 28C5.56758 28 0.243158 26.5912 0.00736859 21.7074L0 21.3684V19.1564C0 17.6032 1.20253 16.3299 2.72632 16.2164L2.94737 16.2105V16.2091ZM19.4821 16.2105H26.5263C27.2696 16.2107 27.9855 16.4917 28.5304 16.9972C29.0753 17.5028 29.4091 18.1956 29.4648 18.9368L29.4737 19.1579V20.6316C29.4722 25.144 25.2619 26.5263 22.1053 26.5263C21.0361 26.5288 19.9727 26.3688 18.9516 26.0518C19.4467 25.4829 19.8461 24.8331 20.1335 24.0962C20.7808 24.2409 21.442 24.3145 22.1053 24.3158L22.4987 24.3069C23.9503 24.2436 27.0465 23.772 27.2528 20.9337L27.2632 20.6316V19.1579C27.2629 18.9855 27.2024 18.8186 27.092 18.6862C26.9817 18.5538 26.8285 18.4642 26.6589 18.4328L26.5263 18.4211H20.5564C20.4346 17.6996 20.133 17.0205 19.6796 16.4463L19.4821 16.2105ZM2.94737 18.4196L2.8 18.4343C2.65856 18.4638 2.5286 18.5333 2.42568 18.6347C2.32426 18.737 2.25465 18.8665 2.22526 19.0076L2.21053 19.1564V21.3684C2.21053 22.8554 2.87368 23.9061 4.29874 24.6724C5.516 25.3282 7.25053 25.7246 9.11179 25.7821L9.57895 25.7895L10.0461 25.7821C11.9074 25.7246 13.6404 25.3282 14.8592 24.6724C16.1943 23.9533 16.8619 22.9851 16.94 21.6411L16.9474 21.3669V19.1579C16.9471 18.9855 16.8866 18.8186 16.7762 18.6862C16.6659 18.5538 16.5127 18.4642 16.3432 18.4328L16.2105 18.4211L2.94737 18.4196ZM9.57895 0C11.3378 0 13.0245 0.698682 14.2682 1.94234C15.5118 3.18601 16.2105 4.87278 16.2105 6.63158C16.2105 8.39038 15.5118 10.0772 14.2682 11.3208C13.0245 12.5645 11.3378 13.2632 9.57895 13.2632C7.82014 13.2632 6.13338 12.5645 4.88971 11.3208C3.64605 10.0772 2.94737 8.39038 2.94737 6.63158C2.94737 4.87278 3.64605 3.18601 4.88971 1.94234C6.13338 0.698682 7.82014 0 9.57895 0ZM22.8421 2.94737C24.2101 2.94737 25.522 3.49079 26.4893 4.45808C27.4566 5.42537 28 6.7373 28 8.10526C28 9.47322 27.4566 10.7852 26.4893 11.7524C25.522 12.7197 24.2101 13.2632 22.8421 13.2632C21.4741 13.2632 20.1622 12.7197 19.1949 11.7524C18.2276 10.7852 17.6842 9.47322 17.6842 8.10526C17.6842 6.7373 18.2276 5.42537 19.1949 4.45808C20.1622 3.49079 21.4741 2.94737 22.8421 2.94737ZM9.57895 2.21053C7.14147 2.21053 5.15789 4.19411 5.15789 6.63158C5.15789 9.06905 7.14147 11.0526 9.57895 11.0526C12.0164 11.0526 14 9.06905 14 6.63158C14 4.19411 12.0164 2.21053 9.57895 2.21053ZM22.8421 5.15789C21.2166 5.15789 19.8947 6.47979 19.8947 8.10526C19.8947 9.73074 21.2166 11.0526 22.8421 11.0526C24.4676 11.0526 25.7895 9.73074 25.7895 8.10526C25.7895 6.47979 24.4676 5.15789 22.8421 5.15789Z" fill="white"></path>
+                                </svg>
+                            </div>
+                            <p>Careers</p>
+                        </div>
+                    </div>
+                    <svg width="183" height="111" viewBox="0 0 183 111" className="payment oliver-logo">
+                        <g opacity="0.8">
+                            <path d="M127.532 95.9756C126.904 94.6418 125.094 93.5505 122.989 94.1859C121.983 94.4865 121.106 95.1311 120.5 96.0144C119.894 95.1311 119.016 94.4865 118.01 94.1859C115.901 93.5602 114.096 94.6418 113.468 95.9756C112.586 97.843 112.952 99.9431 114.555 102.218C115.812 103.998 117.607 105.802 120.214 107.897C120.296 107.964 120.398 108 120.502 108C120.607 108 120.708 107.964 120.791 107.897C123.393 105.807 125.193 104.017 126.449 102.218C128.048 99.9431 128.414 97.843 127.532 95.9756V95.9756Z" fill="white"></path>
+                            <path d="M16.0932 100.114C16.0932 99.162 16.3079 98.308 16.7372 97.552C17.1665 96.7867 17.7499 96.1893 18.4872 95.76C19.2339 95.3307 20.0599 95.116 20.9652 95.116C22.0292 95.116 22.9579 95.3727 23.7512 95.886C24.5445 96.3993 25.1232 97.1273 25.4872 98.07H23.9612C23.6905 97.482 23.2985 97.0293 22.7852 96.712C22.2812 96.3947 21.6745 96.236 20.9652 96.236C20.2839 96.236 19.6725 96.3947 19.1312 96.712C18.5899 97.0293 18.1652 97.482 17.8572 98.07C17.5492 98.6487 17.3952 99.33 17.3952 100.114C17.3952 100.889 17.5492 101.57 17.8572 102.158C18.1652 102.737 18.5899 103.185 19.1312 103.502C19.6725 103.819 20.2839 103.978 20.9652 103.978C21.6745 103.978 22.2812 103.824 22.7852 103.516C23.2985 103.199 23.6905 102.746 23.9612 102.158H25.4872C25.1232 103.091 24.5445 103.815 23.7512 104.328C22.9579 104.832 22.0292 105.084 20.9652 105.084C20.0599 105.084 19.2339 104.874 18.4872 104.454C17.7499 104.025 17.1665 103.432 16.7372 102.676C16.3079 101.92 16.0932 101.066 16.0932 100.114ZM28.6577 98.574C28.8817 98.1353 29.199 97.7947 29.6097 97.552C30.0297 97.3093 30.5383 97.188 31.1357 97.188V98.504H30.7997C29.3717 98.504 28.6577 99.2787 28.6577 100.828V105H27.3837V97.328H28.6577V98.574ZM39.6063 100.87C39.6063 101.113 39.5923 101.369 39.5643 101.64H33.4323C33.479 102.396 33.7357 102.989 34.2023 103.418C34.6783 103.838 35.2523 104.048 35.9243 104.048C36.475 104.048 36.9323 103.922 37.2963 103.67C37.6697 103.409 37.931 103.063 38.0803 102.634H39.4523C39.247 103.371 38.8363 103.973 38.2203 104.44C37.6043 104.897 36.839 105.126 35.9243 105.126C35.1963 105.126 34.543 104.963 33.9643 104.636C33.395 104.309 32.947 103.847 32.6203 103.25C32.2937 102.643 32.1303 101.943 32.1303 101.15C32.1303 100.357 32.289 99.6613 32.6063 99.064C32.9237 98.4667 33.367 98.0093 33.9363 97.692C34.515 97.3653 35.1777 97.202 35.9243 97.202C36.6523 97.202 37.2963 97.3607 37.8563 97.678C38.4163 97.9953 38.8457 98.434 39.1443 98.994C39.4523 99.5447 39.6063 100.17 39.6063 100.87ZM38.2903 100.604C38.2903 100.119 38.183 99.7033 37.9683 99.358C37.7537 99.0033 37.4597 98.7373 37.0863 98.56C36.7223 98.3733 36.3163 98.28 35.8683 98.28C35.2243 98.28 34.6737 98.4853 34.2163 98.896C33.7683 99.3067 33.5117 99.876 33.4463 100.604H38.2903ZM40.812 101.136C40.812 100.352 40.9706 99.666 41.288 99.078C41.6053 98.4807 42.0393 98.0187 42.59 97.692C43.15 97.3653 43.7706 97.202 44.452 97.202C45.124 97.202 45.7073 97.3467 46.202 97.636C46.6966 97.9253 47.0653 98.2893 47.308 98.728V97.328H48.596V105H47.308V103.572C47.056 104.02 46.678 104.393 46.174 104.692C45.6793 104.981 45.1006 105.126 44.438 105.126C43.7566 105.126 43.1406 104.958 42.59 104.622C42.0393 104.286 41.6053 103.815 41.288 103.208C40.9706 102.601 40.812 101.911 40.812 101.136ZM47.308 101.15C47.308 100.571 47.1913 100.067 46.958 99.638C46.7246 99.2087 46.4073 98.882 46.006 98.658C45.614 98.4247 45.18 98.308 44.704 98.308C44.228 98.308 43.794 98.42 43.402 98.644C43.01 98.868 42.6973 99.1947 42.464 99.624C42.2306 100.053 42.114 100.557 42.114 101.136C42.114 101.724 42.2306 102.237 42.464 102.676C42.6973 103.105 43.01 103.437 43.402 103.67C43.794 103.894 44.228 104.006 44.704 104.006C45.18 104.006 45.614 103.894 46.006 103.67C46.4073 103.437 46.7246 103.105 46.958 102.676C47.1913 102.237 47.308 101.729 47.308 101.15ZM52.3029 98.378V102.9C52.3029 103.273 52.3822 103.539 52.5409 103.698C52.6996 103.847 52.9749 103.922 53.3669 103.922H54.3049V105H53.1569C52.4476 105 51.9156 104.837 51.5609 104.51C51.2062 104.183 51.0289 103.647 51.0289 102.9V98.378H50.0349V97.328H51.0289V95.396H52.3029V97.328H54.3049V98.378H52.3029ZM62.8485 100.87C62.8485 101.113 62.8345 101.369 62.8065 101.64H56.6745C56.7212 102.396 56.9778 102.989 57.4445 103.418C57.9205 103.838 58.4945 104.048 59.1665 104.048C59.7172 104.048 60.1745 103.922 60.5385 103.67C60.9118 103.409 61.1732 103.063 61.3225 102.634H62.6945C62.4892 103.371 62.0785 103.973 61.4625 104.44C60.8465 104.897 60.0812 105.126 59.1665 105.126C58.4385 105.126 57.7852 104.963 57.2065 104.636C56.6372 104.309 56.1892 103.847 55.8625 103.25C55.5358 102.643 55.3725 101.943 55.3725 101.15C55.3725 100.357 55.5312 99.6613 55.8485 99.064C56.1658 98.4667 56.6092 98.0093 57.1785 97.692C57.7572 97.3653 58.4198 97.202 59.1665 97.202C59.8945 97.202 60.5385 97.3607 61.0985 97.678C61.6585 97.9953 62.0878 98.434 62.3865 98.994C62.6945 99.5447 62.8485 100.17 62.8485 100.87ZM61.5325 100.604C61.5325 100.119 61.4252 99.7033 61.2105 99.358C60.9958 99.0033 60.7018 98.7373 60.3285 98.56C59.9645 98.3733 59.5585 98.28 59.1105 98.28C58.4665 98.28 57.9158 98.4853 57.4585 98.896C57.0105 99.3067 56.7538 99.876 56.6885 100.604H61.5325ZM64.0541 101.136C64.0541 100.352 64.2128 99.666 64.5301 99.078C64.8475 98.4807 65.2815 98.0187 65.8321 97.692C66.3921 97.3653 67.0175 97.202 67.7081 97.202C68.3055 97.202 68.8608 97.342 69.3741 97.622C69.8875 97.8927 70.2795 98.252 70.5501 98.7V94.64H71.8381V105H70.5501V103.558C70.2981 104.015 69.9248 104.393 69.4301 104.692C68.9355 104.981 68.3568 105.126 67.6941 105.126C67.0128 105.126 66.3921 104.958 65.8321 104.622C65.2815 104.286 64.8475 103.815 64.5301 103.208C64.2128 102.601 64.0541 101.911 64.0541 101.136ZM70.5501 101.15C70.5501 100.571 70.4335 100.067 70.2001 99.638C69.9668 99.2087 69.6495 98.882 69.2481 98.658C68.8561 98.4247 68.4221 98.308 67.9461 98.308C67.4701 98.308 67.0361 98.42 66.6441 98.644C66.2521 98.868 65.9395 99.1947 65.7061 99.624C65.4728 100.053 65.3561 100.557 65.3561 101.136C65.3561 101.724 65.4728 102.237 65.7061 102.676C65.9395 103.105 66.2521 103.437 66.6441 103.67C67.0361 103.894 67.4701 104.006 67.9461 104.006C68.4221 104.006 68.8561 103.894 69.2481 103.67C69.6495 103.437 69.9668 103.105 70.2001 102.676C70.4335 102.237 70.5501 101.729 70.5501 101.15ZM87.9435 97.328L85.5495 105H84.2335L82.3855 98.91L80.5375 105H79.2215L76.8135 97.328H78.1155L79.8795 103.768L81.7835 97.328H83.0855L84.9475 103.782L86.6835 97.328H87.9435ZM89.8659 96.082C89.6232 96.082 89.4179 95.998 89.2499 95.83C89.0819 95.662 88.9979 95.4567 88.9979 95.214C88.9979 94.9713 89.0819 94.766 89.2499 94.598C89.4179 94.43 89.6232 94.346 89.8659 94.346C90.0992 94.346 90.2952 94.43 90.4539 94.598C90.6219 94.766 90.7059 94.9713 90.7059 95.214C90.7059 95.4567 90.6219 95.662 90.4539 95.83C90.2952 95.998 90.0992 96.082 89.8659 96.082ZM90.4819 97.328V105H89.2079V97.328H90.4819ZM94.2072 98.378V102.9C94.2072 103.273 94.2865 103.539 94.4452 103.698C94.6039 103.847 94.8792 103.922 95.2712 103.922H96.2092V105H95.0612C94.3519 105 93.8199 104.837 93.4652 104.51C93.1105 104.183 92.9332 103.647 92.9332 102.9V98.378H91.9392V97.328H92.9332V95.396H94.2072V97.328H96.2092V98.378H94.2072ZM101.561 97.188C102.139 97.188 102.662 97.314 103.129 97.566C103.595 97.8087 103.959 98.1773 104.221 98.672C104.491 99.1667 104.627 99.7687 104.627 100.478V105H103.367V100.66C103.367 99.8947 103.175 99.3113 102.793 98.91C102.41 98.4993 101.887 98.294 101.225 98.294C100.553 98.294 100.016 98.504 99.6148 98.924C99.2228 99.344 99.0268 99.9553 99.0268 100.758V105H97.7528V94.64H99.0268V98.42C99.2788 98.028 99.6241 97.7247 100.063 97.51C100.511 97.2953 101.01 97.188 101.561 97.188ZM137.225 96.082C136.983 96.082 136.777 95.998 136.609 95.83C136.441 95.662 136.357 95.4567 136.357 95.214C136.357 94.9713 136.441 94.766 136.609 94.598C136.777 94.43 136.983 94.346 137.225 94.346C137.459 94.346 137.655 94.43 137.813 94.598C137.981 94.766 138.065 94.9713 138.065 95.214C138.065 95.4567 137.981 95.662 137.813 95.83C137.655 95.998 137.459 96.082 137.225 96.082ZM137.841 97.328V105H136.567V97.328H137.841ZM143.751 97.188C144.684 97.188 145.44 97.4727 146.019 98.042C146.597 98.602 146.887 99.414 146.887 100.478V105H145.627V100.66C145.627 99.8947 145.435 99.3113 145.053 98.91C144.67 98.4993 144.147 98.294 143.485 98.294C142.813 98.294 142.276 98.504 141.875 98.924C141.483 99.344 141.287 99.9553 141.287 100.758V105H140.013V97.328H141.287V98.42C141.539 98.028 141.879 97.7247 142.309 97.51C142.747 97.2953 143.228 97.188 143.751 97.188ZM160.372 105H159.098L153.974 97.23V105H152.7V95.228H153.974L159.098 102.984V95.228H160.372V105ZM163.818 103.964H167.234V105H162.544V95.242H163.818V103.964Z" fill="white"></path>
+                        </g>
+                        <g opacity="0.8">
+                            <path d="M99.4136 4.07642H83.564V19.8726H99.4136V4.07642Z" fill="white"></path>
+                            <path d="M82.5415 4.07642C74.3348 4.67733 67.7867 11.4196 67.2031 19.8726H82.5415V4.07642Z" fill="white"></path>
+                            <path d="M82.5415 20.8916H67.2031V36.6878H82.5415V20.8916Z" fill="white"></path>
+                            <path d="M116.286 20.8916H100.436V36.6878H116.286V20.8916Z" fill="white"></path>
+                            <path d="M100.436 52.9937C108.919 52.4148 115.683 45.8888 116.286 37.707H100.436V52.9937V52.9937Z" fill="white"></path>
+                            <path d="M99.4136 37.707H83.564V52.9937H99.4136V37.707Z" fill="white"></path>
+                            <path d="M82.5415 37.707H67.2031C67.7839 45.8916 74.3292 52.4148 82.5415 52.9937V37.707Z" fill="white"></path>
+                            <path d="M102.993 0.509521V16.8153H119.354C119.351 7.8099 112.026 0.509521 102.993 0.509521Z" fill="white"></path>
+                            <path d="M62.335 78.8761C60.9796 78.1269 59.9178 77.0947 59.1515 75.7776C58.3852 74.4625 58 72.982 58 71.34C58 69.6981 58.3832 68.2176 59.1515 66.9025C59.9178 65.5874 60.9796 64.5552 62.335 63.804C63.6903 63.0548 65.2127 62.6802 66.9023 62.6802C68.5918 62.6802 70.1102 63.0548 71.4573 63.804C72.8045 64.5532 73.8663 65.5854 74.6408 66.9025C75.4153 68.2176 75.8025 69.6981 75.8025 71.34C75.8025 72.982 75.4153 74.4625 74.6408 75.7776C73.8663 77.0927 72.8045 78.1269 71.4573 78.8761C70.1102 79.6253 68.5898 79.9999 66.9023 79.9999C65.2147 79.9999 63.6923 79.6253 62.335 78.8761ZM69.5864 76.1602C70.3853 75.6919 71.011 75.0383 71.4675 74.1994C71.922 73.3606 72.1503 72.4081 72.1503 71.34C72.1503 70.272 71.922 69.3176 71.4675 68.4807C71.013 67.6418 70.3853 66.9882 69.5864 66.5199C68.7875 66.0517 67.8928 65.8165 66.9023 65.8165C65.9118 65.8165 65.0171 66.0517 64.2202 66.5199C63.4212 66.9882 62.7956 67.6418 62.339 68.4807C61.8825 69.3195 61.6563 70.272 61.6563 71.34C61.6563 72.4081 61.8845 73.3625 62.339 74.1994C62.7935 75.0383 63.4212 75.6919 64.2202 76.1602C65.0191 76.6284 65.9138 76.8636 66.9023 76.8636C67.8928 76.8616 68.7875 76.6284 69.5864 76.1602Z" fill="white"></path>
+                            <path d="M77.8467 61.9011H81.3399V79.723H77.8467V61.9011Z" fill="white"></path>
+                            <path d="M84.5885 67.321H88.0817V79.723H84.5885V67.321ZM88.4465 63.6685C88.4241 65.1152 86.3066 66.522 86.3066 66.522C86.3066 66.522 84.1503 65.0773 84.1666 63.6685C84.1788 62.5866 85.1245 61.656 86.3066 61.656C87.4886 61.656 88.4628 62.5866 88.4465 63.6685Z" fill="white"></path>
+                            <path d="M103.29 67.321L98.205 79.723H94.5997L89.5371 67.321H93.1424L96.4788 75.7577L99.9272 67.321H103.29V67.321Z" fill="white"></path>
+                            <path d="M116.124 74.5362H107.009C107.174 75.3054 107.562 75.9111 108.173 76.3575C108.785 76.8038 109.547 77.027 110.458 77.027C111.086 77.027 111.642 76.9314 112.127 76.7381C112.612 76.5468 113.064 76.2419 113.482 75.8275L115.341 77.9018C114.206 79.2388 112.549 79.9063 110.368 79.9063C109.009 79.9063 107.806 79.6333 106.763 79.0874C105.717 78.5414 104.91 77.7842 104.344 76.8178C103.775 75.8494 103.492 74.7514 103.492 73.522C103.492 72.3085 103.771 71.2126 104.331 70.2382C104.892 69.2618 105.66 68.5026 106.638 67.9567C107.617 67.4107 108.711 67.1377 109.92 67.1377C111.1 67.1377 112.168 67.3987 113.124 67.9208C114.079 68.4429 114.829 69.1921 115.374 70.1685C115.918 71.1448 116.191 72.2766 116.191 73.5678C116.191 73.6137 116.168 73.9365 116.124 74.5362ZM107.949 70.549C107.411 71.0093 107.083 71.641 106.963 72.44H112.897C112.777 71.6569 112.449 71.0293 111.911 70.561C111.373 70.0927 110.717 69.8576 109.94 69.8576C109.151 69.8576 108.487 70.0887 107.949 70.549Z" fill="white"></path>
+                            <path d="M123.548 67.598C124.257 67.2911 125.075 67.1377 126 67.1377V70.4574C125.611 70.4275 125.35 70.4115 125.215 70.4115C124.214 70.4115 123.43 70.7005 122.863 71.2763C122.295 71.8522 122.011 72.717 122.011 73.8687V79.723H118.518V67.321H121.854V68.9569C122.276 68.3592 122.839 67.9068 123.548 67.598Z" fill="white"></path>
+                        </g>
+                    </svg>
+                </div>
+            
+
         )
     }
 }
