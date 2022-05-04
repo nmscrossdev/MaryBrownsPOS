@@ -121,23 +121,19 @@ class ProductAtrribute extends React.Component {
                     (_DistictAttribute.map((attribute, index) => {
                         return (
                             attribute && attribute.Variation == true &&
-                            <div className="variation-list" key={index}>
-                                <h4 className="variation-title">{attribute.Name}</h4>
-                                <div className="varialtion-color-category">
-                                    <div className="container-fluid">
-                                        <div className="row">
-                                            <ProductSubAtrribute showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}
-                                                itemIndex={index}
-                                                selectedAttrIndex={this.state.selectedAttrIndex}
-                                                key={"ProductSubAttr-" + index} options={attribute.Option} parentAttribute={attribute.Slug}
-                                                click={this.handleOptionClick}
-                                                filteredAttribute={attribute.Slug == this.props.selectedAttribute ? [] : this.props.filteredAttribute}
-                                                productVariations={this.props.productVariations}
-                                                selectedOption={this.props.selectedOptionCode}
-                                                selectedOptions={this.props.selectedOptions}
-                                                OptionAll={attribute.OptionAll}/>
-                                        </div>
-                                    </div>
+                            <div key={index}>
+                                <p key={index} >{attribute.Name}</p>
+                                <div className="row">
+                                    <ProductSubAtrribute showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}
+                                        itemIndex={index}
+                                        selectedAttrIndex={this.state.selectedAttrIndex}
+                                        key={"ProductSubAttr-" + index} options={attribute.Option} parentAttribute={attribute.Slug}
+                                        click={this.handleOptionClick}
+                                        filteredAttribute={attribute.Slug == this.props.selectedAttribute ? [] : this.props.filteredAttribute}
+                                        productVariations={this.props.productVariations}
+                                        selectedOption={this.props.selectedOptionCode}
+                                        selectedOptions={this.props.selectedOptions}
+                                        OptionAll={attribute.OptionAll}/>
                                 </div>
                             </div>
                         )

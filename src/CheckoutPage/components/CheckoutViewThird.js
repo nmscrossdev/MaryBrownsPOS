@@ -91,7 +91,7 @@ class CheckoutViewThird extends React.Component {
         this.props.onRef(this);
         if (ActiveUser.key.isSelfcheckout == true && this.props.SelfCheckoutStatus == "sfcheckoutpayment") {
             setTimeout(function () {
-                selfCheckoutJs();
+               // selfCheckoutJs();
                 if (typeof EnableContentScroll != "undefined") { EnableContentScroll(); }
             }, 200)
         }
@@ -756,8 +756,9 @@ class CheckoutViewThird extends React.Component {
                                             <div className="spacer-40"></div>
                                             <h1 className="h2-title text-center text-white font-light m-0 pb-3">{LocalizedLanguage.howWouldYouLikeToPay}</h1>
                                         </div> */}
-                                        <div className="payment payment-method">
-                                        <div onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")} className="back">
+                                        <div className="payment-view select-payment">
+                                            <div className="header">
+                                        <div onClick={() => this.props.selfcheckoutstatusmanagingevnt("defaultcheckout")} className="back-button">
                                             <svg width="40" height="36" viewBox="0 0 40 36">
                                                 <path
                                                     d="M37.5 15.5012H7.85L16.925 4.60118C17.3493 4.09064 17.5535 3.43243 17.4926 2.77137C17.4316 2.1103 17.1105 1.50052 16.6 1.07618C16.0895 0.651831 15.4313 0.447676 14.7702 0.508626C14.1091 0.569575 13.4993 0.890636 13.075 1.40118L0.575 16.4012C0.490902 16.5205 0.415698 16.6458 0.35 16.7762C0.35 16.9012 0.35 16.9762 0.175 17.1012C0.0616841 17.3878 0.0023528 17.693 0 18.0012C0.0023528 18.3094 0.0616841 18.6145 0.175 18.9012C0.175 19.0262 0.175 19.1012 0.35 19.2262C0.415698 19.3565 0.490902 19.4819 0.575 19.6012L13.075 34.6012C13.3101 34.8834 13.6044 35.1103 13.9371 35.2659C14.2698 35.4214 14.6327 35.5018 15 35.5012C15.5841 35.5023 16.1502 35.2989 16.6 34.9262C16.8531 34.7163 17.0624 34.4585 17.2158 34.1677C17.3692 33.8768 17.4637 33.5586 17.4938 33.2311C17.524 32.9037 17.4893 32.5735 17.3917 32.2595C17.2941 31.9455 17.1355 31.6538 16.925 31.4012L7.85 20.5012H37.5C38.163 20.5012 38.7989 20.2378 39.2678 19.7689C39.7366 19.3001 40 18.6642 40 18.0012C40 17.3381 39.7366 16.7023 39.2678 16.2334C38.7989 15.7646 38.163 15.5012 37.5 15.5012Z"
@@ -766,12 +767,14 @@ class CheckoutViewThird extends React.Component {
                                             </svg>
                                         </div>
                                         <img src="../assets/image/mblogobig.png" alt="" />
-                                        <div>
-                                            <p>Your Total</p>
-                                            <p className="price">${this.props.checkList.totalPrice}</p>
                                         </div>
-                                        <div className="margin-bottom-24 scroll">
-                                        <p className="margin-bottom-33">Please select a payment method:</p>
+                                    
+                                        <div className="total">
+                                            <p>Your Total</p>
+                                            <p className="amount">${this.props.checkList.totalPrice}</p>
+                                        </div>
+                                        <div className="payment-options">
+                                        <p>Please select a payment method:</p>
         
 
                                         {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null && register_content !== 'undefined' && register_content !== null ?

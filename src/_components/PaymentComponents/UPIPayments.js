@@ -297,7 +297,7 @@ class UPIPayments extends React.Component {
                           <button onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
                         </div>
 
-                // </div>
+                // </div>   
                 :
                 (isMobileOnly == true) && activeDisplayStatus !== true ?
                     <button
