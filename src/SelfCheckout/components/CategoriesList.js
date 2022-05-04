@@ -153,7 +153,7 @@ class CategoriesList extends React.Component {
                         var titleName = item.Value
                         return (
                             item.parent==0 ?
-                            <button className="category-tile"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
+                            <button className="category-tile" style={{marginRight:"20px"}}  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
                             <p>{titleName}</p>
                             </button>
                         : item.parent!=0 ?

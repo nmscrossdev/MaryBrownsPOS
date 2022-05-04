@@ -448,7 +448,7 @@ class CheckoutCart extends React.Component {
                                 <rect width="16" height="2" fill="#758696" />
                               </svg>
                             </div>
-                            <input type="number" value={product.quantity} />
+                            <input type="number" defaultValue={product.quantity}  />
                             <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment">
                               <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
                                 <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
@@ -490,28 +490,28 @@ class CheckoutCart extends React.Component {
               <div className="cart-total">
                 <div className="row">
                   <div className="text-container">
-                    <p class="left">{LocalizedLanguage.subTotal}</p>
+                    <p className="left">{LocalizedLanguage.subTotal}</p>
                   </div>
                   <div className="text-container">
-                    <p class="right"> {checkList1 && checkList1.subTotal}</p>
+                    <p className="right"> {checkList1 && checkList1.subTotal}</p>
                   </div>
                 </div>
                 <div className="row">
                   <div className="text-container">
-                    <p class="left">{LocalizedLanguage.tax}</p>
+                    <p className="left">{LocalizedLanguage.tax}</p>
                   </div>
                   <div className="text-container">
-                    <p class="right">{checkList1 && checkList1.tax}</p>
+                    <p className="right">{checkList1 && checkList1.tax}</p>
                   </div>
                 </div>
-                <div class="divider"></div>    
+                <div className="divider"></div>    
 
                  <div className="row">
                   <div className="text-container">
-                    <p class="left">{LocalizedLanguage.total}</p>
+                    <p className="left">{LocalizedLanguage.total}</p>
                   </div>
                   <div className="text-container">
-                    <p class="right">{checkList1 && checkList1.totalPrice >= 0 ? (cash_round + parseFloat(RoundAmount(checkList1.totalPrice - paid_amount))) : '0.00'}</p>
+                    <p className="right">{checkList1 && checkList1.totalPrice >= 0 ? (cash_round + parseFloat(RoundAmount(checkList1.totalPrice - paid_amount))) : '0.00'}</p>
                   </div>
                 </div>
 

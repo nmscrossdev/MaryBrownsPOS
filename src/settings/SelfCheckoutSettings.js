@@ -133,7 +133,6 @@ export function getBanners(key) {
        return null;
     }
 }
-
 export function getCategories(key) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
     if(settings&& settings.length>0)
@@ -166,4 +165,135 @@ export function getCategories(key) {
        return null;
     }
    
+}
+
+export function initSlider()
+{
+   var timer = getTitle(_key.TRANSITION_TIME_BETWEEN_IMAGES_DEFAULT_IS_8_SECONDS);
+   if(timer && typeof timer!="undefined")
+   {
+       timer =parseInt(timer)*1000;
+   }
+    //TRANSITION_TIME_BETWEEN_IMAGES_DEFAULT_IS_8_SECONDS
+// Slider
+    let sliderToggles = document.querySelector(".slider-container > .slider-toggles");
+    if(sliderToggles.hasChildNodes()==false)
+    {
+        let sliderImages = document.querySelectorAll(".slider-container > .slider > img");
+        let sliderImageWidth = sliderImages[0].offsetWidth;
+        for (let i = 0; i < sliderImages.length; i++) {
+            sliderImages[i].style.left = `${i * -sliderImageWidth}px`;
+            let toggle = document.createElement("div");
+            toggle.setAttribute("class", "toggle");
+            if (i == 0) {
+                toggle.classList.add("selected");
+            }
+            sliderToggles.appendChild(toggle);
+        }
+
+        // let sliderTimer = setTimeout(slide, 5000);
+        let sliderTimer = setTimeout(slide, timer);
+
+        document
+            .querySelectorAll(".slider-container > .slider-toggles > .toggle")
+            .forEach((toggle) => {
+                toggle.addEventListener("click", changeSlide);
+            });
+
+        function changeSlide(e) {
+            clearTimeout(sliderTimer);
+            let children = Array.from(e.target.parentNode.children);
+            let index = children.indexOf(e.target);
+            children.forEach((child) => {
+                child.classList.remove("selected");
+            });
+            children[index].classList.add("selected");
+            if (index < sliderImages.length - 1) {
+                for (let i = 0; i < sliderImages.length; i++) {
+                    sliderImages[i].style.left = `${(index - i) * sliderImageWidth}px`;
+                }
+            } else {
+                for (let i = 0; i < sliderImages.length; i++) {
+                    if (i < sliderImages.length - 1) {
+                        sliderImages[i].style.left = `-${(i + 1) * sliderImageWidth}px`;
+                    } else {
+                        sliderImages[i].style.left = `0px`;
+                    }
+                }
+            }
+            sliderTimer = setTimeout(slide, 5000);
+        }
+
+        function slide() {
+            let toggles = document.querySelectorAll(
+                ".slider-container > .slider-toggles > .toggle"
+            );
+            for (let i = 0; i < sliderImages.length; i++) {
+                let currentLeft = parseInt(
+                    window
+                        .getComputedStyle(sliderImages[i])
+                        .getPropertyValue("left")
+                        .replace("px", "")
+                );
+                if (currentLeft == 0) {
+                    toggles[i].classList.remove("selected");
+                } else if (currentLeft == -sliderImageWidth) {
+                    toggles[i].classList.add("selected");
+                }
+                if (currentLeft > 0) {
+                    sliderImages[i].style.left = `-${
+                        sliderImageWidth * (sliderImages.length - 2)
+                    }px`;
+                } else {
+                    sliderImages[i].style.left = `${currentLeft + sliderImageWidth}px`;
+                }
+            }
+            sliderTimer = setTimeout(slide, 5000);
+        }
+    }
+}
+
+export function initScreenSaver()
+{
+var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
+   if(_timer && typeof _timer!="undefined")
+   {
+    _timer =parseInt(_timer)*1000;
+   }
+    //toggleScroll();
+
+    var timer = setTimeout(setScreensaver, _timer);
+    clearTimeout(timer);
+
+    var cycle = setTimeout(cycleScreensaver, 10000);
+
+    document.body.addEventListener("click", function () {
+        clearTimeout(cycle);
+        clearTimeout(timer);
+        let screensaver = document.getElementById("screensaver");
+        if (!screensaver.classList.contains("hide")) {
+            screensaver.classList.add("hide");
+        }
+        timer = setTimeout(setScreensaver, _timer);
+        //toggleScroll(false);
+    });
+
+    function setScreensaver() {
+        //toggleScroll();
+        clearTimeout(timer);
+        document.getElementById("screensaver").classList.remove("hide");
+        cycle = setTimeout(cycleScreensaver, 10000);
+    }
+
+    function cycleScreensaver() {
+        let images = document.querySelectorAll(".screensaver > img");
+        for (let i = 0; i < images.length; i++) {
+            if (images[i].classList.contains("front")) {
+                images[i].classList.remove("front");
+                images[i + 1 == images.length ? 0 : i + 1].classList.add("front");
+                cycle = setTimeout(cycleScreensaver, 10000);
+                return;
+            }
+        }
+    }
 }

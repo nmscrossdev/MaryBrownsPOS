@@ -42,6 +42,7 @@ import { TickitDetailsPopupModal } from '../_components/TickitDetailsPopupModal/
 import Categories from '../SelfCheckout/components/Categories';
 import Navbar from '../SelfCheckout/components/Navbar';
 import Carasoul from '../SelfCheckout/components/Carasoul';
+import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
 import {_key,getTitle,getBanners,getCategories} from '../settings/SelfCheckoutSettings';
 
 class SelfCheckoutView extends React.Component {
@@ -1139,6 +1140,7 @@ class SelfCheckoutView extends React.Component {
                 closeCommonPopup = {()=>this.handleCloseCommonPopup()}
                 id = {'commonInfoPopup'}
                 /> */}
+                <ScreenSaver banners={this.state.banners}></ScreenSaver>
             </div>
         );
     }

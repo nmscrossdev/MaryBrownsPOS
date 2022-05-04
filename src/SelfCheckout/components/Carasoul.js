@@ -1,5 +1,6 @@
 import React from 'react';
 import Config from '../../Config';
+import {initSlider} from '../../settings/SelfCheckoutSettings'
 const Carasoul=(props)=> {
 	if(props.banners!=null)
 	{
@@ -9,12 +10,17 @@ const Carasoul=(props)=> {
 				{
 				props.banners.map((element, index) => {
 					return(
-					<img src={Config.key.RECIEPT_IMAGE_DOMAIN +element.Path} alt="" />
+					<img key={'slider_'+index} src={Config.key.RECIEPT_IMAGE_DOMAIN +element.Path} alt="" />
 					)
-				 })}
+				 })
+				}
 			</div>
 			<div className="slider-toggles">
 			</div>
+			{
+			setTimeout(() => {
+				initSlider()
+			}, 5000) }
 		</div>)
 	}
 }
