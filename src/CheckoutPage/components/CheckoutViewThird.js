@@ -766,7 +766,6 @@ class CheckoutViewThird extends React.Component {
                                         <div className="payment-options">
                                         <p>Please select a payment method:</p>
                                       
-
                                         {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null ?
                                             // (typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
                                             // paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
@@ -789,7 +788,7 @@ class CheckoutViewThird extends React.Component {
                                             //     )
                                             // })
                                               this.state.paymentMethods.map((type, ind) => {
-                                                this.renderPaymentsType(type, activeDisplay)   
+                                                 return(this.renderPaymentsType(type, activeDisplay))      
                                                 })
                                             :
                                             <div className="w-100">
