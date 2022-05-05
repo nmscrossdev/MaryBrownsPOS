@@ -10,7 +10,7 @@ import Navbar from '../../../SelfCheckout/components/Navbar'
 import { FetchIndexDB } from '../../../settings/FetchIndexDB'
 import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
-import {_key,isDisplay} from '../../../settings/SelfCheckoutSettings';
+import { _key, isDisplay } from '../../../settings/SelfCheckoutSettings';
 class CheckoutCart extends React.Component {
   constructor(props) {
     super(props);
@@ -397,8 +397,8 @@ class CheckoutCart extends React.Component {
   }
   render() {
     const { checkList, cash_round, payments, count, paid_amount, Markup, NumberFormat, RoundAmount, RemoveCustomer, cartDiscountAmount, selfcheckoutstatusmanagingevnt, SelfCheckoutStatus } = this.props;
-    
-    var display_rec_products=isDisplay(_key.DISPLAY_PRODUCT_RECOMMENDATIONS_ON_CART_PAGE)
+
+    var display_rec_products = isDisplay(_key.DISPLAY_PRODUCT_RECOMMENDATIONS_ON_CART_PAGE)
     //var landingScreen = '';
     // var Register_Permissions = localStorage.getItem("RegisterPermissions") ? JSON.parse(localStorage.getItem("RegisterPermissions")) : [];
     //var register_content = Register_Permissions ? Register_Permissions.content : '';
@@ -412,127 +412,157 @@ class CheckoutCart extends React.Component {
     console.log("this.props---------->", checkList1)
     return (
       <div className="portrait ">
-          {/* <div className="topnav margin-bottom-59"> */}
-          <Navbar margin={"topnav margin-bottom-59"} itemCount={checkList1 && checkList1.ListItem ? checkList1.ListItem.length : ''} />
-          {/* </div> */}
-          <div className="category-header m-b-35">
-            <div className="col">
-              <p className="current">Order Summary</p>
-            </div>
-            <button onClick={() => this.GoBackhandleClick()}>
-              <svg width={22} height={20} viewBox="0 0 22 20">
-                <path d="M9.7737 1.8335L1.3695 10.0002L9.7737 18.1668M1.3695 10.0002L20.5791 10.0002L1.3695 10.0002Z" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" fill="transparent" />
-              </svg>
-              Go back to main menu
-            </button>
+
+        <Navbar itemCount={checkList1 && checkList1.ListItem ? checkList1.ListItem.length : ''} />
+        <div className="category-header m-b-35">
+          <div className="col">
+            <p className="current">Order Summary</p>
+            <div className="divider" />
           </div>
-          <div className="category-header-divider margin-bottom-59" />
-          <div className="cart margin-bottom-43">
-            <div className="text-row">
-              <p >Review your order</p>
-              <p className="order-quantity">({checkList1 && checkList1.ListItem ? checkList1.ListItem.length : 'X'} items)</p>
-            </div>
-            <div className="order-summary">
-              <div className="order-products-wrapper">
-                {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
-                  //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
-                  return (
-                    product.Price != null ?
-                      <div className="order-product" key={index}>
-                        <div className="row">
+          <button onClick={() => this.GoBackhandleClick()} id="mainMenuButton">
+            <svg width={22} height={20} viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.7737 1.8335L1.3695 10.0002L9.7737 18.1668M1.3695 10.0002L20.5791 10.0002L1.3695 10.0002Z" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Go back to main menu
+          </button>
+        </div>
+        <div className="text-row">
+          <p>Review your order</p>
+          <p className="order-quantity">({checkList1 && checkList1.ListItem ? checkList1.ListItem.length : 'X'} items)</p>
+        </div>
+        <div className="order-summary">
+          <div className="order-products-wrapper">
+            <div className='productscroller'>
+              {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
+                //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
+                return (
+                  product.Price != null ?
+                    <div className="order-product" key={index}>
+                      <div className="row">
+                        <div className='col-md-5'>
                           <p className="prod-name">{product.Title}</p>
+                        </div>
+
+                        <div className='col-md-7'>
                           <div className="inner-row">
-                          <div className="increment-input">
-                            <div onClick={() => this.incrementDefaultQuantity(product, index, 0)} className="decrement">
-                              <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
-                                <rect width="16" height="2" fill="#758696" />
-                              </svg>
-                            </div>
-                            <input type="number" defaultValue={product.quantity}  />
-                            <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment">
-                              <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
-                                <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
-                              </svg>
+                            <div className='row'>
+                              <div className='col-md-6'>
+                                <div className="increment-input">
+                                  <div onClick={() => this.incrementDefaultQuantity(product, index, 0)} className="decrement">
+                                    <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
+                                      <rect width="16" height="2" fill="#758696" />
+                                    </svg>
+                                  </div>
+                                  <input type="number" defaultValue={product.quantity} />
+                                  <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment">
+                                    <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
+                                      <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
+                                    </svg>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className='col-md-6'>
+                                <div className='pricewrong'>
+                                  <span className='pricesize'> {parseFloat(product.Price)}</span>
+                                  <span className='deletesvgcss'>
+                                    <svg
+                                      width="15"
+                                      height="15"
+                                      viewBox="0 0 15 15"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M8.95014 7.49448L14.8188 1.64148C14.9348 1.50641 14.9954 1.33268 14.9885 1.15498C14.9817 0.977293 14.9078 0.808735 14.7817 0.682995C14.6556 0.557255 14.4866 0.483592 14.3085 0.476729C14.1303 0.469865 13.9561 0.530306 13.8207 0.645973L7.95197 6.49898L2.08327 0.638912C1.94997 0.505964 1.76917 0.431274 1.58064 0.431274C1.39212 0.431274 1.21132 0.505964 1.07802 0.638912C0.944712 0.771861 0.869822 0.952178 0.869822 1.1402C0.869822 1.32821 0.944712 1.50853 1.07802 1.64148L6.9538 7.49448L1.07802 13.3475C1.00391 13.4108 0.943722 13.4887 0.90123 13.5763C0.858738 13.6639 0.83486 13.7593 0.831094 13.8565C0.827328 13.9537 0.843756 14.0507 0.879347 14.1413C0.914937 14.2319 0.968922 14.3142 1.03791 14.383C1.1069 14.4518 1.18941 14.5056 1.28025 14.5411C1.3711 14.5766 1.46832 14.593 1.56582 14.5893C1.66331 14.5855 1.75897 14.5617 1.8468 14.5193C1.93463 14.4769 2.01273 14.4169 2.07619 14.343L7.95197 8.48999L13.8207 14.343C13.9561 14.4587 14.1303 14.5191 14.3085 14.5122C14.4866 14.5054 14.6556 14.4317 14.7817 14.306C14.9078 14.1802 14.9817 14.0117 14.9885 13.834C14.9954 13.6563 14.9348 13.4825 14.8188 13.3475L8.95014 7.49448Z"
+                                        fill="#D51A52"
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                            <p style={{ width: '50px' }}> {product.Price}</p>
-                            <svg width={15} height={15} viewBox="0 0 15 15" onClick={() => this.deleteProduct(product)}>
-                              <path d="M8.95004 7.8928L14.8187 2.03979C14.9347 1.90473 14.9953 1.73099 14.9884 1.5533C14.9816 1.37561 14.9077 1.20705 14.7816 1.08131C14.6555 0.95557 14.4865 0.881908 14.3084 0.875044C14.1302 0.868181 13.956 0.928622 13.8206 1.04429L7.95186 6.89729L2.08316 1.03723C1.94986 0.90428 1.76906 0.82959 1.58054 0.82959C1.39202 0.82959 1.21122 0.90428 1.07791 1.03723C0.944605 1.17018 0.869715 1.35049 0.869715 1.53851C0.869715 1.72653 0.944605 1.90684 1.07791 2.03979L6.95369 7.8928L1.07791 13.7458C1.0038 13.8091 0.943615 13.887 0.901123 13.9746C0.858631 14.0622 0.834753 14.1576 0.830987 14.2548C0.827221 14.352 0.843649 14.449 0.87924 14.5396C0.91483 14.6302 0.968815 14.7125 1.03781 14.7813C1.1068 14.8501 1.1893 14.9039 1.28015 14.9394C1.37099 14.9749 1.46821 14.9913 1.56571 14.9876C1.6632 14.9838 1.75887 14.96 1.8467 14.9176C1.93452 14.8752 2.01262 14.8152 2.07608 14.7413L7.95186 8.8883L13.8206 14.7413C13.956 14.857 14.1302 14.9174 14.3084 14.9105C14.4865 14.9037 14.6555 14.83 14.7816 14.7043C14.9077 14.5785 14.9816 14.41 14.9884 14.2323C14.9953 14.0546 14.9347 13.8809 14.8187 13.7458L8.95004 7.8928Z" fill="#D51A52" />
-                            </svg>
-                        </div>
-                        </div>
-                      </div> : null
-                  )
-                })
-                }
 
-                {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
-                  //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
-                  return (
-                    product.Price == null ?
-                      <div className="order-note">
-                        <div className="row">
-                          <p>Note</p>
-                          <svg width={15} height={15} viewBox="0 0 15 15">
-                            <path d="M8.95004 7.8928L14.8187 2.03979C14.9347 1.90473 14.9953 1.73099 14.9884 1.5533C14.9816 1.37561 14.9077 1.20705 14.7816 1.08131C14.6555 0.95557 14.4865 0.881908 14.3084 0.875044C14.1302 0.868181 13.956 0.928622 13.8206 1.04429L7.95186 6.89729L2.08316 1.03723C1.94986 0.90428 1.76906 0.82959 1.58054 0.82959C1.39202 0.82959 1.21122 0.90428 1.07791 1.03723C0.944605 1.17018 0.869715 1.35049 0.869715 1.53851C0.869715 1.72653 0.944605 1.90684 1.07791 2.03979L6.95369 7.8928L1.07791 13.7458C1.0038 13.8091 0.943615 13.887 0.901123 13.9746C0.858631 14.0622 0.834753 14.1576 0.830987 14.2548C0.827221 14.352 0.843649 14.449 0.87924 14.5396C0.91483 14.6302 0.968815 14.7125 1.03781 14.7813C1.1068 14.8501 1.1893 14.9039 1.28015 14.9394C1.37099 14.9749 1.46821 14.9913 1.56571 14.9876C1.6632 14.9838 1.75887 14.96 1.8467 14.9176C1.93452 14.8752 2.01262 14.8152 2.07608 14.7413L7.95186 8.8883L13.8206 14.7413C13.956 14.857 14.1302 14.9174 14.3084 14.9105C14.4865 14.9037 14.6555 14.83 14.7816 14.7043C14.9077 14.5785 14.9816 14.41 14.9884 14.2323C14.9953 14.0546 14.9347 13.8809 14.8187 13.7458L8.95004 7.8928Z" fill="#D51A52" />
-                          </svg>
                         </div>
-                        <div className="col" style={{ justifyContent: "center", paddingLeft: "26px" }}>
-                        <p className="description">{product.Title}</p>
-                        </div>
-                      </div> : null)
-                })
-                }
+                      </div>
+                    </div> : null
+                )
+              })
+              }
+            </div>
+
+            <div className="order-note" >
+                <div className="row">
+                <div className='col-md-6'>
+                  <p>Note</p>
+                  </div>
+                  <div className='col-md-6'>
+                    <span className='deletesvgcss' style={{ float: 'right'}} >
+                      <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 15 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.95014 7.49448L14.8188 1.64148C14.9348 1.50641 14.9954 1.33268 14.9885 1.15498C14.9817 0.977293 14.9078 0.808735 14.7817 0.682995C14.6556 0.557255 14.4866 0.483592 14.3085 0.476729C14.1303 0.469865 13.9561 0.530306 13.8207 0.645973L7.95197 6.49898L2.08327 0.638912C1.94997 0.505964 1.76917 0.431274 1.58064 0.431274C1.39212 0.431274 1.21132 0.505964 1.07802 0.638912C0.944712 0.771861 0.869822 0.952178 0.869822 1.1402C0.869822 1.32821 0.944712 1.50853 1.07802 1.64148L6.9538 7.49448L1.07802 13.3475C1.00391 13.4108 0.943722 13.4887 0.90123 13.5763C0.858738 13.6639 0.83486 13.7593 0.831094 13.8565C0.827328 13.9537 0.843756 14.0507 0.879347 14.1413C0.914937 14.2319 0.968922 14.3142 1.03791 14.383C1.1069 14.4518 1.18941 14.5056 1.28025 14.5411C1.3711 14.5766 1.46832 14.593 1.56582 14.5893C1.66331 14.5855 1.75897 14.5617 1.8468 14.5193C1.93463 14.4769 2.01273 14.4169 2.07619 14.343L7.95197 8.48999L13.8207 14.343C13.9561 14.4587 14.1303 14.5191 14.3085 14.5122C14.4866 14.5054 14.6556 14.4317 14.7817 14.306C14.9078 14.1802 14.9817 14.0117 14.9885 13.834C14.9954 13.6563 14.9348 13.4825 14.8188 13.3475L8.95014 7.49448Z"
+                          fill="#D51A52"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+               
               </div>
-              {/* <div className="empty hide">
-                <p>Cart is Empty</p>
-               </div> */}
-              <div className="cart-total">
-                <div className="row">
-                  <div className="text-container">
-                    <p className="left">{LocalizedLanguage.subTotal}</p>
-                  </div>
-                  <div className="text-container">
-                    <p className="right"> {checkList1 && checkList1.subTotal}</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="text-container">
-                    <p className="left">{LocalizedLanguage.tax}</p>
-                  </div>
-                  <div className="text-container">
-                    <p className="right">{checkList1 && checkList1.tax}</p>
-                  </div>
-                </div>
-                <div className="divider"></div>    
-
-                 <div className="row">
-                  <div className="text-container">
-                    <p className="left">{LocalizedLanguage.total}</p>
-                  </div>
-                  <div className="text-container">
-                    <p className="right">{checkList1 && checkList1.totalPrice >= 0 ? (cash_round + parseFloat(RoundAmount(checkList1.totalPrice - paid_amount))) : '0.00'}</p>
-                  </div>
-                </div>
-
-                {/* <div className="total">
-                  <p>{LocalizedLanguage.total}</p>
-                  <p className="cart-amount"> {checkList1 && checkList1.totalPrice >= 0 ? (cash_round + parseFloat(RoundAmount(checkList1.totalPrice - paid_amount))) : '0.00'}</p>
-                </div> */}
+              <div className="col">
+                <p>Please have ready for pickup at 1:30pm</p>
               </div>
             </div>
           </div>
-          <div className="order-instructions">
-          <p>Order instructions</p>
-          <textarea name="orderInstrucions" id="orderInstrucions"  placeholder="Enter your instructions" defaultValue={""} />
-          </div>
-          {display_rec_products=="true"?
-          <RecommendedProduct page={"cart"}/>
-          :<div></div>}
-
-          <div className='continuecard'>
-            <button onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart" >{LocalizedLanguage.continueToPayment}</button>
+          <div className="cart-total">
+            <div className="row">
+              <div className="text-container">
+                <p className="left">{LocalizedLanguage.subTotal}</p>
+              </div>
+              <div className="text-container">
+                <p className="right">{checkList1 && checkList1.subTotal}</p>
+              </div>
             </div>
+            {/* <div className="row">
+              <div className="text-container">
+                <p className="left">Discount</p>
+              </div>
+              <div className="text-container">
+                <p className="right">$2.99</p>
+              </div>
+            </div> */}
+            <div className="row">
+              <div className="text-container">
+                <p className="left">{LocalizedLanguage.tax}</p>
+              </div>
+              <div className="text-container">
+                <p className="right">{checkList1 && checkList1.tax}</p>
+              </div>
+            </div>
+            <div className="divider" />
+            <div className="row">
+              <div className="text-container">
+                <p className="left strong">{LocalizedLanguage.total}</p>
+              </div>
+              <div className="text-container">
+                <p className="right strong">{checkList1 && checkList1.totalPrice >= 0 ? (cash_round + parseFloat(RoundAmount(checkList1.totalPrice - paid_amount))) : '0.00'}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="order-instructions">
+          <p>Order Instructions</p>
+          <textarea name id cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
+        </div>
+        {display_rec_products == "true" ?
+          <RecommendedProduct page={"cart"} />
+          : <div></div>}
+        <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>
       </div>)
   }
 }
