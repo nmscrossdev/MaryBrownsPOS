@@ -90,6 +90,7 @@ input[type="number"] {
 	border-bottom: 1px solid gainsboro;
 	padding-bottom: 14px;
 }
+
 .order-note{
 	padding-bottom: 168px!important;
 }
@@ -1443,6 +1444,7 @@ body>.text-row>p.order-quantity {
 .order-summary>.cart-total {
 	align-self: flex-end;
 	margin-bottom: 29px;
+	margin-top: 300px;
 }
 
 .order-summary>.cart-total>.row {
