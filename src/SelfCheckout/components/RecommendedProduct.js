@@ -8,7 +8,8 @@ export default class RecommendedProduct extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            productList:[]
+            productList:[],
+            AllProductList:[]
         }
     }
     addItem=()=>
@@ -71,25 +72,48 @@ export default class RecommendedProduct extends Component {
                     const filter_products = productlist && productlist.filter(item =>{
                     return ids.includes(`${item.WPID}`)
                     });
-                    this.setState({productList:filter_products});
+                    this.setState({productList:filter_products,AllProductList:productlist});
                 }
             });
         }
     }
     componentWillReceiveProps(nextPros) {
-        this.getProducts(nextPros);
+        if(nextPros.item)
+        {
+            this.getProducts(nextPros);
+        }
+        //this.props.showSelected(nextPros.item);
     }
     callMethods(item)
     {
-        this.props.showSelected(item);
-        if(props.handleSimpleProduct)
-        {
-            this.props.handleSimpleProduct(item)
-        }
-        else
-        {
-            this.props.handleProductData(item)
-        }
+       // this.props.showSelected(item);
+       if(item && item.Type=="variable" || item.Type=="variation" )
+       {
+
+        var productlist = this.state.AllProductList;
+            if (productlist && productlist.length > 0) {
+                if (item) {
+                    var variationProdect = productlist.filter(filterItem => {
+                        return (filterItem.ParentId === item.WPID)
+                    })
+                    item['Variations'] = variationProdect
+                   // this.props.handleProductData(item);
+                    this.props.handleSimpleProduct(item)
+                }
+            }
+       }
+       else
+       {
+        this.props.handleSimpleProduct(item)
+       }
+        // if(props.handleSimpleProduct)
+        // {
+        //     this.props.handleSimpleProduct(item)
+        // }
+        // else
+        // {
+        //     this.props.handleProductData(item)
+        // }
         //this.props.handleSimpleProduct?this.props.handleSimpleProduct(item):this.props.handleProductData(item);
     }
    render() {

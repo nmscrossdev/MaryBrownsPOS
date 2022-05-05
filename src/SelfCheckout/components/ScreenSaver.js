@@ -13,10 +13,10 @@ const ScreenSaver=(props)=> {
 				// 	)
 				//  })
 				}
-	            {/* {
+	            {
 			setTimeout(() => {
 				initScreenSaver()
-			}, 5000) } */}
+			}, 5000) }
 			</div>
 
 			

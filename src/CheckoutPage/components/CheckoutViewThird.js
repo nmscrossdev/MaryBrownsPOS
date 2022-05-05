@@ -21,6 +21,7 @@ import { UPIPayments } from '../../_components/PaymentComponents/UPIPayments';
 // import '../../../assets/css_new/Pagewise.css'
 //import { CommonExtensionPopup } from '../../_components/CommonExtensionPopup';
 var cash_rounding = ActiveUser.key.cash_rounding;
+import {getPaymentMethods,getExtPaymentMethods} from '../../settings/SelfCheckoutSettings';
 
 class CheckoutViewThird extends React.Component {
     constructor(props) {
@@ -49,6 +50,10 @@ class CheckoutViewThird extends React.Component {
             landingScreen: '',
             onlinePayments: '',
             onlinePayCardData: '',
+            paymentMethods:[],
+            extPaymentMethods:[]
+
+            
             //IsPaymentButtonClicked:false
         }
     }
@@ -88,6 +93,11 @@ class CheckoutViewThird extends React.Component {
     /** Updated By :Aman Singhai, Updated Date : 10-08-2020, Description : Commented from the line 88 to 91, As aatifa mam said to remove it.
      */
     componentDidMount() {
+       var pm = getPaymentMethods();
+       var epm = getExtPaymentMethods();
+
+       this.setState({paymentMethods:pm,extPaymentMethods:epm});
+
         this.props.onRef(this);
         if (ActiveUser.key.isSelfcheckout == true && this.props.SelfCheckoutStatus == "sfcheckoutpayment") {
             setTimeout(function () {
@@ -552,49 +562,29 @@ class CheckoutViewThird extends React.Component {
 
     //  Fetch extension payments type from GET_EXTENTION_FIELD to show on payment section 
     showExtensionPayments = (styles)=>{
-        var ext_Payment_Fields = localStorage.getItem('GET_EXTENTION_FIELD') ? JSON.parse(localStorage.getItem('GET_EXTENTION_FIELD')) : [];
-        var extension_views_field = []
-        var counter = 1
-        if (ext_Payment_Fields && ext_Payment_Fields !== []) {
-            extension_views_field = ext_Payment_Fields && ext_Payment_Fields.length>0  && ext_Payment_Fields.filter(item => item.PluginId > 0 &&  extension_views_field.removed_from_origin !==true)
-            return extension_views_field && extension_views_field !== [] &&
-                extension_views_field.map((ext, index) => {
-                    return ext.viewManagement && ext.viewManagement !== [] && ext.viewManagement.map((type, ind) => {
-                        return type && type.ViewSlug == 'Payment Types' ?  <React.Fragment key = {ind}>
-                            {/* {counter == 1 ? <h6 className={ActiveUser.key.isSelfcheckout == true? isMobileOnly==true?'': "box-mid-heading-self": "box-mid-heading"} style={{ display: styles}}>{LocalizedLanguage.extensionPayments}</h6> : ''} */}
-                            {/* incr counter to show zextension payment heading only once */}
-                            {/* <p style ={{display : 'none'}}>{counter ++ }</p>  */}
-                           
-                            <div className="row">
-                                <button onClick ={() =>this.OpenPxtensionPaymentPopup(ext.Id)}>{ext.Name}</button>
-                            </div>
-				
-			
-                            
-                            
-                            
-                            {/* <div className= {isMobileOnly==true?"white-background box-flex-shadow box-flex-border mb-2 round-8 pointer overflowHidden no-outline w-100 p-0 overflow-0":"white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0"} style={{ display: styles }}>
-                                <div className="section">
-                                    <div className="accordion_header" data-isopen="false">
-                                        <div className="pointer">
-                                            <div
-                                                style={{ borderColor: '#46A9D4' }}
-                                                id={ext.Id}
-                                                onClick ={() =>this.OpenPxtensionPaymentPopup(ext.Id)} //this.props.handleExtensionPaymentClick(ext.Id)
-                                                className={isMobileOnly==true?'d-flex box-flex-border-left box-flex-background-others border-dynamic h-60 center-center':'d-flex box-flex box-flex-border-left box-flex-background-others border-dynamic'} >
-                                                <div className="box-flex-text-heading" >
-                                                    <h2 id={ext.Id}>{ext.Name}</h2>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
-                            </React.Fragment>
-                            : null
-                    })  
-                })
-        }
+        // var ext_Payment_Fields = localStorage.getItem('GET_EXTENTION_FIELD') ? JSON.parse(localStorage.getItem('GET_EXTENTION_FIELD')) : [];
+        // var extension_views_field = []
+        // if (ext_Payment_Fields && ext_Payment_Fields !== []) {
+        //     extension_views_field = ext_Payment_Fields && ext_Payment_Fields.length>0  && ext_Payment_Fields.filter(item => item.PluginId > 0 &&  extension_views_field.removed_from_origin !==true)
+        //     return extension_views_field && extension_views_field !== [] &&
+        //         extension_views_field.map((ext, index) => {
+        //             return ext.viewManagement && ext.viewManagement !== [] && ext.viewManagement.map((type, ind) => {
+        //                 return type && type.ViewSlug == 'Payment Types' ?  <React.Fragment key = {ind}>
+        //                     <div className="row">
+        //                         <button onClick ={() =>this.OpenPxtensionPaymentPopup(ext.Id)}>{ext.Name}</button>
+        //                     </div>
+        //                     </React.Fragment>
+        //                     : null
+        //             })  
+        //         })
+        // }
+    return (this.state.extPaymentMethods.map((type, ind) => {
+        return (
+            <div className="row">
+                <button onClick ={() =>this.OpenPxtensionPaymentPopup(type.Id)}>{type.Name}</button>
+            </div>
+        )
+    })  )
     }
 
     //*  Render all payments types   *//
@@ -775,29 +765,32 @@ class CheckoutViewThird extends React.Component {
                                         </div>
                                         <div className="payment-options">
                                         <p>Please select a payment method:</p>
-        
+                                      
 
-                                        {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null && register_content !== 'undefined' && register_content !== null ?
-                                            (typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
-                                            paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
-                                                { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
-                                                return (
-                                                        this.renderPaymentsType(pay_name, activeDisplay)                                                                       
-                                                )
-                                            })
-                                            :
-                                            paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
-                                                { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
-                                                return (
-                                                    register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
-                                                        if (itm.slug == pay_name.Code && itm.value == "true") {
-                                                            return (
-                                                                this.renderPaymentsType(pay_name, activeDisplay)                                                                       
-                                                            )
-                                                        }
-                                                    })
-                                                )
-                                            })
+                                        {(typeof paymentTypeName !== 'undefined') && paymentTypeName !== null ?
+                                            // (typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
+                                            // paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
+                                            //     { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
+                                            //     return (
+                                            //             this.renderPaymentsType(pay_name, activeDisplay)                                                                       
+                                            //     )
+                                            // })
+                                            // :
+                                            // paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment).map((pay_name, index) => {
+                                            //     { this.state.isPaymentStart && (!global_payment || !global_payment) ? <LoadingModal /> : "" }
+                                            //     return (
+                                            //         register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
+                                            //             if (itm.slug == pay_name.Code && itm.value == "true") {
+                                            //                 return (
+                                            //                     this.renderPaymentsType(pay_name, activeDisplay)                                                                       
+                                            //                 )
+                                            //             }
+                                            //         })
+                                            //     )
+                                            // })
+                                              this.state.paymentMethods.map((type, ind) => {
+                                                this.renderPaymentsType(type, activeDisplay)   
+                                                })
                                             :
                                             <div className="w-100">
                                                 <p className="text-white text-center payment-description">

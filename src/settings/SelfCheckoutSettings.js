@@ -1,4 +1,4 @@
-
+import paymentsType from './PaymentsType'
 export const _key = {      
     TITLE_FOR_CATEGORY_SECTION:"title-for-category-section",
     TITLE_FOR_PRODUCT_SECTION:"title-for-product-section",
@@ -177,7 +177,7 @@ export function initSlider()
     //TRANSITION_TIME_BETWEEN_IMAGES_DEFAULT_IS_8_SECONDS
 // Slider
     let sliderToggles = document.querySelector(".slider-container > .slider-toggles");
-    if(sliderToggles.hasChildNodes()==false)
+    if(sliderToggles && sliderToggles.hasChildNodes()==false)
     {
         let sliderImages = document.querySelectorAll(".slider-container > .slider > img");
         let sliderImageWidth = sliderImages[0].offsetWidth;
@@ -255,11 +255,11 @@ export function initSlider()
 
 export function initScreenSaver()
 {
-var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
+   var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
    if(_timer && typeof _timer!="undefined")
    {
     _timer =parseInt(_timer)*1000;
-   }
+   } 
     //toggleScroll();
 
     var timer = setTimeout(setScreensaver, _timer);
@@ -286,7 +286,7 @@ var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
     }
 
     function cycleScreensaver() {
-        let images = document.querySelectorAll(".screensaver > img");
+        let images = document.querySelectorAll(".screensaver > div");
         for (let i = 0; i < images.length; i++) {
             if (images[i].classList.contains("front")) {
                 images[i].classList.remove("front");
@@ -296,4 +296,68 @@ var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
             }
         }
     }
+}
+
+export function getExtPaymentMethods()
+{
+    var ext_Payment_Fields = localStorage.getItem('GET_EXTENTION_FIELD') ? JSON.parse(localStorage.getItem('GET_EXTENTION_FIELD')) : [];
+    //var Register_Permissions = localStorage.getItem("RegisterPermissions") ? JSON.parse(localStorage.getItem("RegisterPermissions")) : [];
+    //var register_content = Register_Permissions ? Register_Permissions.content : '';
+    
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+        var foundExtPaymentType = settings.filter(function (indx) {
+            return indx.Section=="checkout-payments" && indx.SubSection ==  "paymet-extention-option";
+        });
+    }
+
+    var extension_views_field = [];
+    var ext_payments=[];
+    if (ext_Payment_Fields && ext_Payment_Fields !== []) {
+        extension_views_field = ext_Payment_Fields.filter(item => item.PluginId > 0 &&  extension_views_field.removed_from_origin !==true)
+        var new_extension_views_field = extension_views_field.filter((ext, index) => {
+            return ext.viewManagement.find((type=>type && type.ViewSlug == 'Payment Types'));
+        });
+        const extNames = foundExtPaymentType && foundExtPaymentType.map(ext => ext.PaymentType.DisplayName);  
+        ext_payments=new_extension_views_field;
+        // ext_payments = new_extension_views_field.filter(item =>{
+        //     return extNames.includes(item.ViewSlug)
+        // })
+    }
+    //console.log("------ext_payments-----"+JSON.stringify(ext_payments))
+    return ext_payments;
+}
+
+export function getPaymentMethods()
+{
+    var paymentTypeName= (typeof localStorage.getItem('PAYMENT_TYPE_NAME') !== 'undefined') ? JSON.parse(localStorage.getItem('PAYMENT_TYPE_NAME')) : null;
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+        var foundPaymentType = settings.filter(function (indx) {
+            return indx.Section=="checkout-payments" && indx.SubSection ==  "paymet-type-option";
+        });
+    }
+    var pt_payments_options=[];
+    if((typeof paymentTypeName !== 'undefined') && paymentTypeName !== null)
+    {
+        var pt_payments=[];
+        pt_payments= paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment);
+        // .map((pay_name, index) => {
+        //     return (
+        //         register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
+        //             if (itm.slug == pay_name.Code && itm.value == "true") {
+        //                 return pay_name;                                                              
+        //             }
+        //         })
+        //     )
+        // });
+        const ptNames = foundPaymentType && foundPaymentType.map(ext => ext.PaymentType.DisplayName);
+        pt_payments_options = pt_payments.filter(item =>{
+            return ptNames.includes(item.Name)
+        })
+        //console.log("------pt_payments_options-----"+JSON.stringify(pt_payments_options))
+    }
+    return pt_payments_options;
 }
