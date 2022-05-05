@@ -255,6 +255,9 @@ export function initSlider()
 
 export function initScreenSaver()
 {
+    
+
+   
    var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
    if(_timer && typeof _timer!="undefined")
    {
@@ -266,17 +269,19 @@ export function initScreenSaver()
     clearTimeout(timer);
 
     var cycle = setTimeout(cycleScreensaver, 10000);
-
+    document.body.removeEventListener("click", function () {});
     document.body.addEventListener("click", function () {
         clearTimeout(cycle);
         clearTimeout(timer);
         let screensaver = document.getElementById("screensaver");
-        if (!screensaver.classList.contains("hide")) {
+        if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
             screensaver.classList.add("hide");
         }
         timer = setTimeout(setScreensaver, _timer);
         //toggleScroll(false);
     });
+
+    
 
     function setScreensaver() {
         //toggleScroll();
