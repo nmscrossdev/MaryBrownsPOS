@@ -76,6 +76,7 @@ input[type="number"] {
 	border: 1px solid #d51a52;
 	width: 23px;
 	height: 23px;
+	padding: 4px 4px;
 }
 
 .productscroller {
@@ -91,9 +92,7 @@ input[type="number"] {
 	padding-bottom: 14px;
 }
 
-.order-note{
-	padding-bottom: 168px!important;
-}
+
 
 
 
