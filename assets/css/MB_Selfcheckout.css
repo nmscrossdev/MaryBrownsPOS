@@ -2026,3 +2026,45 @@ body > .text-row > p.order-quantity {
 	justify-content: center;
 	align-items: center;
 }
+
+
+.block_startscreen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.block_startscreen_background {
+    flex: 1 1 auto;
+    background-color: #3d4c66;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #51bf56;
+    font-weight: 300;
+}
+.background-cover {
+    background-size: cover;
+}
+.background-no-repeat {
+    background-repeat: no-repeat;
+}
+.background-center {
+    background-position: center center;
+}
+
+.portrait .btn-self-checkout {
+    white-space: initial;
+}
+
+.btn-self-checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4b4b4b;
+    background: #f9f8f8;
+    height: 314px;
+    font-size: 60px;
+    padding: 0;
+    white-space: break-spaces;
+}
