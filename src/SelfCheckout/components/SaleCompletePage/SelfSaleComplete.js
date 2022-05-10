@@ -159,8 +159,8 @@ class SelfSaleComplete extends React.Component {
                 <div className="wrapper">
                     <img src="../assets/image/mblogobig.png" alt="" />
                     <svg width={118} height={120} viewBox="0 0 118 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="#3AB4D8" fillOpacity="0.1" stroke="#1DB9CA" strokeWidth={5} />
-                        <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3839" stroke="#1DB9CA" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="var(--mb-orange)" fillOpacity="0.1" stroke="var(--mb-blue)" strokeWidth={5} />
+                        <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3839" stroke="var(--mb-blue)" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <p className="style1">Your order is complete!</p>
                     <p className="style2">Your order number is</p>

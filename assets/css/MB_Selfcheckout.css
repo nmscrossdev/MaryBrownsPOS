@@ -2053,7 +2053,7 @@ body > .text-row > p.order-quantity {
 	min-height: 1920px;
 	margin: 0;
 	box-sizing: border-box;
-	background-color: #0aacdb;
+	background-color: var(--mb-blue);
 	display: flex;
 	justify-content: center;
 	align-items: center;
