@@ -56,12 +56,16 @@ export const _key = {
     HOME_PAGE: "home-page",
     PRODUCT_PAGE:"product-page",
     RECEIPT_PAGE:"receipt-page",
+    CHECKOUT_PAGE:"checkout-page",
+
+    //sub section name
+
 }
 
 export function setThemeColor()
 {
-    document.documentElement.style.setProperty('--mb-blue', getTitle(_key.THEME_PRIMARY_COLOR));
-    document.documentElement.style.setProperty('--mb-orange', getTitle(_key.THEME_SECONDARY_COLOR));
+    document.documentElement.style.setProperty('--primary', getTitle(_key.THEME_PRIMARY_COLOR));
+    document.documentElement.style.setProperty('--secondary', getTitle(_key.THEME_SECONDARY_COLOR));
 }
 export function getTitle(key) {
      let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
@@ -496,7 +500,7 @@ function dropdownInputClick(e) {
 function dropdownClick(e) {
 	console.log(e.target);
 	let openDropdown = document.querySelector(".search-dropdown.open");
-	if (openDropdown.contains(e.target)) {
+	if (openDropdown && openDropdown.contains(e.target)) {
 		if (e.target.classList.contains("option")) {
 			openDropdown.querySelector("input[type=text]").value = e.target.innerHTML;
 			dropdownCleanup(openDropdown);
@@ -508,10 +512,44 @@ function dropdownClick(e) {
 
 function dropdownCleanup(dropdown) {
 	let children = dropdown.querySelectorAll(".option");
-	children.forEach((child) => {
-		child.remove();
-	});
-	dropdown.classList.remove("open");
-	document.body.removeEventListener("click", dropdownClick);
+    if(children)
+    {
+        children.forEach((child) => {
+            child.remove();
+        });
+        dropdown.classList.remove("open");
+        document.body.removeEventListener("click", dropdownClick);
+    }
 }
+}
+
+export function getApps(page)
+{
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var found = settings.find(function (indx) {
+           return indx.LabelSlug ===  _key.DISPLAY_APPS;
+       });
+       
+       if(found && found.Value=="true")
+       {
+        var apps = settings.filter(indx => {
+            return indx.Section ===  "Apps" && indx.SubSection==page;
+        });
+
+        const appNames = apps && apps.map(ext => ext.Value); 
+        var ext_Apps_Fields = localStorage.getItem('GET_EXTENTION_FIELD') ? JSON.parse(localStorage.getItem('GET_EXTENTION_FIELD')) : []; 
+
+        if (ext_Apps_Fields && ext_Apps_Fields !== []) {
+            const filerapps = ext_Apps_Fields.filter(item =>{
+                return appNames.includes(`${item.PluginId}`)
+            })
+            //console.log("------extension apps for"+page+"--"+JSON.stringify(filerapps))
+            return filerapps?filerapps:null;
+         }
+        return null;        
+       }
+       return null;
+    }
 }

@@ -21,6 +21,7 @@ import RecommendedProduct from '../SelfCheckout/components/RecommendedProduct'
 import { getProductSummery } from '../WrapperSettings/CommonWork';
 import { allProductActions } from '../_actions';
 import Navbar from '../SelfCheckout/components/Navbar';
+import {_key} from '../settings/SelfCheckoutSettings';
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
     constructor(props) {
@@ -1410,7 +1411,7 @@ class CommonProductPopupModal extends React.Component {
 
         return (
             <div className= "popup hide productPopup" id="VariationPopUp">
-                 {HostUrl == "" ?<Navbar itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
+                 {HostUrl == "" ?<Navbar itemCount={this.props.itemCount} page={_key.PRODUCT_PAGE} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
                 {/* <div className="modal-dialog modal-center-block"> */}
                     {HostUrl !== "" ?
                         <div className="product-container">
@@ -1523,9 +1524,9 @@ class CommonProductPopupModal extends React.Component {
                             {/* </div> */}
                             </div>
                             <RecommendedProduct showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
-                            <div className='addtocardproductv'>
+                            <div className=''>
                                 <button onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
-                                !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart addcardproductview" >{LocalizedLanguage.addToCart}</button>
+                                !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" >{LocalizedLanguage.addToCart}</button>
                             </div>
                             <div style={{display:"none"}}>
                             { 

@@ -42,7 +42,7 @@ import { TickitDetailsPopupModal } from '../_components/TickitDetailsPopupModal/
 import Navbar from '../SelfCheckout/components/Navbar';
 import Carasoul from '../SelfCheckout/components/Carasoul';
 import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
-import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown} from '../settings/SelfCheckoutSettings';
+import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
 
 class SelfCheckoutView extends React.Component {
     constructor(props) {
@@ -149,8 +149,11 @@ class SelfCheckoutView extends React.Component {
         });
         //  dispatch(customerActions.getCountry())
         //  dispatch(customerActions.getState())
-         console.log("------THEME_SECONDARY_COLOR----"+  getTitle(_key.TITLE_FOR_CATEGORY_SECTION));
-        
+        //console.log("------THEME_SECONDARY_COLOR----"+  getTitle(_key.TITLE_FOR_CATEGORY_SECTION));
+        // getApps(_key.HOME_PAGE);
+        // getApps(_key.PRODUCT_PAGE);
+        // getApps(_key.RECEIPT_PAGE);
+        // getApps(_key.CHECKOUT_PAGE);
         /* Created By:priyanka,Created Date:13/06/2019,Description:using tickera for check default field*/
     }
   // Created By: 
@@ -209,9 +212,9 @@ class SelfCheckoutView extends React.Component {
                     })
                     if (allProdctWithbarcode && allProdctWithbarcode.length > 1) {
                         checkMultipleProductfound = true;
-                        $("#product_search_field").val(scanBarcode);
-                        $(".expand_search").toggleClass("expand_search_open");
-                        $("#product_search_field").focus();
+                        $("#product_search_field_pro").val(scanBarcode);
+                        //$(".expand_search").toggleClass("expand_search_open");
+                        $("#product_search_field_pro").focus();
                         this.filterProduct();
                     }
                     //--------------------------------------------------------------------------
@@ -257,8 +260,8 @@ class SelfCheckoutView extends React.Component {
                                  androidDisplayScreen(data.Title, data.Price, totalPrice, "cart");
                              //-----------------------------------------
                                
-                                $("#product_search_field").val(scanBarcode);
-                                $(".expand_search").toggleClass("expand_search_open");
+                                $("#product_search_field_pro").val(scanBarcode);
+                               //$(".expand_search").toggleClass("expand_search_open");
                                 this.filterProduct();
                             } else {
                                 //this.props.msg('Product is out of stock.');
@@ -1017,16 +1020,16 @@ class SelfCheckoutView extends React.Component {
     }
 
     clearData() {
-        $("#product_search_field").val('')
+        //$("#product_search_field").val('')
         $("#product_search_field_pro").val('')
         this.filterProduct()
     }
 
-    filterProduct(style) {
+    filterProduct() {
         var input = '';
-        if (style == "landscape")
-            input = $("#product_search_field").val();
-        if (style == "portrait")
+        // if (style == "landscape")
+        //     input = $("#product_search_field").val();
+        // if (style == "portrait")
             input = $("#product_search_field_pro").val();
             var value = getSearchInputLength(input.length)
 
@@ -1123,7 +1126,7 @@ class SelfCheckoutView extends React.Component {
 
         return (
             <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
-            <Navbar itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
+            <Navbar page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
             <Carasoul banners={this.state.banners}></Carasoul>
@@ -1131,7 +1134,7 @@ class SelfCheckoutView extends React.Component {
             {/* :''} */}
             <p className="section">Search for an item</p>
             <div className="search-dropdown m-b-35 selectable">
-                <input type="text" placeholder="Type item name here" />
+                <input type="text" placeholder="Type item name here" id="product_search_field_pro"/>
                 <svg
                     className="left"
                     width="33"
@@ -1142,7 +1145,7 @@ class SelfCheckoutView extends React.Component {
                 >
                     <path
                         d="M22.8462 14.3403C22.8462 11.8944 21.9769 9.80213 20.2383 8.06355C18.4997 6.32497 16.4075 5.45568 13.9615 5.45568C11.5156 5.45568 9.42338 6.32497 7.6848 8.06355C5.94621 9.80213 5.07692 11.8944 5.07692 14.3403C5.07692 16.7862 5.94621 18.8785 7.6848 20.617C9.42338 22.3556 11.5156 23.2249 13.9615 23.2249C16.4075 23.2249 18.4997 22.3556 20.2383 20.617C21.9769 18.8785 22.8462 16.7862 22.8462 14.3403ZM33 30.8403C33 31.5278 32.7488 32.1227 32.2464 32.6251C31.744 33.1276 31.149 33.3788 30.4615 33.3788C29.7476 33.3788 29.1526 33.1276 28.6767 32.6251L21.8744 25.8427C19.5078 27.4821 16.8702 28.3018 13.9615 28.3018C12.0709 28.3018 10.2629 27.9349 8.53756 27.2012C6.8122 26.4674 5.32482 25.4758 4.07542 24.2264C2.82602 22.977 1.83443 21.4896 1.10066 19.7643C0.366887 18.0389 0 16.2309 0 14.3403C0 12.4497 0.366887 10.6417 1.10066 8.91631C1.83443 7.19095 2.82602 5.70357 4.07542 4.45417C5.32482 3.20478 6.8122 2.21319 8.53756 1.47941C10.2629 0.745641 12.0709 0.378754 13.9615 0.378754C15.8522 0.378754 17.6602 0.745641 19.3855 1.47941C21.1109 2.21319 22.5983 3.20478 23.8477 4.45417C25.0971 5.70357 26.0886 7.19095 26.8224 8.91631C27.5562 10.6417 27.9231 12.4497 27.9231 14.3403C27.9231 17.2489 27.1034 19.8866 25.4639 22.2532L32.2662 29.0554C32.7554 29.5446 33 30.1396 33 30.8403Z"
-                        fill="var(--mb-blue)"
+                        fill="var(--primary)"
                     />
                 </svg>
                 <svg
@@ -1180,7 +1183,7 @@ class SelfCheckoutView extends React.Component {
             <div className="cover hide"></div>
             
             {/* <TileModel status={this.tileModalAddStatus} msg={this.CommonMsg} positionNum={this.state.posIndex} />       */}
-            <CommonProductPopupModal getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
+            <CommonProductPopupModal itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
             inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
             getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
             msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} 
@@ -1196,7 +1199,22 @@ class SelfCheckoutView extends React.Component {
                 id = {'commonInfoPopup'}
                 /> */}
                 <ScreenSaver banners={this.state.banners}></ScreenSaver>
+                {
+                    //Page Setup
+                    setTimeout(() => {
+                        scrollbarFix();
+                        lastElemMargin(document.querySelector(".category-tile-container"), 5);
+                        lastElemMargin(document.querySelector(".card-tile-container"), 4);
+                        setItemsHeight();
+                        scaleSVG();
+                        scaleImages();
+                        resize();
+                    }, 1000)
+
+
+                }
             </div>
+            
         );
     }
 }

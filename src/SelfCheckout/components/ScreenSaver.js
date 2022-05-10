@@ -7,7 +7,7 @@ const ScreenSaver=()=> {
 	let btnBackColor = getTitle(_key.BOTTOM_BUTTON_COLOR);
 	let bottomImage = getScreenSaverBtnImage();
 	let screenSaverImages = getScreenSaverImages();
-    return (<div>
+    return (
 		<div id="screensaver" className="screensaver hide">
 			{
 			//  screenSaverImages && screenSaverImages.map((element, index) => {
@@ -39,7 +39,7 @@ const ScreenSaver=()=> {
 		</div>
 
 
-			{/* <div id="screensaver" className="screensaver">
+			/* <div id="screensaver" className="screensaver">
 				{
 					<img className="front" key={'ssaver_'+0} src="http://dev1.sell.olivertest.com/assets/images/screensaver4.png" alt="" />
 					///http://dev1.sell.olivertest.com/assets/images/screensaver4.png
@@ -53,10 +53,10 @@ const ScreenSaver=()=> {
 			setTimeout(() => {
 				initScreenSaver()
 			}, 1000) }
-			</div> */}
+			</div> */
 
 			
-	{/* <div className="block_startscreen">
+	/* <div className="block_startscreen">
 		<div className="block_startscreen_background background-cover background-no-repeat background-center" style="background-image: url(&quot;https://app.oliverpos.com/Content/Customization/landing-screen/r135407828838/resize-1638339648842587454images3.jpg&quot;);">
 		</div>
 		<button className="btn btn-light btn-block btn-self-checkout">
@@ -67,8 +67,8 @@ const ScreenSaver=()=> {
 	     {
 		 	setTimeout(() => {
 				initScreenSaver(5000)
-		 	}, 5000) } */}
-			</div>
+		 	}, 5000) } */
+		
 		
 		)
 }

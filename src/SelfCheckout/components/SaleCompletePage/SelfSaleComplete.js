@@ -9,6 +9,8 @@ import { OnboardingShopViewPopup } from '../../../onboarding/components/Onboardi
 import { onBackTOLoginBtnClick } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
 import SendMailComponent from './SendMailComponent;'
+import {_key} from '../../../settings/SelfCheckoutSettings';
+import BottomApps from '../../../SelfCheckout/components/BottomApps';
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 
@@ -159,8 +161,8 @@ class SelfSaleComplete extends React.Component {
                 <div className="wrapper">
                     <img src="../assets/image/mblogobig.png" alt="" />
                     <svg width={118} height={120} viewBox="0 0 118 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="var(--mb-orange)" fillOpacity="0.1" stroke="var(--mb-blue)" strokeWidth={5} />
-                        <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3839" stroke="var(--mb-blue)" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="var(--secondary)" fillOpacity="0.1" stroke="var(--primary)" strokeWidth={5} />
+                        <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3839" stroke="var(--primary)" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <p className="style1">Your order is complete!</p>
                     <p className="style2">Your order number is</p>
@@ -170,7 +172,8 @@ class SelfSaleComplete extends React.Component {
                     <button onClick={() => this.sendMail()} id="emailButton">{LocalizedLanguage.email}</button>
                     <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
                     <div className="divider" />
-                    <div className="row">
+                    <BottomApps page={_key.CHECKOUT_PAGE}></BottomApps>
+                    {/* <div className="row">
                         <button className="icon">
                             <svg width={29} height={29} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M26.1 0H2.9C1.305 0 0 1.305 0 2.9V29L5.8 23.2H26.1C27.695 23.2 29 21.895 29 20.3V2.9C29 1.305 27.695 0 26.1 0ZM26.1 20.3H5.8L2.9 23.2V2.9H26.1V20.3ZM7.25 10.15H10.15V13.05H7.25V10.15ZM13.05 10.15H15.95V13.05H13.05V10.15ZM18.85 10.15H21.75V13.05H18.85V10.15Z" fill="white" />
@@ -189,7 +192,7 @@ class SelfSaleComplete extends React.Component {
                             </svg>
                             <p>Careers</p>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             

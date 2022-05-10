@@ -349,7 +349,7 @@ class AllProduct extends React.Component {
     loadingData() {
         const { pageNumber, chunk_size, ParentProductList } = this.state;
         var prdList = [];
-        var tilDisplayIndex = pageNumber * chunk_size + chunk_size;
+       // var tilDisplayIndex = pageNumber * chunk_size + chunk_size;
         ParentProductList.sort(function (a, b) {
             var nameA = a.Title.toUpperCase(); // ignore upper and lowercase
             var nameB = b.Title.toUpperCase(); // ignore upper and lowercase
@@ -363,7 +363,7 @@ class AllProduct extends React.Component {
         });
 
         ParentProductList && ParentProductList.map((prod, index) => {
-            if (index >= 0 && index < tilDisplayIndex) {
+            //if (index >= 0 && index < tilDisplayIndex) {
                 // check tickera product is expired?--------------------------
                 var isExpired = false;
                 if (prod.IsTicket && prod.IsTicket == true) {
@@ -380,7 +380,7 @@ class AllProduct extends React.Component {
                 //------------------------------------------------------------
                 if (isExpired == false)
                     prdList.push(prod)
-            }
+           // }
         });
         if (prdList.length > 0) {
             this.state.product_List = prdList;
@@ -405,7 +405,7 @@ class AllProduct extends React.Component {
         var prdList = [];
         var tilDisplayIndex = pageNumber * chunk_size + chunk_size;
         filteredProuctList && filteredProuctList.map((prod, index) => {
-            if (index >= 0 && index < tilDisplayIndex)
+           // if (index >= 0 && index < tilDisplayIndex)
                 prdList.push(prod)
         });
         if (prdList.length > 0) {
