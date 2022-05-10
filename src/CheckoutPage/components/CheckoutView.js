@@ -2830,28 +2830,28 @@ class CheckoutView extends React.Component {
         const { shop_order } = this.props;
         var isDemoUser = localStorage.getItem('demoUser') ? localStorage.getItem('demoUser') : false;
         return (
-            (ActiveUser.key.isSelfcheckout == true && isMobileOnly == true) ?
-                <div><CheckoutViewThird SelfCheckoutStatus={this.state.SelfCheckoutStatus}
-                    selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt}
-                    env_type={this.state.envFocus} updateStoreCreditPayment={this.updateStoreCreditPayment}
-                    InactiveStoreCredit={updateStoreCreditPayment} amountStoreCreditPayment={amountStoreCreditPayment}
-                    typeStoreCreditPayment={typeStoreCreditPayment} active_true_diamond={active_true_diamond}
-                    toggleExtentionStatus={toggleExtentionStatus} autoFocus={this.autoFocus} storeCredit={store_credit}
-                    paymentType={this.paymentType} extraPayAmount={this.extraPayAmount} onRef={ref => (this.orderPayments = ref)}
-                    {...this.props} checkList={checkList} addPayment={this.getPayment} setOrderPartialPayments={this.setOrderPartialPayments}
-                    orderPopup={this.openOrderPopup} 
-                    handleExtensionPaymentClick={this.handleExtensionPaymentClick}
-                    showExtIframe={this.state.extensionIframe}
-                    />
-                    {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
-                    <CommonExtensionPopup
-                    showExtIframe={this.state.extensionIframe}
-                    close_ext_modal={this.close_ext_modal}
-                    extHostUrl={this.state.extHostUrl}
-                    extPageUrl={this.state.extPageUrl}
-                />:null}
-                </div>
-                :
+            // (ActiveUser.key.isSelfcheckout == true && isMobileOnly == true) ?
+            //     <div><CheckoutViewThird SelfCheckoutStatus={this.state.SelfCheckoutStatus}
+            //         selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt}
+            //         env_type={this.state.envFocus} updateStoreCreditPayment={this.updateStoreCreditPayment}
+            //         InactiveStoreCredit={updateStoreCreditPayment} amountStoreCreditPayment={amountStoreCreditPayment}
+            //         typeStoreCreditPayment={typeStoreCreditPayment} active_true_diamond={active_true_diamond}
+            //         toggleExtentionStatus={toggleExtentionStatus} autoFocus={this.autoFocus} storeCredit={store_credit}
+            //         paymentType={this.paymentType} extraPayAmount={this.extraPayAmount} onRef={ref => (this.orderPayments = ref)}
+            //         {...this.props} checkList={checkList} addPayment={this.getPayment} setOrderPartialPayments={this.setOrderPartialPayments}
+            //         orderPopup={this.openOrderPopup} 
+            //         handleExtensionPaymentClick={this.handleExtensionPaymentClick}
+            //         showExtIframe={this.state.extensionIframe}
+            //         />
+            //         {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
+            //         <CommonExtensionPopup
+            //         showExtIframe={this.state.extensionIframe}
+            //         close_ext_modal={this.close_ext_modal}
+            //         extHostUrl={this.state.extHostUrl}
+            //         extPageUrl={this.state.extPageUrl}
+            //     />:null}
+            //     </div>
+            //     :
                 (ActiveUser.key.isSelfcheckout == true && this.state.SelfCheckoutStatus == "defaultcheckout") ?
                     <CheckoutViewFirst
                         onRef={ref => (this.orderCart = ref)}
@@ -3185,15 +3185,6 @@ class CheckoutView extends React.Component {
                                  /> */}
                                 <OrderNotCreatePopupModel errOnPlaceOrder={this.state.errOnPlaceOrder} statusUpdate={(text) => { this.statusUpdate(text) }} />
                                 <OnBoardingAllModal />
-                                <OnboardingShopViewPopup
-                                    title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
-                                    subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
-                                    subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
-                                    onClickContinue={onBackTOLoginBtnClick}
-                                    imageSrc={''}
-                                    btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
-                                    id={'firebaseRegisterAlreadyusedPopup'}
-                                />
                                 <GroupSaleModal />
                             </div>
         )

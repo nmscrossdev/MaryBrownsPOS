@@ -36,11 +36,20 @@ export const _key = {
     ALLOW_PARK_SALE:"allow-park-sale",
     PAYMENT_BUTTON_LABEL:"payment-button-label",
 
-    TIMEOUT_WAIT_TIME:"timeout-wait-time",
+    
     TRANSITION_TIME_BETWEEN_IMAGES_DEFAULT_IS_8_SECONDS:"transition-time-between-images-default-is-8-seconds",
     CHECKOUT_PAYMENTS:"checkout-payments",
     PAYMET_TYPE_OPTION:"paymet-type-option",
     PAYMET_EXTENTION_OPTION:"paymet-extention-option",
+
+    TIMEOUT_WAIT_TIME:"timeout-wait-time",
+    BOTTOM_BUTTON_COLOR:"bottom-button-color",
+    //Section: "ScreensaverOption"
+    //SubSection: "button-area"
+    BUTTON_LABEL_FONT_COLOR:"button-label-font-color",
+    LABEL_FOR_BOTTOM_AREA_ON_SCREEN_SAVER:"label-for-bottom-area-on-screen-saver",
+    DISPLAY_LOGO_IN_BOTTOM_BUTTON_AREA:"display-logo-in-bottom-button-area",
+
 
 
     //section name
@@ -49,6 +58,11 @@ export const _key = {
     RECEIPT_PAGE:"receipt-page",
 }
 
+export function setThemeColor()
+{
+    document.documentElement.style.setProperty('--mb-blue', getTitle(_key.THEME_PRIMARY_COLOR));
+    document.documentElement.style.setProperty('--mb-orange', getTitle(_key.THEME_SECONDARY_COLOR));
+}
 export function getTitle(key) {
      let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
      if(settings && settings.length>0)
@@ -255,9 +269,6 @@ export function initSlider()
 
 export function initScreenSaver()
 {
-    
-
-   
    var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
    if(_timer && typeof _timer!="undefined")
    {
@@ -284,14 +295,21 @@ export function initScreenSaver()
     
 
     function setScreensaver() {
-        //toggleScroll();
+       // toggleScroll();
         clearTimeout(timer);
-        document.getElementById("screensaver").classList.remove("hide");
-        cycle = setTimeout(cycleScreensaver, 10000);
+        // document.getElementById("screensaver").classList.remove("hide");
+        // cycle = setTimeout(cycleScreensaver, 10000);
+
+        let screensaver = document.getElementById("screensaver");
+        if (screensaver!=null && typeof screensaver!="undefined" && screensaver.classList) {
+            screensaver.classList.remove("hide");
+            cycle = setTimeout(cycleScreensaver, 10000);
+        }
+
     }
 
     function cycleScreensaver() {
-        let images = document.querySelectorAll(".screensaver > div");
+        let images = document.querySelectorAll(".screensaver > img");
         for (let i = 0; i < images.length; i++) {
             if (images[i].classList.contains("front")) {
                 images[i].classList.remove("front");
@@ -365,4 +383,33 @@ export function getPaymentMethods()
         //console.log("------pt_payments_options-----"+JSON.stringify(pt_payments_options))
     }
     return pt_payments_options;
+}
+
+export function getScreenSaverImages() {
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var images = settings.find(function (indx) {
+           return indx.Section ===  "ScreensaverOption" && indx.SubSection==="screensaver-image";
+       });
+       return images?images:null;
+    }
+}
+export function getScreenSaverBtnImage() {
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var bottomImage=null;
+       var found = settings.find(function (indx) {
+           return indx.LabelSlug===_key.DISPLAY_LOGO_IN_BOTTOM_BUTTON_AREA && indx.Section ===  "ScreensaverOption" && indx.SubSection==="button-logo-section";
+       });
+
+       if(found && found.Value=="true")
+       {   
+        var bottomImage = settings.find(function (indx) {
+            return indx.LabelSlug ===  "custom-button-logo" && indx.Section=="ScreensaverOption" && indx.SubSection==="button-logo-section";
+        });
+        }
+       return bottomImage?bottomImage:null;
+    }
 }

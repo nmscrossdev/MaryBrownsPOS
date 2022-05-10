@@ -495,7 +495,29 @@ class SaleComplete extends React.Component {
         // }
     }
     HandleContinue() {
-        history.push('/selfcheckout')
+        localStorage.removeItem('CARD_PRODUCT_LIST');
+        localStorage.removeItem('GTM_ORDER');        
+        const { dispatch } = this.props;
+        localStorage.removeItem('ORDER_ID');
+        localStorage.removeItem('CHECKLIST');
+        localStorage.removeItem('oliver_order_payments');
+        localStorage.removeItem('AdCusDetail');
+        localStorage.removeItem('CARD_PRODUCT_LIST');
+        localStorage.removeItem("CART");
+        localStorage.removeItem("SINGLE_PRODUCT");
+        localStorage.removeItem("PRODUCT");
+        localStorage.removeItem('PRODUCTX_DATA');
+        localStorage.removeItem('PAYCONIQ_PAYMENT_RESPONSE');
+        localStorage.removeItem('ONLINE_PAYMENT_RESPONSE');
+        localStorage.removeItem('STRIPE_PAYMENT_RESPONSE');
+        localStorage.removeItem('GLOBAL_PAYMENT_RESPONSE');
+        localStorage.removeItem('PAYMENT_RESPONSE');
+        localStorage.removeItem('PENDING_PAYMENTS');
+        localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
+        dispatch(cartProductActions.addtoCartProduct(null));
+        // history.push('/selfcheckout');
+        history.push('/SelfCheckoutView');
+        
     }
     // checkOrderStatus(tempOrderId) {
     //     if (this.state.isOrderSyncComplete == false) {
@@ -1053,15 +1075,6 @@ class SaleComplete extends React.Component {
                         </div>
                 }
               <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
-                <OnboardingShopViewPopup
-                    title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
-                    subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
-                    subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
-                    onClickContinue={onBackTOLoginBtnClick}
-                    imageSrc={''}
-                    btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
-                    id={'firebaseRegisterAlreadyusedPopup'}
-                />
                      <CloudPrinterListPopup
                         cloudPrintersData={this.state.cloudPrintersData}
                         cloudPrinterErr = {this.state.cloudPrinterErr}

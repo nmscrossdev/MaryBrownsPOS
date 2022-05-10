@@ -17,11 +17,11 @@ render() {
    
 console.log("extentionUrl",extentionUrl)
     return (
-        <div id="common_ext_popup" className="modal modal-wide modal-wide1 fade modal-wide-sm">
+        <div id="common_ext_popup" className="popup hide">
             <div className="modal-dialog" id="dialog-midle-align">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <button type="button" onClick={this.props.close_ext_modal} className="close" data-dismiss="modal" aria-hidden="true">
+                        <button type="button" onClick={this.props.close_ext_modal} className="popup-close" data-dismiss="modal" aria-hidden="true">
                             <img src="../assets/img/Close.svg" />
                         </button>
                     </div>
@@ -34,13 +34,13 @@ console.log("extentionUrl",extentionUrl)
                     {this.props.showExtIframe == true ?
                         <iframe
                             width="100%"
-                            height="100px"
+                            height="100%"
                             sandbox="allow-scripts allow-same-origin allow-forms"
                             className="embed-responsive-item diamondSectionHeight"
                             // ref={(f) => this.ifr = f}
-                            src={extentionUrl}
+                            // src={extentionUrl}
                             // src={'./externalApp/customer_activity_ext.html'}
-                            // src={'./externalApp/fetchpaymentApp.html'}                           
+                            src={'./externalApp/fetchpaymentApp.html'}                           
                             id="commoniframe"
                         />: ''}
                         

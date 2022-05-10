@@ -1650,14 +1650,7 @@ class Activity extends React.Component {
                     <CloseRegisterPopupTwo />
                     <PlanUpgradePopup />
                     <OnBoardingAllModal />
-                    <OnboardingShopViewPopup
-                        title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
-                        subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
-                        onClickContinue={onBackTOLoginBtnClick}
-                        imageSrc={''}
-                        btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
-                        id={'firebaseRegisterAlreadyusedPopup'}
-                    />
+                    
                 </div>
         );
     }

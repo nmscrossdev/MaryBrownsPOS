@@ -51,7 +51,7 @@ export default class RecommendedProduct extends Component {
     getProducts(nextPros)
     {
         var ids="";
-        if(nextPros.item && nextPros.page)
+        if(nextPros && nextPros.item && nextPros.page)
         {
             ids=nextPros.item.ReletedIds;
         }
@@ -78,10 +78,11 @@ export default class RecommendedProduct extends Component {
         }
     }
     componentWillReceiveProps(nextPros) {
-        if(nextPros.item)
+        //if(nextPros.item)
         {
             this.getProducts(nextPros);
         }
+
         //this.props.showSelected(nextPros.item);
     }
     callMethods(item)
@@ -121,10 +122,10 @@ export default class RecommendedProduct extends Component {
     return (
         <div className="recommendations">
         <p>Recommendations</p>
-        <div className="row">
         {    
             (productList && productList.length !=0)?
-                productList && productList.map((item, index) => {
+            <div className="row">
+                {productList && productList.map((item, index) => {
                     var display_expireTicketTime;
                     var isVariableProduct = (item.Type !== "simple" && item.StockStatus !== "outofstock") ? true : false;
                     if (item.IsTicket && item.IsTicket == true) {
@@ -160,7 +161,8 @@ export default class RecommendedProduct extends Component {
 						</div>
                         </button>
                     )
-                })
+                })}
+                </div>
             :
                 <div className="w-100">                                    
                     <p className="text-center payment-description">
@@ -168,7 +170,6 @@ export default class RecommendedProduct extends Component {
                     </p>
                 </div>
             }    
-        </div>
     </div>
     )
   }

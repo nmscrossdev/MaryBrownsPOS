@@ -1140,7 +1140,7 @@ class AllProduct extends React.Component {
                         pStylenotFound={pStylenotFound}
                         imgError={this.imgerrorHandling}>
                     </ProductItemsView>
-                         {((!search) && totalRecords > chunk_size * pageNumber && totalRecords > chunk_size) ?
+                         {/* {((!search) && totalRecords > chunk_size * pageNumber && totalRecords > chunk_size) ?
                             <div className="createnewcustomer">
                                 <button type="button" className="btn btn-block btn-primary total_checkout" id='hideButton' onClick={() => this.loadingData()}>{LocalizedLanguage.loadMore}</button>
                             </div>
@@ -1150,7 +1150,7 @@ class AllProduct extends React.Component {
                                     <button type="button" className="btn btn-block btn-primary total_checkout" id='hideButton' onClick={() => this.loadingFilterData()}>{LocalizedLanguage.loadMore}</button>
                                 </div>
                                 :
-                                <div />} 
+                                <div />}  */}
                    </div> 
                     // : (isMobileOnly == true) ?
                     //     <MobileAllProductList

@@ -40,7 +40,7 @@ function marginCalculator(container, marginSize) {
 }
 
 function setFillContainer(container) {
-	if (document.body.scrollHeight == window.innerHeight) {
+	if (document.body.scrollHeight == window.innerHeight && container) {
 		let rect = container.getBoundingClientRect();
 		container.style.height = `${window.innerHeight - rect.top - 115}px`;
 	}
@@ -48,13 +48,13 @@ function setFillContainer(container) {
 
 //Popups
 
-function openPopup(popupName) {
-	let popup = document.querySelector(`.${popupName}`);
+function showModal(popupName) {
+	let popup = document.querySelector(`#${popupName}`);
 	let cover = document.querySelector(".cover");
-	if (cover.classList.contains("hide")) {
+	if (cover && cover.classList.contains("hide")) {
 		cover.classList.remove("hide");
 	}
-	if (popup.classList.contains("hide")) {
+	if (popup && popup.classList.contains("hide")) {
 		let maxWidth = window.innerWidth - 80;
 		let maxHeight = window.innerHeight - 80;
 		let setWidth, setHeight;
@@ -77,13 +77,10 @@ function openPopup(popupName) {
 	toggleScroll();
 }
 
-function closePopup(e) {
-	let parent = e.target.parentNode;
-	while (!parent.classList.contains("popup")) {
-		parent = parent.parentNode;
-	}
-	parent.classList.add("hide");
-	document.querySelector(".cover").classList.add("hide");
+function hideModal(e) {
+	let parent = document.getElementById(e);
+	parent && parent.classList && parent.classList.add("hide");
+	document.querySelector(".cover") && document.querySelector(".cover").classList.add("hide");
 	toggleScroll();
 }
 

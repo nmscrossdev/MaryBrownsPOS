@@ -293,9 +293,9 @@ class UPIPayments extends React.Component {
                 //         {Name}
                 //     </button>
 
-                    <div className="row">
+                    // <div className="row">
                           <button onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
-                        </div>
+                        // </div>
 
                 // </div>   
                 :

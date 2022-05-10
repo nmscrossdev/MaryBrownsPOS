@@ -60,53 +60,53 @@ var ErrorBoundary = bugsnagClient.getPlugin('react');
 
 //var isMobileOnly = window.orientation > -1;
 
-var webCssStyle = ["./assets/css/bootstrap.min.css", "./assets/css/bootstrap-select-override.css", "./assets/css/all.min.css", "./assets/css/theme.css", "./assets/css/circle.css", "./assets/css/search.css", "./assets/css/jquery.mCustomScrollbar.css", "./assets/css/iconSvg.css", "./assets/css/all.min.update.css", "../assets/css/table.css", "./assets/css/bootstrap-select.min.css", "./assets/css/jquery.bootstrap-touchspin.css", "./assets/css/flaticon.css", "./assets/scss/css/webview.css", "./assets/css/icon.css"]
-var mobileCssStyle = ["./mobileAssets/css/main.css", "./mobileAssets/css/text-view.css", "./mobileAssets/www/jquery-scrollbar/css/jquery.scrollbar.css"]
+// var webCssStyle = ["./assets/css/bootstrap.min.css", "./assets/css/bootstrap-select-override.css", "./assets/css/all.min.css", "./assets/css/theme.css", "./assets/css/circle.css", "./assets/css/search.css", "./assets/css/jquery.mCustomScrollbar.css", "./assets/css/iconSvg.css", "./assets/css/all.min.update.css", "../assets/css/table.css", "./assets/css/bootstrap-select.min.css", "./assets/css/jquery.bootstrap-touchspin.css", "./assets/css/flaticon.css", "./assets/scss/css/webview.css", "./assets/css/icon.css"]
+// var mobileCssStyle = ["./mobileAssets/css/main.css", "./mobileAssets/css/text-view.css", "./mobileAssets/www/jquery-scrollbar/css/jquery.scrollbar.css"]
 
-function addLinkOfCss(fileName) {
-  var head = document.head;
-  var link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href = fileName;
-  head.appendChild(link);
-}
-function removeLinkOfCss(fileName) {
-  var fName = fileName && fileName.substring(fileName.lastIndexOf('/') + 1)
-  // var head = document.head;
-  // var link = document.createElement("link");
-  // link.type = "text/css";
-  // link.rel = "stylesheet";
-  // link.href = fileName;
-  // head.removeChild(link);
-  // $("link[title='"+fileName+"']").remove();
-  //$("#"+fileName).attr("disabled", "disabled");
+// function addLinkOfCss(fileName) {
+//   var head = document.head;
+//   var link = document.createElement("link");
+//   link.type = "text/css";
+//   link.rel = "stylesheet";
+//   link.href = fileName;
+//   head.appendChild(link);
+// }
+// function removeLinkOfCss(fileName) {
+//   var fName = fileName && fileName.substring(fileName.lastIndexOf('/') + 1)
+//   // var head = document.head;
+//   // var link = document.createElement("link");
+//   // link.type = "text/css";
+//   // link.rel = "stylesheet";
+//   // link.href = fileName;
+//   // head.removeChild(link);
+//   // $("link[title='"+fileName+"']").remove();
+//   //$("#"+fileName).attr("disabled", "disabled");
 
-  var styles = document.styleSheets;
-  var href = "";
-  for (var i = 0; i < styles.length; i++) {
-    if (styles[i] !== '' && styles[i] !== null && styles[i].href !== null) {
-      if (styles[i] && styles[i].href) {
-        href = styles[i].href.split("/");
-        href = href[href.length - 1];
-      }
-      //console.log( href +'   '+fName)
-      if (href === fName) {
-        styles[i].disabled = true;
-        break;
-      }
-    }
-  }
-}
+//   var styles = document.styleSheets;
+//   var href = "";
+//   for (var i = 0; i < styles.length; i++) {
+//     if (styles[i] !== '' && styles[i] !== null && styles[i].href !== null) {
+//       if (styles[i] && styles[i].href) {
+//         href = styles[i].href.split("/");
+//         href = href[href.length - 1];
+//       }
+//       //console.log( href +'   '+fName)
+//       if (href === fName) {
+//         styles[i].disabled = true;
+//         break;
+//       }
+//     }
+//   }
+// }
 //if( (!(ActiveUser.key.isSelfcheckout)|| ActiveUser.key.isSelfcheckout == false)) {
 if (isMobileOnly) {
   console.log("isMobileOnly", isMobileOnly)
-  webCssStyle.forEach(removeLinkOfCss);
-  mobileCssStyle.forEach(addLinkOfCss);
+  // webCssStyle.forEach(removeLinkOfCss);
+  // mobileCssStyle.forEach(addLinkOfCss);
 
 }
 if (!isMobileOnly) {
-  mobileCssStyle.forEach(removeLinkOfCss);
+ // mobileCssStyle.forEach(removeLinkOfCss);
   // webCssStyle.forEach(addLinkOfCss);
 }
 //}

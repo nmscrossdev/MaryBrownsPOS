@@ -281,9 +281,9 @@ class CashPayment extends React.Component {
                     //         </div>
                     //     </div>
                     // </div>
-                    <div className="row" style={{ display: styles }}>
+                    // <div className="row" style={{ display: styles }}>
                          <button onClick={() => this.hideTab(!status)} >{Name}</button>
-                    </div>
+                    // </div>
                     :
                     <div className="white-background box-flex-shadow box-flex-border mb-2 round-8 d-none overflowHidden overflow-0" >
                         <div className="section">

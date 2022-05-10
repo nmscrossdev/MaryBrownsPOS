@@ -20,7 +20,7 @@ const ProductItemsView = (props) => {
     const showSearchBar = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Search-Bar");
     return (      
   
-        <div className="card-tile-container" style={{height:"781px"}} >
+        <div className="card-tile-container">
             {/* {showSearchBar && showSearchBar.value == 'true' && */}
                 {/* <div className="widget-search"> 
                     <input type="search" id="product_search_field_pro" className="form-control" name="search" onChange={() => props.filterProduct()}
@@ -62,16 +62,17 @@ const ProductItemsView = (props) => {
                             }
                         }
                         return (  
-                            <div className="product-card" key={"product_"+index} style={{ marginRight:((index+1)%4==0)? "":"20px",marginBottom:"20px"}} >
+                            //style={{ marginRight:((index+1)%4==0)? "":"20px",marginBottom:"20px"}} 
+                            <button className="product-card" key={"product_"+index} >
                                 <div className="img-container">
                                 <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)} />
                                 </div>
                                 <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
-                                <p className="price">starting at $ {item.Price}</p>
-                                <button className="button" key={index}
+                                <p className="price">starting at $ {parseFloat(item.Price).toFixed(2)}</p>
+                                <div className="button" key={index}
                             data-toggle={isVariableProduct ? "modal" : ""} href="javascript:void(0)"
-                            onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>View Item</button>
-                            </div>
+                            onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>View Item</div>
+                            </button>
                         )
                     })
                 :
@@ -80,7 +81,12 @@ const ProductItemsView = (props) => {
                         {LocalizedLanguage.noMatchingProductFound}
                         </p>
                     </div>
-                }               
+                } 
+                    {setTimeout(() => {
+                        marginCalculator(document.querySelector(".category-tile-container"), 20);
+                        setFillContainer(document.querySelector(".card-tile-container"));
+                        marginCalculator(document.querySelector(".card-tile-container"), 20);
+                    }, 500) }             
             </div> 
     )
 }

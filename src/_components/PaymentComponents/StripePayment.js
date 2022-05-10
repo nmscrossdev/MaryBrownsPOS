@@ -423,9 +423,9 @@ class StripePayment extends React.Component {
                                     </div>
                                 </div> */
 
-                                <div className="row" style={{ display: styles }}>
+                                // <div className="row" style={{ display: styles }}>
                 <button ref="btn" onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
-            </div>
+            // </div>
                     //  </div>
 
 
