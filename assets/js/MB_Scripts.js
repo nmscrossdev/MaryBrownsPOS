@@ -127,3 +127,4 @@ function decreaseIncrementInput(e) {
 		input.value = 1;
 	}
 }
+

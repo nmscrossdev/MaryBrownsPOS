@@ -413,3 +413,105 @@ export function getScreenSaverBtnImage() {
        return bottomImage?bottomImage:null;
     }
 }
+
+export function initDropDown(searchData)
+{
+    // Search Dropdown
+// let searchData = [
+// 	"Plant 1",
+// 	"Plant 2",
+// 	"Plant 3",
+// 	"Plant 4",
+// 	"Plant 5",
+// 	"Plant 6",
+// 	"Ice",
+// 	"Fire",
+// 	"Air",
+// 	"Earth",
+// 	"Dragon",
+// 	"Simpsons",
+// 	"Covid Cure",
+// ];
+
+let dropdownInputs = document.querySelectorAll(".search-dropdown > input[type=text]");
+dropdownInputs.forEach((input) => {
+	input.addEventListener("input", dropdownChange);
+	input.addEventListener("click", dropdownInputClick);
+});
+
+function dropdownChange(e) {
+	dropdownCleanup(e.target.parentNode);
+	document.body.addEventListener("click", dropdownClick);
+	let value = e.target.value;
+	if (value) {
+		let optionWords = [];
+		searchData.forEach((word) => {
+			if (word.toLowerCase().includes(value.toLowerCase())) {
+				optionWords.push(word);
+			}
+		});
+		if (optionWords) {
+			e.target.parentNode.classList.add("open");
+			optionWords.sort();
+			let inputHeight = e.target.offsetHeight;
+			for (let i = 0; i < (5 > optionWords.length ? optionWords.length : 5); i++) {
+				let option = document.createElement("div");
+				option.setAttribute("class", "option");
+				option.innerHTML = optionWords[i];
+				option.style.top = `${(i + 1) * inputHeight}px`;
+				e.target.parentNode.appendChild(option);
+			}
+		}
+	}
+}
+
+function dropdownInputClick(e) {
+	if (!e.target.classList.contains("open")) {
+		dropdownCleanup(e.target.parentNode);
+		document.body.addEventListener("click", dropdownClick);
+		let value = e.target.value;
+		if (value) {
+			let optionWords = [];
+			searchData.forEach((word) => {
+				if (word.toLowerCase().includes(value.toLowerCase())) {
+					optionWords.push(word);
+				}
+			});
+			if (optionWords) {
+				e.target.parentNode.classList.add("open");
+				optionWords.sort();
+				let inputHeight = e.target.offsetHeight;
+				for (let i = 0; i < (5 > optionWords.length ? optionWords.length : 5); i++) {
+					let option = document.createElement("div");
+					option.setAttribute("class", "option");
+					option.innerHTML = optionWords[i];
+					option.style.top = `${(i + 1) * inputHeight}px`;
+					e.target.parentNode.appendChild(option);
+				}
+			}
+		}
+	}
+}
+
+function dropdownClick(e) {
+	console.log(e.target);
+	let openDropdown = document.querySelector(".search-dropdown.open");
+	if (openDropdown.contains(e.target)) {
+		if (e.target.classList.contains("option")) {
+			openDropdown.querySelector("input[type=text]").value = e.target.innerHTML;
+			dropdownCleanup(openDropdown);
+		}
+	} else {
+		dropdownCleanup(openDropdown);
+	}
+}
+
+function dropdownCleanup(dropdown) {
+	let children = dropdown.querySelectorAll(".option");
+	children.forEach((child) => {
+		child.remove();
+	});
+	dropdown.classList.remove("open");
+	document.body.removeEventListener("click", dropdownClick);
+}
+}
