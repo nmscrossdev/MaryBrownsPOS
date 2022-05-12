@@ -231,18 +231,18 @@ class WebLoginView extends React.Component {
                 {LocalizedLanguage.SignupwithGoogle}
 			</button>
 			
-            <button class="logo facebook" appId={Config.key.FACEBOOK_CLIENT_ID} 
+            <button className="logo facebook" appId={Config.key.FACEBOOK_CLIENT_ID} 
                                                                     autoLoad={false}
                                                                     fields="first_name, last_name,name,email"
                                                                     scope="public_profile, email"
                                                                     onClick={componentClicked}
                                                                     callback={responseFacebook}
                                                                     textButton="Sign in with Facebook">
-				<div class="logo-container">
+				<div className="logo-container">
 					<img
 						src="../Assets/Images/SVG/facebooklogo.svg"
 						alt="facebook logo"
-						class="logo"
+						className="logo"
 					/>
 				</div>
 				Sign in with Facebook
