@@ -65,7 +65,7 @@ class LoginRegisterView extends React.Component {
     componentWillReceiveProps(next) {
         if (next.registers) {
             setTimeout(function () {
-                $(".chooseregisterLinks").niceScroll({ styler: "fb", cursorcolor: "#2BB6E2", cursorwidth: '3', cursorborderradius: '10px', background: '#d5d5d5', spacebarenabled: false, cursorborder: '', scrollspeed: 60, cursorfixedheight: 70 });
+               // $(".chooseregisterLinks").niceScroll({ styler: "fb", cursorcolor: "#2BB6E2", cursorwidth: '3', cursorborderradius: '10px', background: '#d5d5d5', spacebarenabled: false, cursorborder: '', scrollspeed: 60, cursorfixedheight: 70 });
             }, 500)
             this.setState({ loading: false })
         }
@@ -133,7 +133,7 @@ class LoginRegisterView extends React.Component {
         // })
 
         return (
-            (isMobileOnly == true) ?
+            ///(isMobileOnly == true) ?
                 // <MobileLoginRegisterView
                 //     {...this.props}
                 //     {...this.state}
@@ -144,18 +144,18 @@ class LoginRegisterView extends React.Component {
                 //     checkStatus={this.checkStatus}
                 //     removeLocation={this.removeLocation}
                 // />
-                <WebLoginRegisterView
-                    {...this.props}
-                    {...this.state}
-                    registers={_registers}
-                    fireBaseUsedRegister = {this.state.fireBaseUsedRegister}
-                    handleBack={this.handleBack}
-                    autoFocusIs={this.autoFocusIs}
-                    handleSubmit={this.handleSubmit}
-                    checkStatus={this.checkStatus}
-                    removeLocation={this.removeLocation}
-                />
-                :
+                // <WebLoginRegisterView
+                //     {...this.props}
+                //     {...this.state}
+                //     registers={_registers}
+                //     fireBaseUsedRegister = {this.state.fireBaseUsedRegister}
+                //     handleBack={this.handleBack}
+                //     autoFocusIs={this.autoFocusIs}
+                //     handleSubmit={this.handleSubmit}
+                //     checkStatus={this.checkStatus}
+                //     removeLocation={this.removeLocation}
+                // />
+                // :
                 <WebLoginRegisterView
                     {...this.props}
                     {...this.state}

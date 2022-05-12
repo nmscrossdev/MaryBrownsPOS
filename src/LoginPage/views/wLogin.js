@@ -172,137 +172,230 @@ class WebLoginView extends React.Component {
         var vlidationError = fieldErr !== '' ? fieldErr : usernamedErr !== "" ? usernamedErr : passwordErr !== '' ? passwordErr : loggedIn == false ? loginError : wentWrongErr != '' ? wentWrongErr : "";
         // 
         return (
-            <div className="user_login user_login_center scroll-auto">
-                <div className="user_login_pages">
-                    {loggingIn && loggingIn == true || loading == true ? isMobileOnly == true ? <AndroidAndIOSLoader /> : <LoadingModal /> : ''}
-                    {/* hardblocker */}
-                    {isOldVersion ? <div className="user_hard-blocker close_hard_blocker" id="test">
-                        <div className="user_hard-blocker_container">
-                            <div className="user_hard-blocker_pop">
-                                <img src="../assets/img/onboarding/blocker.svg" alt="" />
-                                <h3>Your Oliver POS Plugin must be updated! </h3>
-                                <p>To continue using Oliver POS, please update your Bridge Plugin to the latest version! </p>
-                                <button className="btn btn-primary btn-60" id="close_hard_blocker" onClick={handleRetryButtonClick}>Retry</button>
-                            </div>
-                        </div>
-                    </div> : ''}
+            <div className="login-wrapper">
+                {loggingIn && loggingIn == true || loading == true ? isMobileOnly == true ? <AndroidAndIOSLoader /> : <LoadingModal /> : ''}
+                
+                         {isOldVersion ? <div className="user_hard-blocker close_hard_blocker" id="test">
+                             <div className="user_hard-blocker_container">
+                                 <div className="user_hard-blocker_pop">
+                                     <img src="../assets/img/onboarding/blocker.svg" alt="" />
+                                     <h3>Your Oliver POS Plugin must be updated! </h3>
+                                     <p>To continue using Oliver POS, please update your Bridge Plugin to the latest version! </p>
+                                     <button className="btn btn-primary btn-60" id="close_hard_blocker" onClick={handleRetryButtonClick}>Retry</button>
+                                 </div>
+                             </div>
+                         </div> : ''}
+			<form action="#">
+				<img src="../Assets/Images/SVG/oliverlogo.svg" alt="" />
+				<p>Sign in to your Oliver POS Account</p>
+				<label htmlFor="email">Email</label>
+				<input type="email" id="username" name="username" placeholder="Enter Email" 
+                  value={username} onChange={handleChange} onKeyDown={handleKey}/>
+				
+                <label htmlFor="password">{Language.key.PASSWORD}</label>
+                <input autoComplete="off" className="form-control"  placeholder="******" id="password"
+                name="password" tabIndex="1" type="password" value={password} onChange={handleChange} 
+                onKeyDown={handleKey} />
 
-                    {/* hardblocker */}
-                    <div className="user_login_container">
-                        <div className="user_login_row">
-                            <div className="user_login_colA">
-                                <div className="user_login_form_wrapper">
-                                    <div className="user_login_form_wrapper_container">
-                                        <div className="user_login_form">
-                                            <div className="">
-                                                <div className="user_login_scroll_in">
-                                                    <div className="user_login_center">
-                                                        <div className="user_login_head">
-
-                                                            <div className="user_login_head_logo">
-                                                                <a href="#">
-                                                                    <img src="../../assets/images/logo-dark.svg" alt="" />
-                                                                </a>
-                                                            </div>
-                                                            <h3 className="user_login_head_title">
-                                                                Login to Oliver POS
-                                            </h3>
-                                                            <h3 className="user_login_head__title">
-                                                                Please sign into your account by using one of the following options:
-                                            </h3>
-                                                        </div>
-
-                                                        <div className="form-group user-form-group">
-                                                            <label htmlFor="Email">{Language.key.EMAIL}</label>
-                                                            <input autoComplete="off" type="text" autoFocus='autofocus' tabIndex="1" className="form-control" placeholder="john@example.ca" id="username"
-                                                                name="username" value={username} onChange={handleChange} onKeyDown={handleKey} />
-
-
-                                                        </div>
-                                                        <div className="form-group user-form-group">
-                                                            <label htmlFor="password">{Language.key.PASSWORD}</label>
-                                                            <input autoComplete="off" className="form-control"  placeholder="******" id="password"
-                                                                name="password" tabIndex="1" type="password" value={password} onChange={handleChange} onKeyDown={handleKey} />
-                                                        </div>
-                                                        {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?null:
-                                                        <div className="user_login___extra">
-                                                            <div className="col">
-                                                                <a href={bridgDomain + "/Account/ForgotPassword?_refrence=sell"} id="kt_login_forgot" className="kt-login__link">Forget Password ?</a>
-                                                            </div>
-                                                            <div className="col text-right">
-                                                                <label className="user_login-checkbox">
-                                                                    <input type="checkbox" id="remember" name='rememberUser' /> Remember me
-                                                                    <span></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        }
-                                                        <div className="user_login_action">
-                                                            {vlidationError != "" &&
-                                                                <div className="validationError text-center">
-                                                                    {fieldErr !== '' ? <img src='../../assets/img/images/error.svg' /> : usernamedErr !== "" ? <img src='../../assets/img/images/error.svg' /> : passwordErr !== '' ? <img src='../../assets/img/images/error.svg' /> : loggedIn == false ? <img src='../../assets/img/images/error.svg' /> : ""}
-                                                                    {wentWrongErr !== '' ? wentWrongErr : fieldErr !== '' ? fieldErr : usernamedErr !== "" ? usernamedErr : passwordErr !== '' ? passwordErr : loggedIn == false ? loginError : ""}
-                                                                </div>}
-                                                            <button
-                                                                className="btn btn-primary btn-block user_login_btn_success user_login-margin-t-20" type="button"
-                                                                onClick={handleSubmit} onKeyDown={handleKey}>
-                                                                Sign In
-                                        </button>
-                                        {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?null:
-                                                            <div><div className="user-login__divider">
-                                                                <div className="user-divider">
-                                                                    <span></span>
-                                                                    <span>OR</span>
-                                                                    <span></span>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="user_login__button user_login__button_fill">
-                                                                <button type="submit" ref="googleLoginBtn" title="Log in using your Google account" className="btn btn-outline-secondary btn-block user_login__social user_login_gl_on"
-                                                                   >
-                                                                    <span> {LocalizedLanguage.SignupwithGoogle}</span>
-                                                                </button>
-                                                            </div>
-
-                                                            <div className="user_login__button user_login__button_fill">
-
-                                                                <FacebookLogin cssClass="btn btn-outline-secondary btn-block user_login__social user_login_fb_on"
-                                                                    appId={Config.key.FACEBOOK_CLIENT_ID}
+				<div className="row apart">					
+                    <a href={bridgDomain + "/Account/ForgotPassword?_refrence=sell"} id="kt_login_forgot" className="kt-login__link">Forgot your Password?</a>
+					<label className="checkbox-wrapper">
+						<input type="checkbox" />
+						<div className="custom-checkbox" id="remember" name='rememberUser'>
+							<img src="../Assets/Images/SVG/Checkmark.svg" alt="" />
+						</div>
+						Remember Me?
+                       
+					</label>
+				</div>
+                {vlidationError != "" &&
+            <div className="validationError text-center">
+            {fieldErr !== '' ? <img src='../../assets/img/images/error.svg' /> : usernamedErr !== "" ? <img src='../../assets/img/images/error.svg' /> : passwordErr !== '' ? <img src='../../assets/img/images/error.svg' /> : loggedIn == false ? <img src='../../assets/img/images/error.svg' /> : ""}
+            {wentWrongErr !== '' ? wentWrongErr : fieldErr !== '' ? fieldErr : usernamedErr !== "" ? usernamedErr : passwordErr !== '' ? passwordErr : loggedIn == false ? loginError : ""}
+            </div>}
+                <button
+                    className="btn btn-primary btn-block user_login_btn_success user_login-margin-t-20" type="button"
+                    onClick={handleSubmit} onKeyDown={handleKey}>
+                    Sign In
+                    </button>
+			</form>
+			<div className="row apart">
+				<div className="divider"></div>
+				<p className="largethin">OR</p>
+				<div className="divider"></div>
+			</div>
+			<button className="logo google" type="submit" ref="googleLoginBtn" title="Log in using your Google account">
+				<div className="logo-container">
+					<img src="../assets/images/svg/googleicon.svg" alt="google logo" className="logo" />
+				</div>
+                {LocalizedLanguage.SignupwithGoogle}
+			</button>
+			
+            <button class="logo facebook" appId={Config.key.FACEBOOK_CLIENT_ID} 
                                                                     autoLoad={false}
                                                                     fields="first_name, last_name,name,email"
                                                                     scope="public_profile, email"
                                                                     onClick={componentClicked}
                                                                     callback={responseFacebook}
-                                                                    textButton="Sign in with Facebook"
+                                                                    textButton="Sign in with Facebook">
+				<div class="logo-container">
+					<img
+						src="../Assets/Images/SVG/facebooklogo.svg"
+						alt="facebook logo"
+						class="logo"
+					/>
+				</div>
+				Sign in with Facebook
+			</button>
+                     {/* <FacebookLogin cssClass="btn btn-outline-secondary btn-block user_login__social user_login_fb_on logo facebook"  appId={Config.key.FACEBOOK_CLIENT_ID}
+                                                                    autoLoad={false}
+                                                                    fields="first_name, last_name,name,email"
+                                                                    scope="public_profile, email"
+                                                                    onClick={componentClicked}
+                                                                    callback={responseFacebook}
+                                                                    textButton="Sign in with Facebook"/> */}
+			
+			<button className="logo apple">
+				<div className="logo-container">
+					<img src="../Assets/Images/SVG/applelogo.svg" alt="apple logo" className="logo" />
+				</div>
+				Sign in with Apple
+			</button>
+			<div className="row">
+				<p className="standard">Don't have an account?</p>
+                <a className="bold" href="#" onClick={handleSignInClick} >Sign Up Now!</a>
+			</div>
+		</div>
+            // <div className="user_login user_login_center scroll-auto">
+            //     <div className="user_login_pages">
+            //         {loggingIn && loggingIn == true || loading == true ? isMobileOnly == true ? <AndroidAndIOSLoader /> : <LoadingModal /> : ''}
+                
+            //         {isOldVersion ? <div className="user_hard-blocker close_hard_blocker" id="test">
+            //             <div className="user_hard-blocker_container">
+            //                 <div className="user_hard-blocker_pop">
+            //                     <img src="../assets/img/onboarding/blocker.svg" alt="" />
+            //                     <h3>Your Oliver POS Plugin must be updated! </h3>
+            //                     <p>To continue using Oliver POS, please update your Bridge Plugin to the latest version! </p>
+            //                     <button className="btn btn-primary btn-60" id="close_hard_blocker" onClick={handleRetryButtonClick}>Retry</button>
+            //                 </div>
+            //             </div>
+            //         </div> : ''}
 
-                                                                />
-                                                            </div>
+            //         <div className="user_login_container">
+            //             <div className="user_login_row">
+            //                 <div className="user_login_colA">
+            //                     <div className="user_login_form_wrapper">
+            //                         <div className="user_login_form_wrapper_container">
+            //                             <div className="user_login_form">
+            //                                 <div className="">
+            //                                     <div className="user_login_scroll_in">
+            //                                         <div className="user_login_center">
+            //                                             <div className="user_login_head">
 
-                                                            <div className="user-login__account">
-                                                                <span>Don’t have an account?</span><a href="#"
-                                                                    onClick={handleSignInClick} className="user-login__account-link"><u> Sign Up Now!</u></a>
-                                                            </div>
-                                                            </div>} */}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="user_login_colB">
-                                <div className="user_login_aside"
-                                    style={{ backgroundImage: "url('../../assets/img/onboarding/connect.png')" }}>
+            //                                                 <div className="user_login_head_logo">
+            //                                                     <a href="#">
+            //                                                         <img src="../../assets/images/logo-dark.svg" alt="" />
+            //                                                     </a>
+            //                                                 </div>
+            //                                                 <h3 className="user_login_head_title">
+            //                                                     Login to Oliver POS
+            //                                 </h3>
+            //                                                 <h3 className="user_login_head__title">
+            //                                                     Please sign into your account by using one of the following options:
+            //                                 </h3>
+            //                                             </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <OnboardingFooter />
-                <CommonMsgModal msg_text={common_Msg} close_Msg_Modal={closeExtraPayModal} />
-            </div>
+            //                                             <div className="form-group user-form-group">
+            //                                                 <label htmlFor="Email">{Language.key.EMAIL}</label>
+            //                                                 <input autoComplete="off" type="text" autoFocus='autofocus' tabIndex="1" className="form-control" placeholder="john@example.ca" id="username"
+            //                                                     name="username" value={username} onChange={handleChange} onKeyDown={handleKey} />
+
+
+            //                                             </div>
+            //                                             <div className="form-group user-form-group">
+            //                                                 <label htmlFor="password">{Language.key.PASSWORD}</label>
+            //                                                 <input autoComplete="off" className="form-control"  placeholder="******" id="password"
+            //                                                     name="password" tabIndex="1" type="password" value={password} onChange={handleChange} onKeyDown={handleKey} />
+            //                                             </div>
+            //                                             {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?null:
+            //                                             <div className="user_login___extra">
+            //                                                 <div className="col">
+            //                                                     <a href={bridgDomain + "/Account/ForgotPassword?_refrence=sell"} id="kt_login_forgot" className="kt-login__link">Forget Password ?</a>
+            //                                                 </div>
+            //                                                 <div className="col text-right">
+            //                                                     <label className="user_login-checkbox">
+            //                                                         <input type="checkbox" id="remember" name='rememberUser' /> Remember me
+            //                                                         <span></span>
+            //                                                     </label>
+            //                                                 </div>
+            //                                             </div>
+            //                                             }
+            //                                             <div className="user_login_action">
+            //                                                 {vlidationError != "" &&
+            //                                                     <div className="validationError text-center">
+            //                                                         {fieldErr !== '' ? <img src='../../assets/img/images/error.svg' /> : usernamedErr !== "" ? <img src='../../assets/img/images/error.svg' /> : passwordErr !== '' ? <img src='../../assets/img/images/error.svg' /> : loggedIn == false ? <img src='../../assets/img/images/error.svg' /> : ""}
+            //                                                         {wentWrongErr !== '' ? wentWrongErr : fieldErr !== '' ? fieldErr : usernamedErr !== "" ? usernamedErr : passwordErr !== '' ? passwordErr : loggedIn == false ? loginError : ""}
+            //                                                     </div>}
+            //                                                 <button
+            //                                                     className="btn btn-primary btn-block user_login_btn_success user_login-margin-t-20" type="button"
+            //                                                     onClick={handleSubmit} onKeyDown={handleKey}>
+            //                                                     Sign In
+            //                             </button>
+            //                             {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?null:
+            //                                                 <div><div className="user-login__divider">
+            //                                                     <div className="user-divider">
+            //                                                         <span></span>
+            //                                                         <span>OR</span>
+            //                                                         <span></span>
+            //                                                     </div>
+            //                                                 </div>
+
+            //                                                 <div className="user_login__button user_login__button_fill">
+            //                                                     <button type="submit" ref="googleLoginBtn" title="Log in using your Google account" className="btn btn-outline-secondary btn-block user_login__social user_login_gl_on"
+            //                                                        >
+            //                                                         <span> {LocalizedLanguage.SignupwithGoogle}</span>
+            //                                                     </button>
+            //                                                 </div>
+
+            //                                                 <div className="user_login__button user_login__button_fill">
+
+            //                                                     <FacebookLogin cssClass="btn btn-outline-secondary btn-block user_login__social user_login_fb_on"
+            //                                                         appId={Config.key.FACEBOOK_CLIENT_ID}
+            //                                                         autoLoad={false}
+            //                                                         fields="first_name, last_name,name,email"
+            //                                                         scope="public_profile, email"
+            //                                                         onClick={componentClicked}
+            //                                                         callback={responseFacebook}
+            //                                                         textButton="Sign in with Facebook"
+
+            //                                                     />
+            //                                                 </div>
+
+            //                                                 <div className="user-login__account">
+            //                                                     <span>Don’t have an account?</span><a href="#"
+            //                                                         onClick={handleSignInClick} className="user-login__account-link"><u> Sign Up Now!</u></a>
+            //                                                 </div>
+            //                                                 </div>} */}
+            //                                             </div>
+            //                                         </div>
+            //                                     </div>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>
+            //                 </div>
+            //                 <div className="user_login_colB">
+            //                     <div className="user_login_aside"
+            //                         style={{ backgroundImage: "url('../../assets/img/onboarding/connect.png')" }}>
+
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>
+            //     <OnboardingFooter />
+            //     <CommonMsgModal msg_text={common_Msg} close_Msg_Modal={closeExtraPayModal} />
+            // </div>
         )
     }
 

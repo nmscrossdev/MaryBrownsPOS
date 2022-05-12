@@ -12,41 +12,36 @@ const WebSiteLinkViewFirst = (props) => {
     }
     
     return (
-        <form action="index.html" >
+        <div className="login-card-container">
            {!Sitelist  ? isMobileOnly == true? <AndroidAndIOSLoader/> : <LoadingModal /> : ''}
-            <div className="user_choose-links scroll-hidden">
-                {/* hardblocker */}
-                {/* {true ? <div className="user_hard-blocker close_hard_blocker" id="test">
-                        <div className="user_hard-blocker_container">
-                            <div className="user_hard-blocker_pop">
-                                <img src="../assets/img/onboarding/blocker.svg" alt="" />
-                                <h3>Your Oliver POS Plugin must be updated! </h3>
-                                <p>To continue using Oliver POS, please update your Bridge Plugin to the latest version! </p>
-                                <button class="btn btn-primary btn-60" id="close_hard_blocker" onClick={handleRetryButtonClick}>Retry</button>
-                            </div>
-                        </div>
-                    </div> : ''} */}
-
-                    {/* hardblocker */}
-                <div className="user_choose-list user_choose-list-noScroll">
-                    <ul>
+           
                         {
                             Sitelist !== null && Sitelist !== undefined ?
                                 Sitelist.subscriptions.length > 0 ?
                                     Sitelist.subscriptions.map((link, index) => {
                                         return (
                                             link.subscription_detail.activated == true ?
-                                                <li key={`siteLinkTab${index}`} id={`siteLinkTab${index}`} onClick={() => handleSubmit(link)} onKeyDown={handleBack} >
-                                                    <span style={{marginBottom:"unset"}}>{link.subscription_detail.host_name}</span>
-                                                    <img src="../assets/img/onboarding/left-chevron.svg"
-                                                        alt="" />
-                                                </li>
+                                               
+                                               <button className="login-card"  key={`siteLinkTab${index}`} id={`siteLinkTab${index}`} onClick={() => handleSubmit(link)} onKeyDown={handleBack} >
+                                               <div className="icon-container">
+                                                   <img src="../Assets/Images/SVG/Website.svg" alt="" className="fix-1" />
+                                               </div>
+                                               <div className="text-group" >
+                                                   <p>{link.subscription_detail.host_name}</p>
+                                               </div>
+                                               <div className="button">Select</div>
+                                           </button>
                                                 :
-                                                <li  key={index} title="Site is not connected to bridge!" onClick ={showSubscriptionPopup}>
-                                                    <span style={{marginBottom:"unset"}}>{link.subscription_detail.host_name}</span>
-                                                    <img src="../assets/img/onboarding/left-chevron.svg"
-                                                        alt="" />
-                                                </li>
+                                                <button className="login-card"  key={`siteLinkTab${index}`} id={`siteLinkTab${index}`} onClick ={showSubscriptionPopup}  title="Site is not connected to bridge!">
+                                                <div className="icon-container">
+                                                    <img src="../Assets/Images/SVG/Website.svg" alt="" className="fix-1" />
+                                                </div>
+                                                <div className="text-group" >
+                                                    <p>{link.subscription_detail.host_name}</p>
+                                                </div>
+                                                <div className="button">Select</div>
+                                            </button>
+                                               
                                         )
                                     })
                                     :
@@ -62,10 +57,9 @@ const WebSiteLinkViewFirst = (props) => {
                                     alt="" />
                             </li>                    
                         }
-                    </ul>
-                </div>
-            </div>
-        </form>
+                  
+            
+     </div>
     )
 }
 export default WebSiteLinkViewFirst;

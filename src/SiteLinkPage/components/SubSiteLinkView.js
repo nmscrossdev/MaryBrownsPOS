@@ -168,19 +168,19 @@ class SiteLinkViewFirst extends React.Component {
         });
 
         return (
-            isMobileOnly == true ? //|| isIOS == true
-                // <MobileSiteLinkViewFirst
-                //     Sitelist={Sitelist}
-                //     handleSubmit={this.handleSubmit}
-                //     handleBack={this.handleBack}
-                // />
-                <WebSiteLinkViewFirst
-                    Sitelist={Sitelist}
-                    handleSubmit={this.handleSubmit}
-                    handleBack={this.handleBack}
-                    isOldVersion={this.state.isOldVersion}
-                />
-                :
+            // isMobileOnly == true ? //|| isIOS == true
+            //     // <MobileSiteLinkViewFirst
+            //     //     Sitelist={Sitelist}
+            //     //     handleSubmit={this.handleSubmit}
+            //     //     handleBack={this.handleBack}
+            //     // />
+            //     <WebSiteLinkViewFirst
+            //         Sitelist={Sitelist}
+            //         handleSubmit={this.handleSubmit}
+            //         handleBack={this.handleBack}
+            //         isOldVersion={this.state.isOldVersion}
+            //     />
+            //     :
                 <WebSiteLinkViewFirst
                     Sitelist={Sitelist}
                     handleSubmit={this.handleSubmit}
