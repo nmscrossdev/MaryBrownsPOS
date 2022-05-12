@@ -412,7 +412,7 @@ class CheckoutCart extends React.Component {
     console.log("this.props---------->", checkList1)
     return (
       <div>
-        <Navbar itemCount={checkList1 && checkList1.ListItem ? checkList1.ListItem.length : ''} />
+        <Navbar page={_key.CHECKOUT_PAGE} itemCount={checkList1 && checkList1.ListItem ? checkList1.ListItem.length : ''} />
         <div className="category-header m-b-35">
           <div className="col">
             <p className="current">Order Summary</p>

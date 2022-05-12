@@ -18,6 +18,7 @@ const ProductItemsView = (props) => {
     const registerPermisions = localStorage.getItem('RegisterPermissions') ? JSON.parse(localStorage.getItem('RegisterPermissions')) : '';
     const registerPermsContent = registerPermisions && registerPermisions.content;
     const showSearchBar = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Search-Bar");
+    var i=0;
     return (      
   
         <div className="card-tile-container">
@@ -51,6 +52,7 @@ const ProductItemsView = (props) => {
                 {    
                 (product_List && product_List.length !=0)?
                     product_List && product_List.map((item, index) => {
+                        i++
                         var display_expireTicketTime;
                         var isVariableProduct = (item.Type !== "simple" && item.StockStatus !== "outofstock") ? true : false;
                         //var img = item.Image ? item.Image.split('/') : '';
@@ -74,6 +76,7 @@ const ProductItemsView = (props) => {
                             onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>View Item</div>
                             </button>
                         )
+                        
                     })
                 :
                     <div className="w-100">                                    
@@ -82,11 +85,11 @@ const ProductItemsView = (props) => {
                         </p>
                     </div>
                 } 
-                    {setTimeout(() => {
-                        // marginCalculator(document.querySelector(".category-tile-container"), 20);
+                    {/* {product_List.length==i? setTimeout(() => {
+                        marginCalculator(document.querySelector(".category-tile-container"), 20);
                         setFillContainer(document.querySelector(".card-tile-container"));
-                        // marginCalculator(document.querySelector(".card-tile-container"), 20);
-                    }, 500) }             
+                        marginCalculator(document.querySelector(".card-tile-container"), 20);
+                    }, 100):null }              */}
             </div> 
     )
 }

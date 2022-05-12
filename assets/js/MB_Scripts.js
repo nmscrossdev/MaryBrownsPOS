@@ -127,4 +127,102 @@ function decreaseIncrementInput(e) {
 		input.value = 1;
 	}
 }
+// Resize Timer
+var resizeTimer;
+function resize() {
+	window.addEventListener("resize", function () {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(function () {
+			setItemsHeight();
+			scaleSVG();
+			scaleImages();
+		}, 100);
+	});
+}
+// Scale SVGs
+function scaleSVG() {
+	document.querySelectorAll("svg").forEach((svg) => {
+		svg.style.transform = `scale(${window.innerWidth / 1080})`;
+	});
+}
+// Setting Margin to last Elem in row in row-wrapped div
+function lastElemMargin(container, rowCount) {
+	let children = container.children;
+	for (let i = 0; i < children.length; i++) {
+		if ((i + 1) % rowCount == 0) {
+			children[i].style.margin = "0";
+		}
+	}
+}
+//Set height to all item cards
+function setItemsHeight() {
+	let itemsContainer = document.querySelector(".card-tile-container");
+	if (itemsContainer) {
+		let top = itemsContainer.getBoundingClientRect().top;
+		let bottom = window.innerHeight;
+		let paddingAndButton = window.innerWidth * 0.0694 + window.innerHeight * 0.037;
+		itemsContainer.style.height = `${bottom - paddingAndButton - top}px`;
+	}
+}
 
+function scrollbarFix() {
+	let scrollWidth = window.innerWidth - document.documentElement.clientWidth;
+	if (scrollWidth) {
+		let rect, newWidth;
+		let slider = document.querySelector(".slider-container");
+		if (slider) {
+			rect = slider.getBoundingClientRect();
+			newWidth = rect.width - scrollWidth;
+			slider.style.height = `${(newWidth * rect.height) / rect.width}px`;
+			slider.style.width = `${newWidth}px`;
+		}
+		let categoryTileContainer = document.querySelector(".category-tile-container");
+		if (categoryTileContainer) {
+			let children = categoryTileContainer.children;
+			rect = children[0].getBoundingClientRect();
+			newWidth = rect.width - scrollWidth / 5;
+			for (let i = 0; i < children.length; i++) {
+				children[i].style.width = `${newWidth}px`;
+				children[i].style.height = `${newWidth}px`;
+			}
+		}
+		let cardTileContainer = document.querySelector(".card-tile-container");
+		if (cardTileContainer) {
+			let children = cardTileContainer.children;
+			rect = children[0].getBoundingClientRect();
+			newWidth = rect.width - scrollWidth / 4;
+			for (let i = 0; i < children.length; i++) {
+				children[i].style.height = `${(newWidth * rect.height) / rect.width}px`;
+				children[i].style.width = `${newWidth}px`;
+			}
+		}
+	}
+}
+
+function scaleImages() {
+	let images = document.querySelectorAll("img.scale");
+	let imageStyles, maxWidth, maxHeight;
+	images.forEach((image) => {
+		let trueImage = new Image();
+		trueImage.src = image.src;
+		let ratio = trueImage.width / trueImage.height;
+		imageStyles = window.getComputedStyle(image);
+		maxWidth = imageStyles.getPropertyValue("max-width");
+		maxHeight = imageStyles.getPropertyValue("max-height");
+		if (maxWidth == "100%" && maxHeight == "100%") {
+			imageStyles = window.getComputedStyle(image.parentNode);
+			maxWidth = parseFloat(imageStyles.getPropertyValue("width").replace("px", ""));
+			maxHeight = parseFloat(imageStyles.getPropertyValue("height").replace("px", ""));
+		} else {
+			maxWidth = parseFloat(maxWidth.replace("px", ""));
+			maxHeight = parseFloat(maxHeight.replace("px", ""));
+		}
+		if (maxWidth - trueImage.width < maxHeight - trueImage.height) {
+			image.style.height = `${maxWidth / ratio}px`;
+			image.style.width = `${maxWidth}px`;
+		} else {
+			image.style.width = `${maxHeight * ratio}px`;
+			image.style.height = `${maxHeight}px`;
+		}
+	});
+}
