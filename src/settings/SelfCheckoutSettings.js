@@ -511,14 +511,16 @@ function dropdownClick(e) {
 }
 
 function dropdownCleanup(dropdown) {
-	let children = dropdown.querySelectorAll(".option");
-    if(children)
-    {
-        children.forEach((child) => {
-            child.remove();
-        });
-        dropdown.classList.remove("open");
-        document.body.removeEventListener("click", dropdownClick);
+    if(dropdown){
+        let children = dropdown.querySelectorAll(".option");
+        if(children)
+        {
+            children.forEach((child) => {
+                child.remove();
+            });
+            dropdown.classList.remove("open");
+            document.body.removeEventListener("click", dropdownClick);
+        }
     }
 }
 }

@@ -43,6 +43,7 @@ import Navbar from '../SelfCheckout/components/Navbar';
 import Carasoul from '../SelfCheckout/components/Carasoul';
 import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
 import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
+import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 
 class SelfCheckoutView extends React.Component {
     constructor(props) {
@@ -118,6 +119,9 @@ class SelfCheckoutView extends React.Component {
         // fetch cloud printer as per the location
         var locationId = localStorage.getItem('Location')
         dispatch(cloudPrinterActions.getCloudPrinters(locationId))
+
+        dispatch(selfCheckoutActions.get_selfcheckout_setting());
+
         //----------Fetch All product from indexDB--------------
         var idbKeyval = FetchIndexDB.fetchIndexDb();
         idbKeyval.get('ProductList').then(val => {
