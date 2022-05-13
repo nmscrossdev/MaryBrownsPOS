@@ -295,7 +295,16 @@ export function initScreenSaver()
         timer = setTimeout(setScreensaver, _timer);
         //toggleScroll(false);
     });
-
+    document.body.removeEventListener("touchstart", function () {});
+    document.body.addEventListener('touchstart', function(e){
+        clearTimeout(cycle);
+        clearTimeout(timer);
+        let screensaver = document.getElementById("screensaver");
+        if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
+            screensaver.classList.add("hide");
+        }
+        timer = setTimeout(setScreensaver, _timer);
+    }, false)
     
 
     function setScreensaver() {
@@ -511,7 +520,7 @@ function dropdownClick(e) {
 }
 
 function dropdownCleanup(dropdown) {
-	let children = dropdown.querySelectorAll(".option");
+	let children = dropdown && dropdown.querySelectorAll(".option");
     if(children)
     {
         children.forEach((child) => {

@@ -136,11 +136,13 @@ export default class RecommendedProduct extends Component {
                         }
                     }
                     return (  
-                        <button type="button" className="prod" key={"product_"+index}>
+                        <button type="button" className="prod" key={"product_"+index} onClick={()=>this.callMethods(item)}>
                             <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)}/>
                             <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
                             <p className="price">starting at $ {item.Price}</p>
                             <div className="button">
+                          
+                            {/* {item.logo!=null?null: */}
 							<svg
 								width="28"
 								height="27"
@@ -157,7 +159,8 @@ export default class RecommendedProduct extends Component {
 									fill="white"
 								/>
 							</svg>
-                            <p key={index} data-toggle={isVariableProduct ? "modal" : ""} href="javascript:void(0)" onClick={()=>this.callMethods(item)}> View Item</p>
+                            {/* } */}
+                            <p key={index} data-toggle={isVariableProduct ? "modal" : ""} > View Item</p>
 						</div>
                         </button>
                     )
