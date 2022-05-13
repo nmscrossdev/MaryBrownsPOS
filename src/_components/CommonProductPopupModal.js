@@ -19,7 +19,9 @@ import $ from 'jquery';
 import SelfCheckoutVariatonPopup from '../SelfCheckout/components/selfcheckoutVariatonpopup';
 import RecommendedProduct from '../SelfCheckout/components/RecommendedProduct'
 import { getProductSummery } from '../WrapperSettings/CommonWork';
-import { allProductActions } from '../_actions'
+import { allProductActions } from '../_actions';
+import Navbar from '../SelfCheckout/components/Navbar';
+import {_key} from '../settings/SelfCheckoutSettings';
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
     constructor(props) {
@@ -1220,6 +1222,7 @@ class CommonProductPopupModal extends React.Component {
         localStorage.removeItem("SINGLE_PRODUCT")
         this.props.dispatch(cartProductActions.singleProductDiscount());
         this.props.dispatch(cartProductActions.showSelectedProduct(null));
+        hideModal("VariationPopUp");
     }
     // Apply discount for selected product
     /**
@@ -1407,18 +1410,22 @@ class CommonProductPopupModal extends React.Component {
         }
 
         return (
-            <div className= "modal fade popUpMid" id="VariationPopUp">
-                <div className="modal-dialog modal-center-block">
+            <div className= "popup hide productPopup" id="VariationPopUp">
+                 {HostUrl == "" ?<Navbar showExtensionIframe={this.props.showExtensionIframe} itemCount={this.props.itemCount} page={_key.PRODUCT_PAGE} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
+                {/* <div className="modal-dialog modal-center-block"> */}
                     {HostUrl !== "" ?
-                        <div className="modal-content">
-                            <div className="modal-header">
+                        <div className="product-container">
+                            <div className="product-container">
                                 <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
                                     {hasVariationProductData ? 
-                                    <Markup content=
-                                    {(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup>
+                                    // <Markup content=
+                                    // {
+                                        (variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)
+                                    // }
+                                    // ></Markup>
                                     : ''}
                                 </h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => this.handleClose()}>
+                                <button type="button" className="popup-close" onClick={() => this.handleClose()}>
                                     <span aria-hidden="true">
                                         <img src="assets/img/ic_circle_delete.svg" />
                                     </span>
@@ -1434,34 +1441,51 @@ class CommonProductPopupModal extends React.Component {
                             />
                         </div>
                         :
-                        <div className="modal-content" style={{ width: '165%',height:'90%' }} >
-                            <div className="product-container">
-                                <div className="product-close" data-dismiss="modal">
-                                    <svg width={22} height={21} viewBox="0 0 22 21">
+                        <div className="product-container">
+
+                <div id="productCloseButton" className="product-close">
+				<svg onClick={()=>hideModal('VariationPopUp')} 
+					width="22"
+					height="21"
+					viewBox="0 0 22 21"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
+						fill="#050505"
+					/>
+				</svg>
+			</div>
+			<p className="prod-name" title={this.props.proTitle}>{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
+
+                            {/* <div className="popup-header"> */}
+                                {/* <div className="popup-icon">
+                                    <svg width={22} height={21} viewBox="0 0 22 21" className="popup-close" onClick={()=>hideModal('VariationPopUp')}>
                                         <path d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z" fill="#050505" />
                                     </svg>
                                 </div>
-                                    <div className="prod-name" title={this.props.proTitle} >{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</div>
+                                    <div className="prod-name" title={this.props.proTitle} >{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</div> */}
                                     <div className="prod-wrapper">
                                     <div className="row">
-                                    <div className="img-container">
-                                        <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg" />
-                                    </div>
-                                    <div className="col">
-                                        <p className="prod-description">
-                                            {getVariationProductData.ShortDescription}
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, reiciendis hic,
-                                            rem deserunt enim quisquam alias nulla obcaecati harum commodi possimus. Laudantium
-                                            nulla omnis magni ea dolore totam? Dolores, unde.:
-                                        </p>
-                                        <div className="inner-row">
-                                            <div className="text-row">
-                                                <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
-                                                <p className="subtext">(plus tax)</p>
-                                            </div>
-                                            <button >Modify Ingredients</button>
+                                        <div className="img-container">
+                                            <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg" className='scale'/>
                                         </div>
-                                        <div className="increment-input">
+                                        <div className="col">
+                                            <p className="prod-description">
+                                                {getVariationProductData.ShortDescription}
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, reiciendis hic,
+                                                rem deserunt enim quisquam alias nulla obcaecati harum commodi possimus. Laudantium
+                                                nulla omnis magni ea dolore totam? Dolores, unde.:
+                                            </p>
+                                            <div className="inner-row">
+                                                <div className="text-row">
+                                                    <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
+                                                    <p className="subtext">(plus tax)</p>
+                                                </div>
+                                                <button type="button">Modify Ingredients</button>
+                                            </div>
+                                            <div className="increment-input">
                                                 <div onClick={this.decrementDefaultQuantity} className="decrement">
                                                     <svg width={16} height={2} viewBox="0 0 16 2">
                                                         <rect width={16} height={2} fill="#758696" />
@@ -1477,8 +1501,8 @@ class CommonProductPopupModal extends React.Component {
                                                         <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                                                     </svg>
                                                 </div>
+                                            </div>
                                         </div>
-                                </div>
                                     </div>
                                     {getVariationProductData ? getVariationProductData.Type !== 'variable' ?
                                         <div className='attributesBottom'>
@@ -1497,12 +1521,12 @@ class CommonProductPopupModal extends React.Component {
                                     <p className="center">Add a note to your order</p>
                                     <button type="button">Add Note</button>
                                 </div>
-                            </div>
+                            {/* </div> */}
                             </div>
                             <RecommendedProduct showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
-                            <div className='addtocardproductv'>
+                            <div className=''>
                                 <button onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
-                                !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart addcardproductview" >{LocalizedLanguage.addToCart}</button>
+                                !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" >{LocalizedLanguage.addToCart}</button>
                             </div>
                             <div style={{display:"none"}}>
                             { 
@@ -1512,10 +1536,9 @@ class CommonProductPopupModal extends React.Component {
                                     <span id="txtInScock">{_Inventory}</span>   
                             }
                             </div>
-
                         </div>
                     }
-                </div>
+                {/* </div> */}
             </div>
         )
     }

@@ -35,11 +35,11 @@ class UpdateProductInventoryModal extends React.Component {
         }
 
         return (
-            <div id="checkout1" className="modal modal-wide modal-wide1 fade">
+            <div id="checkout1" className="popup hide">
                 <div className="modal-dialog" id="dialog-midle-align">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button onClick={() => this.closePopup()} type="button" className="close" data-dismiss="modal" aria-hidden="true">
+                            <button onClick={() => this.closePopup()} type="button" className="popup-close" data-dismiss="modal" aria-hidden="true">
                                 <img src="../assets/img/Close.svg" />
                             </button>
                             <h4 className="error_model_title modal-title" id="epos_error_model_title">{LocalizedLanguage.messageTitle}</h4>

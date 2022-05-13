@@ -22,11 +22,11 @@ export const CloudPrinterListPopup = (props) => {
     }, 1000);
     return (
 
-        <div id="cloudPrinterListPopup" data-backdrop="static" tabIndex="-1" className="modal modal-wide modal-wide1 fade modal-wide-sm">
+        <div id="cloudPrinterListPopup" data-backdrop="static" tabIndex="-1" className="popup hide">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <button type="button" className="close fs36 mt-0" aria-hidden="true" data-dismiss="modal" onClick={props.closeCloudPopup}>
+                        <button type="button" className="popup-close fs36 mt-0" aria-hidden="true" data-dismiss="modal" onClick={props.closeCloudPopup}>
                             <img src="assets/img/Close.svg" />
                             {/* <i className="icon icon-fill-close icon-css-override text-danger pointer push-top-3"></i> */}
                         </button>

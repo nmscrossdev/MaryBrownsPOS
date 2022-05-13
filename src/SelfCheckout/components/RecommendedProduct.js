@@ -51,7 +51,7 @@ export default class RecommendedProduct extends Component {
     getProducts(nextPros)
     {
         var ids="";
-        if(nextPros.item && nextPros.page)
+        if(nextPros && nextPros.item && nextPros.page)
         {
             ids=nextPros.item.ReletedIds;
         }
@@ -78,10 +78,11 @@ export default class RecommendedProduct extends Component {
         }
     }
     componentWillReceiveProps(nextPros) {
-        if(nextPros.item)
+        //if(nextPros.item)
         {
             this.getProducts(nextPros);
         }
+
         //this.props.showSelected(nextPros.item);
     }
     callMethods(item)
@@ -121,10 +122,10 @@ export default class RecommendedProduct extends Component {
     return (
         <div className="recommendations">
         <p>Recommendations</p>
-        <div className="row">
         {    
             (productList && productList.length !=0)?
-                productList && productList.map((item, index) => {
+            <div className="row">
+                {productList && productList.map((item, index) => {
                     var display_expireTicketTime;
                     var isVariableProduct = (item.Type !== "simple" && item.StockStatus !== "outofstock") ? true : false;
                     if (item.IsTicket && item.IsTicket == true) {
@@ -135,11 +136,13 @@ export default class RecommendedProduct extends Component {
                         }
                     }
                     return (  
-                        <button type="button" className="prod" key={"product_"+index}>
+                        <button type="button" className="prod" key={"product_"+index} onClick={()=>this.callMethods(item)}>
                             <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)}/>
                             <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
                             <p className="price">starting at $ {item.Price}</p>
                             <div className="button">
+                          
+                            {/* {item.logo!=null?null: */}
 							<svg
 								width="28"
 								height="27"
@@ -156,11 +159,13 @@ export default class RecommendedProduct extends Component {
 									fill="white"
 								/>
 							</svg>
-                            <p key={index} data-toggle={isVariableProduct ? "modal" : ""} href="javascript:void(0)" onClick={()=>this.callMethods(item)}> View Item</p>
+                            {/* } */}
+                            <p key={index} data-toggle={isVariableProduct ? "modal" : ""} > View Item</p>
 						</div>
                         </button>
                     )
-                })
+                })}
+                </div>
             :
                 <div className="w-100">                                    
                     <p className="text-center payment-description">
@@ -168,7 +173,6 @@ export default class RecommendedProduct extends Component {
                     </p>
                 </div>
             }    
-        </div>
     </div>
     )
   }

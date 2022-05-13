@@ -9,6 +9,8 @@ import { OnboardingShopViewPopup } from '../../../onboarding/components/Onboardi
 import { onBackTOLoginBtnClick } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
 import SendMailComponent from './SendMailComponent;'
+import {_key} from '../../../settings/SelfCheckoutSettings';
+import BottomApps from '../../../SelfCheckout/components/BottomApps';
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 
@@ -31,10 +33,6 @@ class SelfSaleComplete extends React.Component {
         this.sendMail = this.sendMail.bind(this);
     }
 
-
-
-
-
     sendMail() {
         this.setState({emailSend:true})
     }
@@ -42,45 +40,45 @@ class SelfSaleComplete extends React.Component {
     render() {
         const { printReceipt, yur4, baseurl, barcode_image, orderId, tempOrderId, handleContinue } = this.props;
         return (
-            (isMobileOnly == true) ?
-                <div className="h-100">
-                    <div style={{ display: 'none' }}>
-                        <img src={baseurl} width="50px" />
-                    </div>
-                    <div style={{ display: 'none' }} >
-                        <img src={barcode_image} width="50px" />
-                    </div>
-                    <div style={{ display: 'none' }} >
-                        <img src={textToBase64Barcode(tempOrderId)} />
-                    </div>
-                    <div className="sidenav-overlay" data-target="slide-out"></div>
-                    {/* <div className="appCapsule bg-primary h-100 text-white fz-14 text-center pt-0" style={{paddingBottom: '122px'}}> */}
-                    <div className="appCapsule bg-primary h-100 text-white fz-14 text-center vh-100" style={{ paddingBottom: '122px' }}>
-                        <div className="content-center-center h-100 w-75 mx-auto">
-                            <div className="page-title mx-auto">
-                                <img src="../../assets/img/checked.svg" alt="" className="w-80" />
-                                <h1 className="h1 fz-18">{LocalizedLanguage.completeSale}</h1>
-                            </div>
-                            <div className="spacer-10"></div>
-                            {LocalizedLanguage.msgforreciept}
-                            <div className="spacer-20"></div>
-                            <div className="w-100 overflow-auto scrollbar">
-                                <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={sendMail} style={{ display: "none" }} >{LocalizedLanguage.email}</button>
-                                <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={printReceipt}>{LocalizedLanguage.print}</button>
-                                <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="appBottomMenu h-auto bg-primary shadow-none">
-                        <div className="text-white text-center pb-30">
-                            {LocalizedLanguage.selfcheckout}<br></br>
-                            <small>{LocalizedLanguage.by}</small>
-                            <br></br>
-                            <img src="../../assets/img/images/logo-light.svg" alt="" />
-                        </div>
-                    </div>
-                </div>
-                :
+            // (isMobileOnly == true) ?
+            //     <div className="h-100">
+            //         <div style={{ display: 'none' }}>
+            //             <img src={baseurl} width="50px" />
+            //         </div>
+            //         <div style={{ display: 'none' }} >
+            //             <img src={barcode_image} width="50px" />
+            //         </div>
+            //         <div style={{ display: 'none' }} >
+            //             <img src={textToBase64Barcode(tempOrderId)} />
+            //         </div>
+            //         <div className="sidenav-overlay" data-target="slide-out"></div>
+            //         {/* <div className="appCapsule bg-primary h-100 text-white fz-14 text-center pt-0" style={{paddingBottom: '122px'}}> */}
+            //         <div className="appCapsule bg-primary h-100 text-white fz-14 text-center vh-100" style={{ paddingBottom: '122px' }}>
+            //             <div className="content-center-center h-100 w-75 mx-auto">
+            //                 <div className="page-title mx-auto">
+            //                     <img src="../../assets/img/checked.svg" alt="" className="w-80" />
+            //                     <h1 className="h1 fz-18">{LocalizedLanguage.completeSale}</h1>
+            //                 </div>
+            //                 <div className="spacer-10"></div>
+            //                 {LocalizedLanguage.msgforreciept}
+            //                 <div className="spacer-20"></div>
+            //                 <div className="w-100 overflow-auto scrollbar">
+            //                     <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={()=>this.sendMail()} style={{ display: "none" }} >{LocalizedLanguage.email}</button>
+            //                     <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={printReceipt}>{LocalizedLanguage.print}</button>
+            //                     <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 btn-uppercase" onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //         <div className="appBottomMenu h-auto bg-primary shadow-none">
+            //             <div className="text-white text-center pb-30">
+            //                 {LocalizedLanguage.selfcheckout}<br></br>
+            //                 <small>{LocalizedLanguage.by}</small>
+            //                 <br></br>
+            //                 <img src="../../assets/img/images/logo-light.svg" alt="" />
+            //             </div>
+            //         </div>
+            //     </div>
+            //     :
                 this.state.emailSend == true  ? <SendMailComponent /> : 
                 // <div>
                 //     <div style={{ display: 'none' }}>
@@ -157,22 +155,14 @@ class SelfSaleComplete extends React.Component {
                 //             </div>
                 //         </div>
                 //     </div>
-                //     <OnboardingShopViewPopup
-                //             title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
-                //             subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
-                //             subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
-                //             onClickContinue={onBackTOLoginBtnClick}
-                //             imageSrc={''}
-                //             btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
-                //             id={'firebaseRegisterAlreadyusedPopup'}
-                //         />
+                
                 // </div>
                 <div className="payment-view complete-payment">
                 <div className="wrapper">
                     <img src="../assets/image/mblogobig.png" alt="" />
                     <svg width={118} height={120} viewBox="0 0 118 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="#3AB4D8" fillOpacity="0.1" stroke="#1DB9CA" strokeWidth={5} />
-                        <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3839" stroke="#1DB9CA" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="var(--secondary)" fillOpacity="0.1" stroke="var(--primary)" strokeWidth={5} />
+                        <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3839" stroke="var(--primary)" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <p className="style1">Your order is complete!</p>
                     <p className="style2">Your order number is</p>
@@ -180,8 +170,10 @@ class SelfSaleComplete extends React.Component {
                     <p className="style4">How would you like to receive your reciept?</p>
                     <button onClick={() => printReceipt()} id="printButton">{LocalizedLanguage.print}</button>
                     <button onClick={() => this.sendMail()} id="emailButton">{LocalizedLanguage.email}</button>
+                    <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
                     <div className="divider" />
-                    <div className="row">
+                    <BottomApps page={_key.CHECKOUT_PAGE}></BottomApps>
+                    {/* <div className="row">
                         <button className="icon">
                             <svg width={29} height={29} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M26.1 0H2.9C1.305 0 0 1.305 0 2.9V29L5.8 23.2H26.1C27.695 23.2 29 21.895 29 20.3V2.9C29 1.305 27.695 0 26.1 0ZM26.1 20.3H5.8L2.9 23.2V2.9H26.1V20.3ZM7.25 10.15H10.15V13.05H7.25V10.15ZM13.05 10.15H15.95V13.05H13.05V10.15ZM18.85 10.15H21.75V13.05H18.85V10.15Z" fill="white" />
@@ -200,7 +192,7 @@ class SelfSaleComplete extends React.Component {
                             </svg>
                             <p>Careers</p>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             

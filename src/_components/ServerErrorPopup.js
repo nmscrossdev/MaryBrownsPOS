@@ -13,26 +13,26 @@ const closeModal = () => {
 
 export const ServerErrorPopup = (props) => {
     return (
-        (isMobileOnly == true) ?
-        <div style={{ backgroundColor: '#808080b0' }} className="modal fade ErrorNotification" id="ServerErrorPopup" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div className="modal-content text-center">
-                <div className="modal-body py-4">
-                    <div className="w-100 float-left">
-                        <h6>{LocalizedLanguage.serverErrTitle}</h6>
-                        <p>{LocalizedLanguage.serverErrSubTitle} <br />{props.message}</p>
-                        <button  onClick={() => reloadUrl()} type="button" className="btn btn-primary btn-sm shadow-none" data-dismiss="modal">{LocalizedLanguage.tryAgain}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-            :
-            <div id="ServerErrorPopup" tabIndex="-1" className="modal modal-wide fade">
+    //     (isMobileOnly == true) ?
+    //     <div style={{ backgroundColor: '#808080b0' }} className="modal fade ErrorNotification" id="ServerErrorPopup" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    //     <div className="modal-dialog modal-dialog-centered modal-sm" role="document">
+    //         <div className="modal-content text-center">
+    //             <div className="modal-body py-4">
+    //                 <div className="w-100 float-left">
+    //                     <h6>{LocalizedLanguage.serverErrTitle}</h6>
+    //                     <p>{LocalizedLanguage.serverErrSubTitle} <br />{props.message}</p>
+    //                     <button  onClick={() => reloadUrl()} type="button" className="popup-close btn btn-primary btn-sm shadow-none" data-dismiss="modal">{LocalizedLanguage.tryAgain}</button>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // </div>
+    //         :
+            <div id="ServerErrorPopup" tabIndex="-1" className="popup hide">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
+                            <button type="button" className="popup-close" data-dismiss="modal" aria-hidden="true">
                                 <img src="assets/img/Close.svg" />
                             </button>
                             <h4 className="error_model_title modal-title" id="epos_error_model_title">{LocalizedLanguage.serverErrTitle}</h4>

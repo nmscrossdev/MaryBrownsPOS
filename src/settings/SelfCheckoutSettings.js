@@ -36,19 +36,37 @@ export const _key = {
     ALLOW_PARK_SALE:"allow-park-sale",
     PAYMENT_BUTTON_LABEL:"payment-button-label",
 
-    TIMEOUT_WAIT_TIME:"timeout-wait-time",
+    
     TRANSITION_TIME_BETWEEN_IMAGES_DEFAULT_IS_8_SECONDS:"transition-time-between-images-default-is-8-seconds",
     CHECKOUT_PAYMENTS:"checkout-payments",
     PAYMET_TYPE_OPTION:"paymet-type-option",
     PAYMET_EXTENTION_OPTION:"paymet-extention-option",
+
+    TIMEOUT_WAIT_TIME:"timeout-wait-time",
+    BOTTOM_BUTTON_COLOR:"bottom-button-color",
+    //Section: "ScreensaverOption"
+    //SubSection: "button-area"
+    BUTTON_LABEL_FONT_COLOR:"button-label-font-color",
+    LABEL_FOR_BOTTOM_AREA_ON_SCREEN_SAVER:"label-for-bottom-area-on-screen-saver",
+    DISPLAY_LOGO_IN_BOTTOM_BUTTON_AREA:"display-logo-in-bottom-button-area",
+
 
 
     //section name
     HOME_PAGE: "home-page",
     PRODUCT_PAGE:"product-page",
     RECEIPT_PAGE:"receipt-page",
+    CHECKOUT_PAGE:"checkout-page",
+
+    //sub section name
+
 }
 
+export function setThemeColor()
+{
+    document.documentElement.style.setProperty('--primary', getTitle(_key.THEME_PRIMARY_COLOR));
+    document.documentElement.style.setProperty('--secondary', getTitle(_key.THEME_SECONDARY_COLOR));
+}
 export function getTitle(key) {
      let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
      if(settings && settings.length>0)
@@ -255,9 +273,6 @@ export function initSlider()
 
 export function initScreenSaver()
 {
-    
-
-   
    var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
    if(_timer && typeof _timer!="undefined")
    {
@@ -280,18 +295,34 @@ export function initScreenSaver()
         timer = setTimeout(setScreensaver, _timer);
         //toggleScroll(false);
     });
-
+    document.body.removeEventListener("touchstart", function () {});
+    document.body.addEventListener('touchstart', function(e){
+        clearTimeout(cycle);
+        clearTimeout(timer);
+        let screensaver = document.getElementById("screensaver");
+        if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
+            screensaver.classList.add("hide");
+        }
+        timer = setTimeout(setScreensaver, _timer);
+    }, false)
     
 
     function setScreensaver() {
-        //toggleScroll();
+       // toggleScroll();
         clearTimeout(timer);
-        document.getElementById("screensaver").classList.remove("hide");
-        cycle = setTimeout(cycleScreensaver, 10000);
+        // document.getElementById("screensaver").classList.remove("hide");
+        // cycle = setTimeout(cycleScreensaver, 10000);
+
+        let screensaver = document.getElementById("screensaver");
+        if (screensaver!=null && typeof screensaver!="undefined" && screensaver.classList) {
+            screensaver.classList.remove("hide");
+            cycle = setTimeout(cycleScreensaver, 10000);
+        }
+
     }
 
     function cycleScreensaver() {
-        let images = document.querySelectorAll(".screensaver > div");
+        let images = document.querySelectorAll(".screensaver > img");
         for (let i = 0; i < images.length; i++) {
             if (images[i].classList.contains("front")) {
                 images[i].classList.remove("front");
@@ -365,4 +396,169 @@ export function getPaymentMethods()
         //console.log("------pt_payments_options-----"+JSON.stringify(pt_payments_options))
     }
     return pt_payments_options;
+}
+
+export function getScreenSaverImages() {
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var images = settings.find(function (indx) {
+           return indx.Section ===  "ScreensaverOption" && indx.SubSection==="screensaver-image";
+       });
+       return images?images:null;
+    }
+}
+export function getScreenSaverBtnImage() {
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var bottomImage=null;
+       var found = settings.find(function (indx) {
+           return indx.LabelSlug===_key.DISPLAY_LOGO_IN_BOTTOM_BUTTON_AREA && indx.Section ===  "ScreensaverOption" && indx.SubSection==="button-logo-section";
+       });
+
+       if(found && found.Value=="true")
+       {   
+        var bottomImage = settings.find(function (indx) {
+            return indx.LabelSlug ===  "custom-button-logo" && indx.Section=="ScreensaverOption" && indx.SubSection==="button-logo-section";
+        });
+        }
+       return bottomImage?bottomImage:null;
+    }
+}
+
+export function initDropDown(searchData)
+{
+    // Search Dropdown
+// let searchData = [
+// 	"Plant 1",
+// 	"Plant 2",
+// 	"Plant 3",
+// 	"Plant 4",
+// 	"Plant 5",
+// 	"Plant 6",
+// 	"Ice",
+// 	"Fire",
+// 	"Air",
+// 	"Earth",
+// 	"Dragon",
+// 	"Simpsons",
+// 	"Covid Cure",
+// ];
+
+let dropdownInputs = document.querySelectorAll(".search-dropdown > input[type=text]");
+dropdownInputs.forEach((input) => {
+	input.addEventListener("input", dropdownChange);
+	input.addEventListener("click", dropdownInputClick);
+});
+
+function dropdownChange(e) {
+	dropdownCleanup(e.target.parentNode);
+	document.body.addEventListener("click", dropdownClick);
+	let value = e.target.value;
+	if (value) {
+		let optionWords = [];
+		searchData.forEach((word) => {
+			if (word.toLowerCase().includes(value.toLowerCase())) {
+				optionWords.push(word);
+			}
+		});
+		if (optionWords) {
+			e.target.parentNode.classList.add("open");
+			optionWords.sort();
+			let inputHeight = e.target.offsetHeight;
+			for (let i = 0; i < (5 > optionWords.length ? optionWords.length : 5); i++) {
+				let option = document.createElement("div");
+				option.setAttribute("class", "option");
+				option.innerHTML = optionWords[i];
+				option.style.top = `${(i + 1) * inputHeight}px`;
+				e.target.parentNode.appendChild(option);
+			}
+		}
+	}
+}
+
+function dropdownInputClick(e) {
+	if (!e.target.classList.contains("open")) {
+		dropdownCleanup(e.target.parentNode);
+		document.body.addEventListener("click", dropdownClick);
+		let value = e.target.value;
+		if (value) {
+			let optionWords = [];
+			searchData.forEach((word) => {
+				if (word.toLowerCase().includes(value.toLowerCase())) {
+					optionWords.push(word);
+				}
+			});
+			if (optionWords) {
+				e.target.parentNode.classList.add("open");
+				optionWords.sort();
+				let inputHeight = e.target.offsetHeight;
+				for (let i = 0; i < (5 > optionWords.length ? optionWords.length : 5); i++) {
+					let option = document.createElement("div");
+					option.setAttribute("class", "option");
+					option.innerHTML = optionWords[i];
+					option.style.top = `${(i + 1) * inputHeight}px`;
+					e.target.parentNode.appendChild(option);
+				}
+			}
+		}
+	}
+}
+
+function dropdownClick(e) {
+	console.log(e.target);
+	let openDropdown = document.querySelector(".search-dropdown.open");
+	if (openDropdown && openDropdown.contains(e.target)) {
+		if (e.target.classList.contains("option")) {
+			openDropdown.querySelector("input[type=text]").value = e.target.innerHTML;
+			dropdownCleanup(openDropdown);
+		}
+	} else {
+		dropdownCleanup(openDropdown);
+	}
+}
+
+function dropdownCleanup(dropdown) {
+	let children = dropdown && dropdown.querySelectorAll(".option");
+    if(children)
+    {
+        children.forEach((child) => {
+            child.remove();
+        });
+        dropdown.classList.remove("open");
+        document.body.removeEventListener("click", dropdownClick);
+    }
+}
+}
+
+export function getApps(page)
+{
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var found = settings.find(function (indx) {
+           return indx.LabelSlug ===  _key.DISPLAY_APPS;
+       });
+       
+       if(found && found.Value=="true")
+       {
+        var apps = settings.filter(indx => {
+            return indx.Section ===  "Apps" && indx.SubSection==page;
+        });
+
+        const appNames = apps && apps.map(ext => ext.Value); 
+        var ext_Apps_Fields = localStorage.getItem('GET_EXTENTION_FIELD') ? JSON.parse(localStorage.getItem('GET_EXTENTION_FIELD')) : []; 
+
+        if (ext_Apps_Fields && ext_Apps_Fields !== []) {
+            const filerapps = ext_Apps_Fields.filter(item =>{
+                return appNames.includes(`${item.PluginId}`)
+            })
+            //console.log("------extension apps for"+page+"--"+JSON.stringify(filerapps))
+            return filerapps?filerapps:null;
+         }
+        return null;        
+       }
+       return null;
+    }
 }

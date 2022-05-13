@@ -2,7 +2,7 @@ import React from 'react';
 
 export const LoadingModal = () => {
     return (
-        <div className='overlay active' style={{ backgroundColor: 'rgba(81, 80, 80, .51)', display: 'block', zIndex: 3 }}>
+        <div className='popup active' style={{ backgroundColor: 'rgba(81, 80, 80, .51)', display: 'block', zIndex: 3 }}>
             <div className="loaderThemeBg">
                 <div className="preloaderbackground">
                     {/* <img src="assets/img/frame02-03s.gif" /> */}

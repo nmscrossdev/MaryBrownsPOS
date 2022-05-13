@@ -19,11 +19,11 @@ $(document).ready(function () {
 // });
 //==================[Popup Call by Function]======================//
 function showModal(id) {
-    $("#"+id).modal('show');
+    $("#"+id).removeClass('hide');
 }
 
 function hideModal(id) {
-    $("#"+id).modal('hide');
+    $("#"+id).addClass('hide');
 }
 
 //==================[Page Redirect by Function]======================//

@@ -151,22 +151,22 @@ class ProductSubAtrribute extends React.Component {
                     var attrIndex = this.props.itemIndex ? this.props.itemIndex : 0;
                     var _isSelfcheckout=ActiveUser.key.isSelfcheckout? ActiveUser.key.isSelfcheckout:false;
                     return (
-                        isMobileOnly == true && (_isSelfcheckout == true) ?                        
-                            <div key={"subattr-" + index} className="subattributesBorder">
-                                <input type="radio" disabled={!isEnabled} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option}
-                                checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
-                                <label  className='subattributetext' htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} title={option}>{option}</label>
-                            </div>
-                        :
-                        isMobileOnly == true && (_isSelfcheckout == false) ?
-                            <label key={"subattr-" + index} className={`btn ${checked ? 'active' : ''}btn-style-03`} htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} title={option} onClick={() => this.props.click(newOption, ProductSubAttribute.parentAttribute, attrIndex)}>
-                                <input disabled={!isEnabled} type="radio" checked={checked} 
-                                id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.
-                                parentAttribute}`} value={option} /> 
-                                {option.length > 13 ? option.substring(0, 10) + "..." : option}
-                            </label>
-                        :
-                        _isSelfcheckout == true ?
+                        // isMobileOnly == true && (_isSelfcheckout == true) ?                        
+                        //     <div key={"subattr-" + index} className="subattributesBorder">
+                        //         <input type="radio" disabled={!isEnabled} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option}
+                        //         checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
+                        //         <label  className='subattributetext' htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} title={option}>{option}</label>
+                        //     </div>
+                        // :
+                        // isMobileOnly == true && (_isSelfcheckout == false) ?
+                        //     <label key={"subattr-" + index} className={`btn ${checked ? 'active' : ''}btn-style-03`} htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} title={option} onClick={() => this.props.click(newOption, ProductSubAttribute.parentAttribute, attrIndex)}>
+                        //         <input disabled={!isEnabled} type="radio" checked={checked} 
+                        //         id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.
+                        //         parentAttribute}`} value={option} /> 
+                        //         {option.length > 13 ? option.substring(0, 10) + "..." : option}
+                        //     </label>
+                        // :
+                       // _isSelfcheckout == true ?
                             // <div key={"subattr-" + index}>
                             //     <div className="subattributesBorder">
                             //         <input type="radio" disabled={!isEnabled} checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} 
@@ -175,36 +175,36 @@ class ProductSubAtrribute extends React.Component {
                             //     </div>
                             // </div>
 
-<label key={"subattr-" + index} htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`}>
-<input disabled={!isEnabled} type="radio" id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)}/>
-<div className="custom-radio">
-    <p>{option}</p>
-</div>
-</label>
+                        <label key={"subattr-" + index} htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`}>
+                        <input disabled={!isEnabled} type="radio" id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)}/>
+                        <div className="custom-radio">
+                            <p>{option}</p>
+                        </div>
+                        </label>
 
-                              :
-                            displayOption.length > 13 &&  displayOption.length < 26 ?
-                            <div className="col-sm-8" key={"subattr-" + index} >
-                                    <div className="button_with_checkbox p-0">
-                                        <input disabled={!isEnabled} type="radio" checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
-                                        <label htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} className="label_select_button" title={option}>{displayOption}</label>
-                                    </div>
-                                </div>
-                                :
-                                displayOption.length > 26 ?
-                                <div className="col-sm-12" key={"subattr-" + index} >
-                                    <div className="button_with_checkbox p-0">
-                                            <input disabled={!isEnabled} type="radio" checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
-                                            <label htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} className="label_select_button" title={option}>{displayOption}</label>
-                                        </div>
-                                    </div>
-                                    :
-                                    <div className="col-sm-4 col-xs-4" key={"subattr-" + index}>
-                                        <div className="button_with_checkbox p-0">
-                                            <input disabled={!isEnabled} type="radio" checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
-                                            <label htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} className="label_select_button" title={option}>{displayOption}</label>
-                                        </div>
-                                    </div>
+                            //   :
+                            // displayOption.length > 13 &&  displayOption.length < 26 ?
+                            // <div className="col-sm-8" key={"subattr-" + index} >
+                            //         <div className="button_with_checkbox p-0">
+                            //             <input disabled={!isEnabled} type="radio" checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
+                            //             <label htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} className="label_select_button" title={option}>{displayOption}</label>
+                            //         </div>
+                            //     </div>
+                            //     :
+                            //     displayOption.length > 26 ?
+                            //     <div className="col-sm-12" key={"subattr-" + index} >
+                            //         <div className="button_with_checkbox p-0">
+                            //                 <input disabled={!isEnabled} type="radio" checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
+                            //                 <label htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} className="label_select_button" title={option}>{displayOption}</label>
+                            //             </div>
+                            //         </div>
+                            //         :
+                            //         <div className="col-sm-4 col-xs-4" key={"subattr-" + index}>
+                            //             <div className="button_with_checkbox p-0">
+                            //                 <input disabled={!isEnabled} type="radio" checked={checked} id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)} />
+                            //                 <label htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} className="label_select_button" title={option}>{displayOption}</label>
+                            //             </div>
+                            //         </div>
                     )
                 })
             ) : ""

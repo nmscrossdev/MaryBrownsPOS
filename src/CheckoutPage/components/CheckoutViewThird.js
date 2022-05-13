@@ -580,9 +580,9 @@ class CheckoutViewThird extends React.Component {
         // }
     return (this.state.extPaymentMethods.map((type, ind) => {
         return (
-            <div className="row">
-                <button onClick ={() =>this.OpenPxtensionPaymentPopup(type.Id)}>{type.Name}</button>
-            </div>
+            // <div className="row">
+                <button onClick ={() =>this.OpenPxtensionPaymentPopup(type.Id)} key={"ext_pay_"+ind}>{type.Name}</button>
+            // </div>
         )
     })  )
     }
@@ -761,7 +761,7 @@ class CheckoutViewThird extends React.Component {
                                     
                                         <div className="total">
                                             <p>Your Total</p>
-                                            <p className="amount">${this.props.checkList.totalPrice}</p>
+                                            <p className="amount">${parseFloat(this.props.checkList.totalPrice).toFixed(2)}</p>
                                         </div>
                                         <div className="payment-options">
                                         <p>Please select a payment method:</p>
@@ -787,9 +787,11 @@ class CheckoutViewThird extends React.Component {
                                             //         })
                                             //     )
                                             // })
-                                              this.state.paymentMethods.map((type, ind) => {
+                                            <div className="row payment-row" style={{marginBottom:0}}>
+                                              {this.state.paymentMethods.map((type, ind) => {
                                                  return(this.renderPaymentsType(type, activeDisplay))      
-                                                })
+                                                })}
+                                                </div>
                                             :
                                             <div className="w-100">
                                                 <p className="text-white text-center payment-description">
@@ -798,7 +800,9 @@ class CheckoutViewThird extends React.Component {
                                             </div>
                                             
                                         }
+                                        <div className="row payment-row">
                                         {this.showExtensionPayments(styles)}
+                                        </div>
                                     </div>
                                 </div>
                                         {/* <div className="payment-button-group overflowscroll payment-otp overflowscroll pb-0 pt-0">

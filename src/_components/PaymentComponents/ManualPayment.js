@@ -277,9 +277,9 @@ class ManualPayment extends React.Component {
                     : isMobileOnly == true ?
                         <button type="submit" style={{ borderLeftColor: color, marginBottom: 15 }} className="btn btn-default btn-lg btn-block btn-style-02" onClick={() => this.handleCardPopup(code)}>{Name}</button>
                         : ActiveUser.key.isSelfcheckout == true ?
-                        <div className="row">
+                        // <div className="row">
                           <button onClick={() => this.handleCardPopup(code)}>{Name}</button>
-                        </div>
+                        // </div>
 
                             // <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => this.handleCardPopup(code)}>{Name}</button>
                             :
@@ -300,13 +300,13 @@ class ManualPayment extends React.Component {
                     // {/* show card popup */}
                     // </div>
                 :
-                <div className={popupClass == '' ? "modal fade popUpMid" : `modal fade popUpMid ${popupClass}`} id="manualcardentryin" role="dialog" style={{ display: displayPopupStyle }} >
+                <div className={popupClass == '' ? "popup hide" : `popup hide ${popupClass}`} id="manualcardentryin" role="dialog" style={{ display: displayPopupStyle }} >
                     {this.props.loading == true && isMobileOnly == true ? <AndroidAndIOSLoader /> : this.props.loading == true ? <LoadingModal /> : ''}
                     <div className={isMobileOnly == true ? 'modal-dialog modal-center-block text-black' : 'modal-dialog modal-sm modal-center-block'}>
                         <div className="modal-content">
                             <div className="modal-header header-modal">
                                 <h1>{LocalizedLanguage.manualCardEntry}</h1>
-                                <div className="data-dismiss" data-dismiss="modal" onClick={this.closePopup}>
+                                <div className="popup-close data-dismiss" data-dismiss="modal" onClick={this.closePopup}>
                                     <img src="assets/img/closenew.svg" alt="" />
                                 </div>
                             </div>

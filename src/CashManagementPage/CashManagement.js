@@ -312,17 +312,6 @@ class CashManagement extends React.Component {
                 <OpeningFloatPopup />
                 <CloseRegisterPopupTwo />
                 <OnBoardingAllModal />
-                <OnboardingShopViewPopup
-                    title={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_TITLE}
-                    subTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE}
-                    subTitle2={ActiveUser.key.firebasePopupDetails.FIREBASE_POPUP_SUBTITLE_TWO}
-                    onClickContinue={onBackTOLoginBtnClick}
-                    imageSrc={''}
-                    btnTitle={ActiveUser.key.firebasePopupDetails.FIREBASE_BUTTON_TITLE}
-                    id={'firebaseRegisterAlreadyusedPopup'}
-                />
-
-
                 <AddRemoveCashPopup drawerBalance={_balance}
                     refreshDetail={this.getCashDrawerPaymentDetail}
                     activeIndex={this.state.active} />

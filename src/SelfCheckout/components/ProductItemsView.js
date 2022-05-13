@@ -18,9 +18,10 @@ const ProductItemsView = (props) => {
     const registerPermisions = localStorage.getItem('RegisterPermissions') ? JSON.parse(localStorage.getItem('RegisterPermissions')) : '';
     const registerPermsContent = registerPermisions && registerPermisions.content;
     const showSearchBar = registerPermsContent && registerPermsContent.find(item => item.slug == "Show-Search-Bar");
+    var i=0;
     return (      
   
-        <div className="card-tile-container" style={{height:"781px"}} >
+        <div className="card-tile-container">
             {/* {showSearchBar && showSearchBar.value == 'true' && */}
                 {/* <div className="widget-search"> 
                     <input type="search" id="product_search_field_pro" className="form-control" name="search" onChange={() => props.filterProduct()}
@@ -51,6 +52,7 @@ const ProductItemsView = (props) => {
                 {    
                 (product_List && product_List.length !=0)?
                     product_List && product_List.map((item, index) => {
+                        i++
                         var display_expireTicketTime;
                         var isVariableProduct = (item.Type !== "simple" && item.StockStatus !== "outofstock") ? true : false;
                         //var img = item.Image ? item.Image.split('/') : '';
@@ -62,17 +64,18 @@ const ProductItemsView = (props) => {
                             }
                         }
                         return (  
-                            <div className="product-card" key={"product_"+index} style={{ marginRight:((index+1)%4==0)? "":"20px",marginBottom:"20px"}} >
+                            //style={{ marginRight:((index+1)%4==0)? "":"20px",marginBottom:"20px"}} 
+                            <button className="product-card" key={"product_"+index} onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>
                                 <div className="img-container">
                                 <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)} />
                                 </div>
                                 <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
-                                <p className="price">starting at $ {item.Price}</p>
-                                <button className="button" key={index}
-                            data-toggle={isVariableProduct ? "modal" : ""} href="javascript:void(0)"
-                            onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>View Item</button>
-                            </div>
+                                <p className="price">starting at $ {parseFloat(item.Price).toFixed(2)}</p>
+                                <div className="button" key={index}
+                            data-toggle={isVariableProduct ? "modal" : ""}>View Item</div>
+                            </button>
                         )
+                        
                     })
                 :
                     <div className="w-100">                                    
@@ -80,7 +83,12 @@ const ProductItemsView = (props) => {
                         {LocalizedLanguage.noMatchingProductFound}
                         </p>
                     </div>
-                }               
+                } 
+                    {/* {product_List.length==i? setTimeout(() => {
+                        marginCalculator(document.querySelector(".category-tile-container"), 20);
+                        setFillContainer(document.querySelector(".card-tile-container"));
+                        marginCalculator(document.querySelector(".card-tile-container"), 20);
+                    }, 100):null }              */}
             </div> 
     )
 }

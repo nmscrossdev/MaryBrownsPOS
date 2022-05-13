@@ -56,10 +56,9 @@ class GlobalPayment extends React.Component {
         return (
             (ActiveUser.key.isSelfcheckout == true && this.state.paymentButtonDisplay == true) ?
                 
-            <div className="row">
-                <button onClick={() => { this.handlePayDisplay(code) }}>{Name}</button>
-                <input type="hidden" value={code} id="pay_amount"></input>
-            </div>
+            // <div className="row">
+                <button onClick={() => { this.handlePayDisplay(code) }}>{Name}<input type="hidden" value={code} id="pay_amount"></input></button>
+            // </div>
 
                 // <div style={{ marginBottom: 15 }}>
                 //     <button className={isMobileOnly == true ? "btn btn-light text-dark btn-block h-60 shadow-none fz-14" : "btn btn-default btn-block btn-90 btn-uppercase"} onClick={() => { this.handlePayDisplay(code) }}>{Name}
