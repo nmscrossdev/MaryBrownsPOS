@@ -2726,3 +2726,22 @@ body > .text-row > p.order-quantity {
 .no-scroll {
 	overflow: hidden !important;
 }
+.productPopup{
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 40px !important;
+    overflow-y:unset !important;
+    border-radius: 0 !important; 
+    background-color: #f1f1f1 !important;
+    }
+    .bodyCenter {
+        min-height: 1920px;
+        margin: 0;
+        box-sizing: border-box;
+        background-color: var(--primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
