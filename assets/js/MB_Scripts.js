@@ -147,10 +147,13 @@ function scaleSVG() {
 }
 // Setting Margin to last Elem in row in row-wrapped div
 function lastElemMargin(container, rowCount) {
-	let children = container.children;
-	for (let i = 0; i < children.length; i++) {
-		if ((i + 1) % rowCount == 0) {
-			children[i].style.margin = "0";
+	let children = container && container.children;
+	if(children)
+	{
+		for (let i = 0; i < children.length; i++) {
+			if ((i + 1) % rowCount == 0) {
+				children[i].style.margin = "0";
+			}
 		}
 	}
 }

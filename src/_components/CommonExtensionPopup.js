@@ -17,7 +17,7 @@ render() {
    
 console.log("extentionUrl",extentionUrl)
     return (
-        <div id="common_ext_popup" className="popup hide">
+        <div id="common_ext_popup" className="popup hide" style={{minWidth:"80%", minHeight:"80%"}}>
             <div className="modal-dialog" id="dialog-midle-align">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -38,9 +38,9 @@ console.log("extentionUrl",extentionUrl)
                             sandbox="allow-scripts allow-same-origin allow-forms"
                             className="embed-responsive-item diamondSectionHeight"
                             // ref={(f) => this.ifr = f}
-                            // src={extentionUrl}
+                            src={extentionUrl}
                             // src={'./externalApp/customer_activity_ext.html'}
-                            src={'./externalApp/fetchpaymentApp.html'}                           
+                            // src={'./externalApp/fetchpaymentApp.html'}                           
                             id="commoniframe"
                         />: ''}
                         

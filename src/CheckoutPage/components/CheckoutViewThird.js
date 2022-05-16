@@ -581,7 +581,7 @@ class CheckoutViewThird extends React.Component {
     return (this.state.extPaymentMethods.map((type, ind) => {
         return (
             // <div className="row">
-                <button onClick ={() =>this.OpenPxtensionPaymentPopup(type.Id)}>{type.Name}</button>
+                <button onClick ={() =>this.OpenPxtensionPaymentPopup(type.Id)} key={"ext_pay_"+ind}>{type.Name}</button>
             // </div>
         )
     })  )
@@ -787,7 +787,7 @@ class CheckoutViewThird extends React.Component {
                                             //         })
                                             //     )
                                             // })
-                                            <div className="row payment-row">
+                                            <div className="row payment-row" style={{marginBottom:0}}>
                                               {this.state.paymentMethods.map((type, ind) => {
                                                  return(this.renderPaymentsType(type, activeDisplay))      
                                                 })}

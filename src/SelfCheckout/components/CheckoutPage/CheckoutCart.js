@@ -4,20 +4,24 @@ import { history } from '../../../_helpers';
 import LocalizedLanguage from '../../../settings/LocalizedLanguage';
 import ActiveUser from '../../../settings/ActiveUser';
 import { OnboardingShopViewPopup } from '../../../onboarding/components/OnboardingShopViewPopup';
-import CommonJs, { onBackTOLoginBtnClick } from '../../../_components/CommonJS';
+import {getHostURLsBySelectedExt}  from '../../../_components/CommonJS';
 import RecommendedProduct from '../../../SelfCheckout/components/RecommendedProduct'
 import Navbar from '../../../SelfCheckout/components/Navbar'
 import { FetchIndexDB } from '../../../settings/FetchIndexDB'
 import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
 import { _key, isDisplay } from '../../../settings/SelfCheckoutSettings';
+import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 class CheckoutCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       productlist: [],
       checkList: localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [],
-      variationDefaultQunatity: 1
+      variationDefaultQunatity: 1,
+      extHostUrl: '',
+      extPageUrl: '',
+      extensionIframe: false,
     }
 
     this.GoBackhandleClick = this.GoBackhandleClick.bind(this);
@@ -395,6 +399,23 @@ class CheckoutCart extends React.Component {
     //androidDisplayScreen(item.Title, 0, 0, "deleteproduct");
     //-----------------------------------------
   }
+  // get extension pageUrl and hostUrl of current clicked extension
+  showExtensionIframe = (ext_id) => { 
+    // get host and page url from common fucnction   
+    var data = getHostURLsBySelectedExt(ext_id)
+    this.setState({
+        extHostUrl: data ? data.ext_host_url : '',
+       extPageUrl: data ? data.ext_page_url : ''
+      })
+    this.setState({ extensionIframe: true })
+    setTimeout(() => {
+        showModal('common_ext_popup')
+    }, 500);
+}
+close_ext_modal = () => {
+    this.setState({ extensionIframe: false });
+    hideModal('common_ext_popup');
+}
   render() {
     const { checkList, cash_round, payments, count, paid_amount, Markup, NumberFormat, RoundAmount, RemoveCustomer, cartDiscountAmount, selfcheckoutstatusmanagingevnt, SelfCheckoutStatus } = this.props;
 
@@ -412,7 +433,7 @@ class CheckoutCart extends React.Component {
     console.log("this.props---------->", checkList1)
     return (
       <div>
-        <Navbar page={_key.CHECKOUT_PAGE} itemCount={checkList1 && checkList1.ListItem ? checkList1.ListItem.length : ''} />
+        <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={checkList1 && checkList1.ListItem ? checkList1.ListItem.length : ''} />
         <div className="category-header m-b-35">
           <div className="col">
             <p className="current">Order Summary</p>
@@ -535,6 +556,11 @@ class CheckoutCart extends React.Component {
           <RecommendedProduct page={"cart"} />
           : <div></div>}
         <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>
+        <CommonExtensionPopup
+          showExtIframe={this.state.extensionIframe}
+          close_ext_modal={this.close_ext_modal}
+          extHostUrl={this.state.extHostUrl}
+          extPageUrl={this.state.extPageUrl} />
       </div>)
   }
 }

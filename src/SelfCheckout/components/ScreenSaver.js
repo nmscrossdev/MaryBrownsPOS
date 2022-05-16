@@ -25,7 +25,7 @@ const ScreenSaver=()=> {
 				// })
 				 
 			}
-			<img key={'ssaver_'+2} src="http://dev1.sell.olivertest.com/assets/images/screensaver4.png" alt="" />
+			{/* <img key={'ssaver_'+2} src="http://dev1.sell.olivertest.com/assets/images/screensaver4.png" alt="" /> */}
 			{/* <img className="front" src="../Assets/Images/Temp/screensaver1.png" alt="" /> */}
 			{/* <img src="../Assets/Images/Temp/screensaver2.png" alt="" /> */}
 			<div className="footer" style={{backgroundColor:btnBackColor}}>

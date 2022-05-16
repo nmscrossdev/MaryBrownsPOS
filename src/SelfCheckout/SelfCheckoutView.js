@@ -31,7 +31,7 @@ import MobileSignInPopup from './components/SelfMobileView/mSignInPopup';
 import CartList from '../_components/views/m.CartList';
 import { MobilePopupDisplayMessage } from './components/SelfMobileView/mPopupDisplayMessage';
 import { PopupDisplayMessage } from '../_components/views/PopupDisplayMessage';
-import { redirectToURL,getSearchInputLength, onBackTOLoginBtnClick } from '../_components/CommonJS';
+import { redirectToURL,getSearchInputLength, onBackTOLoginBtnClick,getHostURLsBySelectedExt } from '../_components/CommonJS';
 import { OnboardingShopViewPopup } from '../onboarding/components/OnboardingShopViewPopup';
 import ActiveUser from '../settings/ActiveUser';
 import { callProductXWindow, sendMessageToComposite, getCompositeAddedToCart, getCompositeSetProductxData } from '../_components/CommonFunctionProductX';
@@ -44,6 +44,8 @@ import Carasoul from '../SelfCheckout/components/Carasoul';
 import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
 import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
 import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
+import { CommonExtensionPopup } from '../_components/CommonExtensionPopup';
+import { handleAppEvent } from '../ExtensionHandeler/commonAppHandler';
 
 class SelfCheckoutView extends React.Component {
     constructor(props) {
@@ -75,7 +77,10 @@ class SelfCheckoutView extends React.Component {
             favFilterPSelect:'',
             showBackProduct:false,
             banners:[],
-            categories:[]
+            categories:[],
+            extHostUrl: '',
+            extPageUrl: '',
+            extensionIframe: false,
         }
         this.onHandleEventofCancelOrderPopup = this.onHandleEventofCancelOrderPopup.bind(this);
         this.onCancelOrderHandler = this.onCancelOrderHandler.bind(this);
@@ -724,8 +729,85 @@ class SelfCheckoutView extends React.Component {
             //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
             if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
         }, 1000);
-    }
 
+        var _user = JSON.parse(localStorage.getItem("user"));
+        // ************ Update _user.instance for local testing ************* //
+        // _user.instance = window.location.origin
+        // localStorage.setItem("user", JSON.stringify(_user));
+        // ************ End ********* //
+        window.addEventListener('message', (e) => {
+            if (e.origin && _user && _user.instance) {
+                try {
+                    var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
+                    if (extensionData && extensionData !== "" && extensionData.oliverpos) {
+                        this.showExtention(extensionData);
+                    }
+
+                    // display app v1.0-------------------------------------
+                    if (extensionData && extensionData !== "" ) {                
+                      var appresponse=  handleAppEvent(extensionData,"ActivityView");
+                      //console.log("appResponse1",appresponse)
+                      if(appresponse){
+                          if(this.setState.appreposnse !==appresponse){
+                               this.setState({"appreposnse": appresponse});
+                          }
+                      
+                      }
+                    }
+                    //----------------------------------------
+                }
+                catch (err) {
+                    console.error('App Error : ', err)
+                }
+            }
+        }, false);
+    }
+    extensionReady = () => {
+        var clientJSON =
+        {
+            oliverpos:
+            {
+                event: "shareCheckoutData"
+            },
+            data:
+            {
+                orderData:
+                {
+                    
+                }
+            }
+        };
+
+        var iframex = document.getElementsByTagName("iframe")[0].contentWindow;
+        iframex.postMessage(JSON.stringify(clientJSON), '*');
+    }
+    showExtention = (value) => {
+        var jsonMsg = value ? value : '';
+        var clientEvent = jsonMsg && jsonMsg !== '' && jsonMsg.oliverpos && jsonMsg.oliverpos.event ? jsonMsg.oliverpos.event : '';
+        if (clientEvent && clientEvent !== '') {
+             console.log("clientEvent----->", jsonMsg)
+            switch (clientEvent) {
+                case "extensionReady":
+                    this.extensionReady()
+                    break;
+                // case "updateOrderStatus":
+                //     this.updateOrderStatusExt(jsonMsg.data)
+                //     break;
+                // case "registerInfo":
+                //     sendRegisterDetails()
+                //     break;
+                // case "clientInfo":
+                //     sendClientsDetails()
+                //     break;
+                // case "tipInfo":
+                //     sendTipInfoDetails()
+                //     break;
+                default: // extensionFinished
+                    console.error('App Error : Extension event does not match ', jsonMsg);
+                    break;
+            }
+        }
+    }
     checkInventoryData(productData) {
         this.setState({ inventoryCheck: productData })
         this.state.inventoryCheck = productData;
@@ -1108,9 +1190,24 @@ class SelfCheckoutView extends React.Component {
     // handleCloseCommonPopup = ()=>{
     //     hideModal('commonInfoPopup');
     // }
-    toggleApp =(a)=>
-    {}
-
+   
+     // get extension pageUrl and hostUrl of current clicked extension
+     showExtensionIframe = (ext_id) => { 
+        // get host and page url from common fucnction   
+        var data = getHostURLsBySelectedExt(ext_id)
+        this.setState({
+            extHostUrl: data ? data.ext_host_url : '',
+           extPageUrl: data ? data.ext_page_url : ''
+          })
+        this.setState({ extensionIframe: true })
+        setTimeout(() => {
+            showModal('common_ext_popup')
+        }, 500);
+    }
+    close_ext_modal = () => {
+        this.setState({ extensionIframe: false });
+        hideModal('common_ext_popup');
+    }
     GoBackhandleClick=()=> {
         // this.handletileFilterData(null, 'product', null)
         this.setState({favFilterSelect:'',favFilterPSelect:''});
@@ -1130,7 +1227,7 @@ class SelfCheckoutView extends React.Component {
 
         return (
             <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
-            <Navbar page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
+            <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
             <Carasoul banners={this.state.banners}></Carasoul>
@@ -1187,14 +1284,19 @@ class SelfCheckoutView extends React.Component {
             <div className="cover hide"></div>
             
             {/* <TileModel status={this.tileModalAddStatus} msg={this.CommonMsg} positionNum={this.state.posIndex} />       */}
-            <CommonProductPopupModal itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
+            <CommonProductPopupModal showExtensionIframe={this.showExtensionIframe} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
             inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
             getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
             msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} 
             datetime={this.state.datetime}/>
             <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
             <PopupDisplayMessage />
-            
+            <CommonExtensionPopup
+                        showExtIframe={this.state.extensionIframe}
+                        close_ext_modal={this.close_ext_modal}
+                        extHostUrl={this.state.extHostUrl}
+                        extPageUrl={this.state.extPageUrl}
+                    />
             {/* <CommonInfoPopup
                 title = {LocalizedLanguage.noMatchingProductFound}
                 subTitle = {this.state.common_Msg}

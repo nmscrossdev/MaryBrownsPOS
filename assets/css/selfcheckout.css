@@ -2063,7 +2063,7 @@ body > .text-row > p.order-quantity {
 }
 
 .search-dropdown > input[type="text"]:focus ~ svg path {
-	fill: #00b998;
+	fill: var(--primary);
 }
 
 .search-dropdown > .option {
