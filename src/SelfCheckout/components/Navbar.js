@@ -13,14 +13,14 @@ const changeURL=()=>
 
 const Navbar=(props)=> {
   var apps=props.page?getApps(props.page):null
-    return ( <div>
+    return (   <React.Fragment>
         <div className={props.margin?props.margin:"header m-b-9"}>
         <img src="assets/image/Mary_Browns_Logo.png" alt="" />
         <div className="row">
           {
             apps &&  apps.map((item, index) => {
              return(<button onClick={() =>props.showExtensionIframe? props.showExtensionIframe(item.Id):null} className="icon" key={"nvapp_"+index}>
-             {item.logo!=null? <img src={item.logo} alt={item.logo}  style={{height:"21px",width:"24px"}}/>:
+             {item.logo!=null? <img src={item.logo} alt=""  style={{height:"21px",width:"24px"}}/>:
               <svg
               width="21"
               height="24"
@@ -103,7 +103,7 @@ const Navbar=(props)=> {
 				Go back to main menu
 			</button>
 		</div>:null}
-    </div>);
+    </React.Fragment>);
     }
 
     export default Navbar;

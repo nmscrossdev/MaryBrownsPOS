@@ -1414,7 +1414,7 @@ class CommonProductPopupModal extends React.Component {
                  {HostUrl == "" ?<Navbar showExtensionIframe={this.props.showExtensionIframe} itemCount={this.props.itemCount} page={_key.PRODUCT_PAGE} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
                 {/* <div className="modal-dialog modal-center-block"> */}
                     {HostUrl !== "" ?
-                        <div className="product-container">
+                        <React.Fragment>
                             <div className="product-container">
                                 <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
                                     {hasVariationProductData ? 
@@ -1439,7 +1439,7 @@ class CommonProductPopupModal extends React.Component {
                                 ref={(f) => this.ifr = f}
                                 src={HostUrl}
                             />
-                        </div>
+                     </React.Fragment>
                         :
                         <div className="product-container">
 
@@ -1509,13 +1509,14 @@ class CommonProductPopupModal extends React.Component {
                                             <div>{LocalizedLanguage.noAvailable} </div>
                                         </div>
                                         :
+                                        <div className="col">
                                             <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
                                                 attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
                                                 optionClick={this.optionClick} filteredAttribute={this.state.filteredAttribute}
                                                 selectedAttribute={this.state.selectedAttribute} productVariations=
                                                 {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
                                                 selectedOptionCode={selectedOptionCode}
-                                                selectedOptions={this.state.selectedOptions} />
+                                                selectedOptions={this.state.selectedOptions} /></div>
                                         : null}
                                 <div className="col">
                                     <p className="center">Add a note to your order</p>
