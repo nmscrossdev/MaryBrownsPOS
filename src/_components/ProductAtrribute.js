@@ -70,9 +70,10 @@ class ProductAtrribute extends React.Component {
             (_DistictAttribute.map((attribute, index) => {
                 return (
                     attribute && attribute.Variation == true &&
-                    <div className="col" key={index}>
-                        <p>{attribute.Name}</p>
-                        <div className="row">
+                    // <div className="col" key={index}>
+                        <React.Fragment>
+                        <p key={"att_name"+index}>{attribute.Name}</p>
+                        <div className="row" key={"sub_att_name"+index}>
                             <ProductSubAtrribute 
                                 showSelectedProduct={this.props.showSelectedProduct ? this.props.showSelectedProduct.combination : null}
                                 itemIndex={index}
@@ -85,7 +86,8 @@ class ProductAtrribute extends React.Component {
                                 selectedOptions={this.props.selectedOptions}
                                 OptionAll={attribute.OptionAll} />
                         </div>
-                    </div>
+                        </React.Fragment>
+                    // </div>
                 )
             })
             )

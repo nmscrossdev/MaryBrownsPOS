@@ -758,15 +758,34 @@ class SelfCheckoutView extends React.Component {
             }
         }, false);
     }
+    extensionReady = () => {
+        var clientJSON =
+        {
+            oliverpos:
+            {
+                event: "shareCheckoutData"
+            },
+            data:
+            {
+                orderData:
+                {
+                    
+                }
+            }
+        };
+
+        var iframex = document.getElementsByTagName("iframe")[0].contentWindow;
+        iframex.postMessage(JSON.stringify(clientJSON), '*');
+    }
     showExtention = (value) => {
         var jsonMsg = value ? value : '';
         var clientEvent = jsonMsg && jsonMsg !== '' && jsonMsg.oliverpos && jsonMsg.oliverpos.event ? jsonMsg.oliverpos.event : '';
         if (clientEvent && clientEvent !== '') {
-             console.log("clientEvent", jsonMsg)
+             console.log("clientEvent----->", jsonMsg)
             switch (clientEvent) {
-                // case "extensionReady":
-                //     this.extensionReady()
-                //     break;
+                case "extensionReady":
+                    this.extensionReady()
+                    break;
                 // case "updateOrderStatus":
                 //     this.updateOrderStatusExt(jsonMsg.data)
                 //     break;
