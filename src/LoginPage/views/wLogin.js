@@ -230,15 +230,14 @@ class WebLoginView extends React.Component {
 				</div>
                 {LocalizedLanguage.SignupwithGoogle}
 			</button>
-			
-            <button class="logo facebook" appId={Config.key.FACEBOOK_CLIENT_ID} 
+			 {/* <button class="logo facebook" appId={Config.key.FACEBOOK_CLIENT_ID} 
                                                                     autoLoad={false}
                                                                     fields="first_name, last_name,name,email"
                                                                     scope="public_profile, email"
                                                                     onClick={componentClicked}
                                                                     callback={responseFacebook}
                                                                     textButton="Sign in with Facebook">
-				<div class="logo-container">
+            <div class="logo-container">
 					<img
 						src="../Assets/Images/SVG/facebooklogo.svg"
 						alt="facebook logo"
@@ -246,15 +245,26 @@ class WebLoginView extends React.Component {
 					/>
 				</div>
 				Sign in with Facebook
+				
 			</button>
-                     {/* <FacebookLogin cssClass="btn btn-outline-secondary btn-block user_login__social user_login_fb_on logo facebook"  appId={Config.key.FACEBOOK_CLIENT_ID}
-                                                                    autoLoad={false}
-                                                                    fields="first_name, last_name,name,email"
-                                                                    scope="public_profile, email"
-                                                                    onClick={componentClicked}
-                                                                    callback={responseFacebook}
-                                                                    textButton="Sign in with Facebook"/> */}
-			
+         */}
+            <FacebookLogin cssClass="logo facebook user_login__social user_login_fb_on logo facebook"  appId={Config.key.FACEBOOK_CLIENT_ID}
+                                                        autoLoad={false}
+                                                        fields="first_name, last_name,name,email"
+                                                        scope="public_profile, email"
+                                                        onClick={componentClicked}
+                                                        callback={responseFacebook}
+                                                        textButton="Sign in with Facebook">
+              {/* <div class="logo-container">
+					<img
+						src="../Assets/Images/SVG/facebooklogo.svg"
+						alt="facebook logo"
+						class="logo"
+					/>
+				</div>
+				Sign in with Facebook */}
+            </FacebookLogin>
+		
 			<button className="logo apple">
 				<div className="logo-container">
 					<img src="../Assets/Images/SVG/applelogo.svg" alt="apple logo" className="logo" />
