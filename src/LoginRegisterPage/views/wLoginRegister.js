@@ -26,6 +26,8 @@ const WebLoginRegisterView = (props) => {
             {registers && registers.length > 0 ?
                      registers && registers.map((item, index) => {
                          var inr = true
+                         if(item.IsSelfCheckout == true) return ""; 
+                         else
                          return (                          
                             <button className="login-card" key={item.id} id={`loginRegisterTab${index}`} onClick={() => handleSubmit(item)} onKeyDown={handleBack}>
                                 <div className="icon-container"  id={`div${item.id}`}>
@@ -59,6 +61,8 @@ const WebLoginRegisterView = (props) => {
                      registers && registers.length > 0 ?
                      registers && registers.map((item, index) => {
                          var inr = true
+                         if(item.IsSelfCheckout == false) return "";
+                         else 
                          return (                          
                             <button className="login-card coral" key={item.id} id={`loginRegisterTab${index}`} onClick={() => handleSubmit(item)} onKeyDown={handleBack}>
                                 <div className="icon-container"  id={`div${item.id}`}>
@@ -87,7 +91,7 @@ const WebLoginRegisterView = (props) => {
 				
 				
 			</div>
-			<p className="category-label">Customer Displays</p>
+			{/* <p className="category-label">Customer Displays</p>
 			<div className="category-divider"></div>
 			<div className="login-card-container">
 				<button className="login-card teal taken">
@@ -113,7 +117,7 @@ const WebLoginRegisterView = (props) => {
 					</div>
 					<div className="button">Take Back</div>
 				</button>
-			</div>
+			</div> */}
 		</div>
 </div>
 

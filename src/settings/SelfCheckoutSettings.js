@@ -198,7 +198,9 @@ export function initSlider()
     if(sliderToggles && sliderToggles.hasChildNodes()==false)
     {
         let sliderImages = document.querySelectorAll(".slider-container > .slider > img");
-        let sliderImageWidth = sliderImages[0].offsetWidth;
+        let sliderImageWidth=0;
+        if(sliderImages && sliderImages[0]){
+              sliderImageWidth = sliderImages[0].offsetWidth;
         for (let i = 0; i < sliderImages.length; i++) {
             sliderImages[i].style.left = `${i * -sliderImageWidth}px`;
             let toggle = document.createElement("div");
@@ -208,6 +210,8 @@ export function initSlider()
             }
             sliderToggles.appendChild(toggle);
         }
+        }
+       
 
         // let sliderTimer = setTimeout(slide, 5000);
         let sliderTimer = setTimeout(slide, timer);
