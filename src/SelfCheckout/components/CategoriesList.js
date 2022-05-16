@@ -141,11 +141,11 @@ class CategoriesList extends React.Component {
     
     render() {
         const { current_categories,item } = this.state;
-        console.log("current_categories",current_categories)
+      
         return (
             <div>
                  <div className="category-header">
-                 <p className="section">{getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+                 <p className="section">{item && item !==null && item !==""? item.Value +" Categories": getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
                     {/* <div className="col">
                     <p className="path">Menu `{'>'}` category `{'>'}` category</p>
                         <p className="current">Plants</p>
