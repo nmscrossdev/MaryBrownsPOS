@@ -45,6 +45,13 @@ class  Navbar extends React.PureComponent{
   //   {
   //       window.removeEventListener("message", function () {}); 
   //   }
+get_uuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  
 changeURL=()=>
   {
     history.push('/checkout');
@@ -52,17 +59,18 @@ changeURL=()=>
 render() {
   const {showExtensionIframe,margin,page,itemCount,GoBackhandleClick,catName,catPName}=this.props;
   var apps=page?getApps(page):null;
+  
   return(
   <React.Fragment>
     <div className={margin?margin:"header m-b-9"}>
         <img src="assets/image/Mary_Browns_Logo.png" alt="" />
-        <canvas id="textCanvas" height="21px" width="24px" style={{display:"none"}}></canvas>
         <div className="row">
           {
             apps &&  apps.map((item, index) => {
              let inName = item.Name?getInitials(item.Name):"";
-             return(<button onClick={() =>showExtensionIframe? showExtensionIframe(item.Id):null} className="icon" key={"nvapp_"+index}>
-             {item.logo!=null? <img src={item.logo} alt={inName}  onError={(e) => { e.target.onerror = null;/* e.target.src = showInitials(inName)*/}}  style={{height:"2vw",width:"2.2vw"}}/>:
+             let uid=this.get_uuid();
+             return(<button onClick={() =>showExtensionIframe? showExtensionIframe(item.Id):null} className="icon" key={"nvapp_"+uid}><span id={"appInitial_"+uid} style={{display:"none",color:"white"}}>{inName}</span>
+             {item.logo!=null? <img id={"appLogo_"+uid} src={item.logo} alt={inName}  onError={(e) => { e.target.onerror = null; document.getElementById("appInitial_"+uid).style.display="block";document.getElementById("appLogo_"+uid).style.display="none";/* e.target.src = showInitials(inName)*/}}  style={{height:"2vw",width:"2.2vw"}}/>:
               
               <svg
               width="21"
@@ -133,17 +141,7 @@ var getInitials = function (string) {
   }
   return initials;
 };
-var showInitials=function(txt)
-{
-  const root = document.querySelector(':root');
-  var tCtx = document.getElementById('textCanvas').getContext('2d');
-  tCtx.canvas.width = tCtx.measureText(txt).width;
-  tCtx.font = "18px Poppins";
-  // tCtx.fillStyle =getComputedStyle(root).getPropertyValue('--secondary');
-  tCtx.fillStyle="white";
-  tCtx.fillText(txt, 0, 15);
-  return tCtx.canvas.toDataURL();
-}
+
 // const Navbar=(props)=> {
 //   var apps=props.page?getApps(props.page):null
 //     return (   <React.Fragment>
