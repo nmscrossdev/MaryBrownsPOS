@@ -1441,7 +1441,7 @@ class CommonProductPopupModal extends React.Component {
                             />
                      </React.Fragment>
                         :
-                        <div className="product-container">
+                        <div className="product-container" style={{height :"90%"}}>
 
                 <div id="productCloseButton" className="product-close">
 				<svg onClick={()=>hideModal('VariationPopUp')} 
@@ -1527,7 +1527,7 @@ class CommonProductPopupModal extends React.Component {
                             <RecommendedProduct showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
                             <div className=''>
                                 <button onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
-                                !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" >{LocalizedLanguage.addToCart}</button>
+                                !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart productviewviewcard" >{LocalizedLanguage.addToCart}</button>
                             </div>
                             <div style={{display:"none"}}>
                             { 
