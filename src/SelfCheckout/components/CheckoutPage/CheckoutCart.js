@@ -466,7 +466,7 @@ close_ext_modal = () => {
                                   <rect width="16" height="2" fill="#758696" />
                                 </svg>
                               </div>
-                              <input type="number" defaultValue={product.quantity} />
+                              <input type="number" value={product.quantity} />
                               <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment">
                                 <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
                                   <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />

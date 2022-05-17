@@ -89,7 +89,7 @@ render() {
             </button>
         </div>
     </div>
-    {catName || catPName?
+    {/* {catName || catPName?
     <div className="category-header-row" onClick={GoBackhandleClick}>
 			<div className="category-header-col">
 				<p style={{textTransform:"capitalize"}} className="path">Menu &#62; {(catName && catName!=""&& catPName && catPName!='')? catPName:''}</p>
@@ -108,7 +108,7 @@ render() {
 				</svg>
 				Go back to main menu
 			</button>
-		</div>:null}
+		</div>:null} */}
     </React.Fragment>)
 }
 }

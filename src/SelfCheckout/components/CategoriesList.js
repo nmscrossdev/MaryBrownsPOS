@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
+import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../../settings/SelfCheckoutSettings';
 class CategoriesList extends React.Component {
     constructor(props) {
         super(props);
@@ -140,15 +141,47 @@ class CategoriesList extends React.Component {
     
     render() {
         const { current_categories,item } = this.state;
+      
         return (
-            <div className="category-tile-container" >
-                {
-                 item==null?null:
-                    <button className="category-tile" style={{backgroundColor:"#a9d47d"}} onClick={() => this.updateActiveStateOnRef(false)}>
-                    <p>{LocalizedLanguage.back}</p>
+            <div>
+                 <div className="category-header">
+                 <p className="section">{item && item !==null && item !==""? item.Value +" Categories": getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+                    {/* <div className="col">
+                    <p className="path">Menu `{'>'}` category `{'>'}` category</p>
+                        <p className="current">Plants</p>
+                        <div className="divider"></div>
+                    </div> */}
+                   { 
+                   //item==null?null:
+                    // <button className="category-tile" style={{backgroundColor:"#a9d47d"}} onClick={() => this.updateActiveStateOnRef(false)}>
+                    // <p>{LocalizedLanguage.back}</p>
+                    // </button>
+                    item==null?null:
+                    <button id="mainMenuButton"  onClick={() => this.updateActiveStateOnRef(false)}>
+                        <svg
+                            width="22"
+                            height="20"
+                            viewBox="0 0 22 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M9.7737 1.8335L1.3695 10.0002L9.7737 18.1668M1.3695 10.0002L20.5791 10.0002L1.3695 10.0002Z"
+                                stroke="white"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        Go back to main menu
                     </button>
-                 }
-                {
+                    }
+                </div>
+                
+                <div className="category-tile-container">
+                    
+                        {/* <p className="section">Categories</p> */}
+                {   
                 current_categories && current_categories.map((item, index) => {                 
                         var titleName = item.Value
                         return (
@@ -164,7 +197,10 @@ class CategoriesList extends React.Component {
                         )
                     })
                 }
-            </div>
+                   
+                  
+                </div>
+        </div>           
       )
     }
 }

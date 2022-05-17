@@ -43,6 +43,7 @@ import Navbar from '../SelfCheckout/components/Navbar';
 import Carasoul from '../SelfCheckout/components/Carasoul';
 import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
 import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
+import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 import { CommonExtensionPopup } from '../_components/CommonExtensionPopup';
 import { handleAppEvent } from '../ExtensionHandeler/commonAppHandler';
 
@@ -124,6 +125,9 @@ class SelfCheckoutView extends React.Component {
         // fetch cloud printer as per the location
         var locationId = localStorage.getItem('Location')
         dispatch(cloudPrinterActions.getCloudPrinters(locationId))
+
+        dispatch(selfCheckoutActions.get_selfcheckout_setting());
+
         //----------Fetch All product from indexDB--------------
         var idbKeyval = FetchIndexDB.fetchIndexDb();
         idbKeyval.get('ProductList').then(val => {
@@ -745,7 +749,7 @@ class SelfCheckoutView extends React.Component {
         localStorage.setItem("isListner","true");
         window.removeEventListener("message", function () {});
         window.addEventListener('message', (e) => {
-            if (e.origin && _user && _user.instance) {
+            if (e.origin && _user && _user.instance && e.data && e.data !=="") {
                 try {
                     var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
                     console.log("clientEvent----->", JSON.stringify(extensionData))
@@ -1227,7 +1231,6 @@ class SelfCheckoutView extends React.Component {
         const { width } = this.props;
         const { getVariationProductData, getSimpleProductData, hasVariationProductData, hasSimpleProductData, openModalActive, AllProductList } = this.state;
     
-
         return (
             <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
             <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
@@ -1271,7 +1274,8 @@ class SelfCheckoutView extends React.Component {
                 </svg>
                 {/* <div className="option">Option 1</div>  */}
             </div>
-            <p className="section">{getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+            
+           
             <CategoriesList categories={this.state.categories} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>

@@ -67,7 +67,7 @@ const ProductItemsView = (props) => {
                             //style={{ marginRight:((index+1)%4==0)? "":"20px",marginBottom:"20px"}} 
                             <button className="product-card" key={"product_"+index} onClick={item.StockStatus == "outofstock" ? productOutOfStock.bind(item.Title) : props.handleIsVariationProduct.bind(props, item.Type, item)}>
                                 <div className="img-container">
-                                <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)} />
+                                <img className="scale" src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)} />
                                 </div>
                                 <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
                                 <p className="price">starting at $ {parseFloat(item.Price).toFixed(2)}</p>
