@@ -1441,7 +1441,7 @@ class CommonProductPopupModal extends React.Component {
                             />
                      </React.Fragment>
                         :
-                        <div className="product-container">
+                        <div className="product-container" style={{height :"90%"}}>
 
                 <div id="productCloseButton" className="product-close">
 				<svg onClick={()=>hideModal('VariationPopUp')} 
