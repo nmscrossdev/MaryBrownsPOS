@@ -2107,7 +2107,7 @@ body>.text-row>p.order-quantity {
 .productPopup {
 	left: 0 !important;
 	top: 0 !important;
-	width: 100% !important;
+	width: 92% !important;
 	height: 100% !important;
 	padding: 40px !important;
 	overflow-y: unset !important;
@@ -2318,4 +2318,7 @@ button.close {
 }
 .newvariable{
 	padding-bottom: 25px;
+} 
+.productviewviewcard{
+	width: 102%;
 }
