@@ -125,8 +125,8 @@ const WebPin = (props) => {
                                 </div>
 
                             </div>
-                            <OliverVersionModal closeModal={closeModal} reportBug={ReportBug} />
-                            <BrowserVersionModal closeModal={closeModal} reportBug={ReportBug} />
+                            {/* <OliverVersionModal closeModal={closeModal} reportBug={ReportBug} /> */}
+                            {/* <BrowserVersionModal closeModal={closeModal} reportBug={ReportBug} /> */}
                             <CommonMsgModal msg_text='Firefox private window not supported by app' close_Msg_Modal={handleMsgOkClick} />
                             <div className="user_login_colB">
                                 <div className="user_login_aside"
