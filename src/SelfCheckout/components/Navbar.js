@@ -83,7 +83,7 @@ const Navbar=(props)=> {
             </button>
         </div>
     </div>
-    {props.catName || props.catPName?
+    {/* {props.catName || props.catPName?
     <div className="category-header-row" onClick={props.GoBackhandleClick}>
 			<div className="category-header-col">
 				<p style={{textTransform:"capitalize"}} className="path">Menu &#62; {(props.catName && props.catName!=""&& props.catPName && props.catPName!='')? props.catPName:''}</p>
@@ -102,7 +102,7 @@ const Navbar=(props)=> {
 				</svg>
 				Go back to main menu
 			</button>
-		</div>:null}
+		</div>:null} */}
     </React.Fragment>);
     }
 
