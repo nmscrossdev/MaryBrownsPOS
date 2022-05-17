@@ -515,7 +515,9 @@ function dropdownClick(e) {
 	let openDropdown = document.querySelector(".search-dropdown.open");
 	if (openDropdown && openDropdown.contains(e.target)) {
 		if (e.target.classList.contains("option")) {
-			openDropdown.querySelector("input[type=text]").value = e.target.innerHTML;
+			openDropdown.querySelector("input[type=text]").value = e.target.innerHTML;  
+            $("#product_search_field_pro").val(e.target.innerHTML) ;  
+            $("#product_search_field_pro").focus()          
 			dropdownCleanup(openDropdown);
 		}
 	} else {
