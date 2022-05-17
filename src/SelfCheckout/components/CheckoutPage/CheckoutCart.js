@@ -47,7 +47,6 @@ class CheckoutCart extends React.Component {
 
   incrementDefaultQuantity = (item, index, action) => {
     if (action == 0 && item.quantity <= 1) {
-     console.log("Item can not be decrese");
       return;
     }
     this.getProductFromIndexDB();

@@ -9,8 +9,9 @@ const Carasoul=(props)=> {
 			<div className="slider">
 				{
 				props.banners.map((element, index) => {
+					//onClick={()=>}
 					return(
-					<img key={'slider_'+index} src={Config.key.RECIEPT_IMAGE_DOMAIN +element.Path} alt="" />
+					<img key={'slider_'+index} src={Config.key.RECIEPT_IMAGE_DOMAIN +element.Path} alt="" onClick={()=>props.showProductPopup(element.ProductId)} />
 					)
 				 })
 				}
