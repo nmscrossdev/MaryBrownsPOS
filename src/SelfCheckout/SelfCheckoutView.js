@@ -81,6 +81,7 @@ class SelfCheckoutView extends React.Component {
             extHostUrl: '',
             extPageUrl: '',
             extensionIframe: false,
+            searchProduct:'',
             appreposnse:null
         }
         this.onHandleEventofCancelOrderPopup = this.onHandleEventofCancelOrderPopup.bind(this);
@@ -102,6 +103,9 @@ class SelfCheckoutView extends React.Component {
         this.onCancelOrderHandler = this.onCancelOrderHandler.bind(this);
         this.viewOrderEvent = this.viewOrderEvent.bind(this);
         this.handleScan = this.handleScan.bind(this);
+        this.filterProduct=this.filterProduct.bind(this)
+        this.handletileFilterData=this.handletileFilterData.bind(this)
+        
         setThemeColor();
         if (!localStorage.getItem('UDID')) {
             // history.push('/oliverlogin');
@@ -1113,10 +1117,16 @@ class SelfCheckoutView extends React.Component {
         //     input = $("#product_search_field").val();
         // if (style == "portrait")
             input = $("#product_search_field_pro").val();
+            if(input && input !==true){           
             var value = getSearchInputLength(input.length)
-
-        if (value == true || input.length == 0) {
-            this.handletileFilterData(input, "product-search");
+        if (value == true || input.length !== 0) {
+                this.state.searchProduct=value;
+                // var obj={key:input,Value:input,value:input}
+                this.handletileFilterData(input, "product-search");
+            }else{
+                this.state.searchProduct="";
+            }
+                
         }
     }
 
@@ -1241,7 +1251,7 @@ class SelfCheckoutView extends React.Component {
             {/* :''} */}
             <p className="section">Search for an item</p>
             <div className="search-dropdown m-b-35 selectable">
-                <input type="text" placeholder="Type item name here" id="product_search_field_pro"/>
+                <input type="text" placeholder="Type item name here" id="product_search_field_pro" onChange={this.filterProduct}  onFocus={this.filterProduct}/>
                 <svg
                     className="left"
                     width="33"
@@ -1280,7 +1290,9 @@ class SelfCheckoutView extends React.Component {
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>
             <p className="section">{getTitle(_key.TITLE_FOR_PRODUCT_SECTION)}</p>  
-            <AllProduct categories={this.state.categories} showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} ></AllProduct>
+            <AllProduct categories={this.state.categories} showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
+            searchProduct={this.state.searchProduct}
+            ></AllProduct>
             <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
                                         showPopuponcartlistView={this.showPopuponcartlistView}
                                         discountType={this.state.discountType}
