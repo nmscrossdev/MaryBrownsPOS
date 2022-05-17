@@ -1213,7 +1213,7 @@ class SelfCheckoutView extends React.Component {
         const filter_products = this.state.AllProductList && this.state.AllProductList.find(item =>{
         return item.WPID==id;
         });
-
+        this.tileProductFilter .handleIsVariationProduct(filter_products.type,filter_products);
         //this.showPopuponcartlistView(filter_products,null)
         console.log("-filter_products"+JSON.stringify(filter_products))
                     //this.setState({productList:filter_products,AllProductList:productlist});
