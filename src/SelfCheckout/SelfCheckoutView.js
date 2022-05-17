@@ -80,6 +80,7 @@ class SelfCheckoutView extends React.Component {
             extHostUrl: '',
             extPageUrl: '',
             extensionIframe: false,
+            appreposnse:null
         }
         this.onHandleEventofCancelOrderPopup = this.onHandleEventofCancelOrderPopup.bind(this);
         this.onCancelOrderHandler = this.onCancelOrderHandler.bind(this);
@@ -151,6 +152,7 @@ class SelfCheckoutView extends React.Component {
                 initDropDown(searchDataNew);
                 
             }
+            //localStorage.removeItem("isListner")
         });
         //  dispatch(customerActions.getCountry())
         //  dispatch(customerActions.getState())
@@ -717,37 +719,48 @@ class SelfCheckoutView extends React.Component {
             this.setState({ Ticket_Detail: item })
         }
     }
-
+    // componentWillUnmount()
+    // {
+    //     window.removeEventListener("message", function () {}); 
+    // }
     componentDidMount() {
+        // window.addEventListener("beforeunload", (ev) => 
+        // {  
+        //     window.removeEventListener("message", function () {});
+        // });
         //call android function to get user--------
         androidGetUser();
-        setTimeout(function () {
-            //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
-            if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
-        }, 1000);
+        // setTimeout(function () {
+        //     //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
+        //     if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
+        // }, 1000);
 
         var _user = JSON.parse(localStorage.getItem("user"));
         // ************ Update _user.instance for local testing ************* //
         // _user.instance = window.location.origin
         // localStorage.setItem("user", JSON.stringify(_user));
         // ************ End ********* //
+        if(!localStorage.getItem("isListner"))
+        {
+        localStorage.setItem("isListner","true");
+        window.removeEventListener("message", function () {});
         window.addEventListener('message', (e) => {
             if (e.origin && _user && _user.instance) {
                 try {
                     var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
-                    if (extensionData && extensionData !== "" && extensionData.oliverpos) {
-                        this.showExtention(extensionData);
-                    }
+                    console.log("clientEvent----->", JSON.stringify(extensionData))
+                    // if (extensionData && extensionData !== "" && extensionData.oliverpos) {
+                    //     this.showExtention(extensionData);
+                    // }
 
                     // display app v1.0-------------------------------------
                     if (extensionData && extensionData !== "" ) {                
                       var appresponse=  handleAppEvent(extensionData,"ActivityView");
-                      //console.log("appResponse1",appresponse)
+                        console.log("appResponse---->",appresponse)
                       if(appresponse){
                           if(this.setState.appreposnse !==appresponse){
                                this.setState({"appreposnse": appresponse});
                           }
-                      
                       }
                     }
                     //----------------------------------------
@@ -757,53 +770,36 @@ class SelfCheckoutView extends React.Component {
                 }
             }
         }, false);
+     }
     }
-    extensionReady = () => {
-        var clientJSON =
-        {
-            oliverpos:
-            {
-                event: "shareCheckoutData"
-            },
-            data:
-            {
-                orderData:
-                {
-                    
-                }
-            }
-        };
-
-        var iframex = document.getElementsByTagName("iframe")[0].contentWindow;
-        iframex.postMessage(JSON.stringify(clientJSON), '*');
-    }
-    showExtention = (value) => {
-        var jsonMsg = value ? value : '';
-        var clientEvent = jsonMsg && jsonMsg !== '' && jsonMsg.oliverpos && jsonMsg.oliverpos.event ? jsonMsg.oliverpos.event : '';
-        if (clientEvent && clientEvent !== '') {
-             console.log("clientEvent----->", jsonMsg)
-            switch (clientEvent) {
-                case "extensionReady":
-                    this.extensionReady()
-                    break;
-                // case "updateOrderStatus":
-                //     this.updateOrderStatusExt(jsonMsg.data)
-                //     break;
-                // case "registerInfo":
-                //     sendRegisterDetails()
-                //     break;
-                // case "clientInfo":
-                //     sendClientsDetails()
-                //     break;
-                // case "tipInfo":
-                //     sendTipInfoDetails()
-                //     break;
-                default: // extensionFinished
-                    console.error('App Error : Extension event does not match ', jsonMsg);
-                    break;
-            }
-        }
-    }
+   
+    // showExtention = (value) => {
+    //     var jsonMsg = value ? value : '';
+    //     var clientEvent = jsonMsg && jsonMsg !== '' && jsonMsg.oliverpos && jsonMsg.oliverpos.event ? jsonMsg.oliverpos.event : '';
+    //     if (clientEvent && clientEvent !== '') {
+    //          console.log("clientEvent----->", jsonMsg)
+    //         switch (clientEvent) {
+    //             case "extensionReady":
+    //                 this.extensionReady()
+    //                 break;
+    //             // case "updateOrderStatus":
+    //             //     this.updateOrderStatusExt(jsonMsg.data)
+    //             //     break;
+    //             // case "registerInfo":
+    //             //     sendRegisterDetails()
+    //             //     break;
+    //             // case "clientInfo":
+    //             //     sendClientsDetails()
+    //             //     break;
+    //             // case "tipInfo":
+    //             //     sendTipInfoDetails()
+    //             //     break;
+    //             default: // extensionFinished
+    //                 console.error('App Error : Extension event does not match ', jsonMsg);
+    //                 break;
+    //         }
+    //     }
+    // }
     checkInventoryData(productData) {
         this.setState({ inventoryCheck: productData })
         this.state.inventoryCheck = productData;
@@ -1208,6 +1204,17 @@ class SelfCheckoutView extends React.Component {
         // this.handletileFilterData(null, 'product', null)
         this.setState({favFilterSelect:'',favFilterPSelect:''});
       }
+      showProductPopup=(id)=>
+      {
+        const filter_products = this.state.AllProductList && this.state.AllProductList.find(item =>{
+        return item.WPID==id;
+        });
+
+        //this.showPopuponcartlistView(filter_products,null)
+        console.log("-filter_products"+JSON.stringify(filter_products))
+                    //this.setState({productList:filter_products,AllProductList:productlist});
+
+      }
     /** 
      * Created By   : Aatifa
      * Created Date : 01-06-2020
@@ -1226,7 +1233,7 @@ class SelfCheckoutView extends React.Component {
             <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
-            <Carasoul banners={this.state.banners}></Carasoul>
+            <Carasoul banners={this.state.banners} showProductPopup={this.showProductPopup}></Carasoul>
             :null}
             {/* :''} */}
             <p className="section">Search for an item</p>
@@ -1300,7 +1307,7 @@ class SelfCheckoutView extends React.Component {
                 closeCommonPopup = {()=>this.handleCloseCommonPopup()}
                 id = {'commonInfoPopup'}
                 /> */}
-                <ScreenSaver banners={this.state.banners}></ScreenSaver>
+                <ScreenSaver></ScreenSaver>
                 {
                     //Page Setup
                     setTimeout(() => {
