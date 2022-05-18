@@ -1411,7 +1411,7 @@ class CommonProductPopupModal extends React.Component {
 
         return (
             <div className= "popup hide productPopup" id="VariationPopUp">
-                 {HostUrl == "" ?<Navbar showExtensionIframe={this.props.showExtensionIframe} itemCount={this.props.itemCount} page={_key.PRODUCT_PAGE} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
+                 {HostUrl == "" ?<Navbar msg={this.props.msg} showExtensionIframe={this.props.showExtensionIframe} itemCount={this.props.itemCount} page={_key.PRODUCT_PAGE} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
                 {/* <div className="modal-dialog modal-center-block"> */}
                     {HostUrl !== "" ?
                         <React.Fragment>

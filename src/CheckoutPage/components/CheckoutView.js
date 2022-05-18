@@ -118,6 +118,8 @@ class CheckoutView extends React.Component {
             extensionMetaData: {},
             extHostUrl: '',
             extPageUrl: '',
+            extName:'',
+            extLogo:'',
             extensionIframe: false,
             extensionOrderNote : [],
             UpdateCartByApp:false,
@@ -2672,7 +2674,9 @@ class CheckoutView extends React.Component {
         this.setState({
             extensionIframe: true,
             extHostUrl: data ? data.ext_host_url : '',
-            extPageUrl: data ? data.ext_page_url : ''
+            extPageUrl: data ? data.ext_page_url : '',
+            extName: data ? data.ext_name : '',
+            extLogo: data ? data.ext_logo : ''
         })
         setTimeout(() => {
             showModal('common_ext_popup');
@@ -2880,12 +2884,14 @@ class CheckoutView extends React.Component {
                             handleExtensionPaymentClick={this.handleExtensionPaymentClick} 
                             showExtIframe={this.state.extensionIframe}/>
                             {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)? */}
-                            
+                            <div className="cover hide"></div>
                             <CommonExtensionPopup
                     showExtIframe={this.state.extensionIframe}
                     close_ext_modal={this.close_ext_modal}
                     extHostUrl={this.state.extHostUrl}
                     extPageUrl={this.state.extPageUrl}
+                    extName={this.state.extName}
+                    extLogo={this.state.extLogo}
                 />
                 {/* :null} */}
                 </div>

@@ -1247,15 +1247,15 @@ class SelfCheckoutView extends React.Component {
     
         return (
             <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
-            <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
+            <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
             <Carasoul banners={this.state.banners} showProductPopup={this.showProductPopup}></Carasoul>
             :null}
             {/* :''} */}
-            <p className="section">Search for an item</p>
+            <p className="section">{getTitle(_key.LABEL_FOR_SEARCH_INPUT_FIELD)}</p>
             {getTitle(_key.DISPLAY_SEARCH_BAR)=="true"?<div className="search-dropdown m-b-35 selectable">
-                <input type="text" placeholder={getTitle(_key.LABEL_FOR_SEARCH_INPUT_FIELD)} id="product_search_field_pro" onChange={this.filterProduct}  onFocus={this.filterProduct}/>
+                <input type="text" placeholder="Type item name here" id="product_search_field_pro" onChange={this.filterProduct}  onFocus={this.filterProduct}/>
                 <svg
                     className="left"
                     width="33"
