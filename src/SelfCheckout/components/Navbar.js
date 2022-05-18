@@ -1,9 +1,9 @@
 import React from 'react';
 import {_key,getApps} from '../../settings/SelfCheckoutSettings';
-// import { history } from '../../_helpers';
+ import { history } from '../../_helpers';
 const changeURL=()=>
 {
-  //history.push='/checkout';
+  history.push='/checkout';
 }
 
 
