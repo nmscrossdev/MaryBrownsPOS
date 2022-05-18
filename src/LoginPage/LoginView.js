@@ -92,7 +92,7 @@ class LoginPage extends React.Component {
         localStorage.removeItem("WarehouseId");
         localStorage.removeItem('DEFAULT_TAX_STATUS');
         localStorage.removeItem('APPLY_DEFAULT_TAX');
-
+        localStorage.removeItem("isListner");
         var demoUser = localStorage.getItem('demoUser')
         if( !demoUser || demoUser != 'true'){
             this.props.dispatch(pinLoginActions.getBlockerInfo())

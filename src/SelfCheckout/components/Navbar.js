@@ -1,5 +1,5 @@
 import React from 'react';
-import {_key,getApps} from '../../settings/SelfCheckoutSettings';
+import {_key,getApps,get_uuid,getInitials} from '../../settings/SelfCheckoutSettings';
 import { handleAppEvent,postmessage } from '../../ExtensionHandeler/commonAppHandler';
 import { history } from '../../_helpers';
 class  Navbar extends React.PureComponent{
@@ -45,12 +45,7 @@ class  Navbar extends React.PureComponent{
   //   {
   //       window.removeEventListener("message", function () {}); 
   //   }
-get_uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
+
   
 changeURL=()=>
   {
@@ -68,8 +63,8 @@ render() {
           {
             apps &&  apps.map((item, index) => {
              let inName = item.Name?getInitials(item.Name):"";
-             let uid=this.get_uuid();
-             return(<button onClick={() =>showExtensionIframe? showExtensionIframe(item.Id):null} className="icon" key={"nvapp_"+uid}><span id={"appInitial_"+uid} style={{display:"none",color:"white"}}>{inName}</span>
+             let uid=get_uuid();
+             return(<button onClick={() =>showExtensionIframe? showExtensionIframe(item.Id):null} className="icon" key={"nvapp_"+uid}><span id={"appInitial_"+uid} style={{display:"none",color:"white",fontSize:"1.8vw"}}>{inName}</span>
              {item.logo!=null? <img id={"appLogo_"+uid} src={item.logo} alt={inName}  onError={(e) => { e.target.onerror = null; document.getElementById("appInitial_"+uid).style.display="block";document.getElementById("appLogo_"+uid).style.display="none";/* e.target.src = showInitials(inName)*/}}  style={{height:"2vw",width:"2.2vw"}}/>:
               
               <svg
@@ -132,15 +127,6 @@ export default Navbar ;
 // const GoBack=()=>{
 //        window.location='/SelfCheckoutView';
 // }
-var getInitials = function (string) {
-  var names = string.split(' '),
-      initials = names[0].substring(0, 1).toUpperCase();
-  
-  if (names.length > 1) {
-      initials += names[names.length - 1].substring(0, 1).toUpperCase();
-  }
-  return initials;
-};
 
 // const Navbar=(props)=> {
 //   var apps=props.page?getApps(props.page):null

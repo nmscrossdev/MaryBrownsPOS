@@ -192,10 +192,12 @@ export const getHostURLsBySelectedExt = (ext_id)=>{
         var ext_host_url = extension_views_field && extension_views_field[0] ? extension_views_field[0].HostUrl : ''
         var ext_page_url = extension_views_field && extension_views_field[0] ? extension_views_field[0].PageUrl : ''
         var ext_name = extension_views_field && extension_views_field[0] ? extension_views_field[0].Name : ''
+        var ext_logo = extension_views_field && extension_views_field[0] ? extension_views_field[0].logo : ''
         var data = {
             ext_page_url,
             ext_host_url,
             ext_name,
+            ext_logo
         }
         return data
 }

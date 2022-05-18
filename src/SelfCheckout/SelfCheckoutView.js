@@ -80,6 +80,8 @@ class SelfCheckoutView extends React.Component {
             categories:[],
             extHostUrl: '',
             extPageUrl: '',
+            extName:'',
+            extLogo:'',
             extensionIframe: false,
             searchProduct:'',
             appreposnse:null
@@ -1203,7 +1205,9 @@ class SelfCheckoutView extends React.Component {
         var data = getHostURLsBySelectedExt(ext_id)
         this.setState({
             extHostUrl: data ? data.ext_host_url : '',
-           extPageUrl: data ? data.ext_page_url : ''
+           extPageUrl: data ? data.ext_page_url : '',
+           extName: data ? data.ext_name : '',
+           extLogo: data ? data.ext_logo : ''
           })
         this.setState({ extensionIframe: true })
         setTimeout(() => {
@@ -1250,8 +1254,8 @@ class SelfCheckoutView extends React.Component {
             :null}
             {/* :''} */}
             <p className="section">Search for an item</p>
-            <div className="search-dropdown m-b-35 selectable">
-                <input type="text" placeholder="Type item name here" id="product_search_field_pro" onChange={this.filterProduct}  onFocus={this.filterProduct}/>
+            {getTitle(_key.DISPLAY_SEARCH_BAR)=="true"?<div className="search-dropdown m-b-35 selectable">
+                <input type="text" placeholder={getTitle(_key.LABEL_FOR_SEARCH_INPUT_FIELD)} id="product_search_field_pro" onChange={this.filterProduct}  onFocus={this.filterProduct}/>
                 <svg
                     className="left"
                     width="33"
@@ -1282,8 +1286,7 @@ class SelfCheckoutView extends React.Component {
                         fill="#ABA7AF"
                     />
                 </svg>
-                {/* <div className="option">Option 1</div>  */}
-            </div>
+            </div>:null}
             
            
             <CategoriesList categories={this.state.categories} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
@@ -1315,6 +1318,8 @@ class SelfCheckoutView extends React.Component {
                         close_ext_modal={this.close_ext_modal}
                         extHostUrl={this.state.extHostUrl}
                         extPageUrl={this.state.extPageUrl}
+                        extName={this.state.extName}
+                        extLogo={this.state.extLogo}
                     />
             {/* <CommonInfoPopup
                 title = {LocalizedLanguage.noMatchingProductFound}
