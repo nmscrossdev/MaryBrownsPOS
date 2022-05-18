@@ -19,15 +19,14 @@ class PopupDisplayMessage extends React.Component {
     render() {
         return (
             <div className="popup hide" id="popupDisplayMessage" style={{overflowY:"hidden",textAlign:"center"}}>
-                 <div className="product-container">
-                        <div className="modal-body center-center pt-5 pb-5">
-                            <div className="plan-info">
-                                    <p style={{fontSize:"2.69vw"}}>{LocalizedLanguage.selectAllAttributes}</p>
-                                    <p style={{fontSize:"2.59vw"}}>{LocalizedLanguage.selectSpecificVariation}</p>
-                                
-                                <button style={{width:"50vw",marginTop:"20px"}} className="view-cart" type="button"  onClick={() => this.closePopupDisplayMessage()}>{LocalizedLanguage.Continue}
-                                </button>
-                            </div>
+                <div className="product-container">
+                    <div className="modal-body center-center pt-5 pb-5">
+                        <div className="plan-info">
+                            <p style={{fontSize:"2.69vw"}}>{LocalizedLanguage.selectAllAttributes}</p>
+                            <p style={{fontSize:"2.59vw"}}>{LocalizedLanguage.selectSpecificVariation}</p>
+                            <button style={{width:"50vw",marginTop:"20px"}} className="view-cart" type="button"  onClick={() => this.closePopupDisplayMessage()}>{LocalizedLanguage.Continue}
+                            </button>
+                        </div>
                     </div>
                 </div>
                 {/* <div>

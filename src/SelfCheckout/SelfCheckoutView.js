@@ -1205,9 +1205,9 @@ class SelfCheckoutView extends React.Component {
         var data = getHostURLsBySelectedExt(ext_id)
         this.setState({
             extHostUrl: data ? data.ext_host_url : '',
-           extPageUrl: data ? data.ext_page_url : '',
-           extName: data ? data.ext_name : '',
-           extLogo: data ? data.ext_logo : ''
+            extPageUrl: data ? data.ext_page_url : '',
+            extName: data ? data.ext_name : '',
+            extLogo: data ? data.ext_logo : ''
           })
         this.setState({ extensionIframe: true })
         setTimeout(() => {
