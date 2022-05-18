@@ -2271,7 +2271,7 @@ body > .text-row > p.order-quantity {
 	line-height: 2.22vw;
 	text-align: center;
 	color: #fff;
-}
+	align-self: center;}
 
 .login-wrapper button:hover {
 	cursor: pointer;
