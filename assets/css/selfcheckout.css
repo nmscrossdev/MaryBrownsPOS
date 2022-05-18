@@ -2801,3 +2801,7 @@ body > .text-row > p.order-quantity {
         align-items: center;
     }
     
+
+.productv2-parrent {
+	opacity: 0.3;
+}

@@ -363,7 +363,6 @@ class CheckoutCart extends React.Component {
       }
     }
     xindex !== undefined && productx.splice(xindex, 1);
-
     if (product.length == 0) {
       //var checklist = localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))
       // if(checklist && (checklist.status == "pending" || checklist.status == "park_sale" || checklist.status == "lay_away" || checklist.status == "on-hold")){
@@ -560,6 +559,8 @@ close_ext_modal = () => {
           : <div></div>}
         <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>
         <div className="cover hide"></div>
+          {checkList1 && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
+        {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
         <CommonExtensionPopup
           showExtIframe={this.state.extensionIframe}
           close_ext_modal={this.close_ext_modal}
