@@ -2951,3 +2951,7 @@ button.close {
 .productviewviewcard{
 	width: 102%;
 }
+
+.productv2-parrent {
+	opacity: 0.3;
+}
