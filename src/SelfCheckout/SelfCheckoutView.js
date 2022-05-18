@@ -1313,6 +1313,8 @@ class SelfCheckoutView extends React.Component {
             datetime={this.state.datetime}/>
             <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />
             <PopupDisplayMessage />
+            {
+                this.state.extensionIframe==true?
             <CommonExtensionPopup
                         showExtIframe={this.state.extensionIframe}
                         close_ext_modal={this.close_ext_modal}
@@ -1320,7 +1322,7 @@ class SelfCheckoutView extends React.Component {
                         extPageUrl={this.state.extPageUrl}
                         extName={this.state.extName}
                         extLogo={this.state.extLogo}
-                    />
+                    />:null}
             {/* <CommonInfoPopup
                 title = {LocalizedLanguage.noMatchingProductFound}
                 subTitle = {this.state.common_Msg}
@@ -1329,7 +1331,7 @@ class SelfCheckoutView extends React.Component {
                 id = {'commonInfoPopup'}
                 /> */}
                 <ScreenSaver></ScreenSaver>
-                {
+                <div style={{display:"none"}}>{
                     //Page Setup
                     setTimeout(() => {
                         scrollbarFix();
@@ -1342,7 +1344,7 @@ class SelfCheckoutView extends React.Component {
                     }, 1000)
 
 
-                }
+                }</div>
             </div>
             
         );

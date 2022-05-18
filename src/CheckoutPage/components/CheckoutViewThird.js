@@ -21,7 +21,7 @@ import { UPIPayments } from '../../_components/PaymentComponents/UPIPayments';
 // import '../../../assets/css_new/Pagewise.css'
 //import { CommonExtensionPopup } from '../../_components/CommonExtensionPopup';
 var cash_rounding = ActiveUser.key.cash_rounding;
-import {getPaymentMethods,getExtPaymentMethods} from '../../settings/SelfCheckoutSettings';
+import {getPaymentMethods,getExtPaymentMethods,centerView} from '../../settings/SelfCheckoutSettings';
 
 class CheckoutViewThird extends React.Component {
     constructor(props) {
@@ -105,6 +105,20 @@ class CheckoutViewThird extends React.Component {
                 if (typeof EnableContentScroll != "undefined") { EnableContentScroll(); }
             }, 200)
         }
+        
+        setTimeout(() => {
+            //Page Setup
+        scaleSVG();
+        centerView("select-payment");
+
+        //Custom resize listener
+        var customResizeTimer;
+        window.addEventListener("resize", function () {
+            clearTimeout(customResizeTimer);
+            customResizeTimer = setTimeout(function () {
+                centerView();
+            }, 100);
+        });}, 100)
     }
 
     componentWillUnmount() {
@@ -804,6 +818,20 @@ class CheckoutViewThird extends React.Component {
                                         {this.showExtensionPayments(styles)}
                                         </div>
                                     </div>
+                                    {/* {setTimeout(() => {
+                                        //Page Setup
+                                    scaleSVG();
+                                    centerView("select-payment");
+
+                                    //Custom resize listener
+                                    var customResizeTimer;
+                                    window.addEventListener("resize", function () {
+                                        clearTimeout(customResizeTimer);
+                                        customResizeTimer = setTimeout(function () {
+                                            centerView();
+                                        }, 100);
+                                    });
+                                                                        }, 100)} */}
                                 </div>
                                         {/* <div className="payment-button-group overflowscroll payment-otp overflowscroll pb-0 pt-0">
                                             <div style={{ display: "none" }}>
@@ -922,6 +950,7 @@ class CheckoutViewThird extends React.Component {
                     //         </div>
                     //     </div>
                     // </div>
+                    
         )
     }
 }
