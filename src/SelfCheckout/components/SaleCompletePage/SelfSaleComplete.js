@@ -196,7 +196,7 @@ class SelfSaleComplete extends React.Component {
                     <button onClick={() => this.sendMail()} id="emailButton">{LocalizedLanguage.email}</button>
                     <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
                     <div className="divider" />
-                    <BottomApps page={_key.CHECKOUT_PAGE}  showExtensionIframe={this.showExtensionIframe}></BottomApps>
+                    <BottomApps page={_key.RECEIPT_PAGE}  showExtensionIframe={this.showExtensionIframe}></BottomApps>
                     {
                 this.state.extensionIframe==true?
                 <CommonExtensionPopup
