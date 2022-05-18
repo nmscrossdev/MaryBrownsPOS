@@ -139,7 +139,7 @@ function get_selfcheckout_setting()
         dispatch(request());
         selfcheckoutService.get_selfcheckout_setting().then(
             self_settings => {
-                console.log("--------self checkout data setttings--->"+JSON.stringify(self_settings))
+                //console.log("--------self checkout data setttings--->"+JSON.stringify(self_settings))
                 if(self_settings.is_success==true && self_settings.message=="Success")
                 {
                     dispatch(success(self_settings));

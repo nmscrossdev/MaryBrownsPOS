@@ -1340,9 +1340,9 @@ export const addProductToCart=(RequestData,isbackgroudApp,whereToview)=>{
 
 export const Notes = (RequestData,isbackgroudApp,whereToview) => {
   var clientJSON = ""
-  if(whereToview !=='CheckoutView'){
-    return;
-  }
+  // if(whereToview !=='CheckoutView'){
+  //   return;
+  // }
   var validationResponse = validateRequest(RequestData)
   if (validationResponse.isValidationSuccess == false) {
     clientJSON = validationResponse.clientJSON;

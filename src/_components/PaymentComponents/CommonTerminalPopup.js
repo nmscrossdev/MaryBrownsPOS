@@ -3,7 +3,8 @@ import LocalizedLanguage from '../../settings/LocalizedLanguage';
 export const CommonTerminalPopup = (props) => {
     const { showTerinalwaitingMsg, errorMsgColor, error_msg, handleCancelButton, handleButton1Click, handleButton2Click, button1Title, button2Title } = props;
     return (
-        <div className="loader-fixed">
+        // <div className="loader-fixed">
+            <div className="popup productPopup">
             <div className="user_login user_login_popup">
                 <div className="user__login_header">
                     <div className="user_login_container">

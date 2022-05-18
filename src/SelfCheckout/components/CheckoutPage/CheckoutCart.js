@@ -21,6 +21,8 @@ class CheckoutCart extends React.Component {
       variationDefaultQunatity: 1,
       extHostUrl: '',
       extPageUrl: '',
+      extName:'',
+      extLogo:'',
       extensionIframe: false,
     }
 
@@ -403,7 +405,9 @@ class CheckoutCart extends React.Component {
     var data = getHostURLsBySelectedExt(ext_id)
     this.setState({
         extHostUrl: data ? data.ext_host_url : '',
-       extPageUrl: data ? data.ext_page_url : ''
+       extPageUrl: data ? data.ext_page_url : '',
+       extName: data ? data.ext_name : '',
+       extLogo: data ? data.ext_logo : ''
       })
     this.setState({ extensionIframe: true })
     setTimeout(() => {
@@ -559,7 +563,9 @@ close_ext_modal = () => {
           showExtIframe={this.state.extensionIframe}
           close_ext_modal={this.close_ext_modal}
           extHostUrl={this.state.extHostUrl}
-          extPageUrl={this.state.extPageUrl} />
+          extPageUrl={this.state.extPageUrl}
+          extName={this.state.extName}
+          extLogo={this.state.extLogo} />
       </div>)
   }
 }

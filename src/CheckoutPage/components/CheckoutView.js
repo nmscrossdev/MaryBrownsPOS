@@ -118,6 +118,8 @@ class CheckoutView extends React.Component {
             extensionMetaData: {},
             extHostUrl: '',
             extPageUrl: '',
+            extName:'',
+            extLogo:'',
             extensionIframe: false,
             extensionOrderNote : [],
             UpdateCartByApp:false,
@@ -257,7 +259,6 @@ class CheckoutView extends React.Component {
             GTM_OliverDemoUser("Visited Checkout View")
         }
     }
-
     componentDidMount() {
         setTimeout(function () {
             if (typeof setHeightDesktop != "undefined") { setHeightDesktop() };
@@ -309,69 +310,71 @@ class CheckoutView extends React.Component {
 
        // addEventListener();
         // //*** */  for checkout payment App ***// App 1.0
-       var _user = JSON.parse(localStorage.getItem("user"));       
-        window.addEventListener('message', (e) => {
+    //    var _user = JSON.parse(localStorage.getItem("user"));  
+    //     window.removeEventListener("message", function () {});     
+    //     window.addEventListener('message', (e) => {
 
-            if (e.origin && _user && _user.instance) {
-                try {
-                    var extensionData = e.data && typeof e.data == 'string' ? JSON.parse(e.data) : e.data;                   
-                    if (extensionData && extensionData !== "" ) {    //app version 1.0   
-                        //For selfchcekout wrapper app
-                        if(extensionData && typeof extensionData.oliverpos!="undefined")
-                        {
-                            //console.log("======"+JSON.stringify(extensionData))
+    //         if (e.origin && _user && _user.instance) {
+    //             try {
+    //                 var extensionData = e.data && typeof e.data == 'string' ? JSON.parse(e.data) : e.data;                   
+    //                 if (extensionData && extensionData !== "" ) {    //app version 1.0   
+    //                     //For selfchcekout wrapper app
+    //                     // if(extensionData && typeof extensionData.oliverpos!="undefined")
+    //                     // {
+    //                     //     //console.log("======"+JSON.stringify(extensionData))
                             
-                            if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" && extensionData.oliverpos.event=="extensionPayment")
-                            {
-                                    this.showExtention(extensionData,'');
-                            }
-                            else if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" )  //&& extensionData.oliverpos.event=="extensionReady"
-                            {
-                                // if((typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true) && ActiveUser.key.isSelfcheckout == true)
-                                if(ActiveUser.key.isSelfcheckout == true && extensionData.oliverpos.event=="extensionReady")
-                                {
-                                    this.extension_pay_selfcheckout();
-                                }
-                                else if(ActiveUser.key.isSelfcheckout == true ){
-                                    this.showExtention(extensionData,'');
-                                }
-                            }
-                        }
-                        //--------
-                       var appResponse= handleAppEvent(extensionData,"CheckoutView");                    
-                        if(appResponse=='app_do_payment'){                          
-                           this.handleAppPayment(extensionData)
-                        }
-                        else if(appResponse=='app-modificaiton-external'){    
-                            this.setState({ UpdateCartByApp: true }) //To Refresh the cart need to update the state
-                         }
-                         else if(appResponse=='app-modificaiton-lock-env'){
-                             setTimeout(() => {
-                                this.setState({ "appLock": true })  
-                             }, 200);
+    //                     //     if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" && extensionData.oliverpos.event=="extensionPayment")
+    //                     //     {
+    //                     //             this.showExtention(extensionData,'');
+    //                     //     }
+    //                     //     else if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" )  //&& extensionData.oliverpos.event=="extensionReady"
+    //                     //     {
+    //                     //         // if((typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true) && ActiveUser.key.isSelfcheckout == true)
+    //                     //         if(ActiveUser.key.isSelfcheckout == true && extensionData.oliverpos.event=="extensionReady")
+    //                     //         {
+    //                     //             this.extension_pay_selfcheckout();
+    //                     //         }
+    //                     //         else if(ActiveUser.key.isSelfcheckout == true ){
+    //                     //             this.showExtention(extensionData,'');
+    //                     //         }
+    //                     //     }
+    //                     // }
+    //                     //--------
+    //                 //    var appResponse= handleAppEvent(extensionData,"CheckoutView");
+    //                    var appResponse= handleAppEvent(extensionData,"");                     
+    //                     if(appResponse=='app_do_payment'){                          
+    //                        this.handleAppPayment(extensionData)
+    //                     }
+    //                     else if(appResponse=='app-modificaiton-external'){    
+    //                         this.setState({ UpdateCartByApp: true }) //To Refresh the cart need to update the state
+    //                      }
+    //                      else if(appResponse=='app-modificaiton-lock-env'){
+    //                          setTimeout(() => {
+    //                             this.setState({ "appLock": true })  
+    //                          }, 200);
                            
-                         }
-                         else if(appResponse=='app-modificaiton-unlock-env'){
-                            setTimeout(() => {
-                                this.setState({ "appLock": false })  
-                            }, 200);
-                         }else if(appResponse=='app-get-lock-env'){
-                             var  clientJSON = {
-                                command: extensionData.command,
-                                version:extensionData.version,
-                                method: extensionData.method,
-                                status: 200,
-                                state:this.state.appLock==true?"lock":'unlock'
-                              }
-                             postmessage(clientJSON)
-                         }
-                    }
-                }
-                catch (err) {
-                    console.error(err);
-                }
-            }
-        }, false);
+    //                      }
+    //                      else if(appResponse=='app-modificaiton-unlock-env'){
+    //                         setTimeout(() => {
+    //                             this.setState({ "appLock": false })  
+    //                         }, 200);
+    //                      }else if(appResponse=='app-get-lock-env'){
+    //                          var  clientJSON = {
+    //                             command: extensionData.command,
+    //                             version:extensionData.version,
+    //                             method: extensionData.method,
+    //                             status: 200,
+    //                             state:this.state.appLock==true?"lock":'unlock'
+    //                           }
+    //                          postmessage(clientJSON)
+    //                      }
+    //                 }
+    //             }
+    //             catch (err) {
+    //                 console.error(err);
+    //             }
+    //         }
+    //     }, false);
     }
     handleAppPayment(RequesteData){
         try {
@@ -2577,6 +2580,7 @@ class CheckoutView extends React.Component {
                 history.push('../SelfCheckoutView');
             }
             else {
+                localStorage.removeItem("isListner");
                 window.location = '../SelfCheckoutView';
             }
         }
@@ -2670,7 +2674,9 @@ class CheckoutView extends React.Component {
         this.setState({
             extensionIframe: true,
             extHostUrl: data ? data.ext_host_url : '',
-            extPageUrl: data ? data.ext_page_url : ''
+            extPageUrl: data ? data.ext_page_url : '',
+            extName: data ? data.ext_name : '',
+            extLogo: data ? data.ext_logo : ''
         })
         setTimeout(() => {
             showModal('common_ext_popup');
@@ -2878,12 +2884,14 @@ class CheckoutView extends React.Component {
                             handleExtensionPaymentClick={this.handleExtensionPaymentClick} 
                             showExtIframe={this.state.extensionIframe}/>
                             {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)? */}
-                            
+                            <div className="cover hide"></div>
                             <CommonExtensionPopup
                     showExtIframe={this.state.extensionIframe}
                     close_ext_modal={this.close_ext_modal}
                     extHostUrl={this.state.extHostUrl}
                     extPageUrl={this.state.extPageUrl}
+                    extName={this.state.extName}
+                    extLogo={this.state.extLogo}
                 />
                 {/* :null} */}
                 </div>
