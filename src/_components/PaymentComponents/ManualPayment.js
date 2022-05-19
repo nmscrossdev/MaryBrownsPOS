@@ -284,7 +284,7 @@ class ManualPayment extends React.Component {
                     // </div>
                 :
                 <div className={popupClass == '' ? "popup hide" : `popup hide ${popupClass}`} id="manualcardentryin" role="dialog" style={{ display: displayPopupStyle }} >
-                    {this.props.loading == true && isMobileOnly == true ? <AndroidAndIOSLoader /> : this.props.loading == true ? <LoadingModal /> : ''}
+                    {this.props.loading == true ? <LoadingModal /> : ''}
                     <div className={isMobileOnly == true ? 'modal-dialog modal-center-block text-black' : 'modal-dialog modal-sm modal-center-block'}>
                         <div className="modal-content">
                             <div className="modal-header header-modal">

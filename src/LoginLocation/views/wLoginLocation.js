@@ -9,7 +9,7 @@ const WebLoginLocation = (props) => {
     const { autoFocusIs, windowLocation, handleSubmit, handleBack, checkStatus, UserLocations, check, loading, notFounLocation, isLoading, clear } = props;
     return (
         <div>
-            {loading == true || isLoading === false ? <AndroidAndIOSLoader /> : ''}
+            {loading == true || isLoading === false ? <LoadingModal /> : ''}
             <div className="login-header">
                 <div className="login-go-back"  onClick={() =>windowLocation('/site_link')}>
                     <img src="../Assets/Images/SVG/LesserThan.svg" alt="" />

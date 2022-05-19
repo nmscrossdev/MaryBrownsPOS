@@ -173,7 +173,7 @@ class WebLoginView extends React.Component {
         // 
         return (
             <div className="login-wrapper">
-                {loggingIn && loggingIn == true || loading == true ? isMobileOnly == true ? <AndroidAndIOSLoader /> : <LoadingModal /> : ''}
+                {loggingIn && loggingIn == true || loading == true ?  <LoadingModal /> : ''}
                 
                          {isOldVersion ? <div className="user_hard-blocker close_hard_blocker" id="test">
                              <div className="user_hard-blocker_container">
@@ -248,22 +248,25 @@ class WebLoginView extends React.Component {
 				
 			</button>
          */}
-            <FacebookLogin cssClass="logo facebook user_login__social user_login_fb_on logo facebook"  appId={Config.key.FACEBOOK_CLIENT_ID}
+           <button className="logo facebook">
+				<div className="logo-container">
+					<img
+						src="../Assets/Images/SVG/facebooklogo.svg"
+						alt="facebook logo"
+						className="logo"
+					/>
+				</div>
+                <FacebookLogin cssClass="logo facebook"  appId={Config.key.FACEBOOK_CLIENT_ID}
                                                         autoLoad={false}
                                                         fields="first_name, last_name,name,email"
                                                         scope="public_profile, email"
                                                         onClick={componentClicked}
                                                         callback={responseFacebook}
                                                         textButton="Sign in with Facebook">
-              {/* <div class="logo-container">
-					<img
-						src="../Assets/Images/SVG/facebooklogo.svg"
-						alt="facebook logo"
-						class="logo"
-					/>
-				</div>
-				Sign in with Facebook */}
-            </FacebookLogin>
+             </FacebookLogin>
+			</button>
+            
+           
 		
 			<button className="logo apple">
 				<div className="logo-container">

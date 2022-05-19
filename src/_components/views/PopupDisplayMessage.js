@@ -22,43 +22,14 @@ class PopupDisplayMessage extends React.Component {
     render() {
         console.log(this.props,"variation popup")
         return (
-            <div className="popup hide" id="popupDisplayMessage"  data-keyboard="false" data-backdrop="static" role='dialog' >
+            <div className="popup hide" id="popupDisplayMessage" style={{overflowY:"hidden",textAlign:"center"}}>
                 <div className="product-container">
-                    <div type="button" className="popup-close" data-dismiss="modal" aria-hidden="true">
-                        <svg onClick={() => hideModal('popupDisplayMessage')}
-                            width="22"
-                            height="21"
-                            viewBox="0 0 22 21"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
-                                fill="#050505"
-                            />
-                        </svg>
-                    </div>
-                    <p className="prod-name" id="epos_error_model_title">{LocalizedLanguage.messageTitle}</p>
-                    <div className="prod-wrapper">
-                        <p id="epos_error_model_message" style={{ fontSize: "2.59vw", textAlign: "center", marginBottom: "3vw" }}>{LocalizedLanguage.selectAllAttributes}</p>
-                        <p id="epos_error_model_message" style={{ fontSize: "2.59vw", textAlign: "center", marginBottom: "3vw" }}>{LocalizedLanguage.selectSpecificVariation}</p>#\
-                    </div>
-                    <div style={{ textAlign: "center" }}>
-                        <button style={{ width: "50vw" }} className="view-cart" type="button" onClick={() => hideModal('popupDisplayMessage')}>{LocalizedLanguage.okTitle}</button>
-                    </div>
-                </div>
-
-
-                {/* <div className="modal-dialog modal-sm modal-md2 modal-center-block">
-                    <div className="modal-content">
-                        <div className="modal-body center-center pt-5 pb-5">
-                            <div className="plan-info">
-                                    <h4 className='attributenameinfo'>{LocalizedLanguage.selectAllAttributes}</h4>
-                                    <p className="mb-3 mt-3 newvariable">{LocalizedLanguage.selectSpecificVariation}</p>
-                                <button type="button" className="btn btn-primary btn-lg mb-3" data-toggle="modal" onClick={() => this.closePopupDisplayMessage()}
-                                        data-target="#myModal">Continue
-                                </button>
-                            </div>
+                    <div className="modal-body center-center pt-5 pb-5">
+                        <div className="plan-info">
+                            <p style={{fontSize:"2.69vw"}}>{LocalizedLanguage.selectAllAttributes}</p>
+                            <p style={{fontSize:"2.59vw"}}>{LocalizedLanguage.selectSpecificVariation}</p>
+                            <button style={{width:"50vw",marginTop:"20px"}} className="view-cart" type="button"  onClick={() => this.closePopupDisplayMessage()}>{LocalizedLanguage.Continue}
+                            </button>
                         </div>
                     </div>
                 </div> */}

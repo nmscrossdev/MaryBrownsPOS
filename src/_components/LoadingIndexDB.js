@@ -167,9 +167,9 @@ class LoadingIndexDB extends React.Component {
             } else {
                 if (ActiveUser.key.isSelfcheckout == true) {
                     if(isMobileOnly == true){
-                        history.push('/selfcheckout')
+                        history.push('/SelfCheckoutView')
                     }else{
-                        window.location = '/selfcheckout';
+                        window.location = '/SelfCheckoutView';
                     }
                    
                 }

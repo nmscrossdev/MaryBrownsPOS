@@ -2,7 +2,7 @@ import React from 'react';
 
 export const AndroidAndIOSLoader = () => {
     return (
-        <div className="loader-fixed">
+        <div className="popup">
         <div className="loader-centered text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="120" height="120" viewBox="0 0 400 400" enableBackground="new 0 0 400 400">
                 <g>

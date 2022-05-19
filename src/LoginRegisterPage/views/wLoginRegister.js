@@ -9,7 +9,7 @@ const WebLoginRegisterView = (props) => {
     var loginDetails = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail')) : null;
     return (
 <div>
-{loading == true ? isMobileOnly == true ? <AndroidAndIOSLoader /> : <LoadingModal /> : ''}
+{loading == true ?  <LoadingModal /> : ''}
         <div className="login-header small-margin" onClick={() => window.location = "/login_location"}>
 			<div className="login-go-back"  onClick={() => removeLocation()}>
 				<img src="../Assets/Images/SVG/LesserThan.svg" alt="" />

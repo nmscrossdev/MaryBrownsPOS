@@ -13,7 +13,7 @@ const WebSiteLinkViewFirst = (props) => {
     
     return (
         <div className="login-card-container">
-           {!Sitelist  ? isMobileOnly == true? <AndroidAndIOSLoader/> : <LoadingModal /> : ''}
+           {!Sitelist  ?  <LoadingModal /> : ''}
            
                         {
                             Sitelist !== null && Sitelist !== undefined ?
