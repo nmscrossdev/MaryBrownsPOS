@@ -221,10 +221,17 @@
 
 .login-wrapper button.logo.facebook {
 	background-color: #4267b2;
+	padding-left:1.4vw;
+
+}
+.login-wrapper button.logo.facebook > span >button
+{
+	background-color: transparent;
 }
 
 .login-wrapper button.logo.facebook > .logo-container {
 	border-color: #4267b2;
+	z-index: 1;
 }
 
 .login-wrapper button.logo.facebook > .logo-container > .logo {
@@ -833,3 +840,32 @@
   .st7 {
 	fill: #FFD026;
   }
+  .loaderThemeBg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	margin: auto;
+	background-color: rgba(81, 80, 80, .51);
+  }
+  .loaderThemeBg img {
+	border: none;
+	margin-left: 0px;
+	margin-right: 0px;
+	display: block;
+	width: 150px;
+	height: 150px;
+	margin: auto;
+  }
+  .preloaderbackground {
+	background-color: #fff;
+	/* min-width: 221px; */
+	text-align: center;
+	border-radius: 14px;
+	padding: 20px 40px;
+  }
+  

@@ -15,7 +15,7 @@ const WebPin = (props) => {
         <div>
             <div className="user_login user_login_center scroll-auto" onClick={() => whichkey()}>
                 {/* {isloading ? isMobileOnly == true ? <LoadingModal />  : <LoadingModal /> : ''} */}
-                {isloading ? isMobileOnly == true ? <AndroidAndIOSLoader />  : <LoadingModal /> : ''}
+                {isloading ?  <LoadingModal /> : ''}
                 <div>
                     <div className="user_login_container" onClick={() => history.push("/choose_registration", "loginpin")}>
                         <div className="user_login-back">

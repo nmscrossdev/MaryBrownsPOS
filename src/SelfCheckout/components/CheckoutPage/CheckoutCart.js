@@ -557,7 +557,6 @@ close_ext_modal = () => {
         {display_rec_products == "true" ?
           <RecommendedProduct page={"cart"} />
           : <div></div>}
-        <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>
         <div className="cover hide"></div>
           {checkList1 && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}

@@ -2112,6 +2112,81 @@ body > .text-row > p.order-quantity {
 	background-color: var(--primary);
 	color: #fff;
 }
+/* --------------------Popup - Add Note-------------------- */
+
+.popup.add-note {
+	width: 78.52vw;
+	height: 48.89vw;
+	box-sizing: border-box;
+	border-radius: 1.39vw;
+	background-color: #fff;
+	padding: 3.24vw;
+	display: flex;
+	flex-direction: column;
+}
+
+.popup.add-note > .popup-header {
+	margin-bottom: 4.27vw;
+}
+
+.popup.add-note > .popup-header p {
+	font-family: Poppins;
+	font-size: 2.04vw;
+	font-weight: 600;
+	line-height: 2.69vw;
+	color: #050505;
+}
+
+.popup.add-note > .popup-body {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+.popup.add-note > .popup-body > p {
+	font-family: Poppins;
+	font-size: 1.85vw;
+	font-weight: 400;
+	line-height: 2.69vw;
+	color: #050505;
+	margin-bottom: 1.85vw;
+}
+
+.popup.add-note > .popup-body > textarea {
+	resize: none;
+	box-sizing: border-box;
+	padding: 1.11vw;
+	width: 100%;
+	/* height: 15.83vw; */
+	font-family: Poppins;
+	font-size: 1.85vw;
+	font-weight: 400;
+	line-height: 2.69vw;
+	flex-grow: 1;
+	margin-bottom: 1.85vw;
+}
+
+.popup.add-note > .popup-body > button {
+	width: 100%;
+	height: 7.22vw;
+	border: 0;
+	border-radius: 0.74vw;
+	background-color: var(--secondary);
+	font-family: Poppins;
+	font-size: 2.22vw;
+	font-weight: 500;
+	line-height: 2.96vw;
+	color: #fff;
+}
+
+.popup.add-note > .popup-body > button:hover {
+	cursor: pointer;
+}
+
+.popup.add-note > .popup-body > button:active {
+	transform: scale(0.95);
+}
+
 
 /* --------------------Login-------------------- */
 
