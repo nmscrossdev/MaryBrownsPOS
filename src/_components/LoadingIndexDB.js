@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { idbProductActions, taxRateAction, checkShopSTatusAction,tipsActions } from '../_actions';
+import { idbProductActions, taxRateAction,tipsActions } from '../_actions';
 import { get_UDid } from '../ALL_localstorage'
 import { openDb } from 'idb';
 import Config from '../Config';
@@ -13,14 +13,18 @@ import { refreshwebManu } from "../_components/CommonFunction";
 import ActiveUser from '../settings/ActiveUser';
 import LoaderOnboarding from '../onboarding/components/LoaderOnboarding'
 import { serverRequest } from '../CommonServiceRequest/serverRequest'
-
-
+import { checkShopSTatusAction, discountActions, attributesActions,categoriesActions, cartProductActions,exchangerateActions } from '../_actions';
+import { favouriteListActions } from '../ShopView';
+import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
+import { cashManagementAction } from "../CashManagementPage/actions/cashManagement.action";
+import { registerActions } from '../LoginRegisterPage/actions/register.action';
 import { redirectToURL } from './CommonJS';
 class LoadingIndexDB extends React.Component {
     constructor(props) {
         super(props);
         this.state = { loadingProducts: '',loadPerc:0 }
         // this.props.dispatch(idbProductActions.createProductDB());
+     
         if (!localStorage.getItem("shopstatus")) {
             this.props.dispatch(checkShopSTatusAction.getStatus());
         }
@@ -30,6 +34,45 @@ class LoadingIndexDB extends React.Component {
         this.props.dispatch(tipsActions.getAll());
         //ActiveUser.key.isSelfcheckout =  localStorage.getItem('selectedRegister') ? JSON.parse(localStorage.getItem('selectedRegister')).IsSelfCheckout : null
         this.getProductList = this.getProductList.bind(this);
+
+        const UID = get_UDid('UDID');
+        if (sessionStorage.getItem("AUTH_KEY")) {
+           
+            this.props.dispatch(checkShopSTatusAction.getStatus());
+            this.props.dispatch(favouriteListActions.userList());
+            this.props.dispatch(selfCheckoutActions.get_selfcheckout_setting());
+            
+            this.props.dispatch(favouriteListActions.get_TickeraSetting());
+            this.props.dispatch(checkoutActions.cashRounding());
+            this.props.dispatch(checkoutActions.getOrderReceipt());
+            this.props.dispatch(discountActions.getAll());
+            this.props.dispatch(categoriesActions.getAll());
+            this.props.dispatch(attributesActions.getAll());
+            //this.props.dispatch(pinLoginActions.getBlockerInfo())
+            this.props.dispatch(cartProductActions.getTaxRateList());
+            
+            this.props.dispatch(exchangerateActions.getUSDConversionRate());
+           
+            const register_Id = localStorage.getItem('register');
+            this.props.dispatch(registerActions.GetRegisterPermission(register_Id));
+            if (UID && register_Id) {
+                this.props.dispatch(favouriteListActions.getAll(UID, register_Id));
+                var client = localStorage.getItem("clientDetail") ? JSON.parse(localStorage.getItem("clientDetail")) : '';
+                var selectedRegister = localStorage.getItem('selectedRegister') ? JSON.parse(localStorage.getItem("selectedRegister")) : '';
+                if (client && client.subscription_permission && client.subscription_permission.AllowCashManagement == true && selectedRegister && selectedRegister.EnableCashManagement == true) {
+                    this.props.dispatch(cashManagementAction.GetOpenRegister(register_Id));
+                }
+                else {
+                    localStorage.setItem("IsCashDrawerOpen", "false");
+                }
+            }
+        }
+        else {
+            history.push('/login');
+        }
+
+
+
     }
 
     componentWillMount() {
@@ -38,10 +81,10 @@ class LoadingIndexDB extends React.Component {
             history.push('/login');
         }
 
-        if (!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) {
-            redirectToURL()
-            // history.push('/loginpin');
-        }
+        // if (!localStorage.getItem('clientDetail') || !sessionStorage.getItem("issuccess")) { //localStorage.getItem('user')
+        //     redirectToURL()
+        //     // history.push('/loginpin');
+        // }
 
     }
     getProductList(pn, pz, pl, trc) {
@@ -51,11 +94,11 @@ class LoadingIndexDB extends React.Component {
         }
 
         var self = this;
-        if (!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) {
-            redirectToURL()
-            // history.push('/loginpin');
-        }
-        var RedirectUrl ='/selfcheckout';// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
+        // if (!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) {
+        //     redirectToURL()
+        //     // history.push('/loginpin');
+        // }
+        var RedirectUrl ='/selfcheckoutview';// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
 
         var udid = get_UDid(localStorage.getItem("UDID"));
         var reloadCount = localStorage.getItem("ReloadCount") ? localStorage.getItem("ReloadCount") : 0;
@@ -189,13 +232,13 @@ class LoadingIndexDB extends React.Component {
     }
     componentDidMount() {
         var isDemoUser = localStorage.getItem('demoUser') ? localStorage.getItem('demoUser') : false;
-        if (!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) {
-            // history.push('/loginpin');
-            redirectToURL()
+        // if (!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) {
+        //     // history.push('/loginpin');
+        //     redirectToURL()
 
-        }
+        // }
         //To Clear indexDB----------------------------
-        var RedirectUrl ='/selfcheckout'// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
+        var RedirectUrl ='/selfcheckoutview'// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
         var udid = get_UDid(localStorage.getItem("UDID"));
         var pcount = localStorage.getItem('productcount');
         if(isDemoUser ==false){

@@ -114,10 +114,10 @@ class SelfCheckoutView extends React.Component {
             redirectToURL()
         }
 
-        if (!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) {
-            // history.push('/loginpin');
-            redirectToURL()
-        }
+        // if (!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) {
+        //     // history.push('/loginpin');
+        //     redirectToURL()
+        // }
 
         this.handletileFilterData = this.handletileFilterData.bind(this);
         var udid = get_UDid('UDID');
@@ -524,7 +524,7 @@ class SelfCheckoutView extends React.Component {
     componentWillMount() {
         localStorage.removeItem("CHECKLIST");
         localStorage.removeItem("VOID_SALE");
-        if (!localStorage.getItem('user'))// || !sessionStorage.getItem("issuccess")) 
+        if (!localStorage.getItem('clientDetail'))// //!localStorage.getItem('user') || !sessionStorage.getItem("issuccess")) 
         {
             // history.push('/loginpin');
             redirectToURL()
@@ -755,7 +755,7 @@ class SelfCheckoutView extends React.Component {
         localStorage.setItem("isListner","true");
         window.removeEventListener("message", function () {});
         window.addEventListener('message', (e) => {
-            if (e.origin && _user && _user.instance && e.data && e.data !=="") {
+            if (e.origin  && e.data && e.data !=="") { //&& _user && _user.instance
                 try {
                     var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
                     console.log("clientEvent----->", JSON.stringify(extensionData))

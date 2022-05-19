@@ -289,17 +289,18 @@ function save(shopOrder, path) {
                            trackOliverOrderComplete();
                             //------------------------------------------------
                             localStorage.setItem("ORDER_ID", JSON.stringify(0));
-                            if (JSON.parse(localStorage.getItem("user")).display_sale_refund_complete_screen == false) {
-                                localStorage.removeItem('PRODUCT');
-                                localStorage.removeItem("CART");
-                                localStorage.removeItem('CHECKLIST');
-                                localStorage.removeItem('AdCusDetail');
-                                localStorage.removeItem('CARD_PRODUCT_LIST');
-                                localStorage.removeItem("PRODUCTX_DATA");
-                                localStorage.removeItem("PENDING_PAYMENTS");
-                                window.location = '/shopview';
+                            // if (JSON.parse(localStorage.getItem("user")).display_sale_refund_complete_screen == false) {
+                            //     localStorage.removeItem('PRODUCT');
+                            //     localStorage.removeItem("CART");
+                            //     localStorage.removeItem('CHECKLIST');
+                            //     localStorage.removeItem('AdCusDetail');
+                            //     localStorage.removeItem('CARD_PRODUCT_LIST');
+                            //     localStorage.removeItem("PRODUCTX_DATA");
+                            //     localStorage.removeItem("PENDING_PAYMENTS");
+                            //     window.location = '/shopview';
 
-                            } else {
+                            // } else 
+                            {
                                 // localStorage.removeItem("PRODUCTX_DATA");
                                // window.location = '/salecomplete';
                                 history.push('/salecomplete');
