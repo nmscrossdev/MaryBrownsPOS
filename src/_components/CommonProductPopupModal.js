@@ -1526,7 +1526,7 @@ class CommonProductPopupModal extends React.Component {
                             </div>
                             <RecommendedProduct showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
                             <div className=''>
-                                <button onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
+                                <button data-target="#popupDisplayMessage" data-toggle="modal"  onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                 !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" style={{width:"84.59vw"}}>{LocalizedLanguage.addToCart}</button>
                             </div>
                             <div style={{display:"none"}}>
