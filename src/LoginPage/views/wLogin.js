@@ -173,7 +173,7 @@ class WebLoginView extends React.Component {
         // 
         return (
             <div className="login-wrapper">
-                {loggingIn && loggingIn == true || loading == true ? isMobileOnly == true ? <AndroidAndIOSLoader /> : <LoadingModal /> : ''}
+                {loggingIn && loggingIn == true || loading == true ?  <LoadingModal /> : ''}
                 
                          {isOldVersion ? <div className="user_hard-blocker close_hard_blocker" id="test">
                              <div className="user_hard-blocker_container">
