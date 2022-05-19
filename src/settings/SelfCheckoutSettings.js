@@ -583,3 +583,42 @@ export function getApps(page)
        return null;
     }
 }
+
+//Centers view for stage of payment
+export function centerView(viewName = null) {
+	let view;
+	if (viewName) {
+		console.log("here");
+		let allViews = document.querySelectorAll(".payment-view").forEach((view) => {
+			if (!view.classList.contains("hide")) {
+				view.classList.add("hide");
+			}
+		});
+		view = document.querySelector(`.${viewName}`);
+		view.classList.remove("hide");
+	} else {
+		view = document.querySelector(".payment-view:not(.hide)");
+	}
+	let viewWidth = view.offsetWidth;
+	if (viewWidth > window.innerWidth - 80) {
+		viewWidth = window.innerWidth - 80;
+		view.style.width = `${viewWidth}px`;
+	}
+	let viewHeight = view.offsetHeight;
+	if (viewHeight > window.innerHeight - 80) {
+		viewHeight = window.innerHeight - 80;
+		view.style.height = `${viewHeight}px`;
+	}
+	view.style.top = `${(window.innerHeight - viewHeight) / 2}px`;
+	view.style.left = `${(window.innerWidth - viewWidth) / 2}px`;
+	centerWrapper(view);
+}
+
+export function centerWrapper(container) {
+	let wrapper = container.firstElementChild;
+	if (wrapper.classList && !wrapper.classList.contains("wrapper")) {
+		return;
+	}
+	let margin = (container.offsetHeight - wrapper.offsetHeight) / 2;
+	if (margin > 0) wrapper.style.marginTop = `${margin}px`;
+}

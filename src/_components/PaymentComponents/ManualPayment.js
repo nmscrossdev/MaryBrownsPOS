@@ -254,8 +254,9 @@ class ManualPayment extends React.Component {
     onCancel = (itm) => {
         const {code} = this.props
         if (itm =="Cancel") {
-            $(`#onlinePaymentPopup${code}`).modal("hide");
-            $(`onlinePaymentPopup${code}`).removeClass('show');
+            // $(`#onlinePaymentPopup${code}`).add("hide");
+            // $(`onlinePaymentPopup${code}`).removeClass('show');
+            hideModal(`onlinePaymentPopup${code}`)
             this.setState({ CustInfor: 'cardInfo',cardData : '' })
             this.props.dispatch(checkoutActions.makeOnlinePayments(null))
         } else {
@@ -270,33 +271,15 @@ class ManualPayment extends React.Component {
         const { isOrderPaymentOnline, color, Name, code, styles } = this.props;
         const { displaybuttonStyle, displayPopupStyle, popupClass, CustInfor } = this.state;
         return (
-            // <div>
+            <React.Fragment>
                 
-            displayPopupStyle=="none" ?ActiveUser.key.isSelfcheckout == true && isMobileOnly == true ?
-                    <button className="btn btn-light text-dark btn-block h-60 shadow-none fz-14 mb-15" onClick={() => this.handleCardPopup(code)}>{Name}</button>
-                    : isMobileOnly == true ?
-                        <button type="submit" style={{ borderLeftColor: color, marginBottom: 15 }} className="btn btn-default btn-lg btn-block btn-style-02" onClick={() => this.handleCardPopup(code)}>{Name}</button>
-                        : ActiveUser.key.isSelfcheckout == true ?
+            {displayPopupStyle=="none" ?
                         // <div className="row">
                           <button onClick={() => this.handleCardPopup(code)}>{Name}</button>
                         // </div>
 
                             // <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => this.handleCardPopup(code)}>{Name}</button>
-                            :
-                            // <div>
-                            <div style={isOrderPaymentOnline == false ? { display: styles, pointerEvents: 'none', borderColor: '#765b72', marginBottom: 15, opacity: 0.5 } : { display: styles }} className="white-background box-flex-shadow box-flex-border mb-2 round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0">
-                                <div className="section">
-                                    <div className="accordion_header" data-isopen="false">
-                                        <div className="pointer">
-                                            <div style={{ borderColor: color }} id="others" value="other" name="payments-type" onClick={() => this.handleCardPopup(code)} className="d-flex box-flex box-flex-border-left box-flex-background-others border-dynamic">
-                                                <div className="box-flex-text-heading">
-                                                    <h2>{Name}</h2>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                     // {/* show card popup */}
                     // </div>
                 :
@@ -411,21 +394,36 @@ class ManualPayment extends React.Component {
                         </div>
                     </div>
                 </div>
+    }
 
+             
 
-                /* for mobile view */
-
-                /* <div className="modal" id={`onlinePaymentPopup${code}`} tabIndex="-1" role="dialog" aria-labelledby="profileWizard"
-                    aria-hidden="true">
+                 <div className="popup hide" id={`onlinePaymentPopup${code}`} tabIndex="-1">
                     {this.props.loading == true ? <AndroidAndIOSLoader /> : ''}
                     <div className="modal-dialog modal-dialog-centered modal-sm text-primary text-left">
-                        <div className="modal-content">
-                            <div className="modal-header align-items-center">
+                        {/* <div className="modal-content"> */}
+                            {/* <div className="modal-header align-items-center">
                                 <h5 className="modal-title fz-14" id="success">{LocalizedLanguage.manualCardEntry}</h5>
-                                <button type="button" className="close py-0 shadow-none outline-none" data-dismiss="modal" aria-label="Close" onClick={() => this.onCancel('Cancel')}>
+                                <button type="button" className="popup-close py-0 shadow-none outline-none"  onClick={() => this.onCancel('Cancel')}>
                                     <img src="../../assets/img/closenew.svg" width="23" alt="" />
                                 </button>
+                            </div> */}
+                            <div type="button" className="popup-close">
+                            <svg className="popup-close" onClick={() => this.onCancel('Cancel')}
+                                width="22"
+                                height="21"
+                                viewBox="0 0 22 21"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
+                                    fill="#050505"
+                                />
+                            </svg>
                             </div>
+                            <p className="prod-name" id="epos_error_model_title">{LocalizedLanguage.manualCardEntry}</p>
+                            
                             <div className="modal-body pl-30 pr-30">
                                 <form className="app-form">
                                     {(CustInfor === "cardInfo") ?
@@ -519,12 +517,12 @@ class ManualPayment extends React.Component {
                             <div className="modal-footer no-padding overflow-hidden">
                                 <button className="btn btn-primary shadow-none fz-12 btn-block rounded-0 h-40 h-50-pxi" onClick={() => this.handleChargeButton()}>{LocalizedLanguage.chargeCard}</button>
                             </div>
-                        </div>
+                        {/* </div> */}
                     </div>
-                </div> */
+                </div> 
 
 
-            /* </div> */
+                </React.Fragment>  
         )
     }
 }

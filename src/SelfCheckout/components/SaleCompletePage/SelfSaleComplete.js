@@ -6,11 +6,12 @@ import { Markup } from 'interweave';
 import LocalizedLanguage from '../../../settings/LocalizedLanguage';
 import $ from 'jquery'
 import { OnboardingShopViewPopup } from '../../../onboarding/components/OnboardingShopViewPopup';
-import { onBackTOLoginBtnClick } from '../../../_components/CommonJS';
+import { onBackTOLoginBtnClick,getHostURLsBySelectedExt } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
 import SendMailComponent from './SendMailComponent;'
 import {_key} from '../../../settings/SelfCheckoutSettings';
 import BottomApps from '../../../SelfCheckout/components/BottomApps';
+import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 
@@ -28,11 +29,34 @@ class SelfSaleComplete extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            emailSend: false
+            emailSend: false,
+            extensionIframe: false,
+            extHostUrl:'',
+            extPageUrl:'',
+            extName:'',
+            extLogo:''
         }
         this.sendMail = this.sendMail.bind(this);
     }
-
+    // get extension pageUrl and hostUrl of current clicked extension
+    showExtensionIframe = (ext_id) => { 
+        // get host and page url from common fucnction   
+        var data = getHostURLsBySelectedExt(ext_id)
+        this.setState({
+            extHostUrl: data ? data.ext_host_url : '',
+            extPageUrl: data ? data.ext_page_url : '',
+            extName: data ? data.ext_name : '',
+            extLogo: data ? data.ext_logo : ''
+        })
+        this.setState({ extensionIframe: true })
+        setTimeout(() => {
+            showModal('common_ext_popup')
+        }, 500);
+    }
+    close_ext_modal = () => {
+        this.setState({ extensionIframe: false });
+        hideModal('common_ext_popup');
+    }
     sendMail() {
         this.setState({emailSend:true})
     }
@@ -172,7 +196,17 @@ class SelfSaleComplete extends React.Component {
                     <button onClick={() => this.sendMail()} id="emailButton">{LocalizedLanguage.email}</button>
                     <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
                     <div className="divider" />
-                    <BottomApps page={_key.CHECKOUT_PAGE}></BottomApps>
+                    <BottomApps page={_key.RECEIPT_PAGE}  showExtensionIframe={this.showExtensionIframe}></BottomApps>
+                    {
+                this.state.extensionIframe==true?
+                <CommonExtensionPopup
+                            showExtIframe={this.state.extensionIframe}
+                            close_ext_modal={this.close_ext_modal}
+                            extHostUrl={this.state.extHostUrl}
+                            extPageUrl={this.state.extPageUrl}
+                            extName={this.state.extName}
+                            extLogo={this.state.extLogo}
+                        />:null}
                     {/* <div className="row">
                         <button className="icon">
                             <svg width={29} height={29} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">

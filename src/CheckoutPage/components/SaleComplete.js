@@ -355,33 +355,33 @@ class SaleComplete extends React.Component {
         trackPage(history.location.pathname,"Sale Completed","salecomplete","salecomplete");
 
         // *** checkout complete extension event listner *** //
-        var _user = JSON.parse(localStorage.getItem("user"));
-        // ************ Update _user.instance for local testing ************* //
-        // _user.instance = window.location.origin
-        // localStorage.setItem("user", JSON.stringify(_user));
-        // ************ End ********* //
-        window.addEventListener('message', (e) => {
-            if (e.origin && _user && _user.instance) {
-                try {
-                    var extensionData = e.data && typeof e.data == 'string' && e.data !=="" ? JSON.parse(e.data) : e.data;
-                    if (extensionData && extensionData !== "" && extensionData.oliverpos) {
-                        this.showExtention(extensionData);
-                    }
-                    // display app v1.0-------------------------------------
-                    if (extensionData && extensionData !== "" ) {                
-                        var appresponse=  handleAppEvent(extensionData,"activity");
-                        console.log("appResponse1",appresponse)
-                        if(appresponse){
-                            this.printReceipt(appresponse) ;                       
-                        }
-                      }
-                      //----------------------------------------
-                }
-                catch (err) {
-                    console.error(err);
-                }
-            }
-        }, false);
+        // var _user = JSON.parse(localStorage.getItem("user"));
+        // // ************ Update _user.instance for local testing ************* //
+        // // _user.instance = window.location.origin
+        // // localStorage.setItem("user", JSON.stringify(_user));
+        // // ************ End ********* //
+        // window.addEventListener('message', (e) => {
+        //     if (e.origin && _user && _user.instance) {
+        //         try {
+        //             var extensionData = e.data && typeof e.data == 'string' && e.data !=="" ? JSON.parse(e.data) : e.data;
+        //             if (extensionData && extensionData !== "" && extensionData.oliverpos) {
+        //                 this.showExtention(extensionData);
+        //             }
+        //             // display app v1.0-------------------------------------
+        //             if (extensionData && extensionData !== "" ) {                
+        //                 var appresponse=  handleAppEvent(extensionData,"activity");
+        //                 console.log("appResponse1",appresponse)
+        //                 if(appresponse){
+        //                     this.printReceipt(appresponse) ;                       
+        //                 }
+        //               }
+        //               //----------------------------------------
+        //         }
+        //         catch (err) {
+        //             console.error(err);
+        //         }
+        //     }
+        // }, false);
         // *** checkout complete extension event listner end*** //
     }
 

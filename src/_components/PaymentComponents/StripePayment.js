@@ -446,7 +446,8 @@ class StripePayment extends React.Component {
 
 
                     :
-                    <div className="loader-fixed">
+                    // <div className="loader-fixed">
+                        <div className="popup productPopup">
                         <div className="user_login user_login_popup">
                             <div className="user__login_header">
                                 <div className="user_login_container">

@@ -453,7 +453,7 @@ close_ext_modal = () => {
           <p className="order-quantity">({checkList1 && checkList1.ListItem ? checkList1.ListItem.length : 'X'} items)</p>
         </div>
         <div className="order-summary">
-          <div className="order-products-wrapper">
+          <div className="order-products-wrapper" style={{height:"58vw"}}>
               {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
                 //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
                 return (
