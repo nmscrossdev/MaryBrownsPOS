@@ -32,7 +32,7 @@ class PopupDisplayMessage extends React.Component {
                             </button>
                         </div>
                     </div>
-                </div> */}
+                </div> 
             </div>
         )
     }
