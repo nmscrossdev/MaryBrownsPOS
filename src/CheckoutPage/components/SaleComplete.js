@@ -474,7 +474,7 @@ class SaleComplete extends React.Component {
                     }
                     if (ActiveUser.key.isSelfcheckout == true) {
                         setTimeout(function () {
-                            history.push('/selfcheckout')
+                            history.push('/SelfCheckoutView')
                         }, 500);
                     }
                 }, 1000);
@@ -690,7 +690,7 @@ class SaleComplete extends React.Component {
             this.closeCloudPopup()
             if (ActiveUser.key.isSelfcheckout == true) {
                 setTimeout(function () {
-                    history.push('/selfcheckout')
+                    history.push('/SelfCheckoutView')
                 }, 500);
             }
         }
@@ -805,19 +805,19 @@ class SaleComplete extends React.Component {
         }
         else
         {
-            if(cloudPrintersData && cloudPrintersData !== [] && cloudPrintersData.content && cloudPrintersData.content.length){
-                setTimeout(() => {
-                    if(isMobileOnly == true){
-                     $('#cloudPrinterListPopup').addClass('show')
-                    }
-                    showModal('cloudPrinterListPopup')
-                }, 500);
-            }
-            else{
+            // if(cloudPrintersData && cloudPrintersData !== [] && cloudPrintersData.content && cloudPrintersData.content.length){
+            //     setTimeout(() => {
+            //         if(isMobileOnly == true){
+            //          $('#cloudPrinterListPopup').addClass('show')
+            //         }
+            //         showModal('cloudPrinterListPopup')
+            //     }, 500);
+            // }
+            // else{
              setTimeout(() => {
                 this.printReceipt()
              },500);
-            }
+           // }
         }
            
     }

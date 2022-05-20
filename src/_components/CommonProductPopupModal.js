@@ -1224,6 +1224,37 @@ class CommonProductPopupModal extends React.Component {
         this.props.dispatch(cartProductActions.showSelectedProduct(null));
         hideModal("VariationPopUp");
     }
+    handleNote() {
+        var txtNote = jQuery("#prodNote").val();
+        if (txtNote != "") {
+            var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
+            cartlist = cartlist == null ? [] : cartlist;
+            cartlist.push({ "Title": txtNote })
+            this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
+            var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+            if (list != null) {
+                const CheckoutList = {
+                    ListItem: cartlist,
+                    customerDetail: list.customerDetail,
+                    totalPrice: list.totalPrice,
+                    discountCalculated: list.discountCalculated,
+                    tax: list.tax,
+                    subTotal: list.subTotal,
+                    TaxId: list.TaxId,
+                    order_id: list.order_id !== 0 ? list.order_id : 0,
+                    showTaxStaus: list.showTaxStaus,
+                    _wc_points_redeemed: list._wc_points_redeemed,
+                    _wc_amount_redeemed: list._wc_amount_redeemed,
+                    _wc_points_logged_redemption: list._wc_points_logged_redemption
+                }
+                localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
+                //location.reload();
+
+            }
+         hideModal("add-note");
+         hideOverlay("overlay-cover");
+        }
+    }
     // Apply discount for selected product
     /**
      * Updated By :Shakuntala Jatav
@@ -1537,25 +1568,26 @@ class CommonProductPopupModal extends React.Component {
                                     <span id="txtInScock">{_Inventory}</span>   
                             }
                             </div>
-                            <div class="popup add-note hide" id="add-note">
-			<svg class="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
-				<path
-					d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
-					fill="#050505"
-				/>
-			</svg>
-			<div class="popup-header">
-				<div class="col">
-					<p>Add Product Note</p>
-					<div class="divider"></div>
-				</div>
-			</div>
-			<div class="popup-body">
-				<p>Add a note or any comments for the product.</p>
-				<textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
-				<button >Add Note to item</button>
-			</div>
-		</div>
+                            <div className="overlay-cover hide"></div>
+                                <div class="popup add-note hide" id="add-note">
+                                    <svg class="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
+                                    <path
+                                    d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
+                                    fill="#050505"
+                                    />
+                                    </svg>
+                                    <div class="popup-header">
+                                        <div class="col">
+                                            <p>Add Product Note</p>
+                                            <div class="divider"></div>
+                                        </div>
+                                    </div>
+                                    <div class="popup-body">
+                                        <p>Add a note or any comments for the product.</p>
+                                        <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
+                                        <button onClick={()=>this.handleNote()} >Add Note to item</button>
+                                    </div>
+                                </div>
                         </div>
                     }
                 {/* </div> */}
