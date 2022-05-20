@@ -750,6 +750,8 @@ class CheckoutViewThird extends React.Component {
             // (ActiveUser.key.isSelfcheckout == true && (SelfCheckoutStatus == "sfcheckoutpayment" || isMobileOnly == true)) ?
               
                     (this.state.isPaymentStart == false || !global_payment) ?
+                    <React.Fragment>
+                    <div class="cover hide"></div>
                             <div className='bodyCenterBg'>
                                 {this.state.loading == true ? <LoadingModal /> : ''}
                                 {/* <div className="payment-nav">
@@ -875,6 +877,7 @@ class CheckoutViewThird extends React.Component {
                                 {/* display the message terminal not connected */}
                                 <CommonMsgModal msg_text={LocalizedLanguage.terminalnotconnected} close_Msg_Modal={this.props.closeExtraPayModal} />
                             </div>
+                            </React.Fragment>
                         :
                         <CardpaymentRes
                             msg={this.props.global_payment ? this.props.global_payment.message : LocalizedLanguage.waitForTerminal}

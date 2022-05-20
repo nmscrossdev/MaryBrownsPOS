@@ -231,12 +231,12 @@ class ManualPayment extends React.Component {
         const { cardData } = this.state
         // this.props.activeDisplay(true)
         if (cardData == '') {
-            if (isMobileOnly == true) {
+            // if (isMobileOnly == true) {
                 this.setState({ validationError: '' })
                 showModal(`onlinePaymentPopup${code}`)
-            } else {
+            // } else {
                 this.setState({ popupClass: 'in', displayPopupStyle: 'block', validationError: '' })
-            }
+           // }
         } else {
             closingTab(true); // commented for test
             onlinePayCardDetails && onlinePayCardDetails(cardData)
@@ -247,6 +247,7 @@ class ManualPayment extends React.Component {
         }
     }
     closePopup = () => {
+        hideModal(`onlinePaymentPopup${this.props.code}`)
         this.setState({ popupClass: '', displayPopupStyle: 'none', cardData: '', validationError: '' })
         this.props.dispatch(checkoutActions.makeOnlinePayments(null))
 
@@ -274,17 +275,11 @@ class ManualPayment extends React.Component {
         return (
             <React.Fragment>
 
-                {displayPopupStyle == "none" ?
-                    // <div className="row">
+               
                     <button onClick={() => this.handleCardPopup(code)}>{Name}</button>
-                    // </div>
-
-                    // <button className="btn btn-default btn-block btn-90 btn-uppercase" onClick={() => this.handleCardPopup(code)}>{Name}</button>
-
-                    // {/* show card popup */}
-                    // </div>
-                    :
-                    <div className={popupClass == '' ? "popup hide" : `popup hide ${popupClass}`} id="manualcardentryin" role="dialog" style={{ display: displayPopupStyle }} >
+                 
+                    
+                    <div className="popup hide" id={`onlinePaymentPopup${code}`} >
                         {this.props.loading == true ? <LoadingModal /> : ''}
                         <div className="product-container">
                             <div type="button" className="popup-close">
@@ -385,234 +380,8 @@ class ManualPayment extends React.Component {
                                 </div>
                             </div>
                         </div>
-
-
-                        {/* <div className={isMobileOnly == true ? 'modal-dialog modal-center-block text-black' : 'modal-dialog modal-sm modal-center-block'}>
-                        <div className="modal-content">
-                            <div className="modal-header header-modal">
-                                <h1>{LocalizedLanguage.manualCardEntry}</h1>
-                                <div className="popup-close data-dismiss" data-dismiss="modal" onClick={this.closePopup}>
-                                    <img src="assets/img/closenew.svg" alt="" />
-                                </div>
-                            </div>
-                            <div className="modal-body popScroll">
-                                <div className="mb-3">
-                                    <form className="form-addon">
-                                        <h3 className="manual-title">{LocalizedLanguage.cardInformation}</h3>
-                                        <p style={{ color: 'red' }}>{this.state.validationError}</p>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.cardNumber}</div>
-                                                <input type="tel" className="form-control" id="CardNo" placeholder={LocalizedLanguage.cardNumber} name="CardNo" value={this.state.CardNo} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.cardholderName}</div>
-                                                <input type="text" className="form-control" id="cardHoldername" name="card_holder_name" placeholder={LocalizedLanguage.cardholderName} value={this.state.CardName} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.expiryMonth}</div>
-                                                <input type="tel" className="form-control" maxLength={2} id="cardExpiryMonth" name='card_expiry_month' placeholder={LocalizedLanguage.expiryMonth}
-                                                    value={this.state.ExpirMonth} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.expiryYear}</div>
-                                                <input type="tel" className="form-control" maxLength={4} id="cardExpiryYear" name='card_expiry_year' placeholder={LocalizedLanguage.expiryYear}
-                                                    value={this.state.ExpirYear} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.CVVAndCVC}</div>
-                                                <input type="tel" className="form-control" maxLength={5} id="cardCVC" name='card_CVC' placeholder={LocalizedLanguage.CVVAndCVC}
-                                                    value={this.state.CVVNo} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <h3 className="manual-title manual-title-space">{LocalizedLanguage.billingInformation}</h3>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.addressOne}</div>
-                                                <input type="text" className="form-control" id="billingAddress" name='billing_address' placeholder={LocalizedLanguage.addressOne}
-                                                    value={this.state.BillAddress} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.addressTwo}</div>
-                                                <input type="text" className="form-control" id="billingAddress2" name='billing_address2' placeholder={LocalizedLanguage.addressTwo}
-                                                    value={this.state.BillAddress2} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.country}</div>
-                                                <input type="text" className="form-control" id="country" name='country' placeholder={LocalizedLanguage.country}
-                                                    value={this.state.Country} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.city}</div>
-                                                <input type="text" className="form-control" id="city" name='city' placeholder={LocalizedLanguage.city}
-                                                    value={this.state.City} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.provinceState}</div>
-                                                <input type="text" className="form-control" id="province" name='province' placeholder={LocalizedLanguage.provinceState}
-                                                    value={this.state.State} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="input-group">
-                                                <div className="input-group-addon">{LocalizedLanguage.zippostalcode}</div>
-                                                <input type="tel" className="form-control" id="zip" name='zip_code' placeholder={LocalizedLanguage.zippostalcode}
-                                                    value={this.state.ZipCode} onChange={this.handleChange} />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div className="modal-footer no-padding bt-0">
-                                <button className="btn btn-primary btn-block h-70" onClick={this.handleChargeButton}>
-                                    {LocalizedLanguage.chargeCard}
-                                </button>
-                            </div>
-                        </div>
-                    </div> */}
                     </div>
-                }
-
-
-
-                <div className="popup hide" id={`onlinePaymentPopup${code}`} tabIndex="-1">
-                    {this.props.loading == true ? <AndroidAndIOSLoader /> : ''}
-                    <div className="modal-dialog modal-dialog-centered modal-sm text-primary text-left">
-                        {/* <div className="modal-content"> */}
-                        {/* <div className="modal-header align-items-center">
-                                <h5 className="modal-title fz-14" id="success">{LocalizedLanguage.manualCardEntry}</h5>
-                                <button type="button" className="popup-close py-0 shadow-none outline-none"  onClick={() => this.onCancel('Cancel')}>
-                                    <img src="../../assets/img/closenew.svg" width="23" alt="" />
-                                </button>
-                            </div> */}
-                        <div type="button" className="popup-close">
-                            <svg className="popup-close" onClick={() => this.onCancel('Cancel')}
-                                width="22"
-                                height="21"
-                                viewBox="0 0 22 21"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
-                                    fill="#050505"
-                                />
-                            </svg>
-                        </div>
-                        <p className="prod-name" id="epos_error_model_title">{LocalizedLanguage.manualCardEntry}</p>
-
-                        <div className="modal-body pl-30 pr-30">
-                            <form className="app-form">
-                                {(CustInfor === "cardInfo") ?
-                                    <div>
-                                        <div className="text-primary text-center mb-20 fz-12">
-                                            <img className="img-fluid d-block mx-auto mb-1" src="assets/img/self-checkout/circle-user.svg" width="30" />
-                                            {LocalizedLanguage.cardInformation}
-                                            <p style={{ color: 'red' }}>{this.state.validationError}</p>
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.cardNumber}</label>
-                                            <input type="text" id="CardNo" value={this.state.CardNo} name="CardNo" className="form-control shadow-none" onChange={this.handleChange} placeholder={LocalizedLanguage.cardNumber} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.cardholderName}</label>
-                                            <input type="text" className="form-control shadow-none" id="cardHoldername" name="card_holder_name" placeholder={LocalizedLanguage.cardholderName} value={this.state.CardName} onChange={this.handleChange} />
-
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.expiryMonth}</label>
-                                            <input type="tel" className="form-control shadow-none" maxLength={2} id="cardExpiryMonth" name='card_expiry_month' placeholder={LocalizedLanguage.expiryMonth}
-                                                value={this.state.ExpirMonth} onChange={this.handleChange} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.expiryYear}</label>
-                                            <input type="tel" className="form-control shadow-none" maxLength={4} id="cardExpiryYear" name='card_expiry_year' placeholder={LocalizedLanguage.expiryYear}
-                                                value={this.state.ExpirYear} onChange={this.handleChange} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.CVVAndCVC}</label>
-                                            <input type="tel" className="form-control shadow-none" maxLength={3} id="cardCVC" name='card_CVC' placeholder={LocalizedLanguage.CVVAndCVC}
-                                                value={this.state.CVVNo} onChange={this.handleChange} />
-                                        </div>
-                                        <div className="form-group">
-                                            <div className="profile-action">
-                                                <button type="button" className="btn btn-light shadow-none text-dark" onClick={() => this.onCancel('Cancel')}>{LocalizedLanguage.cancel}</button>
-                                                <button type="button" className="btn btn-success shadow-none ml-10" onClick={() => this.nextEventHandler('billingInfo')}>{LocalizedLanguage.nextStep}</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    : (CustInfor === 'billingInfo') ?
-                                        <div>
-                                            <div className="text-primary text-center mb-20 fz-12">
-                                                <img className="img-fluid d-block mx-auto mb-1" src="../../assets/img/self-checkout/place-maker.svg" width="30" />
-                                                {LocalizedLanguage.billingInformation}
-                                                <p style={{ color: 'red' }}>{this.state.validationError}</p>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.address}</label>
-                                                <input type="text" className="form-control shadow-none" id="billingAddress" name='billing_address' placeholder={LocalizedLanguage.addressOne}
-                                                    value={this.state.BillAddress} onChange={this.handleChange} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.addressTwo}</label>
-                                                <input type="text" className="form-control shadow-none" id="billingAddress2" name='billing_address2' placeholder={LocalizedLanguage.addressTwo}
-                                                    value={this.state.BillAddress2} onChange={this.handleChange} />
-
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.country}</label>
-                                                <input type="text" className="form-control shadow-none" id="country" name='country' placeholder={LocalizedLanguage.country}
-                                                    value={this.state.Country} onChange={this.handleChange} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.city} </label>
-                                                <input type="text" className="form-control shadow-none" id="city" name='city' placeholder={LocalizedLanguage.city}
-                                                    value={this.state.City} onChange={this.handleChange} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.provinceState} </label>
-                                                <input type="text" className="form-control shadow-none" id="province" name='province' placeholder={LocalizedLanguage.provinceState}
-                                                    value={this.state.State} onChange={this.handleChange} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="" className="fz-12 pl-2">{LocalizedLanguage.zippostalcode} </label>
-                                                <input type="tel" className="form-control shadow-none" id="zip" name='zip_code' placeholder={LocalizedLanguage.zippostalcode}
-                                                    value={this.state.ZipCode} onChange={this.handleChange} />
-                                            </div>
-                                            <div className="form-group">
-                                                <div className="profile-action">
-                                                    <button type="button" className="btn btn-light shadow-none text-dark" onClick={() => this.onCancel('cardInfo')}>{LocalizedLanguage.cancel}</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        :
-                                        <div>
-                                        </div>
-                                }
-                            </form>
-                        </div>
-                        <div className="modal-footer no-padding overflow-hidden">
-                            <button className="btn btn-primary shadow-none fz-12 btn-block rounded-0 h-40 h-50-pxi" onClick={() => this.handleChargeButton()}>{LocalizedLanguage.chargeCard}</button>
-                        </div>
-                        {/* </div> */}
-                    </div>
-                </div>
+                
 
 
             </React.Fragment>

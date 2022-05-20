@@ -2887,7 +2887,7 @@ class CheckoutView extends React.Component {
                             handleExtensionPaymentClick={this.handleExtensionPaymentClick} 
                             showExtIframe={this.state.extensionIframe}/>
                             {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)? */}
-                            <div className="cover hide"></div>
+                            {/* <div className="cover hide"></div> */}
                             <CommonExtensionPopup
                     showExtIframe={this.state.extensionIframe}
                     close_ext_modal={this.close_ext_modal}

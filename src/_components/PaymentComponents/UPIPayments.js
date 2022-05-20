@@ -341,7 +341,7 @@ class UPIPayments extends React.Component {
                                                         <div className="">
                                                             <div className="user_login_scroll_in">
                                                                 <div className="user_login_center">
-                                                                    <div className="user_login_head user_login_join">
+                                                                    <div className="user_login_head user_login_join" style={{padding: '20px'}}>
                                                                         {this.state.barcodeURl !== "" ?
                                                                             <div>
                                                                                 <img src={this.state.barcodeURl} style={{ width: '250px' }}></img>
@@ -352,7 +352,7 @@ class UPIPayments extends React.Component {
                                                                                 <h3 className="user_login_head_title">
                                                                                     {LocalizedLanguage.pleaseWait}
                                                                         </h3>
-                                                                                <div className="user_login_head_logo">
+                                                                                <div className="user_login_head_logo" >
                                                                                     <a href="#">
                                                                                         <svg
                                                                                             version="1.1" id="ologo"
@@ -396,9 +396,8 @@ class UPIPayments extends React.Component {
                                                                         }
                                                                     </div>
                                                                     <button
-                                                                        className="btn btn-50 btn-border-primary btn-text-primary btn-radius-4 btn-padding-30"
+                                                                        className="view-cart payconic-btn "
                                                                         onClick={this.cancel_UPI_payment}
-                                                                        style={{ minWidth: '220px' }}
                                                                     >
                                                                         {LocalizedLanguage.cancel}
                                                                     </button>
@@ -406,9 +405,8 @@ class UPIPayments extends React.Component {
                                                                     {/* show regenrate QR code in case of payment status 'EXPIRED' */}
                                                                     {this.state.payconiq_current_status == 'EXPIRED' || this.state.payconiq_current_status == 'CANCELLED' ?
                                                                         <button
-                                                                            className="btn btn-50 btn-border-primary btn-text-primary btn-radius-4 btn-padding-30"
+                                                                            className="view-cart payconic-btn"
                                                                             onClick={this.regenerate_payconiq_barcode}
-                                                                            style={{ minWidth: '220px' }}
                                                                         >
                                                                            {LocalizedLanguage.reGenerateQRCode}
                                                                     </button> : <p id='counterParentId' style={{ color: 'black' }}>{this.state.sessionMsg}<span id='counterId' ></span></p>}
