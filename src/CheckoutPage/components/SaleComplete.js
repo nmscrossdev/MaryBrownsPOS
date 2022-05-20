@@ -901,7 +901,7 @@ class SaleComplete extends React.Component {
             this.printReceipt()
         }
         return (
-            <div className='bodyCenter'>               
+            <div className='bodyCenterBg'>               
                 {(ActiveUser.key.isSelfcheckout == true) ?
                     <SelfSaleComplete
                         printReceipt={this.handlePrintClick}

@@ -310,7 +310,7 @@ export function initScreenSaver()
         var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
         if(_timer && typeof _timer!="undefined")
         {
-            _timer = 10000;//parseInt(_timer)*1000;
+            _timer =parseInt(_timer)*1000;
         } 
         var timer;
         var cycle;
