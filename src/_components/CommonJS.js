@@ -115,7 +115,7 @@ export const redirectToURL = () => {
             history.push("/login");
         }
     } else {
-        history.push('/loginpin')
+        history.push('/')///loginpin
 
     }
 
