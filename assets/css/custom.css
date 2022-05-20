@@ -246,4 +246,105 @@
     background-image: none;
     border: 1px solid #ccc;
 	border-radius: 0 8px 8px 0;
+  .payment-row
+{
+	flex-wrap: wrap;
+    justify-content: space-between;
+	min-width: 400px;
+    margin-right: -16px;
+}
+.payment-row>button
+{
+	width: 47.5% !important;
+	margin-bottom: 16px !important;
+}
+.search-dropdown > input[type="text"]:focus ~ svg path {
+	fill: var(--primary);
+}
+.login-wrapper button {
+	width: 32.13vw;
+	height: 4.07vw;
+	margin: 0 auto 2.59vw auto;
+	border: 0;
+	background-color: var(--oliver-blue);
+	border-radius: 0.37vw;
+	font-family: Poppins;
+	font-size: 1.67vw;
+	font-weight: 400;
+	line-height: 2.22vw;
+	text-align: center;
+	color: #fff;
+	align-self: center;}
+
+	.card-tile-container {
+		position: relative;
+		box-sizing: border-box;
+		width: 100%;
+		min-height: 31.11vw;
+		height: 62.22vw;
+		display: flex;
+		flex-wrap: wrap;
+		align-content: flex-start;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+		scrollbar-width: none; /* Firefox */
+	}
+	
+	.card-tile-container::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
+	}
+
+	.category-tile-container {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 4.54vw;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+		scrollbar-width: none; /* Firefox */
+	}
+	.recommendations > .row {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+		margin: 0 -24px -24px 0;
+		transform: translateX(-14px);
+		justify-content: center;
+		overflow-y: scroll;
+		flex-wrap:unset !important;
+	}
+	.recommendations > .row > .prod {
+		position: relative;
+		min-width: 18.8vw;
+		height: 19.53vw;
+		box-sizing: border-box;
+		border: 0.19vw solid #e2e2e2;
+		border-radius: 0.74vw;
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0 1.02vw 0.93vw 1.02vw;
+		margin-right: 2.22vw;
+	}
+	.header > .row > div> .initial {
+	width: 3.7vw;
+    height: 3.7vw;
+    background-color: var(--primary);
+    border-radius: 0.74vw;
+    border: 0;
+    text-align: center;
+	}
+.overlay-cover {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #000;
+	opacity: 0.5;
+	z-index: 2;
+	overflow: hidden;
 }

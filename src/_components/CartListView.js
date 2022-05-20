@@ -182,15 +182,15 @@ class CartListView extends React.Component {
         }
         if (ListItem.length == 0 || productCount==0) {
             this.setState({ isLoading: false })
-            if (isMobileOnly == true) {
+            // if (isMobileOnly == true) {
                 this.props.msg(LocalizedLanguage.messageCartNoProduct);
-                $('#common_msg_popup').addClass('show');
+                // $('#common_msg_popup').addClass('show');
                // $('#common_msg_popup').modal('show');
                 showModal('common_msg_popup');
-            } else {
-               // $('#checkout1').modal('show');
-                showModal('checkout1');
-            }
+            // } else {
+            //    // $('#checkout1').modal('show');
+            //     showModal('checkout1');
+            // }
         } else {
             this.setState({ updateProductStatus: true });
             this.state.updateProductStatus= true ;

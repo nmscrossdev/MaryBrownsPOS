@@ -54,6 +54,14 @@ function showModal(popupName) {
 	if (cover && cover.classList.contains("hide")) {
 		cover.classList.remove("hide");
 	}
+	// const covers = document.querySelectorAll('.cover');
+	// if(covers)
+	// { 
+	// 	for (const c of covers) {
+	//  		c.classList.remove('hide');
+	// 	}
+	// }
+
 	if (popup && popup.classList.contains("hide")) {
 		let maxWidth = window.innerWidth - 80;
 		let maxHeight = window.innerHeight - 80;
@@ -75,6 +83,10 @@ function showModal(popupName) {
 		popup.style.top = `${(window.innerHeight - setHeight) / 2}px`;
 	}
 	toggleScroll();
+	if(popupName=="add-note")
+	{
+		showOverlay();
+	}
 }
 
 function hideModal(e) {
@@ -82,6 +94,27 @@ function hideModal(e) {
 	parent && parent.classList && parent.classList.add("hide");
 	document.querySelector(".cover") && document.querySelector(".cover").classList.add("hide");
 	toggleScroll();
+
+	// const covers = document.querySelectorAll('.cover');
+	// if(covers)
+	// { 
+	// 	for (const c of covers) {
+	//  		c.classList.add('hide');
+	// 	}
+	// }
+	if(parent && parent.id=="add-note")
+	{
+		hideOverlay();
+	}
+
+}
+function showOverlay()
+{
+	document.querySelector(".overlay-cover") && document.querySelector(".overlay-cover").classList.remove("hide");
+}
+function hideOverlay()
+{
+	document.querySelector(".overlay-cover") && document.querySelector(".overlay-cover").classList.add("hide");
 }
 
 function toggleScroll(toggle = true) {

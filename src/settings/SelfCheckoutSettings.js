@@ -304,9 +304,9 @@ export function emptyCart() {
 }
 export function initScreenSaver()
 {
-    if(isScreenSaverInitialized==false)
+    if(window.isScreenSaverInitialized==false)
     {
-        isScreenSaverInitialized=true;
+        window.isScreenSaverInitialized=true;
         var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
         if(_timer && typeof _timer!="undefined")
         {
