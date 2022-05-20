@@ -442,11 +442,13 @@ class CheckoutViewThird extends React.Component {
        
         if (nextProp.checkoutlist) {
             this.closingTab(true);
-            this.setState({ paidAmount: nextProp.checkoutlist.totalPrice })
+            if(nextProp.checkoutlist){
+            this.setState({ paidAmount: nextProp.checkoutlist.totalPrice })}
         }
         if (nextProp.checkList !== this.props.checkList) {
             this.closingTab(true);
-            this.setState({ paidAmount: nextProp.checkList.totalPrice })
+            if( nextProp.checkList){
+            this.setState({ paidAmount: nextProp.checkList.totalPrice })}
         }
         if (nextProp.global_payment && this.state.isPaymentStart == true) {
             this.setState({ isPaymentStart: false })
