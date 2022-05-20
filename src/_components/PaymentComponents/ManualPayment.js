@@ -199,8 +199,9 @@ class ManualPayment extends React.Component {
             console.log('----sucess-manualPayments.js -', nextProps);
             if (nextProps.online_payment.content.RefranseCode && nextProps.online_payment.content.IsSuccess == true) {
                 this.setState({ validationError: '', popupClass: '', displayPopupStyle: 'none' })
-                $(`#onlinePaymentPopup${code}`).modal("hide");
-                $(`onlinePaymentPopup${code}`).removeClass('show');
+                // $(`#onlinePaymentPopup${code}`).modal("hide");
+                // $(`onlinePaymentPopup${code}`).removeClass('show');
+                hideModal(`onlinePaymentPopup${code}`)
             } else {
                 var data = nextProps.online_payment.content
                 var err = data && data.RefranseMessage ? data.RefranseMessage : 'Something went wrong'

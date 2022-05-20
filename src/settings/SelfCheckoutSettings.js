@@ -327,7 +327,9 @@ export function initScreenSaver()
             if (parseInt(countdown.innerHTML) < 1) {
                 setScreensaver();
                 countdown.innerHTML = "30";
+               if(document.querySelector(".idle-screen")){
                 document.querySelector(".idle-screen").classList.add("hide");
+                }
                 emptyCart();
                 return;
             }
