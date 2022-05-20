@@ -25,7 +25,7 @@ export const CommonTerminalPopup = (props) => {
                                                             {showTerinalwaitingMsg == true ? <h3 className="user_login_head_title">
                                                                 {LocalizedLanguage.waitingOnPaymentTerminal}
                                                                 </h3> : ''}
-                                                            <div className="user_login_head_logo">
+                                                            <div className="user_login_head_logo" style={{padding: '39px'}}>
                                                                 <a href="#">
                                                                     <svg
                                                                         version="1.1" id="ologo"
@@ -68,25 +68,22 @@ export const CommonTerminalPopup = (props) => {
                                                         </div>
                                                     </div>
                                                     <button
-                                                        className="btn btn-50 btn-border-primary btn-text-primary btn-radius-4 btn-padding-30 ml-2 mt-2"
+                                                        className="view-cart payconic-btn" style={{marginRight:'20px'}}
                                                         onClick={handleButton1Click}
-                                                        style={{ minWidth: '220px' }}
                                                     >
                                                         {button1Title}
                                                     </button>
 
                                                     <button
-                                                        className="btn btn-50 btn-border-primary btn-text-primary btn-radius-4 btn-padding-30 ml-2 mt-2"
-                                                        onClick={handleButton2Click}
-                                                        style={{ minWidth: '220px' }}
+                                                        className="view-cart payconic-btn" style={{marginRight:'20px'}}
+                                                        onClick={handleButton2Click} 
                                                     >
                                                         {button2Title}
                                                     </button>
 
                                                     <button
-                                                        className="btn btn-50 btn-border-primary btn-text-primary btn-radius-4 btn-padding-30 ml-2 mt-2"
+                                                        className="view-cart payconic-btn" style={{marginRight:'20px'}}
                                                         onClick={handleCancelButton}
-                                                        style={{ minWidth: '220px' }}
                                                     >
                                                         {LocalizedLanguage.cancel}
                                                                     </button>

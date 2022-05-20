@@ -103,7 +103,12 @@ class SelfSaleComplete extends React.Component {
             //         </div>
             //     </div>
             //     :
-                this.state.emailSend == true  ? <SendMailComponent /> : 
+                this.state.emailSend == true  ? <SendMailComponent
+                                                {...this.props}
+                                                {...this.state}
+                                                orderId={this.props.orderId}
+                                                tempOrderId={this.props.tempOrderId}
+                /> : 
                 // <div>
                 //     <div style={{ display: 'none' }}>
                 //         <img src={baseurl} width="50px" />
