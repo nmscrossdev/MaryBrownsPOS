@@ -163,7 +163,7 @@ class SelfCheckoutView extends React.Component {
                 initDropDown(searchDataNew);
                 
             }
-            //localStorage.removeItem("isListner")
+            //localStorage.removeItem("window.isListner")
         });
         //  dispatch(customerActions.getCountry())
         //  dispatch(customerActions.getState())
@@ -751,9 +751,9 @@ class SelfCheckoutView extends React.Component {
         // _user.instance = window.location.origin
         // localStorage.setItem("user", JSON.stringify(_user));
         // ************ End ********* //
-        if(!localStorage.getItem("isListner"))
+        if(!window.isListner)
         {
-        localStorage.setItem("isListner","true");
+        window.isListner=true;
         window.removeEventListener("message", function () {});
         window.addEventListener('message', (e) => {
             if (e.origin  && e.data && e.data !=="") { //&& _user && _user.instance
@@ -1248,6 +1248,7 @@ class SelfCheckoutView extends React.Component {
     
         return (
             <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
+            <div className="cover hide"></div>
             <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
@@ -1304,7 +1305,7 @@ class SelfCheckoutView extends React.Component {
                                         msg={this.CommonMsg}
                                         AllProductList={AllProductList} 
                                         style="landscape"/>
-            <div className="cover hide"></div>
+            
             
             {/* <TileModel status={this.tileModalAddStatus} msg={this.CommonMsg} positionNum={this.state.posIndex} />       */}
             <CommonProductPopupModal showExtensionIframe={this.showExtensionIframe} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
@@ -1346,7 +1347,7 @@ class SelfCheckoutView extends React.Component {
                         // scaleSVG();
                         // scaleImages();
                         // resize();
-                    }, 1000)
+                    }, 200)
 
 
                 }</div>

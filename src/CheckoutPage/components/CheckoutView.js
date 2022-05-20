@@ -2580,7 +2580,8 @@ class CheckoutView extends React.Component {
                 history.push('../SelfCheckoutView');
             }
             else {
-                localStorage.removeItem("isListner");
+                //localStorage.removeItem("isListner");
+                window.isListner=false;
                 window.location = '../SelfCheckoutView';
             }
         }
