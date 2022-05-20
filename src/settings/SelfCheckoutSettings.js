@@ -317,7 +317,10 @@ export function initScreenSaver()
         var countdown = document.getElementById("timeoutNumber");
         var idleTimeout;
         function timeoutStart() {
-            document.querySelector(".idle-screen").classList.remove("hide");
+            if( document.querySelector(".idle-screen")){
+                 document.querySelector(".idle-screen").classList.remove("hide");
+            }
+           
             idleTimeout = setTimeout(decrementCountdown, 1000);
         }
         function decrementCountdown() {

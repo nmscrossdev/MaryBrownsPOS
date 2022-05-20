@@ -560,7 +560,7 @@ close_ext_modal = () => {
           <RecommendedProduct page={"cart"} />
           : <div></div>}
         <div className="cover hide"></div>
-          {checkList1 && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
+          {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
         <CommonExtensionPopup
           showExtIframe={this.state.extensionIframe}

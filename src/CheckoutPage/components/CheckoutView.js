@@ -2576,13 +2576,16 @@ class CheckoutView extends React.Component {
     selfcheckoutstatusmanagingevnt(checkoutstatus) {
         this.handleNote();
         if (checkoutstatus == "defaultcheckout") {
-            if (isMobileOnly == true) {
-                history.push('../SelfCheckoutView');
-            }
-            else {
-                localStorage.removeItem("isListner");
-                window.location = '../SelfCheckoutView';
-            }
+            this.setState({
+                SelfCheckoutStatus: checkoutstatus
+            })
+            // if (isMobileOnly == true) {
+            //     history.push('../SelfCheckoutView');
+            // }
+            // else {
+            //     localStorage.removeItem("isListner");
+            //     window.location = '../SelfCheckoutView';
+            // }
         }
         else {
             this.setState({

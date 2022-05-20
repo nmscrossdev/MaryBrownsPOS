@@ -9,7 +9,8 @@ class CategoriesList extends React.Component {
             active: false,
             item: null,
             num: '',
-            current_categories:[]
+            current_categories:[],
+            cat_breadcrumb:[]
         }
         this.ActiveList = this.ActiveList.bind(this);
         this.updateActiveStateOnRef = this.updateActiveStateOnRef.bind(this);
@@ -42,6 +43,7 @@ class CategoriesList extends React.Component {
             var _sub= item && item.Subcategories; 
             this.setState({ item: item, num: index,current_categories:_sub});
         }
+        this.fillCategorySelection(item)
     }
 
     getParent(item,id)
@@ -132,25 +134,56 @@ class CategoriesList extends React.Component {
             }
            
         }
-      
+        this.RemoveCategorySelection()
         setTimeout(function () {
             if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
         }, 500);
         this.props.tileFilterData(null, "product", null)
+       
     }
-    
+   fillCategorySelection(item){
+        if(this.state.item==null){
+            this.state.cat_breadcrumb=[]
+        }
+            var catList=this.state.cat_breadcrumb;
+        if(item){
+            catList.push(item)
+            this.setState({cat_breadcrumb:catList})
+            }     
+   }
+   RemoveCategorySelection(){
+    if(this.state.item==null){
+        this.state.cat_breadcrumb=[]
+    }
+    var catList=this.state.cat_breadcrumb;
+    if(catList.length>0){
+        catList.splice(-1)
+        this.setState({cat_breadcrumb:catList})
+    }     
+}
+    showCategorySelection(){      
+         var displayCat="";        
+        if(this.state.cat_breadcrumb && this.state.cat_breadcrumb.length>0){
+            this.state.cat_breadcrumb.map(cat=>{
+                displayCat +=cat.Value +" > "
+            })
+        }
+        return displayCat;       
+    }
     render() {
         const { current_categories,item } = this.state;
-      
+       console.log("current_categories",current_categories,"item",item)
         return (
             <div>
                  <div className="category-header">
-                 <p className="section">{item && item !==null && item !==""? item.Value +" Categories": getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
-                    {/* <div className="col">
-                    <p className="path">Menu `{'>'}` category `{'>'}` category</p>
-                        <p className="current">Plants</p>
+                 {/* <p className="section">{item && item !==null && item !==""? item.Value +" Categories": getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p> */}
+                    <div className="col">
+                    {item && item !==null && item !==""?
+                        <p className="path">{this.showCategorySelection()} </p> :""}
+
+                        <p className="current">{item && item !==null && item !==""? item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
                         <div className="divider"></div>
-                    </div> */}
+                    </div>
                    { 
                    //item==null?null:
                     // <button className="category-tile" style={{backgroundColor:"#a9d47d"}} onClick={() => this.updateActiveStateOnRef(false)}>
