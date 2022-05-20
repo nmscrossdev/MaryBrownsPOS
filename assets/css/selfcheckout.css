@@ -2852,27 +2852,99 @@ body>.text-row>p.order-quantity {
 .no-scroll {
 	overflow: hidden !important;
 }
-.productPopup{
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    padding: 4vw !important;
-    overflow-y:unset !important;
-    border-radius: 0 !important; 
-    background-color: #f1f1f1 !important;
-    }
-    .bodyCenter {
-        min-height: 1920px;
-        margin: 0;
-        box-sizing: border-box;
-        background-color: var(--primary);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
 
-.productv2-parrent {
-	opacity: 0.3;
+/* --------------------Idle Screen-------------------- */
+
+.idle-screen {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #758696;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.idle-screen > .body {
+	width: 51.76vw;
+	height: 60.46vw;
+	background-color: #fff;
+	border-radius: 1.39vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.idle-screen > .body p {
+	font-family: Poppins;
+	font-size: 1.85vw;
+	font-weight: 400;
+	line-height: 2.41vw;
+	text-align: center;
+	color: #050505;
+	max-width: 85%;
+}
+
+.idle-screen > .body p.bold {
+	font-size: 2.41vw;
+	font-weight: 600;
+	line-height: 2.87vw;
+	margin-bottom: 3.15vw;
+}
+
+.idle-screen > .body p#timeoutNumber {
+	font-weight: 700;
+}
+
+.idle-screen > .body > .icon-container {
+	width: 19.72vw;
+	height: 19.72vw;
+	border-radius: 50%;
+	background-color: var(--primary);
+	margin-bottom: 3.7vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.idle-screen > .body > .icon-container > img {
+	max-width: 100%;
+	max-width: 100%;
+	width: auto;
+	height: auto;
+}
+
+.idle-screen > .body > .text-row {
+	display: flex;
+	margin: 3.7vw 0;
+}
+
+.idle-screen > .body > .text-row > #timeoutNumber {
+	margin: 0 0.46vw;
+}
+
+.idle-screen > .body > button {
+	width: 27.87vw;
+	height: 4.44vw;
+	background-color: var(--secondary);
+	border: 0;
+	border-radius: 0.37vw;
+	font-family: Poppins;
+	font-size: 1.67vw;
+	font-weight: 400;
+	line-height: 2.22vw;
+	text-align: center;
+	color: #fff;
+}
+
+.idle-screen > .body > button:hover {
+	cursor: pointer;
+}
+
+.idle-screen > .body > button:active {
+	transform: scale(0.95);
 }

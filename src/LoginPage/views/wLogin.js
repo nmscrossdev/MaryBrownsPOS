@@ -268,12 +268,12 @@ class WebLoginView extends React.Component {
             
            
 		
-			<button className="logo apple">
+			{/* <button className="logo apple">
 				<div className="logo-container">
 					<img src="../Assets/Images/SVG/applelogo.svg" alt="apple logo" className="logo" />
 				</div>
 				Sign in with Apple
-			</button>
+			</button> */}
 			<div className="row">
 				<p className="standard">Don't have an account?</p>
                 <a className="bold" href="#" onClick={handleSignInClick} >Sign Up Now!</a>

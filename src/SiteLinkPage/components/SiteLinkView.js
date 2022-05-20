@@ -12,7 +12,12 @@ class SiteLinkView extends React.Component {
         super(props);
         if (!localStorage.getItem("shopstatus") && localStorage.getItem('UDID')) {
             this.props.dispatch(checkShopSTatusAction.getStatus());
+            
+            if (sessionStorage.getItem("AUTH_KEY")) {
+                this.props.dispatch(checkShopSTatusAction.getProductCount());
+            }
         }
+
     }
 
     componentWillMount() {

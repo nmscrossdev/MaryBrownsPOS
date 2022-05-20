@@ -505,6 +505,7 @@ class CartListView extends React.Component {
                 localStorage.removeItem("VOID_SALE")
 
                 //if (isMobileOnly)
+                  
                     history.push('/checkout');
                 // else
                 //     window.location = '/checkout';

@@ -12,6 +12,8 @@ import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
 import { _key, isDisplay } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
+// import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
+// import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
 class CheckoutCart extends React.Component {
   constructor(props) {
     super(props);
@@ -567,6 +569,8 @@ close_ext_modal = () => {
           extPageUrl={this.state.extPageUrl}
           extName={this.state.extName}
           extLogo={this.state.extLogo} />
+           {/* <IdleScreen></IdleScreen>
+                <ScreenSaver></ScreenSaver> */}
       </div>)
   }
 }
