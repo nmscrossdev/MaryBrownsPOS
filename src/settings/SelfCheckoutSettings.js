@@ -1,4 +1,9 @@
-import paymentsType from './PaymentsType'
+import paymentsType from './PaymentsType';
+import { store } from "../_helpers";
+import { get_UDid } from '../ALL_localstorage';
+import{cartProductActions} from '../_actions/cartProduct.action';
+import {checkoutActions} from '../CheckoutPage/actions/checkout.action';
+
 export const _key = {      
     TITLE_FOR_CATEGORY_SECTION:"title-for-category-section",
     TITLE_FOR_PRODUCT_SECTION:"title-for-product-section",
@@ -274,65 +279,115 @@ export function initSlider()
         }
     }
 }
-
+export function emptyCart() {
+    //var checklist = localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))
+    var cardproductlist = localStorage.getItem('CARD_PRODUCT_LIST') && JSON.parse(localStorage.getItem('CARD_PRODUCT_LIST'))
+    if(cardproductlist && cardproductlist.length>0)
+    {
+        // if(checklist && (checklist.status == "pending" || checklist.status == "park_sale" || checklist.status == "lay_away" || checklist.status == "on-hold")){
+        //     var udid = get_UDid('UDID');
+        //     store.dispatch(checkoutActions.orderToCancelledSale(checklist.order_id, udid));
+        //     localStorage.removeItem('PENDING_PAYMENTS');
+        // }
+        localStorage.removeItem('CHECKLIST');
+        localStorage.removeItem('oliver_order_payments');
+        localStorage.removeItem('AdCusDetail');
+        localStorage.removeItem('TIKERA_SELECTED_SEATS');
+        localStorage.removeItem("CART");
+        localStorage.removeItem('CARD_PRODUCT_LIST');
+        localStorage.removeItem("PRODUCT");
+        localStorage.removeItem("SINGLE_PRODUCT");
+        localStorage.removeItem("PRODUCTX_DATA");
+        //this.props.ticketDetail(status, item)
+        store.dispatch(cartProductActions.addtoCartProduct(null));
+    }
+}
 export function initScreenSaver()
 {
-   var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
-   if(_timer && typeof _timer!="undefined")
-   {
-    _timer =parseInt(_timer)*1000;
-   } 
-    //toggleScroll();
-
-    var timer = setTimeout(setScreensaver, _timer);
-    clearTimeout(timer);
-
-    var cycle = setTimeout(cycleScreensaver, 10000);
-    document.body.removeEventListener("click", function () {});
-    document.body.addEventListener("click", function () {
-        clearTimeout(cycle);
-        clearTimeout(timer);
-        let screensaver = document.getElementById("screensaver");
-        if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
-            screensaver.classList.add("hide");
+    if(isScreenSaverInitialized==false)
+    {
+        isScreenSaverInitialized=true;
+        var _timer = getTitle(_key.TIMEOUT_WAIT_TIME);
+        if(_timer && typeof _timer!="undefined")
+        {
+            _timer = 10000;//parseInt(_timer)*1000;
+        } 
+        var timer;
+        var cycle;
+        var countdown = document.getElementById("timeoutNumber");
+        var idleTimeout;
+        function timeoutStart() {
+            document.querySelector(".idle-screen").classList.remove("hide");
+            idleTimeout = setTimeout(decrementCountdown, 1000);
         }
-        timer = setTimeout(setScreensaver, _timer);
-        //toggleScroll(false);
-    });
-    document.body.removeEventListener("touchstart", function () {});
-    document.body.addEventListener('touchstart', function(e){
-        clearTimeout(cycle);
-        clearTimeout(timer);
-        let screensaver = document.getElementById("screensaver");
-        if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
-            screensaver.classList.add("hide");
-        }
-        timer = setTimeout(setScreensaver, _timer);
-    }, false)
-    
-
-    function setScreensaver() {
-       // toggleScroll();
-        clearTimeout(timer);
-        // document.getElementById("screensaver").classList.remove("hide");
-        // cycle = setTimeout(cycleScreensaver, 10000);
-
-        let screensaver = document.getElementById("screensaver");
-        if (screensaver!=null && typeof screensaver!="undefined" && screensaver.classList) {
-            screensaver.classList.remove("hide");
-            cycle = setTimeout(cycleScreensaver, 10000);
-        }
-
-    }
-
-    function cycleScreensaver() {
-        let images = document.querySelectorAll(".screensaver > img");
-        for (let i = 0; i < images.length; i++) {
-            if (images[i].classList.contains("front")) {
-                images[i].classList.remove("front");
-                images[i + 1 == images.length ? 0 : i + 1].classList.add("front");
-                cycle = setTimeout(cycleScreensaver, 10000);
+        function decrementCountdown() {
+            if (parseInt(countdown.innerHTML) < 1) {
+                setScreensaver();
+                countdown.innerHTML = "30";
+                document.querySelector(".idle-screen").classList.add("hide");
+                emptyCart();
                 return;
+            }
+            countdown.innerHTML = parseInt(countdown.innerHTML) - 1;
+            idleTimeout = setTimeout(decrementCountdown, 1000);
+        }
+        //toggleScroll();
+
+        var timer = setTimeout(timeoutStart, _timer);
+        //clearTimeout(timer);
+
+        var cycle = setTimeout(cycleScreensaver, 10000);
+       // document.body.removeEventListener("click", function () {});
+        document.body.addEventListener("click", function () {
+            clearTimeout(timer);
+            clearTimeout(cycle);
+            let screensaver = document.getElementById("screensaver");
+            if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
+                screensaver.classList.add("hide");
+            }
+            //toggleScroll(false);
+            timer = setTimeout(timeoutStart, _timer);
+        
+        },true);
+        //document.body.removeEventListener("touchstart", function () {});
+        document.body.addEventListener('touchstart', function(e){
+            clearTimeout(cycle);
+            clearTimeout(timer);
+            let screensaver = document.getElementById("screensaver");
+            if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
+                screensaver.classList.add("hide");
+            }
+            timer = setTimeout(timeoutStart, _timer);
+        }, true)
+        
+        document.querySelector(".idle-screen > .body > button").addEventListener("click", function (e) {
+            clearTimeout(idleTimeout);
+            clearTimeout(timer);
+            document.querySelector(".idle-screen").classList.add("hide");
+            countdown.innerHTML = "30";
+            timer = setTimeout(timeoutStart, 30000);
+         
+        });
+        function setScreensaver() {
+        // toggleScroll();
+            clearTimeout(timer);
+            let screensaver = document.getElementById("screensaver");
+            if (screensaver!=null && typeof screensaver!="undefined" && screensaver.classList) {
+                screensaver.classList.remove("hide");
+                cycle = setTimeout(cycleScreensaver, 10000);
+            }
+
+        }
+
+        function cycleScreensaver() {
+            let images = document.querySelectorAll(".screensaver > img");
+            for (let i = 0; i < images.length; i++) {
+                if (images[i].classList.contains("front")) {
+                    images[i].classList.remove("front");
+                    images[i + 1 == images.length ? 0 : i + 1].classList.add("front");
+                    cycle = setTimeout(cycleScreensaver, 10000);
+                    return;
+                }
             }
         }
     }

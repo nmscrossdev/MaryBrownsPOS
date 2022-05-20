@@ -42,6 +42,7 @@ import { TickitDetailsPopupModal } from '../_components/TickitDetailsPopupModal/
 import Navbar from '../SelfCheckout/components/Navbar';
 import Carasoul from '../SelfCheckout/components/Carasoul';
 import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
+import IdleScreen from '../SelfCheckout/components/IdleScreen';
 import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
 import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 import { CommonExtensionPopup } from '../_components/CommonExtensionPopup';
@@ -1330,6 +1331,7 @@ class SelfCheckoutView extends React.Component {
                 closeCommonPopup = {()=>this.handleCloseCommonPopup()}
                 id = {'commonInfoPopup'}
                 /> */}
+                <IdleScreen></IdleScreen>
                 <ScreenSaver></ScreenSaver>
                 <div style={{display:"none"}}>{
                     //Page Setup
@@ -1341,6 +1343,9 @@ class SelfCheckoutView extends React.Component {
                         scaleSVG();
                         scaleImages();
                         resize();
+                        // scaleSVG();
+                        // scaleImages();
+                        // resize();
                     }, 1000)
 
 
