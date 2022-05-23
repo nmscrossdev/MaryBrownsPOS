@@ -1123,7 +1123,7 @@ class AllProduct extends React.Component {
             //         pStylenotFound={pStylenotFound} />
             //     :
             //     (ActiveUser.key.isSelfcheckout == true) ?
-                 <div>
+                 <React.Fragment>
                     <ProductItemsView
                         {...this.props}
                         {...this.state}
@@ -1151,7 +1151,7 @@ class AllProduct extends React.Component {
                                 </div>
                                 :
                                 <div />}  */}
-                   </div> 
+                   </React.Fragment> 
                     // : (isMobileOnly == true) ?
                     //     <MobileAllProductList
                     //         {...this.props}

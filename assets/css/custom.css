@@ -253,7 +253,7 @@
 	color: #fff;
 	align-self: center;}
 
-	.card-tile-container {
+	/* .card-tile-container {
 		position: relative;
 		box-sizing: border-box;
 		width: 100%;
@@ -264,24 +264,24 @@
 		align-content: flex-start;
 		overflow-y: scroll;
 		overflow-x: hidden;
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-		scrollbar-width: none; /* Firefox */
-	}
+		-ms-overflow-style: none; 
+		scrollbar-width: none;
+	} */
 	
 	.card-tile-container::-webkit-scrollbar {
 		display: none; /* Safari and Chrome */
 	}
 
-	.category-tile-container {
+	/* .category-tile-container {
 		width: 100%;
 		display: flex;
 		flex-wrap: wrap;
 		margin-bottom: 4.54vw;
 		overflow-y: scroll;
 		overflow-x: hidden;
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-		scrollbar-width: none; /* Firefox */
-	}
+		-ms-overflow-style: none; 
+		scrollbar-width: none; 
+	} */
 	.recommendations > .row {
 		display: flex;
 		width: 100%;
@@ -371,4 +371,31 @@
 	text-align: center;
 	width: 5vw;
 	overflow-wrap: break-word;;
+}
+.fn-poppins
+{
+	font-family: Poppins;
+}
+.please-wait
+{
+
+	font-family: Poppins;
+    font-size: 1.67vw;
+    font-weight: 500;
+    line-height: 2.22vw;
+    color: #3d4c66;
+    width: 89.79vw;
+    margin: 0 auto 1.85vw auto;
+
+
+}
+.errorLogin
+{
+	justify-content: center;
+    padding-bottom: 10px;
+    display: flex;
+}
+.disable-attribute
+{
+	background-color: lightgray;
 }

@@ -177,7 +177,7 @@ class ProductSubAtrribute extends React.Component {
 
                         <label key={"subattr-" + index} htmlFor={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`}>
                         <input disabled={!isEnabled} type="radio" id={`variation-size-${option}-${_allOpt.term_id}-${randomNum}`} name={`variation-option-${ProductSubAttribute.parentAttribute}`} value={option} onClick={this.props.click.bind(this, newOption, ProductSubAttribute.parentAttribute, attrIndex)}/>
-                        <div className="custom-radio">
+                        <div className= {isEnabled? "custom-radio":"custom-radio disable-attribute"}>
                             <p>{option}</p>
                         </div>
                         </label>

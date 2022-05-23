@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ProductSubAtrribute } from './';
 import { isMobileOnly } from "react-device-detect";
 import ActiveUser from '../settings/ActiveUser';
+import LocalizedLanguage from '../settings/LocalizedLanguage';
 class ProductAtrribute extends React.Component {
     constructor(props) {
         super(props);
@@ -91,7 +92,7 @@ class ProductAtrribute extends React.Component {
                 )
             })
             )
-             : "")
+             : <div style={{textAlign:"center", fontFamily:"Poppins"}}>{LocalizedLanguage.noAvailable} </div>)
         // :
         //     isMobileOnly == true && (_isSelfcheckout == false) ?
         //     _DistictAttribute && _DistictAttribute.length > 0 ?

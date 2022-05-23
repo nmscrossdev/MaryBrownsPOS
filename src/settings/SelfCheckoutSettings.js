@@ -336,46 +336,10 @@ export function initScreenSaver()
             countdown.innerHTML = parseInt(countdown.innerHTML) - 1;
             idleTimeout = setTimeout(decrementCountdown, 1000);
         }
-        //toggleScroll();
 
-        var timer = setTimeout(timeoutStart, _timer);
-        //clearTimeout(timer);
-
-        var cycle = setTimeout(cycleScreensaver, 10000);
-       // document.body.removeEventListener("click", function () {});
-        document.body.addEventListener("click", function () {
-            clearTimeout(timer);
-            clearTimeout(cycle);
-            let screensaver = document.getElementById("screensaver");
-            if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
-                screensaver.classList.add("hide");
-            }
-            //toggleScroll(false);
-            timer = setTimeout(timeoutStart, _timer);
-        
-        },true);
-        //document.body.removeEventListener("touchstart", function () {});
-        document.body.addEventListener('touchstart', function(e){
-            clearTimeout(cycle);
-            clearTimeout(timer);
-            let screensaver = document.getElementById("screensaver");
-            if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
-                screensaver.classList.add("hide");
-            }
-            timer = setTimeout(timeoutStart, _timer);
-        }, true)
-        
-        document.querySelector(".idle-screen > .body > button").addEventListener("click", function (e) {
-            clearTimeout(idleTimeout);
-            clearTimeout(timer);
-            document.querySelector(".idle-screen").classList.add("hide");
-            countdown.innerHTML = "30";
-            timer = setTimeout(timeoutStart, 30000);
-         
-        });
         function setScreensaver() {
-        // toggleScroll();
-            clearTimeout(timer);
+            toggleScroll();
+            // clearTimeout(timer);
             let screensaver = document.getElementById("screensaver");
             if (screensaver!=null && typeof screensaver!="undefined" && screensaver.classList) {
                 screensaver.classList.remove("hide");
@@ -395,6 +359,42 @@ export function initScreenSaver()
                 }
             }
         }
+
+         timer = setTimeout(timeoutStart, _timer);
+      
+        document.body.addEventListener("click", function () {
+            clearTimeout(timer);
+            clearTimeout(cycle);
+            let screensaver = document.getElementById("screensaver");
+            if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
+                screensaver.classList.add("hide");
+            }
+            toggleScroll(false);
+            timer = setTimeout(timeoutStart, _timer);
+        
+        },true);
+        document.body.addEventListener('touchstart', function(e){
+            clearTimeout(cycle);
+            clearTimeout(timer);
+            let screensaver = document.getElementById("screensaver");
+            if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
+                screensaver.classList.add("hide");
+            }
+            toggleScroll(false);
+            timer = setTimeout(timeoutStart, _timer);
+        }, true)
+        
+        document.querySelector(".idle-screen > .body > button").addEventListener("click", function (e) {
+            clearTimeout(idleTimeout);
+            clearTimeout(timer);
+            document.querySelector(".idle-screen").classList.add("hide");
+            countdown.innerHTML = "30";
+            timer = setTimeout(timeoutStart, 30000);
+         
+        });
+       
+
+        
     }
 }
 

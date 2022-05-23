@@ -18,7 +18,7 @@ class LoaderOnboarding extends React.Component {
                             <img src="../assets/images/logo-dark.svg" alt="" />
                         </div>
                     </div> */}
-                    <div className="login-selection-wrapper" style={{textAlign:"center"}}>
+                    <div className="login-selection-wrapper" style={{textAlign:"center",fontFamily:"Poppins",color:"#3d4c66"}}>
                             <div className="login-card-container">
                                 <div>    
                                 {  <h3>
@@ -27,7 +27,7 @@ class LoaderOnboarding extends React.Component {
                                 :""}                                          
                                 </h3>
                                 }                                                
-                                {isDemoUser==false  && <h3 className="user_login_head__title">{LocalizedLanguage.loadIndexDBMsg}</h3>   }                              
+                                {isDemoUser==false  && <p className="user_login_head__title please-wait">{LocalizedLanguage.loadIndexDBMsg}</p>   }                              
 
                                 <div>
                                 <div>
@@ -127,16 +127,16 @@ class LoaderOnboarding extends React.Component {
                                 <div>
                                 {
                                 this.props.statusCompleted  && this.props.statusCompleted !=='NaN' &&
-                                    <span className=""> {this.props.statusCompleted>100?100:this.props.statusCompleted}% </span>
+                                    <span className="please-wait"> {this.props.statusCompleted>100?100:this.props.statusCompleted}% </span>
                                 }
-                                <p className="">{this.props.statusCompleted>=100?"Completed":"Loading..."}</p>
+                                <p className="please-wait">{this.props.statusCompleted>=100?"Completed":"Loading..."}</p>
                                 </div> 
                                 </div>                                                    {/* <a href="#">
                                 <img src="../assets/img/onboarding/logo-2-sm.png" alt="" />
                                 </a> */}
                                 </div>
 
-                                {this.props.isDemoUser==true || this.props.isDemoUser=="true" && <h3 className="user_login_head__title">{LocalizedLanguage.LoadingDemo}</h3>}
+                                {this.props.isDemoUser==true || this.props.isDemoUser=="true" && <p className="user_login_head__title please-wait">{LocalizedLanguage.LoadingDemo}</p>}
                                 </div>
                             </div>
                     </div>

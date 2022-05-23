@@ -1514,7 +1514,7 @@ class CommonProductPopupModal extends React.Component {
                                                     <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
                                                     <p className="subtext">(plus tax)</p>
                                                 </div>
-                                                <button type="button">Modify Ingredients</button>
+                                                {/* <button type="button">Modify Ingredients</button> */}
                                             </div>
                                             <div className="increment-input">
                                                 <div onClick={this.decrementDefaultQuantity} className="decrement">
@@ -1535,11 +1535,12 @@ class CommonProductPopupModal extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    {getVariationProductData ? getVariationProductData.Type !== 'variable' ?
-                                        <div className='attributesBottom'>
-                                            <div>{LocalizedLanguage.noAvailable} </div>
-                                        </div>
-                                        :
+                                    {
+                                    // getVariationProductData ? getVariationProductData.Type !== 'variable' ?
+                                    //     <div className='attributesBottom'>
+                                    //         <div>{LocalizedLanguage.noAvailable} </div>
+                                    //     </div>
+                                    //     :
                                         <div className="col">
                                             <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
                                                 attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
@@ -1548,7 +1549,8 @@ class CommonProductPopupModal extends React.Component {
                                                 {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
                                                 selectedOptionCode={selectedOptionCode}
                                                 selectedOptions={this.state.selectedOptions} /></div>
-                                        : null}
+                                        // : null
+                                        }
                                 <div className="col">
                                     <p className="center">Add a note to your order</p>
                                     <button type="button" id="addNote" onClick={()=>showModal("add-note")}>Add Note</button>
@@ -1584,7 +1586,7 @@ class CommonProductPopupModal extends React.Component {
                                     </div>
                                     <div class="popup-body">
                                         <p>Add a note or any comments for the product.</p>
-                                        <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
+                                        <textarea maxLength={100} name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
                                         <button onClick={()=>this.handleNote()} >Add Note to item</button>
                                     </div>
                                 </div>

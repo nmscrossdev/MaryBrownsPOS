@@ -19,7 +19,7 @@ export const LoadingModal = () => {
                         </g>
                     </svg>
                     <div>
-                        <span className="">Loading...</span>
+                        <span className="fn-poppins">Loading...</span>
                     </div> 
                 </div>
             </div>

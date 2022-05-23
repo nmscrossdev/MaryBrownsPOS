@@ -872,7 +872,7 @@ const language_en = {
         },
         {
             "key": "tax",
-            "value": "Tax:"
+            "value": "Tax"
         },
         {
             "key": "refundPayment",
