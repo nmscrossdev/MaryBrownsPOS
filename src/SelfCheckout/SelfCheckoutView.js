@@ -128,7 +128,7 @@ class SelfCheckoutView extends React.Component {
         dispatch(taxRateAction.getGetRates());
         //dispatch(taxRateAction.getIsMultipleTaxSupport());
         dispatch(checkoutActions.getPaymentTypeName(udid, localStorage.getItem('register')));
-        dispatch(checkoutActions.GetExtensions())
+        // dispatch(checkoutActions.GetExtensions())
         // fetch cloud printer as per the location
         var locationId = localStorage.getItem('Location')
         dispatch(cloudPrinterActions.getCloudPrinters(locationId))
