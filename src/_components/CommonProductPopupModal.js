@@ -1505,16 +1505,13 @@ class CommonProductPopupModal extends React.Component {
                                         <div className="col">
                                             <p className="prod-description">
                                                 {getVariationProductData.ShortDescription}
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, reiciendis hic,
-                                                rem deserunt enim quisquam alias nulla obcaecati harum commodi possimus. Laudantium
-                                                nulla omnis magni ea dolore totam? Dolores, unde.:
                                             </p>
                                             <div className="inner-row">
                                                 <div className="text-row">
                                                     <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
                                                     <p className="subtext">(plus tax)</p>
                                                 </div>
-                                                <button type="button">Modify Ingredients</button>
+                                                <button style={{display:'none'}} type="button">Modify Ingredients</button>
                                             </div>
                                             <div className="increment-input">
                                                 <div onClick={this.decrementDefaultQuantity} className="decrement">
@@ -1528,7 +1525,7 @@ class CommonProductPopupModal extends React.Component {
                                                         : ''} onChange={this.handleChange.bind(this)} />
 
                                                 <div onClick = {this.incrementDefaultQuantity} className="increment">
-                                                    <svg width={16} height={16} viewBox="0 0 16 16">
+                                                    <svg className='checkout-increament-mr' width={16} height={16} viewBox="0 0 16 16">
                                                         <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                                                     </svg>
                                                 </div>

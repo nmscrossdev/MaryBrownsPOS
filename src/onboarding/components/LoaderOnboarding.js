@@ -21,7 +21,7 @@ class LoaderOnboarding extends React.Component {
                     <div className="login-selection-wrapper" style={{textAlign:"center"}}>
                             <div className="login-card-container">
                                 <div>    
-                                {  <h3>
+                                {  <h3 className="user_login_head__title">
                                 { isDemoUser==false ? LocalizedLanguage.pleaseWait
                                 :(isDemoUser==true || this.props.isDemoUser==true || this.props.isDemoUser=="true") ? LocalizedLanguage.Thankyouforjoiningthemovement 
                                 :""}                                          

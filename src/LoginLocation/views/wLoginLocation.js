@@ -15,7 +15,7 @@ const WebLoginLocation = (props) => {
                     <img src="../Assets/Images/SVG/LesserThan.svg" alt="" />
                     <p> {LocalizedLanguage.goBack}</p>
                 </div>
-                <p>Sushi Sun</p>
+                {/* <p>Sushi Sun</p> */}
             </div>
             <div className="login-selection-wrapper">
 			<p> {LocalizedLanguage.chooseLocation}</p>
@@ -26,7 +26,7 @@ const WebLoginLocation = (props) => {
            UserLocations && UserLocations.length > 0 ? UserLocations.map((item, index) => {
             return (
                
-              <button class="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} style={{marginBottom:"unset"}}>
+              <button class="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} style={{marginBottom:"unset" ,marginTop:"23px"}}>
               <div class="icon-container">
                   <img src="../Assets/Images/SVG/Store.svg" alt="" class="fix-1" />
               </div>

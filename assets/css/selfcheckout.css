@@ -1083,7 +1083,7 @@ p.section {
 }
 
 .product-container>.prod-wrapper>.row>.img-container {
-	width: 41.67vw;
+	/* width: 41.67vw; */
 	height: 26.3vw;
 	margin-right: 4.63vw;
 	display: flex;
@@ -1377,7 +1377,7 @@ body>.text-row>p.order-quantity {
 }
 
 .order-summary>.order-products-wrapper>.order-product>.row>.inner-row>svg {
-	padding: 0.2vw;
+	padding: 0.3vw;
 	border: 0.092vw solid #d51a52;
 }
 
