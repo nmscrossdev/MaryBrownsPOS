@@ -357,8 +357,8 @@
 
 .payconic-btn{
 	background-color: transparent;
-    color: #46a9d4;
-	border: 1px solid #46a9d4;
+    color: var(--primary);
+	border: 1px solid var(--primary);
 	background-color:unset!important;
 	min-width: 220px;
 	width: unset!important;

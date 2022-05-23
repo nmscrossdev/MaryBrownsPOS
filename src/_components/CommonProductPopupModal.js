@@ -1447,7 +1447,7 @@ class CommonProductPopupModal extends React.Component {
                     {HostUrl !== "" ?
                         <React.Fragment>
                             <div className="product-container">
-                                <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
+                                {/* <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
                                     {hasVariationProductData ? 
                                     // <Markup content=
                                     // {
@@ -1455,21 +1455,47 @@ class CommonProductPopupModal extends React.Component {
                                     // }
                                     // ></Markup>
                                     : ''}
-                                </h5>
-                                <button type="button" className="popup-close" onClick={() => this.handleClose()}>
+                                </h5> */}
+                                {/* <button type="button" className="popup-close" onClick={() => this.handleClose()}>
                                     <span aria-hidden="true">
                                         <img src="assets/img/ic_circle_delete.svg" />
                                     </span>
-                                </button>
+                                </button> */}
+                                {/* <div id="productCloseButton" className="product-close"> */}
+                            <svg className="product-close" onClick={()=>this.handleClose()} 
+                                width="22"
+                                height="21"
+                                viewBox="0 0 22 21"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
+                                    fill="#050505"
+                                />
+                            </svg>
+                            <div className="popup-header" style={{marginBottom:"2vw"}}>
+                            <div className="col">
+                                <p>{hasVariationProductData ? 
+                                    (variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)
+                                : ''}</p>
+                                <div className="divider"></div>
                             </div>
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                sandbox="allow-scripts allow-same-origin allow-forms"
-                                //className="embed-responsive-item diamondSectionHeight"
-                                ref={(f) => this.ifr = f}
-                                src={HostUrl}
-                            />
+                            </div>
+                            {/* </div> */}
+                            <div className="prod-wrapper">
+                                <div className="row">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        style={{height:"140vw",border:0}}
+                                        sandbox="allow-scripts allow-same-origin allow-forms"
+                                        //className="embed-responsive-item diamondSectionHeight"
+                                        ref={(f) => this.ifr = f}
+                                        src={HostUrl}
+                                    />
+                                </div>
+                            </div> </div>
                      </React.Fragment>
                         :
                         <div className="product-container" style={{height:"93.5%"}}>

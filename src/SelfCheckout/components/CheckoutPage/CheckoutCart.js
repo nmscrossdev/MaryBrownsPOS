@@ -470,17 +470,17 @@ close_ext_modal = () => {
                   product.Price != null ?
                     <div className="order-product" key={index}>
                       <div className="row">
-                          <p className="prod-name">{product.Title}</p>
-                          <div className="inner-row">
+                          <p className="prod-name" style={{width:"50%"}}>{product.Title}</p>
+                          <div className="inner-row" style={{width:"50%",justifyContent:"space-between"}}>
                             <div className="increment-input">
                               <div onClick={() => this.incrementDefaultQuantity(product, index, 0)} className="decrement">
-                                <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
+                                <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px" }}>
                                   <rect width="16" height="2" fill="#758696" />
                                 </svg>
                               </div>
                               <input type="number" value={product.quantity} />
                               <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment">
-                                <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
+                                <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px" }}>
                                   <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                                 </svg>
                               </div>
@@ -581,6 +581,12 @@ close_ext_modal = () => {
           extLogo={this.state.extLogo} />
            {/* <IdleScreen></IdleScreen>
                 <ScreenSaver></ScreenSaver> */}
+                <div style={{display:"none"}}>{setTimeout(() => {
+                  scaleSVG();
+                  scaleImages();
+                  resize();
+                  
+                }, 200)}</div>
       </div>)
   }
 }
