@@ -15,7 +15,7 @@ const WebLoginLocation = (props) => {
                     <img src="../Assets/Images/SVG/LesserThan.svg" alt="" />
                     <p> {LocalizedLanguage.goBack}</p>
                 </div>
-                <p>Sushi Sun</p>
+                {/* <p>Sushi Sun</p> */}
             </div>
             <div className="login-selection-wrapper">
 			<p> {LocalizedLanguage.chooseLocation}</p>

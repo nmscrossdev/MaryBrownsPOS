@@ -209,7 +209,7 @@ class WebLoginView extends React.Component {
 					</label>
 				</div>
                 {vlidationError != "" &&
-            <div className="validationError text-center">
+            <div className="validationError text-center row apart">
             {fieldErr !== '' ? <img src='../../assets/img/images/error.svg' /> : usernamedErr !== "" ? <img src='../../assets/img/images/error.svg' /> : passwordErr !== '' ? <img src='../../assets/img/images/error.svg' /> : loggedIn == false ? <img src='../../assets/img/images/error.svg' /> : ""}
             {wentWrongErr !== '' ? wentWrongErr : fieldErr !== '' ? fieldErr : usernamedErr !== "" ? usernamedErr : passwordErr !== '' ? passwordErr : loggedIn == false ? loginError : ""}
             </div>}
