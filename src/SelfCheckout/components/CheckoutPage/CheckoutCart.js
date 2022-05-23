@@ -562,7 +562,7 @@ close_ext_modal = () => {
         </div>
         <div className="order-instructions">
           <p>Order Instructions</p>
-          <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
+          <textarea maxLength={200} name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
         </div>
         {display_rec_products == "true" ?
           <RecommendedProduct page={"cart"} />
