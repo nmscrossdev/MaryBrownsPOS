@@ -105,7 +105,7 @@ class SaleComplete extends React.Component {
         this.clear = this.clear.bind(this);
         this.closeMsgModal = this.closeMsgModal.bind(this)
         this.printdetails = this.printdetails.bind(this);
-        this.HandleContinue = this.HandleContinue.bind(this);
+        this.handleContinue = this.handleContinue.bind(this);
         
         this.printdetails();
     }
@@ -403,7 +403,33 @@ class SaleComplete extends React.Component {
             }
         });
     }
+    handleContinue() {
+        localStorage.removeItem('CARD_PRODUCT_LIST');
+        localStorage.removeItem('GTM_ORDER');        
+        const { dispatch } = this.props;
+        localStorage.removeItem('ORDER_ID');
+        localStorage.removeItem('CHECKLIST');
+        localStorage.removeItem('oliver_order_payments');
+        localStorage.removeItem('AdCusDetail');
+        localStorage.removeItem('CARD_PRODUCT_LIST');
+        localStorage.removeItem("CART");
+        localStorage.removeItem("SINGLE_PRODUCT");
+        localStorage.removeItem("PRODUCT");
+        localStorage.removeItem('PRODUCTX_DATA');
+        localStorage.removeItem('PAYCONIQ_PAYMENT_RESPONSE');
+        localStorage.removeItem('ONLINE_PAYMENT_RESPONSE');
+        localStorage.removeItem('STRIPE_PAYMENT_RESPONSE');
+        localStorage.removeItem('GLOBAL_PAYMENT_RESPONSE');
+        localStorage.removeItem('PAYMENT_RESPONSE');
+        localStorage.removeItem('PENDING_PAYMENTS');
+        localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
+        dispatch(cartProductActions.addtoCartProduct(null));
+        // history.push('/selfcheckout');
+        history.push('/SelfCheckoutView');
+        
+    }
     printReceipt(appResponse=undefined) {
+        const { dispatch } = this.props;
         var type = 'completecheckout';
         var env = localStorage.getItem("env_type");
         var event_array = []
@@ -474,7 +500,29 @@ class SaleComplete extends React.Component {
                     }
                     if (ActiveUser.key.isSelfcheckout == true) {
                         setTimeout(function () {
-                            history.push('/SelfCheckoutView')
+                            //history.push('/SelfCheckoutView')
+                            localStorage.removeItem('CARD_PRODUCT_LIST');
+                            localStorage.removeItem('GTM_ORDER');        
+                            
+                            localStorage.removeItem('ORDER_ID');
+                            localStorage.removeItem('CHECKLIST');
+                            localStorage.removeItem('oliver_order_payments');
+                            localStorage.removeItem('AdCusDetail');
+                            localStorage.removeItem('CARD_PRODUCT_LIST');
+                            localStorage.removeItem("CART");
+                            localStorage.removeItem("SINGLE_PRODUCT");
+                            localStorage.removeItem("PRODUCT");
+                            localStorage.removeItem('PRODUCTX_DATA');
+                            localStorage.removeItem('PAYCONIQ_PAYMENT_RESPONSE');
+                            localStorage.removeItem('ONLINE_PAYMENT_RESPONSE');
+                            localStorage.removeItem('STRIPE_PAYMENT_RESPONSE');
+                            localStorage.removeItem('GLOBAL_PAYMENT_RESPONSE');
+                            localStorage.removeItem('PAYMENT_RESPONSE');
+                            localStorage.removeItem('PENDING_PAYMENTS');
+                            localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
+                            dispatch(cartProductActions.addtoCartProduct(null));
+                            // history.push('/selfcheckout');
+                            history.push('/SelfCheckoutView');
                         }, 500);
                     }
                 }, 1000);
@@ -494,31 +542,7 @@ class SaleComplete extends React.Component {
         //     }
         // }
     }
-    HandleContinue() {
-        localStorage.removeItem('CARD_PRODUCT_LIST');
-        localStorage.removeItem('GTM_ORDER');        
-        const { dispatch } = this.props;
-        localStorage.removeItem('ORDER_ID');
-        localStorage.removeItem('CHECKLIST');
-        localStorage.removeItem('oliver_order_payments');
-        localStorage.removeItem('AdCusDetail');
-        localStorage.removeItem('CARD_PRODUCT_LIST');
-        localStorage.removeItem("CART");
-        localStorage.removeItem("SINGLE_PRODUCT");
-        localStorage.removeItem("PRODUCT");
-        localStorage.removeItem('PRODUCTX_DATA');
-        localStorage.removeItem('PAYCONIQ_PAYMENT_RESPONSE');
-        localStorage.removeItem('ONLINE_PAYMENT_RESPONSE');
-        localStorage.removeItem('STRIPE_PAYMENT_RESPONSE');
-        localStorage.removeItem('GLOBAL_PAYMENT_RESPONSE');
-        localStorage.removeItem('PAYMENT_RESPONSE');
-        localStorage.removeItem('PENDING_PAYMENTS');
-        localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
-        dispatch(cartProductActions.addtoCartProduct(null));
-        // history.push('/selfcheckout');
-        history.push('/SelfCheckoutView');
-        
-    }
+
     // checkOrderStatus(tempOrderId) {
     //     if (this.state.isOrderSyncComplete == false) {
     //         const { Email } = ActiveUser.key;
@@ -911,7 +935,7 @@ class SaleComplete extends React.Component {
                         barcode_image={barcode_image}
                         tempOrderId={tempOrderId}
                         orderId={this.state.orderId}
-                        handleContinue={this.HandleContinue} />
+                        handleContinue={this.handleContinue} />
                     :
                     (isMobileOnly == true) ?
                         <div>

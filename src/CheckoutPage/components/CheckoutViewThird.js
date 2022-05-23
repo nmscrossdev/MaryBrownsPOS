@@ -808,19 +808,22 @@ class CheckoutViewThird extends React.Component {
                                             <div className="row payment-row" style={{marginBottom:0}}>
                                               {this.state.paymentMethods.map((type, ind) => {
                                                  return(this.renderPaymentsType(type, activeDisplay))      
-                                                })}
+                                                })
+                                                }
+                                                {this.showExtensionPayments(styles)}
                                                 </div>
                                             :
-                                            <div className="w-100">
-                                                <p className="text-white text-center payment-description">
+                                            this.state.extPaymentMethods && this.state.extPaymentMethods.length>0?
+                                             <div className="row payment-row">
+                                            {this.showExtensionPayments(styles)}
+                                            </div>:
+                                                <p>
                                                     {LocalizedLanguage.noPaymenttypeavilable}
                                                 </p>
-                                            </div>
-                                            
                                         }
-                                        <div className="row payment-row">
+                                        {/* <div className="row payment-row">
                                         {this.showExtensionPayments(styles)}
-                                        </div>
+                                        </div> */}
                                     </div>
                                     {/* {setTimeout(() => {
                                         //Page Setup

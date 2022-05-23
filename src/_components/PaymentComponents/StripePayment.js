@@ -407,7 +407,7 @@ class StripePayment extends React.Component {
 
         return (
             (isMobileOnly == true) && activeDisplayStatus !== true ?
-                <button  ref="btn" type="submit" style={{ borderLeftColor: color, marginBottom: 15, marginTop: 15 }} className={ ActiveUser.key.isSelfcheckout == true ? "btn btn-light text-dark btn-block h-60 shadow-none fz-14" : "btn btn-default btn-lg btn-block btn-style-02"} onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
+                <button  ref="btn" type="submit" style={{ borderLeftColor: color, marginBottom: 15}} className={ ActiveUser.key.isSelfcheckout == true ? "btn btn-light text-dark btn-block h-60 shadow-none fz-14" : "btn btn-default btn-lg btn-block btn-style-02"} onClick={() => this.hideTab(!activeDisplayStatus)}>{Name}</button>
                 :
                 activeDisplayStatus !== true ?
                     // <div style={{ display: styles }}  ref="btn" onClick={() => this.hideTab(!activeDisplayStatus)} className={`white-background box-flex-shadow box-flex-border ${ActiveUser.key.isSelfcheckout == true ? 'mb-5' : 'mb-2'} round-8 pointer d-none overflowHidden no-outline w-100 p-0 overflow-0`}>

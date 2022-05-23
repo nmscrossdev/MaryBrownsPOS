@@ -199,7 +199,7 @@ class SelfSaleComplete extends React.Component {
                     <p className="style4">How would you like to receive your reciept?</p>
                     <button onClick={() => printReceipt()} id="printButton">{LocalizedLanguage.print}</button>
                     <button onClick={() => this.sendMail()} id="emailButton">{LocalizedLanguage.email}</button>
-                    <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button>
+                    {/* <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button> */}
                     <div className="divider" />
                     <BottomApps page={_key.RECEIPT_PAGE}  showExtensionIframe={this.showExtensionIframe}></BottomApps>
                     {

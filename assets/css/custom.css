@@ -363,3 +363,12 @@
 	min-width: 220px;
 	width: unset!important;
 }
+.header > .row > .col > p {
+	font-family: Poppins;
+	font-size: 1.11vw;
+	font-weight: 500;
+	line-height: 1.48vw;
+	text-align: center;
+	width: 5vw;
+	overflow-wrap: break-word;;
+}
