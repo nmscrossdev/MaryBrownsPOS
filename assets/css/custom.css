@@ -307,68 +307,60 @@
 	align-self: center;
 }
 
-.card-tile-container {
-	position: relative;
-	box-sizing: border-box;
-	width: 100%;
-	min-height: 31.11vw;
-	height: 62.22vw;
-	display: flex;
-	flex-wrap: wrap;
-	align-content: flex-start;
-	overflow-y: scroll;
-	overflow-x: hidden;
-	-ms-overflow-style: none;
-	/* Internet Explorer 10+ */
-	scrollbar-width: none;
-	/* Firefox */
-}
+	/* .card-tile-container {
+		position: relative;
+		box-sizing: border-box;
+		width: 100%;
+		min-height: 31.11vw;
+		height: 62.22vw;
+		display: flex;
+		flex-wrap: wrap;
+		align-content: flex-start;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-ms-overflow-style: none; 
+		scrollbar-width: none;
+	} */
+	
+	.card-tile-container::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
+	}
 
-.card-tile-container::-webkit-scrollbar {
-	display: none;
-	/* Safari and Chrome */
-}
-
-.category-tile-container {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	margin-bottom: 4.54vw;
-	overflow-y: scroll;
-	overflow-x: hidden;
-	-ms-overflow-style: none;
-	/* Internet Explorer 10+ */
-	scrollbar-width: none;
-	/* Firefox */
-}
-
-.recommendations>.row {
-	display: flex;
-	width: 100%;
-	justify-content: center;
-	margin: 0 -24px -24px 0;
-	transform: translateX(-14px);
-	justify-content: center;
-	overflow-y: scroll;
-	flex-wrap: unset !important;
-}
-
-.recommendations>.row>.prod {
-	position: relative;
-	min-width: 18.8vw;
-	height: 19.53vw;
-	box-sizing: border-box;
-	border: 0.19vw solid #e2e2e2;
-	border-radius: 0.74vw;
-	background-color: #fff;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 0 1.02vw 0.93vw 1.02vw;
-	margin-right: 2.22vw;
-}
-
-.header>.row>div>.initial {
+	/* .category-tile-container {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 4.54vw;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-ms-overflow-style: none; 
+		scrollbar-width: none; 
+	} */
+	.recommendations > .row {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+		margin: 0 -24px -24px 0;
+		transform: translateX(-14px);
+		justify-content: center;
+		overflow-y: scroll;
+		flex-wrap:unset !important;
+	}
+	.recommendations > .row > .prod {
+		position: relative;
+		min-width: 18.8vw;
+		height: 19.53vw;
+		box-sizing: border-box;
+		border: 0.19vw solid #e2e2e2;
+		border-radius: 0.74vw;
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0 1.02vw 0.93vw 1.02vw;
+		margin-right: 2.22vw;
+	}
+	.header > .row > div> .initial {
 	width: 3.7vw;
 	height: 3.7vw;
 	background-color: var(--primary);
@@ -424,50 +416,45 @@
 
 .payconic-btn {
 	background-color: transparent;
-	color: #46a9d4;
-	border: 1px solid #46a9d4;
-	background-color: unset !important;
+    color: var(--primary);
+	border: 1px solid var(--primary);
+	background-color:unset!important;
 	min-width: 220px;
-	width: unset !important;
+	width: unset!important;
 }
-
-.validationError {
-	text-align: center;
-	color: #e90c0c;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	letter-spacing: 1px;
-	font-size: 12px;
-	display: block;
-	float: left;
-	width: 100%;
+.header > .row > .col > p {
+	font-family: Poppins;
+	font-size: 1.11vw;
 	font-weight: 500;
-	text-align: center !important;
-
+	line-height: 1.48vw;
+	text-align: center;
+	width: 5vw;
+	overflow-wrap: break-word;;
 }
-
-.text-center {
-	text-align: center !important;
+.fn-poppins
+{
+	font-family: Poppins;
 }
+.please-wait
+{
 
-img {
-	vertical-align: middle;
-	border-style: none;
-}
-.user_login_head__title{
 	font-family: Poppins;
     font-size: 1.67vw;
-    font-weight: 400;
-    line-height: 2.5vw;
-    color: #050505;
-    margin-bottom: 3.89vw;
+    font-weight: 500;
+    line-height: 2.22vw;
+    color: #3d4c66;
+    width: 89.79vw;
+    margin: 0 auto 1.85vw auto;
+
+
 }
-.checkout-increament-mr{
-	margin-right: unset!important;
+.errorLogin
+{
+	justify-content: center;
+    padding-bottom: 10px;
+    display: flex;
 }
-.decrement svg{
-	padding: 0px !important;
-}
-.increment svg{
-	padding : 0px!important;
+.disable-attribute
+{
+	background-color: lightgray;
 }

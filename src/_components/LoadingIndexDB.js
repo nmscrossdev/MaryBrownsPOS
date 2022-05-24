@@ -55,6 +55,7 @@ class LoadingIndexDB extends React.Component {
            
             const register_Id = localStorage.getItem('register');
             this.props.dispatch(registerActions.GetRegisterPermission(register_Id));
+            this.props.dispatch(checkoutActions.GetExtensions());
             if (UID && register_Id) {
                 this.props.dispatch(favouriteListActions.getAll(UID, register_Id));
                 var client = localStorage.getItem("clientDetail") ? JSON.parse(localStorage.getItem("clientDetail")) : '';

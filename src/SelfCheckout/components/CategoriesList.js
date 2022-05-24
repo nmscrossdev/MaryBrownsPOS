@@ -174,15 +174,13 @@ class CategoriesList extends React.Component {
         const { current_categories,item } = this.state;
        console.log("current_categories",current_categories,"item",item)
         return (
-            <div>
+            <React.Fragment> 
+                {item && item !==null && item !==""?
                  <div className="category-header">
-                 {/* <p className="section">{item && item !==null && item !==""? item.Value +" Categories": getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p> */}
                     <div className="col">
-                    {item && item !==null && item !==""?
-                        <p className="path">{this.showCategorySelection()} </p> :""}
-
+                        <p className="path">{this.showCategorySelection()} </p>
                         <p className="current">{item && item !==null && item !==""? item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
-                        <div className="divider"></div>
+                        <div className="divider"></div> 
                     </div>
                    { 
                    //item==null?null:
@@ -209,11 +207,9 @@ class CategoriesList extends React.Component {
                         Go back to main menu
                     </button>
                     }
-                </div>
-                
-                <div className="category-tile-container">
-                    
-                        {/* <p className="section">Categories</p> */}
+                </div>:
+                <p className="section">{item && item !==null && item !==""? item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+                 } <div className="category-tile-container">
                 {   
                 current_categories && current_categories.map((item, index) => {                 
                         var titleName = item.Value
@@ -233,7 +229,7 @@ class CategoriesList extends React.Component {
                    
                   
                 </div>
-        </div>           
+        </React.Fragment>           
       )
     }
 }

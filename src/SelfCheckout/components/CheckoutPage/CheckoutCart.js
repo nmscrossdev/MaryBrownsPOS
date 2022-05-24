@@ -12,8 +12,9 @@ import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
 import { _key, isDisplay } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
-// import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
-// import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
+
+import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
+import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
 class CheckoutCart extends React.Component {
   constructor(props) {
     super(props);
@@ -435,9 +436,16 @@ close_ext_modal = () => {
     // }
     var checkList1 = this.state.checkList;//localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
     console.log("this.props---------->", checkList1)
+    var length="";
+        if(checkList1 && checkList1.ListItem && checkList1.ListItem.length>0)
+        {
+            length = checkList1.ListItem.filter(function(item){
+                return item.Price && item.Price!="";
+            }).length;
+        }
     return (
       <div>
-        <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={checkList1 && checkList1.ListItem ? checkList1.ListItem.length : ''} />
+        <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
         <div className="category-header m-b-35">
           <div className="col">
             <p className="current">Order Summary</p>
@@ -462,17 +470,17 @@ close_ext_modal = () => {
                   product.Price != null ?
                     <div className="order-product" key={index}>
                       <div className="row">
-                          <p className="prod-name">{product.Title}</p>
-                          <div className="inner-row">
+                          <p className="prod-name" style={{width:"50%"}}>{product.Title}</p>
+                          <div className="inner-row" style={{width:"50%",justifyContent:"space-between"}}>
                             <div className="increment-input">
                               <div onClick={() => this.incrementDefaultQuantity(product, index, 0)} className="decrement">
-                                <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px", paddingLeft: "10px" }}>
+                                <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px" }}>
                                   <rect width="16" height="2" fill="#758696" />
                                 </svg>
                               </div>
                               <input type="number" value={product.quantity} />
                               <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment">
-                                <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px", paddingRight: "10px" }}>
+                                <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px" }}>
                                   <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                                 </svg>
                               </div>
@@ -554,7 +562,7 @@ close_ext_modal = () => {
         </div>
         <div className="order-instructions">
           <p>Order Instructions</p>
-          <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
+          <textarea maxLength={200} name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
         </div>
         {display_rec_products == "true" ?
           <RecommendedProduct page={"cart"} />
@@ -562,6 +570,8 @@ close_ext_modal = () => {
         <div className="cover hide"></div>
           {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
+        <IdleScreen></IdleScreen>
+        <ScreenSaver></ScreenSaver>
         <CommonExtensionPopup
           showExtIframe={this.state.extensionIframe}
           close_ext_modal={this.close_ext_modal}
@@ -571,6 +581,12 @@ close_ext_modal = () => {
           extLogo={this.state.extLogo} />
            {/* <IdleScreen></IdleScreen>
                 <ScreenSaver></ScreenSaver> */}
+                <div style={{display:"none"}}>{setTimeout(() => {
+                  scaleSVG();
+                  scaleImages();
+                  resize();
+                  
+                }, 200)}</div>
       </div>)
   }
 }

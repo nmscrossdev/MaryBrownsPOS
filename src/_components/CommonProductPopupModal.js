@@ -1447,7 +1447,7 @@ class CommonProductPopupModal extends React.Component {
                     {HostUrl !== "" ?
                         <React.Fragment>
                             <div className="product-container">
-                                <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
+                                {/* <h5 className="modal-title" id="modalLargeLabel" title={(variation_single_data ? variation_single_data.Title.replace(" - ", "-") : SelectedTitle)}>
                                     {hasVariationProductData ? 
                                     // <Markup content=
                                     // {
@@ -1455,24 +1455,50 @@ class CommonProductPopupModal extends React.Component {
                                     // }
                                     // ></Markup>
                                     : ''}
-                                </h5>
-                                <button type="button" className="popup-close" onClick={() => this.handleClose()}>
+                                </h5> */}
+                                {/* <button type="button" className="popup-close" onClick={() => this.handleClose()}>
                                     <span aria-hidden="true">
                                         <img src="assets/img/ic_circle_delete.svg" />
                                     </span>
-                                </button>
+                                </button> */}
+                                {/* <div id="productCloseButton" className="product-close"> */}
+                            <svg className="product-close" onClick={()=>this.handleClose()} 
+                                width="22"
+                                height="21"
+                                viewBox="0 0 22 21"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
+                                    fill="#050505"
+                                />
+                            </svg>
+                            <div className="popup-header" style={{marginBottom:"2vw"}}>
+                            <div className="col">
+                                <p>{hasVariationProductData ? 
+                                    (variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)
+                                : ''}</p>
+                                <div className="divider"></div>
                             </div>
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                sandbox="allow-scripts allow-same-origin allow-forms"
-                                //className="embed-responsive-item diamondSectionHeight"
-                                ref={(f) => this.ifr = f}
-                                src={HostUrl}
-                            />
+                            </div>
+                            {/* </div> */}
+                            <div className="prod-wrapper">
+                                <div className="row">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        style={{height:"140vw",border:0}}
+                                        sandbox="allow-scripts allow-same-origin allow-forms"
+                                        //className="embed-responsive-item diamondSectionHeight"
+                                        ref={(f) => this.ifr = f}
+                                        src={HostUrl}
+                                    />
+                                </div>
+                            </div> </div>
                      </React.Fragment>
                         :
-                        <div className="product-container" style={{height:"94%"}}>
+                        <div className="product-container" style={{height:"93.5%"}}>
 
                 <div id="productCloseButton" className="product-close">
 				<svg onClick={()=>hideModal('VariationPopUp')} 
@@ -1511,7 +1537,7 @@ class CommonProductPopupModal extends React.Component {
                                                     <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
                                                     <p className="subtext">(plus tax)</p>
                                                 </div>
-                                                <button style={{display:'none'}} type="button">Modify Ingredients</button>
+                                                {/* <button type="button">Modify Ingredients</button> */}
                                             </div>
                                             <div className="increment-input">
                                                 <div onClick={this.decrementDefaultQuantity} className="decrement">
@@ -1532,11 +1558,12 @@ class CommonProductPopupModal extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    {getVariationProductData ? getVariationProductData.Type !== 'variable' ?
-                                        <div className='attributesBottom'>
-                                            <div>{LocalizedLanguage.noAvailable} </div>
-                                        </div>
-                                        :
+                                    {
+                                    // getVariationProductData ? getVariationProductData.Type !== 'variable' ?
+                                    //     <div className='attributesBottom'>
+                                    //         <div>{LocalizedLanguage.noAvailable} </div>
+                                    //     </div>
+                                    //     :
                                         <div className="col">
                                             <ProductAtrribute showSelectedProduct={showSelectStatus == true ? showSelectedProduct : ''}
                                                 attribute={hasVariationProductData ? getVariationProductData.ProductAttributes : null}
@@ -1545,7 +1572,8 @@ class CommonProductPopupModal extends React.Component {
                                                 {this.props.getVariationProductData ? this.props.getVariationProductData.Variations : []}
                                                 selectedOptionCode={selectedOptionCode}
                                                 selectedOptions={this.state.selectedOptions} /></div>
-                                        : null}
+                                        // : null
+                                        }
                                 <div className="col">
                                     <p className="center">Add a note to your order</p>
                                     <button type="button" id="addNote" onClick={()=>showModal("add-note")}>Add Note</button>
@@ -1581,7 +1609,7 @@ class CommonProductPopupModal extends React.Component {
                                     </div>
                                     <div class="popup-body">
                                         <p>Add a note or any comments for the product.</p>
-                                        <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
+                                        <textarea maxLength={100} name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
                                         <button onClick={()=>this.handleNote()} >Add Note to item</button>
                                     </div>
                                 </div>

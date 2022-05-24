@@ -166,7 +166,7 @@ function resize() {
 	window.addEventListener("resize", function () {
 		clearTimeout(resizeTimer);
 		resizeTimer = setTimeout(function () {
-			setItemsHeight();
+			// setItemsHeight();
 			scaleSVG();
 			scaleImages();
 		}, 100);

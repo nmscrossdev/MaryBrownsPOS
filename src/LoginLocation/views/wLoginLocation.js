@@ -6,6 +6,7 @@ import { AndroidAndIOSLoader ,Footer} from '../../_components';
 import { Markup } from 'interweave';
 const WebLoginLocation = (props) => {
     //console.log("%cWebLoginLocation state", 'color:green', props);
+    var subscriptionClientDetail = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail')) : '';
     const { autoFocusIs, windowLocation, handleSubmit, handleBack, checkStatus, UserLocations, check, loading, notFounLocation, isLoading, clear } = props;
     return (
         <div>
@@ -15,7 +16,7 @@ const WebLoginLocation = (props) => {
                     <img src="../Assets/Images/SVG/LesserThan.svg" alt="" />
                     <p> {LocalizedLanguage.goBack}</p>
                 </div>
-                {/* <p>Sushi Sun</p> */}
+                <p>{subscriptionClientDetail && subscriptionClientDetail.user_full_name}</p>
             </div>
             <div className="login-selection-wrapper">
 			<p> {LocalizedLanguage.chooseLocation}</p>
@@ -26,7 +27,7 @@ const WebLoginLocation = (props) => {
            UserLocations && UserLocations.length > 0 ? UserLocations.map((item, index) => {
             return (
                
-              <button class="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} style={{marginBottom:"unset" ,marginTop:"23px"}}>
+              <button class="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} >
               <div class="icon-container">
                   <img src="../Assets/Images/SVG/Store.svg" alt="" class="fix-1" />
               </div>
