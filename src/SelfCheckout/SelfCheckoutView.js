@@ -1245,11 +1245,18 @@ class SelfCheckoutView extends React.Component {
     render() {
         const { width } = this.props;
         const { getVariationProductData, getSimpleProductData, hasVariationProductData, hasSimpleProductData, openModalActive, AllProductList } = this.state;
-    
+        var length="";
+        if(this.props.cartproductlist && this.props.cartproductlist.length>0)
+        {
+            length = this.props.cartproductlist.filter(function(item){
+                return item.Price && item.Price!="";
+            }).length;
+        }
+        //console.log("--length--"+length)
         return (
-            <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
+            <React.Fragment /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
             <div className="cover hide"></div>
-            <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
+            <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={length} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
             <Carasoul banners={this.state.banners} showProductPopup={this.showProductPopup}></Carasoul>
@@ -1290,7 +1297,7 @@ class SelfCheckoutView extends React.Component {
                 </svg>
             </div>:null}
             
-           
+            <div className='scrollable' style={{height:"unset"}}>
             <CategoriesList categories={this.state.categories} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>
@@ -1298,6 +1305,7 @@ class SelfCheckoutView extends React.Component {
             <AllProduct categories={this.state.categories} showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
             searchProduct={this.state.searchProduct}
             ></AllProduct>
+            </div>
             <CartListView islandscape="false" simpleProductData={this.handleSimpleProduct}
                                         showPopuponcartlistView={this.showPopuponcartlistView}
                                         discountType={this.state.discountType}
@@ -1308,7 +1316,7 @@ class SelfCheckoutView extends React.Component {
             
             
             {/* <TileModel status={this.tileModalAddStatus} msg={this.CommonMsg} positionNum={this.state.posIndex} />       */}
-            <CommonProductPopupModal showExtensionIframe={this.showExtensionIframe} itemCount={this.props.cartproductlist?this.props.cartproductlist.length:''} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
+            <CommonProductPopupModal showExtensionIframe={this.showExtensionIframe} itemCount={length} getQuantity={localStorage.getItem("CART_QTY")} isInventoryUpdate={this.state.isInventoryUpdate}
             inventoryData={this.checkInventoryData} getVariationProductData={getVariationProductData ? getVariationProductData :
             getSimpleProductData} hasVariationProductData={hasVariationProductData ? hasVariationProductData : hasSimpleProductData}
             msg={this.CommonMsg} handleSimpleProduct={this.handleSimpleProduct} productData={this.handleProductData} 
@@ -1337,10 +1345,10 @@ class SelfCheckoutView extends React.Component {
                 <div style={{display:"none"}}>{
                     //Page Setup
                     setTimeout(() => {
-                        scrollbarFix();
-                        lastElemMargin(document.querySelector(".category-tile-container"), 5);
-                        lastElemMargin(document.querySelector(".card-tile-container"), 4);
-                        setItemsHeight();
+                        // scrollbarFix();
+                        // lastElemMargin(document.querySelector(".category-tile-container"), 5);
+                        // lastElemMargin(document.querySelector(".card-tile-container"), 4);
+                        // setItemsHeight();
                         scaleSVG();
                         scaleImages();
                         resize();
@@ -1351,7 +1359,7 @@ class SelfCheckoutView extends React.Component {
 
 
                 }</div>
-            </div>
+            </React.Fragment >
             
         );
     }

@@ -1083,7 +1083,7 @@ p.section {
 }
 
 .product-container>.prod-wrapper>.row>.img-container {
-	width: 41.67vw;
+	/* width: 41.67vw; */
 	height: 26.3vw;
 	margin-right: 4.63vw;
 	display: flex;
@@ -1280,12 +1280,12 @@ p.section {
 
 /* --------------------Order Summary-------------------- */
 
-body>.text-row {
+body>div>div>div>.text-row {
 	display: flex;
 	margin-bottom: 1.76vw;
 }
 
-body>.text-row>p {
+body>div>div>div>.text-row>p {
 	font-family: Poppins;
 	font-size: 2.22vw;
 	font-weight: 500;
@@ -1294,7 +1294,7 @@ body>.text-row>p {
 	margin-right: 0.93vw;
 }
 
-body>.text-row>p.order-quantity {
+body>div>div>div>.text-row>p.order-quantity {
 	font-family: Poppins;
 	font-size: 2.22vw;
 	font-weight: 400;
@@ -1377,7 +1377,7 @@ body>.text-row>p.order-quantity {
 }
 
 .order-summary>.order-products-wrapper>.order-product>.row>.inner-row>svg {
-	padding: 0.2vw;
+	padding: 0.3vw;
 	border: 0.092vw solid #d51a52;
 }
 
@@ -2214,6 +2214,7 @@ body>.text-row>p.order-quantity {
 	width: auto;
 	height: auto;
 	margin-right: 4.17vw;
+	border-radius: 1.8vw;
 }
 
 .screensaver>.footer>p {
