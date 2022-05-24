@@ -908,12 +908,12 @@ class CartListView extends React.Component {
         // var selectedGroupSale=localStorage.getItem('selectedGroupSale') ? JSON.parse(localStorage.getItem('selectedGroupSale')).Label : ""; 
         // var user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : "";
         return(
-        <div>
+        <React.Fragment>
         <button className="view-cart" onClick={() => this.checkSubscriptionType(ListItem)}>
         View Cart {parseFloat(this.state.totalAmount).toFixed(2)}
         </button>
           {this.state.isLoading == true ? <LoadingModal /> : ''}
-        </div>
+        </React.Fragment>
         )
         // return (
         //     (ActiveUser.key.isSelfcheckout == true && isMobileOnly == true)?

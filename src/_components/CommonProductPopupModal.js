@@ -1609,7 +1609,7 @@ class CommonProductPopupModal extends React.Component {
                                     </div>
                                     <div class="popup-body">
                                         <p>Add a note or any comments for the product.</p>
-                                        <textarea maxLength={100} name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
+                                        <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
                                         <button onClick={()=>this.handleNote()} >Add Note to item</button>
                                     </div>
                                 </div>
