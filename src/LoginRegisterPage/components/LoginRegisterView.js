@@ -11,7 +11,7 @@ import { checkForEnvirnmentAndDemoUser, redirectToURL } from '../../_components/
 import {trackPage} from '../../_components/SegmentAnalytic';
 import {GetUsedRegisters} from '../../firebase/Notifications'
 import Config from '../../Config'
-
+import ActiveUser from '../../settings/ActiveUser';
 class LoginRegisterView extends React.Component {
     constructor(props) {
         super(props);
@@ -85,6 +85,7 @@ class LoginRegisterView extends React.Component {
         localStorage.setItem(`last_login_register_id_${getudid}`, item.id);
         localStorage.setItem(`last_login_register_name_${getudid}`, item.name);
         localStorage.setItem('selectedRegister',JSON.stringify(item))
+        ActiveUser.key.isSelfcheckout=item.IsSelfCheckout;
         // history.push('/loginpin');
         redirectToURL()
     }
