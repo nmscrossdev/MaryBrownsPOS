@@ -9,7 +9,7 @@ import { OnboardingShopViewPopup } from '../../../onboarding/components/Onboardi
 import { onBackTOLoginBtnClick,getHostURLsBySelectedExt } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
 import SendMailComponent from './SendMailComponent;'
-import {_key} from '../../../settings/SelfCheckoutSettings';
+import {_key,setThemeColor} from '../../../settings/SelfCheckoutSettings';
 import BottomApps from '../../../SelfCheckout/components/BottomApps';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 var JsBarcode = require('jsbarcode');
@@ -37,6 +37,7 @@ class SelfSaleComplete extends React.Component {
             extLogo:''
         }
         this.sendMail = this.sendMail.bind(this);
+        setThemeColor();
     }
     // get extension pageUrl and hostUrl of current clicked extension
     showExtensionIframe = (ext_id) => { 

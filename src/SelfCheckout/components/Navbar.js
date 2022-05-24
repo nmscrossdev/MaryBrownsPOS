@@ -1,5 +1,5 @@
 import React from 'react';
-import {_key,getApps,get_uuid,getInitials} from '../../settings/SelfCheckoutSettings';
+import {_key,getApps,get_uuid,getInitials,setThemeColor} from '../../settings/SelfCheckoutSettings';
 import { handleAppEvent,postmessage } from '../../ExtensionHandeler/commonAppHandler';
 import { history } from '../../_helpers';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
@@ -8,8 +8,10 @@ class  Navbar extends React.PureComponent{
   constructor(props) {
       super(props);
   }
-  // componentDidMount()
-  // {
+  componentDidMount()
+  {
+    setThemeColor();
+  }
   //   var _user = JSON.parse(localStorage.getItem("user"));
   //       // ************ Update _user.instance for local testing ************* //
   //       // _user.instance = window.location.origin

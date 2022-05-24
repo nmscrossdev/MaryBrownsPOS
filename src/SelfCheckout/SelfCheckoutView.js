@@ -43,7 +43,7 @@ import Navbar from '../SelfCheckout/components/Navbar';
 import Carasoul from '../SelfCheckout/components/Carasoul';
 import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
 import IdleScreen from '../SelfCheckout/components/IdleScreen';
-import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
+import {_key,getTitle,getBanners,getCategories,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
 import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 import { CommonExtensionPopup } from '../_components/CommonExtensionPopup';
 import { handleAppEvent } from '../ExtensionHandeler/commonAppHandler';
@@ -109,7 +109,7 @@ class SelfCheckoutView extends React.Component {
         this.filterProduct=this.filterProduct.bind(this)
         this.handletileFilterData=this.handletileFilterData.bind(this)
         
-        setThemeColor();
+        
         if (!localStorage.getItem('UDID')) {
             // history.push('/oliverlogin');
             redirectToURL()
