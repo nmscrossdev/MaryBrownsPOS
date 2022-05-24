@@ -178,62 +178,6 @@ function scaleSVG() {
 		svg.style.transform = `scale(${window.innerWidth / 1080})`;
 	});
 }
-// Setting Margin to last Elem in row in row-wrapped div
-function lastElemMargin(container, rowCount) {
-	let children = container && container.children;
-	if(children)
-	{
-		for (let i = 0; i < children.length; i++) {
-			if ((i + 1) % rowCount == 0) {
-				children[i].style.margin = "0";
-			}
-		}
-	}
-}
-//Set height to all item cards
-function setItemsHeight() {
-	let itemsContainer = document.querySelector(".card-tile-container");
-	if (itemsContainer) {
-		let top = itemsContainer.getBoundingClientRect().top;
-		let bottom = window.innerHeight;
-		let paddingAndButton = window.innerWidth * 0.0694 + window.innerHeight * 0.037;
-		itemsContainer.style.height = `${bottom - paddingAndButton - top}px`;
-	}
-}
-
-function scrollbarFix() {
-	let scrollWidth = window.innerWidth - document.documentElement.clientWidth;
-	if (scrollWidth) {
-		let rect, newWidth;
-		let slider = document.querySelector(".slider-container");
-		if (slider) {
-			rect = slider.getBoundingClientRect();
-			newWidth = rect.width - scrollWidth;
-			slider.style.height = `${(newWidth * rect.height) / rect.width}px`;
-			slider.style.width = `${newWidth}px`;
-		}
-		let categoryTileContainer = document.querySelector(".category-tile-container");
-		if (categoryTileContainer) {
-			let children = categoryTileContainer.children;
-			rect = children[0].getBoundingClientRect();
-			newWidth = rect.width - scrollWidth / 5;
-			for (let i = 0; i < children.length; i++) {
-				children[i].style.width = `${newWidth}px`;
-				children[i].style.height = `${newWidth}px`;
-			}
-		}
-		let cardTileContainer = document.querySelector(".card-tile-container");
-		if (cardTileContainer) {
-			let children = cardTileContainer.children;
-			rect = children[0].getBoundingClientRect();
-			newWidth = rect.width - scrollWidth / 4;
-			for (let i = 0; i < children.length; i++) {
-				children[i].style.height = `${(newWidth * rect.height) / rect.width}px`;
-				children[i].style.width = `${newWidth}px`;
-			}
-		}
-	}
-}
 
 function scaleImages() {
 	let images = document.querySelectorAll("img.scale");

@@ -304,6 +304,7 @@ class ManualPayment extends React.Component {
                                         <div className="row">
                                             <p className="prod-name">{LocalizedLanguage.cardInformation}</p>
                                         </div>
+                                        <p style={{ color: 'red' }}>{this.state.validationError}</p>
                                     </div>
                                     <div className="order-product">
                                         <div className="row">

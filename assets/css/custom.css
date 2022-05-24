@@ -459,3 +459,13 @@
 {
 	background-color: lightgray;
 }
+.mb10
+{
+	margin-bottom: 1.9vw;
+}
+
+/* define this for fixing the font-weight issue */
+div{font-weight: normal !important;}
+p{font-weight: normal !important;}
+button{font-weight: normal !important;}
+span{font-weight: normal !important;}
