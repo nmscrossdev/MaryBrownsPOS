@@ -1530,7 +1530,7 @@ class CommonProductPopupModal extends React.Component {
                                         </div>
                                         <div className="col">
                                             <p className="prod-description">
-                                                {getVariationProductData.ShortDescription}
+                                            <Markup content={getVariationProductData.ShortDescription} /> 
                                             </p>
                                             <div className="inner-row">
                                                 <div className="text-row">

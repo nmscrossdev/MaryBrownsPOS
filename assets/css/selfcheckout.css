@@ -1100,6 +1100,7 @@ p.section {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+	width: 50%;
 }
 
 .product-container>.prod-wrapper>.row>.col>p.prod-description {
