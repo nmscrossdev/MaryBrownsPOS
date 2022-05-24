@@ -1254,7 +1254,7 @@ class SelfCheckoutView extends React.Component {
         }
         //console.log("--length--"+length)
         return (
-            <div /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
+            <React.Fragment /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
             <div className="cover hide"></div>
             <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={length} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
@@ -1359,7 +1359,7 @@ class SelfCheckoutView extends React.Component {
 
 
                 }</div>
-            </div>
+            </React.Fragment >
             
         );
     }

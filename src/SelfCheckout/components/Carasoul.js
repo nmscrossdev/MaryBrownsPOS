@@ -18,10 +18,10 @@ const Carasoul=(props)=> {
 			</div>
 			<div className="slider-toggles">
 			</div>
-			{
+			<div style={{display:"none"}}>{
 			setTimeout(() => {
 				initSlider()
-			}, 5000) }
+			}, 1000) }</div>
 		</div>)
 	}
 }
