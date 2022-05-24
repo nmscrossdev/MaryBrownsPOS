@@ -1280,12 +1280,12 @@ p.section {
 
 /* --------------------Order Summary-------------------- */
 
-body>.text-row {
+body>div>div>div>.text-row {
 	display: flex;
 	margin-bottom: 1.76vw;
 }
 
-body>.text-row>p {
+body>div>div>div>.text-row>p {
 	font-family: Poppins;
 	font-size: 2.22vw;
 	font-weight: 500;
@@ -1294,7 +1294,7 @@ body>.text-row>p {
 	margin-right: 0.93vw;
 }
 
-body>.text-row>p.order-quantity {
+body>div>div>div>.text-row>p.order-quantity {
 	font-family: Poppins;
 	font-size: 2.22vw;
 	font-weight: 400;
