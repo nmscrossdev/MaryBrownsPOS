@@ -54,7 +54,7 @@ export const _key = {
     BUTTON_LABEL_FONT_COLOR:"button-label-font-color",
     LABEL_FOR_BOTTOM_AREA_ON_SCREEN_SAVER:"label-for-bottom-area-on-screen-saver",
     DISPLAY_LOGO_IN_BOTTOM_BUTTON_AREA:"display-logo-in-bottom-button-area",
-
+    PAYMENT_PAGE_LOGO_OPTIONS:"payment-page-logo-options",
 
 
     //section name
@@ -83,6 +83,24 @@ export function getTitle(key) {
      }
      return null;
 }
+export function getCustomLogo() {
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var found = settings.find(function (indx) {
+           return indx.LabelSlug ===  _key.DISPLAY_PAYMENT_PAGE_CUSTOM_LOGO;
+       });
+       
+       if(found && found.Value=="true")
+       {
+        var custom_logo = settings.find(function (indx) {
+            return indx.LabelSlug ===  _key.PAYMENT_PAGE_CUSTOM_LOGO && indx.Section=="GeneralSetting" && indx.SubSection==_key.PAYMENT_PAGE_LOGO_OPTIONS;
+        });
+        return custom_logo;
+       }
+       return null;
+    }
+}
 export function isDisplay(key) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
     if(settings && settings.length>0)
@@ -95,6 +113,7 @@ export function isDisplay(key) {
     return null;
    
 }
+
 export  function getSettingByKey(key) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
      if(settings && settings.length>0)
@@ -124,7 +143,7 @@ export function getRecommendedProducts(key,page) {
                         return indx.InputType=="Select" && indx.Section ==  key && indx.SubSection== subsection;
                     });
                     const ids = found && found.map(rp => rp.Value);
-
+                      
                     // const filter_products = productlist && productlist.filter(item =>{
                     //     return ids.includes(`${item.WPID}`)
                     // })
@@ -330,7 +349,7 @@ export function initScreenSaver()
                if(document.querySelector(".idle-screen")){
                 document.querySelector(".idle-screen").classList.add("hide");
                 }
-                //emptyCart();
+                emptyCart();
                 return;
             }
             countdown.innerHTML = parseInt(countdown.innerHTML) - 1;
@@ -338,7 +357,7 @@ export function initScreenSaver()
         }
 
         function setScreensaver() {
-            toggleScroll();
+           // toggleScroll();
             // clearTimeout(timer);
             let screensaver = document.getElementById("screensaver");
             if (screensaver!=null && typeof screensaver!="undefined" && screensaver.classList) {
@@ -369,7 +388,7 @@ export function initScreenSaver()
             if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
                 screensaver.classList.add("hide");
             }
-            toggleScroll(false);
+            //toggleScroll(false);
             timer = setTimeout(timeoutStart, _timer);
         
         },true);
@@ -380,7 +399,7 @@ export function initScreenSaver()
             if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
                 screensaver.classList.add("hide");
             }
-            toggleScroll(false);
+            //toggleScroll(false);
             timer = setTimeout(timeoutStart, _timer);
         }, true)
         
@@ -433,33 +452,39 @@ export function getPaymentMethods()
 {
     var paymentTypeName= (typeof localStorage.getItem('PAYMENT_TYPE_NAME') !== 'undefined') ? JSON.parse(localStorage.getItem('PAYMENT_TYPE_NAME')) : null;
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    var foundPaymentType=[];
     if(settings&& settings.length>0)
     {
-        var foundPaymentType = settings.filter(function (indx) {
+         foundPaymentType = settings.filter(function (indx) {
             return indx.Section=="checkout-payments" && indx.SubSection ==  "paymet-type-option";
         });
     }
     var pt_payments_options=[];
+    var pt_payments=[];
     if((typeof paymentTypeName !== 'undefined') && paymentTypeName !== null)
     {
-        var pt_payments=[];
+      
         pt_payments= paymentTypeName.filter(item => item.Code !== paymentsType.typeName.cashPayment);
-        // .map((pay_name, index) => {
-        //     return (
-        //         register_content.filter(item => item.subSection == "PaymentType").map((itm, index) => {
-        //             if (itm.slug == pay_name.Code && itm.value == "true") {
-        //                 return pay_name;                                                              
-        //             }
-        //         })
-        //     )
+        // const ptNames = foundPaymentType && foundPaymentType.map(ext => ext.PaymentType.Slug);
+        // pt_payments_options = pt_payments.filter(item =>{
+        //     return ptNames.includes(item.Code)
         // });
-        const ptNames = foundPaymentType && foundPaymentType.map(ext => ext.PaymentType.DisplayName);
-        pt_payments_options = pt_payments.filter(item =>{
-            return ptNames.includes(item.Name)
-        })
-        //console.log("------pt_payments_options-----"+JSON.stringify(pt_payments_options))
+
+       var _temp=[];
+       pt_payments && pt_payments.map((pay_name, index) => {
+        foundPaymentType &&  foundPaymentType.map((_pay_name, _index) => {
+            if(_pay_name.PaymentType.Slug===pay_name.Code)
+            {
+                pay_name.Name=_pay_name.PaymentType.DisplayName;
+                _temp.push(pay_name);
+            }
+            });
+        });
+        // console.log("------pt_payments_options _temp-----"+JSON.stringify(_temp))
+        // console.log("------pt_payments_options-----"+JSON.stringify(pt_payments_options))
     }
-    return pt_payments_options;
+    // return pt_payments_options;
+    return _temp;
 }
 
 export function getScreenSaverImages() {

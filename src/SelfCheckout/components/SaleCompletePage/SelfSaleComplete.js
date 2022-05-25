@@ -9,9 +9,10 @@ import { OnboardingShopViewPopup } from '../../../onboarding/components/Onboardi
 import { onBackTOLoginBtnClick,getHostURLsBySelectedExt } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
 import SendMailComponent from './SendMailComponent;'
-import {_key,setThemeColor} from '../../../settings/SelfCheckoutSettings';
+import {_key,setThemeColor,getCustomLogo,getApps,centerView} from '../../../settings/SelfCheckoutSettings';
 import BottomApps from '../../../SelfCheckout/components/BottomApps';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
+import Config from '../../../Config';
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 
@@ -64,6 +65,8 @@ class SelfSaleComplete extends React.Component {
 
     render() {
         const { printReceipt, yur4, baseurl, barcode_image, orderId, tempOrderId, handleContinue } = this.props;
+        var custom_logo=getCustomLogo();
+        var apps=getApps(_key.RECEIPT_PAGE);
         return (
             // (isMobileOnly == true) ?
             //     <div className="h-100">
@@ -189,7 +192,8 @@ class SelfSaleComplete extends React.Component {
                 // </div>
                 <div className="payment-view complete-payment">
                 <div className="wrapper">
-                    <img src="../assets/image/mblogobig.png" alt="" />
+                {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+                    {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
                     <svg width={118} height={120} viewBox="0 0 118 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="var(--secondary)" fillOpacity="0.1" stroke="var(--primary)" strokeWidth={5} />
                         <path d="M29.8887 64.0422L52.0582 86.7006L89.0074 41.3839" stroke="var(--primary)" strokeWidth="8.625" strokeLinecap="round" strokeLinejoin="round" />
@@ -201,8 +205,9 @@ class SelfSaleComplete extends React.Component {
                     <button onClick={() => printReceipt()} id="printButton">{LocalizedLanguage.print}</button>
                     <button onClick={() => this.sendMail()} id="emailButton">{LocalizedLanguage.email}</button>
                     {/* <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button> */}
-                    <div className="divider" />
-                    <BottomApps page={_key.RECEIPT_PAGE}  showExtensionIframe={this.showExtensionIframe}></BottomApps>
+                   {apps && apps.length>0?
+                    <BottomApps apps={apps}  showExtensionIframe={this.showExtensionIframe}></BottomApps>
+                    :null}
                     {
                 this.state.extensionIframe==true?
                 <CommonExtensionPopup
@@ -234,6 +239,23 @@ class SelfSaleComplete extends React.Component {
                         </button>
                     </div> */}
                 </div>
+                <div style={{display:"none"}}>
+          {//Page Setup
+          setTimeout(() => {
+            scaleSVG();
+            centerView("complete-payment");
+            //Custom resize listener
+            var customResizeTimer;
+            window.addEventListener("resize", function () {
+            clearTimeout(customResizeTimer);
+            customResizeTimer = setTimeout(function () {
+            centerView();
+            }, 100);
+            });
+          }, 100)
+
+}
+        </div>
             </div>
             
 

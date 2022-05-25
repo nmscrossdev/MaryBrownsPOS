@@ -1262,7 +1262,7 @@ class SelfCheckoutView extends React.Component {
             <Carasoul banners={this.state.banners} showProductPopup={this.showProductPopup}></Carasoul>
             :null}
             {/* :''} */}
-            <p className="section">{getTitle(_key.LABEL_FOR_SEARCH_INPUT_FIELD)}</p>
+            {getTitle(_key.DISPLAY_SEARCH_BAR)=="true"?<p className="section">{getTitle(_key.LABEL_FOR_SEARCH_INPUT_FIELD)}</p>:null}
             {getTitle(_key.DISPLAY_SEARCH_BAR)=="true"?<div className="search-dropdown m-b-35 selectable">
                 <input type="text" placeholder="Type item name here" id="product_search_field_pro" onChange={this.filterProduct}  onFocus={this.filterProduct}/>
                 <svg
@@ -1297,7 +1297,7 @@ class SelfCheckoutView extends React.Component {
                 </svg>
             </div>:null}
             
-            <div className='scrollable' style={{height:"unset"}}>
+            <div className='scrollable'>
             <CategoriesList categories={this.state.categories} clearall={this.clearData} productData={this.handleProductData} tileFilterData={this.handletileFilterData}
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>

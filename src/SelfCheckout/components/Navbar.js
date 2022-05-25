@@ -1,5 +1,5 @@
 import React from 'react';
-import {_key,getApps,get_uuid,getInitials,setThemeColor} from '../../settings/SelfCheckoutSettings';
+import {_key,getApps,get_uuid,getInitials,setThemeColor,getCustomLogo} from '../../settings/SelfCheckoutSettings';
 import { handleAppEvent,postmessage } from '../../ExtensionHandeler/commonAppHandler';
 import { history } from '../../_helpers';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
@@ -68,11 +68,13 @@ changeURL=(msg,itemCount)=>
 render() {
   const {showExtensionIframe,margin,page,itemCount,msg,GoBackhandleClick,catName,catPName}=this.props;
   var apps=page?getApps(page):null;
+  var custom_logo=getCustomLogo();
   
   return(
   <React.Fragment>
     <div className={margin?margin:"header m-b-9"}>
-        <img src="assets/image/Mary_Browns_Logo.png" alt="" />
+        {/* <img src="assets/image/Mary_Browns_Logo.png" alt="" /> */}
+        {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
         <div className="row">
           {
             apps &&  apps.map((item, index) => {

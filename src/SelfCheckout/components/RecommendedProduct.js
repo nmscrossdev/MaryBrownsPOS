@@ -54,6 +54,15 @@ export default class RecommendedProduct extends Component {
         if(nextPros && nextPros.item && nextPros.page)
         {
             ids=nextPros.item.ReletedIds;
+            if(ids!="")
+            {
+                var tempArr = ids.split(',');
+                if(tempArr && tempArr.length>4)
+                {
+                    tempArr=tempArr.slice(0,4);
+                    ids=tempArr;
+                }
+            }
         }
         else
         {
@@ -143,6 +152,7 @@ export default class RecommendedProduct extends Component {
                             <div className="button">
                           
                             {/* {item.logo!=null?null: */}
+                            {this.props.page && this.props.page =='cart'?null:
 							<svg
 								width="28"
 								height="27"
@@ -158,9 +168,9 @@ export default class RecommendedProduct extends Component {
 									d="M20.7292 12.6562H14.7609V6.75H13.0557V12.6562H7.0874V14.3438H13.0557V20.25H14.7609V14.3438H20.7292V12.6562Z"
 									fill="white"
 								/>
-							</svg>
+							</svg>}
                             {/* } */}
-                            <p key={index} data-toggle={isVariableProduct ? "modal" : ""} > View Item</p>
+                            <p key={index}>{this.props.page && this.props.page =='cart'?"Add Item":"View Item"}</p>
 						</div>
                         </button>
                     )

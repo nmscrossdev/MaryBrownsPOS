@@ -318,7 +318,7 @@ class App extends React.Component {
         }
         return (
             <Router history={history}>
-                <div>
+                <React.Fragment>
                     {/* when shops plan update the popup called  */}
                     {/* added here because need to call in every component  (it is common and same on all component) */}
                     {/* <CommonInfoPopup
@@ -364,7 +364,7 @@ class App extends React.Component {
                     {/* <OliverVersionModal closeModal={this.closeModal} reportBug={this.ReportBug} />
                     <BrowserVersionModal closeModal={this.closeModal} reportBug={this.ReportBug}/> */}
                     <ServerErrorPopup message={this.state.ErrMessage} />
-                </div>
+                </React.Fragment>
             </Router>
 
         );

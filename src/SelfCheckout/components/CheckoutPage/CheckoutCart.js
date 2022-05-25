@@ -444,7 +444,7 @@ close_ext_modal = () => {
             }).length;
         }
     return (
-      <div>
+      <React.Fragment>
         <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
         <div className="category-header m-b-35">
           <div className="col">
@@ -587,7 +587,7 @@ close_ext_modal = () => {
                   resize();
                   
                 }, 200)}</div>
-      </div>)
+      </React.Fragment>)
   }
 }
 export default CheckoutCart;

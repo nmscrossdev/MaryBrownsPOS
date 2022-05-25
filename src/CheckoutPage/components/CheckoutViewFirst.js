@@ -286,7 +286,7 @@ class CheckoutViewFirst extends React.Component {
         var user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : "";
         
         return (
-            (ActiveUser.key.isSelfcheckout == true) ?
+            // (ActiveUser.key.isSelfcheckout == true) ?
                 <CheckoutCart  
                     {...this.props}
                     {...this.state}
@@ -297,215 +297,215 @@ class CheckoutViewFirst extends React.Component {
                     SelfCheckoutStatus={this.props.SelfCheckoutStatus}
                     selfcheckoutstatusmanagingevnt={this.props.selfcheckoutstatusmanagingevnt}
                     continuetoPayment={this.continuetoPayment}/>                    
-            :
-            isMobileOnly == true ?
-                this.props.activeComponent == "notes" ?
-                    <MobileOption
-                        {...this.props}
-                        {...this.state}
-                        addCustomer={this.AddCustomer}
-                        deleteAddCust={this.RemoveCustomer}
-                        //Addcust={Addcust}
-                        Footer={Footer}
-                        type="checkout"
-                        Addcust={checkList && checkList.customerDetail}
-                    />
-                    :
-                    <CheckoutCartList
-                        {...this.props}
-                        {...this.state}
-                        RoundAmount={RoundAmount}
-                        NumberFormat={NumberFormat}
-                        Markup={Markup}
-                    // AddCustomer={this.AddCustomer}
-                    // RemoveCustomer={this.RemoveCustomer}
-                    />
-                    :
-                    <div className="col-lg-3 col-sm-4 col-xs-4 pl-0">
-                    <div className="panel panel-default panel-right-side r0 br-1 bb-0">
-                        {checkList && checkList.customerDetail && checkList.customerDetail.content ?
-                            <div className="panel-heading pr-0 nav-section-heading">
-                               <div className="div-length-heading"> {checkList.customerDetail.content.FirstName ? checkList.customerDetail.content.FirstName : checkList.customerDetail.content.Email}{" "}{checkList.customerDetail.content.LastName ? checkList.customerDetail.content.LastName : null}</div>
-                                {/* <span className="pull-right pointer pl-15 pr-15 fs29" onClick={() => this.RemoveCustomer()}> */}
-                                {/* <i className="icon icon-fill-close icon-css-override text-danger pointer push-top-3"></i> */}
-                                <img src="assets/img/Close.svg" className="pointer mr-15" onClick={() => this.RemoveCustomer()} />
-                                {/* </span> */}
-                            </div>
-                            :
-                            <div className="panel-heading pr-0 nav-section-heading">
-                                {LocalizedLanguage.addCustomerTitle}
-                                {/* <span className="pull-right pointer pl-15 pr-15 fs29" > */}
-                                {/* <img src="assets/img/AddNew.svg" /> */}
-                                <img src="assets/images/add.svg" width="35" className="pointer mr-15" onClick={() => this.AddCustomer()} />
-                                {/* <i className="icon icon-fill-plus icon-css-override text-success pointer push-top-5"></i> */}
-                                {/* </span> */}
-                            </div>
-                        }
-                            {/* group_sales div */}
+            // :
+            // isMobileOnly == true ?
+            //     this.props.activeComponent == "notes" ?
+            //         <MobileOption
+            //             {...this.props}
+            //             {...this.state}
+            //             addCustomer={this.AddCustomer}
+            //             deleteAddCust={this.RemoveCustomer}
+            //             //Addcust={Addcust}
+            //             Footer={Footer}
+            //             type="checkout"
+            //             Addcust={checkList && checkList.customerDetail}
+            //         />
+            //         :
+            //         <CheckoutCartList
+            //             {...this.props}
+            //             {...this.state}
+            //             RoundAmount={RoundAmount}
+            //             NumberFormat={NumberFormat}
+            //             Markup={Markup}
+            //         // AddCustomer={this.AddCustomer}
+            //         // RemoveCustomer={this.RemoveCustomer}
+            //         />
+            //         :
+            //         <div className="col-lg-3 col-sm-4 col-xs-4 pl-0">
+            //         <div className="panel panel-default panel-right-side r0 br-1 bb-0">
+            //             {checkList && checkList.customerDetail && checkList.customerDetail.content ?
+            //                 <div className="panel-heading pr-0 nav-section-heading">
+            //                    <div className="div-length-heading"> {checkList.customerDetail.content.FirstName ? checkList.customerDetail.content.FirstName : checkList.customerDetail.content.Email}{" "}{checkList.customerDetail.content.LastName ? checkList.customerDetail.content.LastName : null}</div>
+            //                     {/* <span className="pull-right pointer pl-15 pr-15 fs29" onClick={() => this.RemoveCustomer()}> */}
+            //                     {/* <i className="icon icon-fill-close icon-css-override text-danger pointer push-top-3"></i> */}
+            //                     <img src="assets/img/Close.svg" className="pointer mr-15" onClick={() => this.RemoveCustomer()} />
+            //                     {/* </span> */}
+            //                 </div>
+            //                 :
+            //                 <div className="panel-heading pr-0 nav-section-heading">
+            //                     {LocalizedLanguage.addCustomerTitle}
+            //                     {/* <span className="pull-right pointer pl-15 pr-15 fs29" > */}
+            //                     {/* <img src="assets/img/AddNew.svg" /> */}
+            //                     <img src="assets/images/add.svg" width="35" className="pointer mr-15" onClick={() => this.AddCustomer()} />
+            //                     {/* <i className="icon icon-fill-plus icon-css-override text-success pointer push-top-5"></i> */}
+            //                     {/* </span> */}
+            //                 </div>
+            //             }
+            //                 {/* group_sales div */}
                            
-                        {selectedGroupSale && selectedGroupSale !==""?
-                        <div className="panel-heading bg-white nav-section-heading optiontablebtn" id="optiontablebtn">
-                        <div className="div-length-heading"> {selectedGroupSale }</div>
-                                    <img src="assets/img/Close.svg" className="pull-right fs29" onClick={() => this.DeleteGroupSale()}/>
-                             </div>
-                             :
-                        user.group_sales && user.group_sales !== null && user.group_sales !== "" && user.group_sales !== "undefined" ?
-                            <div className="panel-heading bg-white nav-section-heading optiontablebtn"id="optiontablebtn">
-                                     { "Add "+user.group_sales_by}
-                                                <img className="pull-right fs29" onClick={(e) => this.AddGroupSale()} 
-                                                src="assets/images/add.svg" width="35" />
-                                      </div> : null}
+            //             {selectedGroupSale && selectedGroupSale !==""?
+            //             <div className="panel-heading bg-white nav-section-heading optiontablebtn" id="optiontablebtn">
+            //             <div className="div-length-heading"> {selectedGroupSale }</div>
+            //                         <img src="assets/img/Close.svg" className="pull-right fs29" onClick={() => this.DeleteGroupSale()}/>
+            //                  </div>
+            //                  :
+            //             user.group_sales && user.group_sales !== null && user.group_sales !== "" && user.group_sales !== "undefined" ?
+            //                 <div className="panel-heading bg-white nav-section-heading optiontablebtn"id="optiontablebtn">
+            //                          { "Add "+user.group_sales_by}
+            //                                     <img className="pull-right fs29" onClick={(e) => this.AddGroupSale()} 
+            //                                     src="assets/images/add.svg" width="35" />
+            //                           </div> : null}
 
 
 
-                        <div className="panel-body p-0 overflowscroll" id="cart_product_list">
-                            <div className="table-responsive">
-                                <table className="table ListViewCartProductTable">
-                                    <colgroup>
-                                        <col width="10" />
-                                        <col width="*" />
-                                        <col width="*" />
-                                    </colgroup>
-                                    <tbody>
-                                        {checkList && checkList.ListItem &&
-                                            checkList.ListItem.map((product, index) => {
-                                                var isProdAddonsType = CommonJs.checkForProductXAddons(product.product_id);// check for productX is Addons type products
-                                                if (product.Price && product.product_discount_amount) {
-                                                    // productDiscountAmount += product.discount_type == "Number"?product.product_discount_amount:product.product_discount_amount;// quantity comment for addons
-                                                    productDiscountAmount += product.discount_type == "Number"?product.product_discount_amount:product.product_discount_amount * (isProdAddonsType && isProdAddonsType == true ? 1 : product.quantity);
-                                                }
-                                                var _order_Meta= product.addons_meta_data && product.addons_meta_data.length>0 ? CommonJs.showAddons("",product.addons_meta_data):""
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{product.quantity ? product.quantity : (product.customTags && (typeof product.customTags !== 'undefined')) ? "" : 1 || (product.customExtFee && (typeof product.customExtFee !== 'undefined')) ? "" : 1}</td>
-                                                        <td> {product.Title && product.Title !== "" ? <Markup content={(product.Title).replace(" - ", "-")} /> : (product.Sku && product.Sku !== "" && product.Sku !== "False") ? product.Sku : 'N/A' }
-                                                            {/* <Markup content={product.Title} /> {product.Title } */}
-                                                            {(productxList && productxList.length > 0) && CommonModuleJS.productxArray(product.product_id, AllProductList,"",product.strProductX)}
-                                                            {_order_Meta && _order_Meta !=="" ?<div className="comman_subtitle" ><Markup content={ _order_Meta} /></div>:""}
-                                                            {(product.customTags && (typeof product.customTags !== 'undefined')) ?
-                                                                this.extensionArray(product.customTags)
-                                                                :
-                                                                (product.customExtFee && (typeof product.customExtFee !== 'undefined') && product.Price !== 0) ?
-                                                                    <span className="comman_subtitle">{product.customExtFee}</span>
-                                                                    :
-                                                                    <span className="comman_subtitle">{product.color}  {product.size ? ',' + product.size : null}</span>
-                                                            }
-                                                               {/* ADDING PRODUCT SUMMARY (ATTRIBUTES) HERE 09FEB2022 */}
-                                                               {product.psummary && typeof product.psummary!="undefined" && product.psummary!=""?<div  style={{textTransform: 'capitalize',textAlign:'left',fontSize:12,color:'grey'}}>{product.psummary}</div>:null}
-                                                        </td>
-                                                        {(typeof product.product_id !== 'undefined') ?
-                                                            <td align="right">
-                                                                {/* {product.discount_amount !== 0 ?
-                                                                <NumberFormat value={product.after_discount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                                : ''}
-                                                            <span className={product.discount_amount !== 0 ? "comman_delete" : ''}><NumberFormat value={product.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></span> */}
-                                                            {/* quantity comment for addons */}
-                                                                {/* <span>{parseFloat(product.product_discount_amount) !== 0.00 ? <NumberFormat value={product.Price - ( product.discount_type !=="Number" ?  product.product_discount_amount:product.product_discount_amount )} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /> : null}</span> */}
-                                                                <span>{parseFloat(product.product_discount_amount) !== 0.00 ? <NumberFormat value={product.Price - ( product.discount_type !=="Number" ?  (product.product_discount_amount* (isProdAddonsType && isProdAddonsType == true ? 1 : product.quantity)):product.product_discount_amount )} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /> : null}</span>
+            //             <div className="panel-body p-0 overflowscroll" id="cart_product_list">
+            //                 <div className="table-responsive">
+            //                     <table className="table ListViewCartProductTable">
+            //                         <colgroup>
+            //                             <col width="10" />
+            //                             <col width="*" />
+            //                             <col width="*" />
+            //                         </colgroup>
+            //                         <tbody>
+            //                             {checkList && checkList.ListItem &&
+            //                                 checkList.ListItem.map((product, index) => {
+            //                                     var isProdAddonsType = CommonJs.checkForProductXAddons(product.product_id);// check for productX is Addons type products
+            //                                     if (product.Price && product.product_discount_amount) {
+            //                                         // productDiscountAmount += product.discount_type == "Number"?product.product_discount_amount:product.product_discount_amount;// quantity comment for addons
+            //                                         productDiscountAmount += product.discount_type == "Number"?product.product_discount_amount:product.product_discount_amount * (isProdAddonsType && isProdAddonsType == true ? 1 : product.quantity);
+            //                                     }
+            //                                     var _order_Meta= product.addons_meta_data && product.addons_meta_data.length>0 ? CommonJs.showAddons("",product.addons_meta_data):""
+            //                                     return (
+            //                                         <tr key={index}>
+            //                                             <td>{product.quantity ? product.quantity : (product.customTags && (typeof product.customTags !== 'undefined')) ? "" : 1 || (product.customExtFee && (typeof product.customExtFee !== 'undefined')) ? "" : 1}</td>
+            //                                             <td> {product.Title && product.Title !== "" ? <Markup content={(product.Title).replace(" - ", "-")} /> : (product.Sku && product.Sku !== "" && product.Sku !== "False") ? product.Sku : 'N/A' }
+            //                                                 {/* <Markup content={product.Title} /> {product.Title } */}
+            //                                                 {(productxList && productxList.length > 0) && CommonModuleJS.productxArray(product.product_id, AllProductList,"",product.strProductX)}
+            //                                                 {_order_Meta && _order_Meta !=="" ?<div className="comman_subtitle" ><Markup content={ _order_Meta} /></div>:""}
+            //                                                 {(product.customTags && (typeof product.customTags !== 'undefined')) ?
+            //                                                     this.extensionArray(product.customTags)
+            //                                                     :
+            //                                                     (product.customExtFee && (typeof product.customExtFee !== 'undefined') && product.Price !== 0) ?
+            //                                                         <span className="comman_subtitle">{product.customExtFee}</span>
+            //                                                         :
+            //                                                         <span className="comman_subtitle">{product.color}  {product.size ? ',' + product.size : null}</span>
+            //                                                 }
+            //                                                    {/* ADDING PRODUCT SUMMARY (ATTRIBUTES) HERE 09FEB2022 */}
+            //                                                    {product.psummary && typeof product.psummary!="undefined" && product.psummary!=""?<div  style={{textTransform: 'capitalize',textAlign:'left',fontSize:12,color:'grey'}}>{product.psummary}</div>:null}
+            //                                             </td>
+            //                                             {(typeof product.product_id !== 'undefined') ?
+            //                                                 <td align="right">
+            //                                                     {/* {product.discount_amount !== 0 ?
+            //                                                     <NumberFormat value={product.after_discount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                                     : ''}
+            //                                                 <span className={product.discount_amount !== 0 ? "comman_delete" : ''}><NumberFormat value={product.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></span> */}
+            //                                                 {/* quantity comment for addons */}
+            //                                                     {/* <span>{parseFloat(product.product_discount_amount) !== 0.00 ? <NumberFormat value={product.Price - ( product.discount_type !=="Number" ?  product.product_discount_amount:product.product_discount_amount )} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /> : null}</span> */}
+            //                                                     <span>{parseFloat(product.product_discount_amount) !== 0.00 ? <NumberFormat value={product.Price - ( product.discount_type !=="Number" ?  (product.product_discount_amount* (isProdAddonsType && isProdAddonsType == true ? 1 : product.quantity)):product.product_discount_amount )} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /> : null}</span>
 
-                                                                <NumberFormat className={(!product.product_discount_amount) || parseFloat(product.product_discount_amount) == 0.00 ? '' : 'comman_delete'} value={product.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                            </td>
-                                                            :
-                                                            <td align="right">
-                                                                <NumberFormat value={product.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                            </td>
-                                                        }
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                        {checkList && checkList._wc_points_redeemed && checkList._wc_points_redeemed > 0 ?
-                                            <tr>
-                                                <td />
-                                                <td>Redeemed Point - {checkList._wc_points_redeemed}</td>
-                                                <td />
-                                            </tr>
-                                            : null}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="panel-footer p-0 bg-white">
-                            <div className="table-calculate-price">
-                                <table className="table ShopViewCalculator">
-                                    <tbody>
-                                        <tr>
-                                            <th className="bt-0">{LocalizedLanguage.subTotal}</th>
-                                            <td align="right" className="bt-0">
-                                                <span >
-                                                    <NumberFormat value={checkList && checkList.subTotal} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                {checkList && checkList.showTaxStaus}:
-                                           <span className="pull-right">
-                                                    <NumberFormat value={checkList && checkList.tax} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                </span>
-                                            </th>
-                                            <th className="bl-1 w-50" align="right">
-                                                {LocalizedLanguage.discount}:
-                                           {/* <span className="value pull-right pointer" style={{ color: '#46A9D4' }}> */}
-                                           <span className="pull-right" >
-                                                    <NumberFormat value={checkList && RoundAmount(checkList.discountCalculated - productDiscountAmount)} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                </span>
-                                            </th>
-                                        </tr>
-                                        {/*  add payment */}
-                                        {
-                                            (this.state.count > 0) ? (
-                                                <tr id="paymentTr">
-                                                    <th>
-                                                        <div className="relDiv show_payment_box">
-                                                            <span className="value pointer" style={{ color: '#46A9D4' }} id="totalPayment">
-                                                                {count} {LocalizedLanguage.payments}</span>
-                                                            <div className="absDiv">
-                                                                <div className="payment_box">
-                                                                    <h1 className="m-0">{LocalizedLanguage.payments}</h1>
-                                                                    <div className="row" id="totalPaymentSrc">
-                                                                        {payments.map((item, index) => {
-                                                                           // console.log("testing",item);
-                                                                            return (
-                                                                                (item.type !== null && item.payment_amount !== 0.00)?
-                                                                                    <div key={index} className="col-sm-12 p-0">
-                                                                                        <label className="col-sm-6">{item.payment_type}</label>
-                                                                                        <div className="col-sm-6 text-right"><NumberFormat value={item.payment_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></div>
-                                                                                    </div>
-                                                                                :
-                                                                                null
-                                                                            )
-                                                                        })}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </th>
-                                                    <td align="right" id="paymentLeft">
-                                                        <NumberFormat value={this.state.paid_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                    </td>
-                                                </tr>
-                                            ) : null
-                                        }
-                                        <tr>
-                                            <th colSpan="2" className="p-0">
-                                                <button className="btn btn-block btn-primary total_checkout">
-                                                    <span className="pull-left">
-                                                        {/* Total Left */}
-                                                        {LocalizedLanguage.balanceDue}
-                                                    </span>
-                                                    <span className="pull-right">
-                                                        <NumberFormat value={checkList && checkList.totalPrice >= 0 ? (cash_round + parseFloat(RoundAmount(checkList.totalPrice - paid_amount))) : '0.00'} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
-                                                    </span>
-                                                </button>
-                                            </th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            //                                                     <NumberFormat className={(!product.product_discount_amount) || parseFloat(product.product_discount_amount) == 0.00 ? '' : 'comman_delete'} value={product.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                                 </td>
+            //                                                 :
+            //                                                 <td align="right">
+            //                                                     <NumberFormat value={product.Price} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                                 </td>
+            //                                             }
+            //                                         </tr>
+            //                                     )
+            //                                 })
+            //                             }
+            //                             {checkList && checkList._wc_points_redeemed && checkList._wc_points_redeemed > 0 ?
+            //                                 <tr>
+            //                                     <td />
+            //                                     <td>Redeemed Point - {checkList._wc_points_redeemed}</td>
+            //                                     <td />
+            //                                 </tr>
+            //                                 : null}
+            //                         </tbody>
+            //                     </table>
+            //                 </div>
+            //             </div>
+            //             <div className="panel-footer p-0 bg-white">
+            //                 <div className="table-calculate-price">
+            //                     <table className="table ShopViewCalculator">
+            //                         <tbody>
+            //                             <tr>
+            //                                 <th className="bt-0">{LocalizedLanguage.subTotal}</th>
+            //                                 <td align="right" className="bt-0">
+            //                                     <span >
+            //                                         <NumberFormat value={checkList && checkList.subTotal} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                     </span>
+            //                                 </td>
+            //                             </tr>
+            //                             <tr>
+            //                                 <th>
+            //                                     {checkList && checkList.showTaxStaus}:
+            //                                <span className="pull-right">
+            //                                         <NumberFormat value={checkList && checkList.tax} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                     </span>
+            //                                 </th>
+            //                                 <th className="bl-1 w-50" align="right">
+            //                                     {LocalizedLanguage.discount}:
+            //                                {/* <span className="value pull-right pointer" style={{ color: '#46A9D4' }}> */}
+            //                                <span className="pull-right" >
+            //                                         <NumberFormat value={checkList && RoundAmount(checkList.discountCalculated - productDiscountAmount)} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                     </span>
+            //                                 </th>
+            //                             </tr>
+            //                             {/*  add payment */}
+            //                             {
+            //                                 (this.state.count > 0) ? (
+            //                                     <tr id="paymentTr">
+            //                                         <th>
+            //                                             <div className="relDiv show_payment_box">
+            //                                                 <span className="value pointer" style={{ color: '#46A9D4' }} id="totalPayment">
+            //                                                     {count} {LocalizedLanguage.payments}</span>
+            //                                                 <div className="absDiv">
+            //                                                     <div className="payment_box">
+            //                                                         <h1 className="m-0">{LocalizedLanguage.payments}</h1>
+            //                                                         <div className="row" id="totalPaymentSrc">
+            //                                                             {payments.map((item, index) => {
+            //                                                                // console.log("testing",item);
+            //                                                                 return (
+            //                                                                     (item.type !== null && item.payment_amount !== 0.00)?
+            //                                                                         <div key={index} className="col-sm-12 p-0">
+            //                                                                             <label className="col-sm-6">{item.payment_type}</label>
+            //                                                                             <div className="col-sm-6 text-right"><NumberFormat value={item.payment_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></div>
+            //                                                                         </div>
+            //                                                                     :
+            //                                                                     null
+            //                                                                 )
+            //                                                             })}
+            //                                                         </div>
+            //                                                     </div>
+            //                                                 </div>
+            //                                             </div>
+            //                                         </th>
+            //                                         <td align="right" id="paymentLeft">
+            //                                             <NumberFormat value={this.state.paid_amount} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                         </td>
+            //                                     </tr>
+            //                                 ) : null
+            //                             }
+            //                             <tr>
+            //                                 <th colSpan="2" className="p-0">
+            //                                     <button className="btn btn-block btn-primary total_checkout">
+            //                                         <span className="pull-left">
+            //                                             {/* Total Left */}
+            //                                             {LocalizedLanguage.balanceDue}
+            //                                         </span>
+            //                                         <span className="pull-right">
+            //                                             <NumberFormat value={checkList && checkList.totalPrice >= 0 ? (cash_round + parseFloat(RoundAmount(checkList.totalPrice - paid_amount))) : '0.00'} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} />
+            //                                         </span>
+            //                                     </button>
+            //                                 </th>
+            //                             </tr>
+            //                         </tbody>
+            //                     </table>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>
         )
     }
 }

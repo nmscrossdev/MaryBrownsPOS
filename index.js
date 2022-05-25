@@ -126,4 +126,6 @@ ReactDOM.render(
   <Provider store={store}>
     <ErrorBoundary><App /></ErrorBoundary>
   </Provider>,
-  document.getElementById('root'));
+  document.getElementsByTagName("BODY")[0]
+  // document.getElementById('root')
+  );

@@ -225,26 +225,29 @@ class CategoriesList extends React.Component {
                     }
                 </div>:
                 <p className="section">{item && item !==null && item !==""? item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
-                 } <div className="category-tile-container">
+                 } 
                 {   
-                current_categories && current_categories.map((item, index) => {                 
-                        var titleName = item.Value
-                        return (
-                            item.parent==0 ?
-                            <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
-                            <p>{titleName}</p>
-                            </button>
-                        : item.parent!=0 ?
-                            <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                            <p>{titleName}</p>
-                            </button>
-                        : ''
-                        )
-                    })
-                }
+                current_categories && current_categories.length>0 &&
+                    <div className="category-tile-container">
+                    {current_categories.map((item, index) => {                 
+                            var titleName = item.Value
+                            return (
+                                item.parent==0 ?
+                                <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
+                                <p>{titleName}</p>
+                                </button>
+                            : item.parent!=0 ?
+                                <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
+                                <p>{titleName}</p>
+                                </button>
+                            : ''
+                            )
+                        })
+                    }</div>
+            }
                    
                   
-                </div>
+                
         </React.Fragment>           
       )
     }

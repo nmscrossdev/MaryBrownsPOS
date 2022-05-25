@@ -102,8 +102,8 @@
             style="display:none;visibility:hidden"></iframe></noscript> -->
     <!-- End Google Tag Manager (noscript) -->
 
-    <div id="root" >
-    </div>
+    <React.Fragment id="root" >
+    </React.Fragment>
     <div id="hiddenIfrms">
     </div>
    
@@ -147,6 +147,7 @@
     var isScreenSaverInitialized=false;
     var isHomePageInitialized=false; 
     var isListner=false;
+    var dataLayer=[];
         // function setMargins() {
         //     var $box = $('.dialog-content');
         //     var boxLeft = ($(window).width()) / 2 - ($box.width() / 2),

@@ -5,6 +5,7 @@ import { get_UDid } from '../../../ALL_localstorage';
 import { saveCustomerInOrderAction } from '../../../_actions'
 import Config from '../../../Config';
 import LocalizedLanguage from '../../../settings/LocalizedLanguage';
+import {getCustomLogo,centerView} from '../../../settings/SelfCheckoutSettings';
 class SendMailComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -93,12 +94,14 @@ class SendMailComponent extends React.Component {
   }
 
   render() {
+    var custom_logo=getCustomLogo();
     var checkList = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : '';
     console.log("this.state", this.state)
     return (
       <div className="payment-view email-payment">
         <div className="wrapper">
-          <img src="../assets/image/mblogobig.png" alt="" />
+        {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+          {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
           <p>Please enter your email address</p>
           <input type="email" defaultValue={(checkList.customerDetail && checkList.customerDetail.content &&
             typeof checkList.customerDetail.content.Email !== "undefined") ? checkList.customerDetail.content.Email : ''}
@@ -125,6 +128,23 @@ class SendMailComponent extends React.Component {
               }
             </span>
           <button id="sendReceipt" onClick={() => this.sendMail()}>Send Receipt</button>
+        </div>
+        <div style={{display:"none"}}>
+          {//Page Setup
+          setTimeout(() => {
+            // scaleSVG();
+            centerView("email-payment");
+            //Custom resize listener
+            var customResizeTimer;
+            window.addEventListener("resize", function () {
+            clearTimeout(customResizeTimer);
+            customResizeTimer = setTimeout(function () {
+            centerView();
+            }, 100);
+            });
+          }, 100)
+
+}
         </div>
       </div>
     )
