@@ -459,3 +459,29 @@
 {
 	background-color: lightgray;
 }
+
+.emailMessage{
+	font-family: Poppins;
+	font-size: 1.67vw;
+	font-weight: 400;
+	line-height: 2.22vw;
+	text-align: center;
+	color: #050505;
+	display: flex;
+	align-items: center;
+    padding-bottom: 10px;
+}
+
+.category-tile>p>div {
+	/* font-family: Poppins; */
+	/* font-size: 2.03vw; */
+	font-weight: 600;
+	line-height: 2.69vw;
+	text-align: center;
+	color: #fff;
+	max-width: calc(100% - 1.85vw);
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}

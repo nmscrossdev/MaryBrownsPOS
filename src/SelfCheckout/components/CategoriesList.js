@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
 import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../../settings/SelfCheckoutSettings';
+import { Markup } from 'interweave';
 class CategoriesList extends React.Component {
     constructor(props) {
         super(props);
@@ -216,11 +217,17 @@ class CategoriesList extends React.Component {
                         return (
                             item.parent==0 ?
                             <button className="category-tile" style={{marginRight:"20px"}}  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
-                            <p>{titleName}</p>
+                            {/* <p>{titleName}</p> */}
+                            <p>
+                              <Markup content={titleName}></Markup>
+                             </p>
                             </button>
                         : item.parent!=0 ?
                             <button className="category-tile" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                            <p>{titleName}</p>
+                            {/* <p>{titleName}</p> */}
+                            <p>
+                                <Markup content={titleName}></Markup>
+                             </p>
                             </button>
                         : ''
                         )

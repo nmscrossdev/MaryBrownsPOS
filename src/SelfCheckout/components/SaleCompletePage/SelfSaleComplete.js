@@ -8,7 +8,7 @@ import $ from 'jquery'
 import { OnboardingShopViewPopup } from '../../../onboarding/components/OnboardingShopViewPopup';
 import { onBackTOLoginBtnClick,getHostURLsBySelectedExt } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
-import SendMailComponent from './SendMailComponent;'
+import {SendMailComponent} from './SendMailComponent;'
 import {_key} from '../../../settings/SelfCheckoutSettings';
 import BottomApps from '../../../SelfCheckout/components/BottomApps';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';

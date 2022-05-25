@@ -910,7 +910,7 @@ class CartListView extends React.Component {
         return(
         <div>
         <button className="view-cart" onClick={() => this.checkSubscriptionType(ListItem)}>
-        View Cart {parseFloat(this.state.totalAmount).toFixed(2)}
+        View Cart ${parseFloat(this.state.totalAmount).toFixed(2)}
         </button>
           {this.state.isLoading == true ? <LoadingModal /> : ''}
         </div>

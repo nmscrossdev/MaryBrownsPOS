@@ -779,7 +779,7 @@ class CheckoutViewThird extends React.Component {
                                     
                                         <div className="total">
                                             <p>Your Total</p>
-                                            <p className="amount">{parseFloat(this.props.checkList.totalPrice).toFixed(2)}</p>
+                                            <p className="amount">${parseFloat(this.props.checkList.totalPrice).toFixed(2)}</p>
                                         </div>
                                         <div className="payment-options">
                                         <p>Please select a payment method:</p>

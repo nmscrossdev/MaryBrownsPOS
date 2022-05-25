@@ -595,11 +595,12 @@ class SaleComplete extends React.Component {
         localStorage.removeItem('PENDING_PAYMENTS');
         localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
         dispatch(cartProductActions.addtoCartProduct(null));
-        if(isMobileOnly == true){
-            history.push('/shopview')
-        }else{
-            window.location = '/shopview';
-        }
+        // if(isMobileOnly == true){
+        //     history.push('/shopview')
+        // }else{
+        //     window.location = '/shopview';
+        // }
+        history.push('/SelfCheckoutView')
     }
 
     closeMsgModal() {
@@ -682,13 +683,13 @@ class SaleComplete extends React.Component {
                 emailSendingMessage:nextProp.getSuccess && nextProp.getSuccess.message?nextProp.getSuccess.message:'',
                 loader: false
             })
-            if (nextProp.getSuccess && nextProp.getSuccess.is_success == true) {
-                localStorage.removeItem('CARD_PRODUCT_LIST');
-                localStorage.removeItem('GTM_ORDER');
-                setTimeout(
-                    this.clear()
-                    , 1000);
-            }
+            // if (nextProp.getSuccess && nextProp.getSuccess.is_success == true) {
+            //     localStorage.removeItem('CARD_PRODUCT_LIST');
+            //     localStorage.removeItem('GTM_ORDER');
+            //     setTimeout(
+            //         this.clear()
+            //         , 1000);
+            // }
         }
         if (nextProp.tick_event !== '' && (typeof nextProp.tick_event !== 'undefined')) {
         }

@@ -1534,8 +1534,8 @@ class CommonProductPopupModal extends React.Component {
                                             </p>
                                             <div className="inner-row">
                                                 <div className="text-row">
-                                                    <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
-                                                    <p className="subtext">(plus tax)</p>
+                                                    <p className="price">$<NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
+                                                    <p className="subtext"> (plus tax)</p>
                                                 </div>
                                                 {/* <button type="button">Modify Ingredients</button> */}
                                             </div>
