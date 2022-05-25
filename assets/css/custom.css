@@ -465,11 +465,9 @@
 	font-size: 1.67vw;
 	font-weight: 400;
 	line-height: 2.22vw;
-	text-align: center;
 	color: #050505;
-	display: flex;
-	align-items: center;
     padding-bottom: 10px;
+	text-align: center!important;
 }
 
 .category-tile>p>div {

@@ -143,12 +143,12 @@ class SendMailComponent extends React.Component {
             </div>
             Receive promotional emails
           </label>
-          <span className="emailMessage" style={{ display: "none" }} >
+          <span className="emailMessage">
             {this.state.IsEmailExist == false ? LocalizedLanguage.enterEmail :
               this.state.valiedEmail == false ? LocalizedLanguage.invalidEmail :
                 this.state.mailsucces == null ? LocalizedLanguage.pleaseWait :
                   this.state.mailsucces && this.state.mailsucces == true ? LocalizedLanguage.successSendEmail
-                    : this.state.mailsucces == false ? this.state.emailSendingMessage != '' ? this.state.emailSendingMessage : LocalizedLanguage.failedSendEmail : ""
+                    : this.state.mailsucces == false ? this.state.emailSendingMessage : ""
             }
           </span>
           <button id="sendReceipt" onClick={() => this.sendMail()}>Send Receipt</button>
