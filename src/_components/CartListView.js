@@ -469,6 +469,8 @@ class CartListView extends React.Component {
             showTaxStaus: typeOfTax() == 'incl' ? LocalizedLanguage.inclTax : LocalizedLanguage.exclTax,
             cartDiscountAmount : _cartDiscountAmount
         })   
+       
+
         var IsExist = false;
         var IsExsitTicket = false;
         if (nextProps.checkout_list &&  nextProps.checkout_list.length > 0 && this.state.updateProductStatus == true) {
@@ -892,6 +894,7 @@ class CartListView extends React.Component {
         
     }
     render() {
+        localStorage.setItem("taxType", JSON.stringify(this.state.showTaxStaus))
         // var totalPrice = 0;
         // const { taxRateList, defaultTaxStatus } = this.state;
         var ListItem = this.props.cartproductlist ? this.props.cartproductlist : [];
@@ -913,6 +916,7 @@ class CartListView extends React.Component {
         View Cart ${parseFloat(this.state.totalAmount).toFixed(2)}
         </button>
           {this.state.isLoading == true ? <LoadingModal /> : ''}
+
         </div>
         )
         // return (
