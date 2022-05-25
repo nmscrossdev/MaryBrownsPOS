@@ -444,7 +444,7 @@ close_ext_modal = () => {
             }).length;
         }
     return (
-      <div>
+      <React.Fragment>
         <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
         <div className="category-header m-b-35">
           <div className="col">
@@ -463,7 +463,7 @@ close_ext_modal = () => {
           <p className="order-quantity">({checkList1 && checkList1.ListItem ? checkList1.ListItem.length : 'X'} items)</p>
         </div>
         <div className="order-summary">
-          <div className="order-products-wrapper" style={{height:"58vw"}}>
+          <div className="order-products-wrapper">
               {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
                 //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
                 return (
@@ -562,7 +562,7 @@ close_ext_modal = () => {
         </div>
         <div className="order-instructions">
           <p>Order Instructions</p>
-          <textarea maxLength={200} name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
+          <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
         </div>
         {display_rec_products == "true" ?
           <RecommendedProduct page={"cart"} />
@@ -570,8 +570,8 @@ close_ext_modal = () => {
         <div className="cover hide"></div>
           {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
-        <IdleScreen></IdleScreen>
-        <ScreenSaver></ScreenSaver>
+        {/* <IdleScreen></IdleScreen>
+        <ScreenSaver></ScreenSaver> */}
         <CommonExtensionPopup
           showExtIframe={this.state.extensionIframe}
           close_ext_modal={this.close_ext_modal}
@@ -587,7 +587,7 @@ close_ext_modal = () => {
                   resize();
                   
                 }, 200)}</div>
-      </div>)
+      </React.Fragment>)
   }
 }
 export default CheckoutCart;

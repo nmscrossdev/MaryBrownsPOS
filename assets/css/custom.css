@@ -483,3 +483,20 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
+.mb10
+{
+	margin-bottom: 1.9vw;
+}
+.product-container>.prod-wrapper>.row>.col>.inner-row>.text-row>p.subtext
+{
+	padding-left: 10px;
+}
+.screensaver
+{
+	background: var(--primary);
+}
+/* define this for fixing the font-weight issue */
+div{font-weight: normal !important;}
+p{font-weight: normal !important;}
+button{font-weight: normal !important;}
+span{font-weight: normal !important;}

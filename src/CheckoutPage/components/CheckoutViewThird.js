@@ -21,8 +21,8 @@ import { UPIPayments } from '../../_components/PaymentComponents/UPIPayments';
 // import '../../../assets/css_new/Pagewise.css'
 //import { CommonExtensionPopup } from '../../_components/CommonExtensionPopup';
 var cash_rounding = ActiveUser.key.cash_rounding;
-import {getPaymentMethods,getExtPaymentMethods,centerView} from '../../settings/SelfCheckoutSettings';
-
+import {getPaymentMethods,getExtPaymentMethods,centerView,getCustomLogo} from '../../settings/SelfCheckoutSettings';
+import Config from '../../Config';
 class CheckoutViewThird extends React.Component {
     constructor(props) {
         super(props);
@@ -108,7 +108,7 @@ class CheckoutViewThird extends React.Component {
         
         setTimeout(() => {
             //Page Setup
-        scaleSVG();
+        // scaleSVG();
         centerView("select-payment");
 
         //Custom resize listener
@@ -744,6 +744,7 @@ class CheckoutViewThird extends React.Component {
                 isStoreCredit = true;
             }
         }
+        var custom_logo=getCustomLogo();
         //var isDemoUser = localStorage.getItem('demoUser') ? localStorage.getItem('demoUser') : false;
         // if(this.props.showExtIframe==false){
         //     this.state.IsPaymentButtonClicked=false;
@@ -774,7 +775,8 @@ class CheckoutViewThird extends React.Component {
                                                 />
                                             </svg>
                                         </div>
-                                        <img src="../assets/image/mblogobig.png" alt="" />
+                                        {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+                                        {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
                                         </div>
                                     
                                         <div className="total">
