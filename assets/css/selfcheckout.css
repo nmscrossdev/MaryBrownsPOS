@@ -314,6 +314,7 @@ input[type="number"] {
 	box-sizing: border-box;
 	border: 0;
 	margin-bottom: 0.28vw;
+	border-radius: 8px;
 }
 
 .header > .row > .col > p {
