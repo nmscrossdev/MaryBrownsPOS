@@ -894,7 +894,6 @@ class CartListView extends React.Component {
         
     }
     render() {
-        localStorage.setItem("taxType", JSON.stringify(this.state.showTaxStaus))
         // var totalPrice = 0;
         // const { taxRateList, defaultTaxStatus } = this.state;
         var ListItem = this.props.cartproductlist ? this.props.cartproductlist : [];
@@ -913,7 +912,7 @@ class CartListView extends React.Component {
         return(
         <React.Fragment>
         <button className="view-cart" onClick={() => this.checkSubscriptionType(ListItem)}>
-        View Cart ${parseFloat(this.state.totalAmount).toFixed(2)}
+        View Cart {parseFloat(this.state.totalAmount).toFixed(2)}
         </button>
           {this.state.isLoading == true ? <LoadingModal /> : ''}
         </React.Fragment>

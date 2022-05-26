@@ -1374,7 +1374,6 @@ class CommonProductPopupModal extends React.Component {
     render() {
         
         const { getVariationProductData, hasVariationProductData, single_product, showSelectedProduct, isInventoryUpdate } = this.props;
-        var showTaxStaus = localStorage.getItem("taxType") ? JSON.parse(localStorage.getItem("taxType")) : []
         //var idbKeyval = FetchIndexDB.fetchIndexDb();
         // if(getVariationProductData && getVariationProductData.Type== "simple"){
         //     idbKeyval.get('ProductList').then(val => {
@@ -1537,8 +1536,8 @@ class CommonProductPopupModal extends React.Component {
                                             </p>
                                             <div className="inner-row">
                                                 <div className="text-row">
-                                                    <p className="price">$<NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
-                                                    <p className="subtext"> ({showTaxStaus})</p>
+                                                    <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
+                                                    <p className="subtext">({typeOfTax() == 'incl' ? LocalizedLanguage.inclTax : "excl "+LocalizedLanguage.exclTax})</p>
                                                 </div>
                                                 {/* <button type="button">Modify Ingredients</button> */}
                                             </div>

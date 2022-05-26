@@ -33,12 +33,15 @@ class SendMailComponent extends React.Component {
       })
     }
     if (nextProp.getSuccess && nextProp.getSuccess.is_success == true) {
-      localStorage.removeItem('CARD_PRODUCT_LIST');
-      localStorage.removeItem('GTM_ORDER');
       setTimeout(
         this.clear()
         , 1000);
+    }else if(nextProp.getSuccess && nextProp.getSuccess.is_success == false){
+      setTimeout(
+        this.clear()
+        , 10000);
     }
+
   }
   clear() {
     localStorage.removeItem('CARD_PRODUCT_LIST');

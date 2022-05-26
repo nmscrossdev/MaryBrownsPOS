@@ -235,11 +235,11 @@ class CategoriesList extends React.Component {
                             return (
                                 item.parent==0 ?
                                 <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
-                                <p><Markup content={titleName}></Markup></p>
+                                <p>{titleName}</p>
                                 </button>
                             : item.parent!=0 ?
                                 <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                                <p><Markup content={titleName}></Markup></p>
+                                <p>{titleName}</p>
                                 </button>
                             : ''
                             )

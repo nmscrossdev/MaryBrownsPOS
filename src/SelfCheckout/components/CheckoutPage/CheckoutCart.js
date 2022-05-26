@@ -485,7 +485,7 @@ close_ext_modal = () => {
                                 </svg>
                               </div>
                             </div>
-                            <p> ${parseFloat(product.Price).toFixed(2)}</p>
+                            <p> {parseFloat(product.Price).toFixed(2)}</p>
                               <svg
                                 width="15"
                                 height="15"
