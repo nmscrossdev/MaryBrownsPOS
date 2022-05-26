@@ -131,6 +131,20 @@ class SendMailComponent extends React.Component {
     console.log("this.state", this.state)
     return (
       <div className="payment-view email-payment">
+         <div type="button" className="popup-close">
+            <svg onClick={() => this.clear()}
+                width="22"
+                height="21"
+                viewBox="0 0 22 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
+                    fill="#050505"
+                />
+            </svg>
+            </div>
         <div className="wrapper">
         {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
           {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
