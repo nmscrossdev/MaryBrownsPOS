@@ -525,10 +525,6 @@ class CheckoutView extends React.Component {
     }
     // its set the order payments
     setOrderPartialPayments(paying_amount, payment_type) {
-        if(!this.state.checkList && localStorage.getItem('CHECKLIST')){ //IF checklist in null then reset it
-            var checklist = localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'));
-            this.state.checkList=checklist;
-        }
         var totalPrice = this.state.checkList && this.state.checkList.totalPrice
         var change_amount = 0;
         var payment_is = 0;

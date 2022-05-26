@@ -108,8 +108,6 @@ class SelfCheckoutView extends React.Component {
         this.handleScan = this.handleScan.bind(this);
         this.filterProduct=this.filterProduct.bind(this)
         this.handletileFilterData=this.handletileFilterData.bind(this)
-        localStorage.removeItem("oliver_order_payments")
-        localStorage.removeItem("CHECKLIST")
         
         
         if (!localStorage.getItem('UDID')) {
@@ -761,7 +759,7 @@ class SelfCheckoutView extends React.Component {
             if (e.origin  && e.data && e.data !=="") { //&& _user && _user.instance
                 try {
                     var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
-                    //console.log("clientEvent----->", JSON.stringify(extensionData))
+                    console.log("clientEvent----->", JSON.stringify(extensionData))
                     // if (extensionData && extensionData !== "" && extensionData.oliverpos) {
                     //     this.showExtention(extensionData);
                     // }
