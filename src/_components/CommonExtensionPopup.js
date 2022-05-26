@@ -37,8 +37,8 @@ console.log("extentionUrl",extentionUrl)
             </svg>
             <div className="popup-header" style={{marginBottom:"2vw"}}>
                 <div className="popup-icon">
-                <span id={"appInitial_"+uid} style={{display:"none",color:"white",fontSize:"3.4vw",fontFamily:"poppins"}}>{inName}</span>
-                 {extLogo!=null? <img id={"appLogo_"+uid} src={extLogo} alt={inName}  onError={(e) => { e.target.onerror = null; document.getElementById("appInitial_"+uid).style.display="block";document.getElementById("appLogo_"+uid).style.display="none";/* e.target.src = showInitials(inName)*/}}  style={{height:"4vw",width:"4.4vw"}}/>:null}
+                <span id={"appInitial_"+uid}>{inName}</span>
+                 {extLogo!=null? <img id={"appLogo_"+uid} src={extLogo} alt={inName}  onError={(e) => { e.target.onerror = null; document.getElementById("appInitial_"+uid).style.display="block";document.getElementById("appLogo_"+uid).style.display="none";/* e.target.src = showInitials(inName)*/}} />:null}
                 
                 </div>
                 <div className="col">

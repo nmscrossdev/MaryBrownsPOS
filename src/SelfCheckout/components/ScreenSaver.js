@@ -8,7 +8,7 @@ const ScreenSaver=()=> {
 	let bottomImage = getScreenSaverBtnImage();
 	let screenSaverImages = getScreenSaverImages();
     return (
-		<div id="screensaver" className="screensaver hide">
+		<div id="screensaver" className="screensaver">
 			{
 			//  screenSaverImages && screenSaverImages.map((element, index) => {
 			// 		return(

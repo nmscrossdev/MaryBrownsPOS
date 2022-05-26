@@ -100,6 +100,32 @@ export function getCustomLogo() {
        }
        return null;
     }
+    else
+    {
+        return null;
+    }
+}
+export function getParkSale() {
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var found = settings.find(function (indx) {
+           return indx.LabelSlug ===  _key.ALLOW_PARK_SALE;
+       });
+       
+       if(found && found.Value=="true")
+       {
+        var parksale_name = settings.find(function (indx) {
+            return indx.LabelSlug ===  _key.PAYMENT_BUTTON_LABEL && indx.Section==_key.CHECKOUT_PAYMENTS && indx.SubSection=="section-1";
+        });
+        return parksale_name;
+       }
+       return null;
+    }
+    else
+    {
+        return null;
+    }
 }
 export function isDisplay(key) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
@@ -174,6 +200,10 @@ export function getBanners(key) {
        }
        return null;
     }
+    else
+    {
+        return null;
+    }
 }
 export function getCategories(key) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
@@ -205,6 +235,10 @@ export function getCategories(key) {
        
        }
        return null;
+    }
+    else
+    {
+        return null;
     }
    
 }
@@ -427,7 +461,7 @@ export function getExtPaymentMethods()
     if(settings&& settings.length>0)
     {
         var foundExtPaymentType = settings.filter(function (indx) {
-            return indx.Section=="checkout-payments" && indx.SubSection ==  "paymet-extention-option";
+            return indx.Section==_key.CHECKOUT_PAYMENTS && indx.SubSection ==  "paymet-extention-option";
         });
     }
 
@@ -456,7 +490,7 @@ export function getPaymentMethods()
     if(settings&& settings.length>0)
     {
          foundPaymentType = settings.filter(function (indx) {
-            return indx.Section=="checkout-payments" && indx.SubSection ==  "paymet-type-option";
+            return indx.Section==_key.CHECKOUT_PAYMENTS && indx.SubSection ==  "paymet-type-option";
         });
     }
     var pt_payments_options=[];

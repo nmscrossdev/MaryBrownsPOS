@@ -20,7 +20,22 @@ class WebLoginView extends React.Component {
     }
 
     componentDidMount() {
+        //Apple login Listner START
+        // Listen for authorization success.
+        document.addEventListener('AppleIDSignInOnSuccess', (event) => {
+            // Handle successful response.
+            this.singInApple();
+            console.log("---AppleIDSignInOnSuccess----"+ JSON.stringify(event));
+        });
+        // Listen for authorization failures.
+        document.addEventListener('AppleIDSignInOnFailure', (event) => {
+            // Handle error.
+            console.log("---AppleIDSignInOnFailure---"+event.detail.error);
+        });
+        //Apple login Listner END
+
         this.googleSDK();
+        this.appleLogin();
 
     }
 
@@ -95,7 +110,111 @@ class WebLoginView extends React.Component {
         console.log("FGdata", FGdata)
         dispatch(onboardingActions.OliverExternalLogin(FGdata));
     }
+  //Apple login methods Start
+  appleLogin=()=>
+  {
+     let appleConnectLoaded = (AppleID) => {
+      AppleID.auth.init({
+          clientId    : "sell.oliverpos.com",
+          scope       : 'name email',
+          state : 'origin:web',
+          redirectURI : Config.key.APPLE_LOGIN_RETURN_URL,
+          usePopup    : true
+      });
+      setTimeout(() => {//To Remove the default apple logo
+          // $("svg text").text('Sign in with Apple')
+        //   $("svg text").text($("svg text").text().substring(1));
+        //   $("svg text").removeAttr("textLength");
+     }, 100);
+  };
 
+  (function(d, s, cb){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      js = d.createElement(s);
+      js.src = "//appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js";
+      fjs.parentNode.insertBefore(js, fjs);
+      js.addEventListener("load", () => cb(AppleID));
+  }(document, 'script', appleConnectLoaded));
+  }
+  singInApple = async () => {
+  try {
+      const response = await window.AppleID.auth.signIn();
+      if(response!=null && typeof response!="undefined")
+      {
+          localStorage.removeItem('FGLoginData');
+          localStorage.setItem('FGLoginData', JSON.stringify(response));
+          console.log("successful login with apple--"+JSON.stringify(response))
+          var code='';
+          var id_token='';
+          var state='';
+          var fname='';
+          var lname='';
+          var email='';
+          if(response.authorization && typeof response.authorization!="undefined")
+          {
+              code=response.authorization.code;
+              id_token=response.authorization.id_token;
+              state=response.authorization.state;
+          }
+          if(response.user && typeof response.user!="undefined" && response.user.name && response.user.email)
+          {
+              fname=response.user.name.firstName;
+              lname=response.user.name.lastName;
+              email=response.user.email;
+          }
+          if(id_token!="")
+          {
+              var _data= this.parseJwt(id_token);
+              if(_data!=null && _data.email)
+              {
+                  email=_data.email;
+              }
+          }
+          var data = {
+              FirstName: fname,
+              LastName: lname,
+              Email:email,
+              Id:  '',
+              picture: '',
+              Gender: '',
+              Dob:  '',
+              AgeRange: '',
+              Address :'',
+              AccessToken: id_token,
+              userLoginInfo:{
+                  LoginProvider: "apple",
+                  ProviderKey:  ""
+              },
+              DefaultUserName: '',
+              PhoneNumber: '',    
+              ClientGuid: '',
+              SendAuthToken:id_token!=''?true:false,
+              ModelName:'',
+              DeviceId:'',
+              Version: '',
+              CountryName :'',
+              CityName :''
+          }
+          if(this.state.isCallService == true){
+              this.setState({isCallService:false})
+              this.CallService(data);
+          }
+      }
+  } 
+  catch ( error ) {
+          console.log("---singInApple---catch--");
+          // Handle error.
+  }
+  };
+  parseJwt (token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+  };
+  //Apple login methods End
     googleSDK = () => {
         // this.setState({ isLoginSuccess: "" })
         window['googleSDKLoaded'] = () => {
@@ -265,7 +384,9 @@ class WebLoginView extends React.Component {
                                                         textButton="Sign in with Facebook">
              </FacebookLogin>
 			</button>
-            
+            <button type="submit" id="appleid-signin" title="Log in using your Apple account" className="btn btn-outline-secondary btn-block user_login__social appleid-signin-dv" >
+                <span>Sing in with Apple</span>
+            </button>
            
 		
 			{/* <button className="logo apple">
