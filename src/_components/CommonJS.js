@@ -115,11 +115,7 @@ export const redirectToURL = () => {
             history.push("/login");
         }
     } else {
-        
-    var _isSelfcheckout= localStorage.getItem('selectedRegister') ? JSON.parse(localStorage.getItem('selectedRegister')).IsSelfCheckout : null;
-    if(_isSelfcheckout && _isSelfcheckout==true){
         history.push('/')///loginpin
-    }        
 
     }
 
