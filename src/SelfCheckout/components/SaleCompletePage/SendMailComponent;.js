@@ -62,7 +62,6 @@ class SendMailComponent extends React.Component {
     localStorage.removeItem('GLOBAL_PAYMENT_RESPONSE');
     localStorage.removeItem('PAYMENT_RESPONSE');
     localStorage.removeItem('PENDING_PAYMENTS');
-    localStorage.removeItem('taxType');
     localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
     dispatch(cartProductActions.addtoCartProduct(null));
     // if(isMobileOnly == true){

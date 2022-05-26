@@ -349,7 +349,7 @@ export function initScreenSaver()
                if(document.querySelector(".idle-screen")){
                 document.querySelector(".idle-screen").classList.add("hide");
                 }
-              //  emptyCart();
+               emptyCart();
                 return;
             }
             countdown.innerHTML = parseInt(countdown.innerHTML) - 1;
