@@ -300,9 +300,9 @@ class CheckoutCart extends React.Component {
 
 
   componentDidMount() {
-    setTimeout(function () {
-      if (typeof EnableContentScroll != "undefined") { EnableContentScroll(); }
-    }, 2000)
+    // setTimeout(function () {
+    //   if (typeof EnableContentScroll != "undefined") { EnableContentScroll(); }
+    // }, 2000)
 
   }
 
@@ -581,12 +581,12 @@ close_ext_modal = () => {
           extLogo={this.state.extLogo} />
            {/* <IdleScreen></IdleScreen>
                 <ScreenSaver></ScreenSaver> */}
-                <div style={{display:"none"}}>{setTimeout(() => {
+                {/* <div style={{display:"none"}}>{setTimeout(() => {
                   scaleSVG();
                   scaleImages();
                   resize();
                   
-                }, 200)}</div>
+                }, 200)}</div> */}
       </React.Fragment>)
   }
 }

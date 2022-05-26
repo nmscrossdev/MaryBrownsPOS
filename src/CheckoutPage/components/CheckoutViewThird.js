@@ -21,7 +21,7 @@ import { UPIPayments } from '../../_components/PaymentComponents/UPIPayments';
 // import '../../../assets/css_new/Pagewise.css'
 //import { CommonExtensionPopup } from '../../_components/CommonExtensionPopup';
 var cash_rounding = ActiveUser.key.cash_rounding;
-import {getPaymentMethods,getExtPaymentMethods,centerView,getCustomLogo} from '../../settings/SelfCheckoutSettings';
+import {getPaymentMethods,getExtPaymentMethods,centerView,getCustomLogo,getParkSale} from '../../settings/SelfCheckoutSettings';
 import Config from '../../Config';
 class CheckoutViewThird extends React.Component {
     constructor(props) {
@@ -745,6 +745,7 @@ class CheckoutViewThird extends React.Component {
             }
         }
         var custom_logo=getCustomLogo();
+        var park_sale= getParkSale();
         //var isDemoUser = localStorage.getItem('demoUser') ? localStorage.getItem('demoUser') : false;
         // if(this.props.showExtIframe==false){
         //     this.state.IsPaymentButtonClicked=false;
@@ -808,6 +809,10 @@ class CheckoutViewThird extends React.Component {
                                             //     )
                                             // })
                                             <div className="row payment-row" style={{marginBottom:0}}>
+                                                {
+                                                    park_sale!=null?<button onClick={() => this.pay_amount("park-sale")}>{park_sale.Value}</button>:null              
+                                                }
+                                            
                                               {this.state.paymentMethods.map((type, ind) => {
                                                  return(this.renderPaymentsType(type, activeDisplay))      
                                                 })
@@ -817,6 +822,9 @@ class CheckoutViewThird extends React.Component {
                                             :
                                             this.state.extPaymentMethods && this.state.extPaymentMethods.length>0?
                                              <div className="row payment-row">
+                                            {
+                                                park_sale!=null?<button onClick={() => this.pay_amount("park-sale")}>{park_sale.Value}</button>:null
+                                            }
                                             {this.showExtensionPayments(styles)}
                                             </div>:
                                                 <p>
