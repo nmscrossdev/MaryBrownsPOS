@@ -111,22 +111,22 @@ function GTM_oliver_payments(oliver_order_payments) {
     oliver_order_payments.map(items => {
       paid_amount += parseFloat(items.payment_amount);
       //console.log("some paid amount", paid_amount);
-      dataLayer.push({
-        'event': 'payment',
-        'paymentType': items.payment_type,
-        'paymentAmount': parseFloat(items.payment_amount),
-        'remainingBalance': parseFloat(unpaid_amount) - paid_amount
-      });
+      // dataLayer.push({
+      //   'event': 'payment',
+      //   'paymentType': items.payment_type,
+      //   'paymentAmount': parseFloat(items.payment_amount),
+      //   'remainingBalance': parseFloat(unpaid_amount) - paid_amount
+      // });
     })
   }
 
   if (oliver_order_payments == 0) {
-    dataLayer.push({
-      'event': 'payment',
-      'paymentType': '',
-      'paymentAmount': 0,
-      'remainingBalance': parseFloat(checkout_list.totalPrice)
-    });
+    // dataLayer.push({
+    //   'event': 'payment',
+    //   'paymentType': '',
+    //   'paymentAmount': 0,
+    //   'remainingBalance': parseFloat(checkout_list.totalPrice)
+    // });
   }
 }
 

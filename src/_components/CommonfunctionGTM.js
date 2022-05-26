@@ -22,7 +22,7 @@ export const  GTM_ClientDetail=()=> {
             'is-demo-user': demoUser
         }
         if (process.env.ENVIRONMENT=='production' && clientDetail  && checkEventExist('',_clientData)==false) {    
-            dataLayer.push(_clientData);        
+         //   dataLayer.push(_clientData);        
         }
     }
  }
@@ -33,11 +33,11 @@ export const  GTM_oliverCheckout=()=> {
     var checkout_list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : "";
    if (process.env.ENVIRONMENT=='production' && checkout_list &&checkout_list!=="") {
       if( checkEventExist("checkoutPage")==false){ // check for duplicate
-       dataLayer.push({
-           'event': 'checkoutPage',
-           'checkoutTotal': checkout_list.totalPrice,
-           'is-demo-user': demoUser
-       });
+    //    dataLayer.push({
+    //        'event': 'checkoutPage',
+    //        'checkoutTotal': checkout_list.totalPrice,
+    //        'is-demo-user': demoUser
+    //    });
      }
    }
 }
@@ -55,13 +55,13 @@ export const  GTM_oliverOrderPayment=(PaymentType,amount)=> {
         var demoUser = localStorage.getItem("demoUser") ? localStorage.getItem("demoUser") : false;
        
         if (oliver_order_payments) {
-               dataLayer.push({
-                    'is-demo-user': demoUser,
-                    'event': 'payment',
-                    'paymentType':PaymentType,
-                    'paymentAmount': parseFloat(amount),
-                    'remainingBalance':  Number(Math.round(parseFloat(gtm_order.totalPrice)-parseFloat(totalPayment) + 'e' + 2) + 'e-' + 2)  
-                });
+            //    dataLayer.push({
+            //         'is-demo-user': demoUser,
+            //         'event': 'payment',
+            //         'paymentType':PaymentType,
+            //         'paymentAmount': parseFloat(amount),
+            //         'remainingBalance':  Number(Math.round(parseFloat(gtm_order.totalPrice)-parseFloat(totalPayment) + 'e' + 2) + 'e-' + 2)  
+            //     });
          }
     }
 }
@@ -73,11 +73,11 @@ export const  GTM_oliverOrderComplete=()=> {
        var demoUser = localStorage.getItem("demoUser") ? localStorage.getItem("demoUser") : false;
           if (gtm_order.status == 'completed' && gtm_order.order_payments && gtm_order.order_payments.length > 0) {                     
           if( checkEventExist("checkoutComplete")==false){
-                dataLayer.push({
-                    'event': 'checkoutComplete',
-                    'orderDetails': gtm_order,
-                    'is-demo-user': demoUser
-                });
+                // dataLayer.push({
+                //     'event': 'checkoutComplete',
+                //     'orderDetails': gtm_order,
+                //     'is-demo-user': demoUser
+                // });
             }
         }
     }
@@ -103,20 +103,20 @@ const addUSDConversionRate=(_order)=>{
 const checkEventExist=(event,_clientData =null)=>{0
     var checkEventExit=false;
     if(_clientData  && dataLayer){
-        dataLayer.map((item,index)=>{
-            try { if(JSON.parse(JSON.stringify(item))["oliverpos-client-guid"]){
-                   // console.log("Duplicate")
-                  return  checkEventExit =true;                  
-                }
-             } catch (error) {  }
-            });
+    //    dataLayer.map((item,index)=>{
+    //         try { if(JSON.parse(JSON.stringify(item))["oliverpos-client-guid"]){
+    //                // console.log("Duplicate")
+    //               return  checkEventExit =true;                  
+    //             }
+    //          } catch (error) {  }
+    //         }); 
        
     }
      else  if(event !=='' && dataLayer){
-            dataLayer.map((item,index)=>{               
-                if(item.event && item.event==event )
-                checkEventExit =true;            
-            })
+            // dataLayer.map((item,index)=>{               
+            //     if(item.event && item.event==event )
+            //     checkEventExit =true;            
+            // })
         }
         return checkEventExit;
 }
@@ -127,12 +127,12 @@ export const GTM_OliverDemoUser=(pageDetails)=>{
         var VisiterId = localStorage.getItem("VisiterUserID") ?  localStorage.getItem("VisiterUserID")  : "";
         var VisiterEmail = localStorage.getItem("VisiterUserEmail") ?  localStorage.getItem("VisiterUserEmail")  : "";
         console.log("Ënviroment", process.env.ENVIRONMENT);
-            dataLayer.push({
-                'event':'DemoUser',
-                'VisiterId':VisiterId,
-                'VisiterEmail': VisiterEmail,
-                'VisiterDetails': pageDetails,
-                'is-demo-user': demoUser
-            });
+            // dataLayer.push({
+            //     'event':'DemoUser',
+            //     'VisiterId':VisiterId,
+            //     'VisiterEmail': VisiterEmail,
+            //     'VisiterDetails': pageDetails,
+            //     'is-demo-user': demoUser
+            // });
     }  
 }
