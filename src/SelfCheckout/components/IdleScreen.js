@@ -8,7 +8,7 @@ const IdleScreen=()=> {
 				</div>
 				<p>We noticed you haven’t been active. If you’re just taking your time, please click the button below.</p>
 				<div className="text-row">
-					<p>Otherwise, this cart will be cleard in</p>
+					<p>Otherwise, this cart will be cleared in</p>
 					<p id="timeoutNumber">30</p>
 					<p>seconds.</p>
 				</div>
