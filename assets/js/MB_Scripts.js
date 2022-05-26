@@ -82,7 +82,7 @@ function showModal(popupName) {
 		popup.style.left = `${(window.innerWidth - setWidth) / 2}px`;
 		popup.style.top = `${(window.innerHeight - setHeight) / 2}px`;
 	}
-	toggleScroll();
+	toggleScroll(false);
 	if(popupName=="add-note")
 	{
 		showOverlay();
@@ -93,7 +93,7 @@ function hideModal(e) {
 	let parent = document.getElementById(e);
 	parent && parent.classList && parent.classList.add("hide");
 	document.querySelector(".cover") && document.querySelector(".cover").classList.add("hide");
-	toggleScroll();
+	toggleScroll(false);
 
 	// const covers = document.querySelectorAll('.cover');
 	// if(covers)

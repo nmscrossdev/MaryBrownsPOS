@@ -1251,6 +1251,7 @@ class CommonProductPopupModal extends React.Component {
                 //location.reload();
 
             }
+         jQuery("#prodNote").val('');
          hideModal("add-note");
          hideOverlay("overlay-cover");
         }
@@ -1371,6 +1372,7 @@ class CommonProductPopupModal extends React.Component {
     }
 
     render() {
+        
         const { getVariationProductData, hasVariationProductData, single_product, showSelectedProduct, isInventoryUpdate } = this.props;
         //var idbKeyval = FetchIndexDB.fetchIndexDb();
         // if(getVariationProductData && getVariationProductData.Type== "simple"){
@@ -1500,21 +1502,21 @@ class CommonProductPopupModal extends React.Component {
                         :
                         <div className="product-container" style={{height:"93.5%"}}>
 
-                <div id="productCloseButton" className="product-close">
-				<svg onClick={()=>hideModal('VariationPopUp')} 
-					width="22"
-					height="21"
-					viewBox="0 0 22 21"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
-						fill="#050505"
-					/>
-				</svg>
-			</div>
-			<p className="prod-name" title={this.props.proTitle}>{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
+                            <div id="productCloseButton" className="product-close">
+                                <svg onClick={()=>hideModal('VariationPopUp')} 
+                                    width="22"
+                                    height="21"
+                                    viewBox="0 0 22 21"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M19.0466 21L10.7521 12.9L2.45762 21L0 18.6L8.29448 10.5L0 2.4L2.45762 0L10.7521 8.1L19.0466 0L21.5042 2.4L13.2097 10.5L21.5042 18.6L19.0466 21Z"
+                                        fill="#050505"
+                                    />
+                                </svg>
+                            </div>
+                            <p className="prod-name" title={this.props.proTitle}>{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
 
                             {/* <div className="popup-header"> */}
                                 {/* <div className="popup-icon">
@@ -1523,7 +1525,7 @@ class CommonProductPopupModal extends React.Component {
                                     </svg>
                                 </div>
                                     <div className="prod-name" title={this.props.proTitle} >{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</div> */}
-                                    <div className="prod-wrapper">
+                            <div className="prod-wrapper">
                                     <div className="row">
                                         <div className="img-container">
                                             <img src={hasVariationProductData ? this.state.variationImage ? img == 'placeholder.png' ? '' : this.state.variationImage : '' : ''} onError={(e) => { e.target.onerror = null; e.target.src = "assets/img/placeholder.png" }} id="prdImg" className='scale'/>
@@ -1535,7 +1537,7 @@ class CommonProductPopupModal extends React.Component {
                                             <div className="inner-row">
                                                 <div className="text-row">
                                                     <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
-                                                    <p className="subtext">(plus tax)</p>
+                                                    <p className="subtext">({typeOfTax() == 'incl' ? LocalizedLanguage.inclTax : "excl "+LocalizedLanguage.exclTax})</p>
                                                 </div>
                                                 {/* <button type="button">Modify Ingredients</button> */}
                                             </div>
@@ -1594,25 +1596,25 @@ class CommonProductPopupModal extends React.Component {
                             }
                             </div>
                             <div className="overlay-cover hide"></div>
-                                <div class="popup add-note hide" id="add-note">
-                                    <svg class="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
-                                    <path
-                                    d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
-                                    fill="#050505"
-                                    />
-                                    </svg>
-                                    <div class="popup-header">
-                                        <div class="col">
-                                            <p>Add Product Note</p>
-                                            <div class="divider"></div>
-                                        </div>
-                                    </div>
-                                    <div class="popup-body">
-                                        <p>Add a note or any comments for the product.</p>
-                                        <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
-                                        <button onClick={()=>this.handleNote()} >Add Note to item</button>
+                            <div class="popup add-note hide" id="add-note">
+                                <svg class="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
+                                <path
+                                d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
+                                fill="#050505"
+                                />
+                                </svg>
+                                <div class="popup-header">
+                                    <div class="col">
+                                        <p>Add Product Note</p>
+                                        <div class="divider"></div>
                                     </div>
                                 </div>
+                                <div class="popup-body">
+                                    <p>Add a note or any comments for the product.</p>
+                                    <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
+                                    <button onClick={()=>this.handleNote()} >Add Note to item</button>
+                                </div>
+                            </div>
                         </div>
                     }
                 {/* </div> */}

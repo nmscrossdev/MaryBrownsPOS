@@ -12,48 +12,21 @@ export default class RecommendedProduct extends Component {
             AllProductList:[]
         }
     }
-    addItem=()=>
-    {
-
-    }
-    
-    componentWillMount() {
-    //  var ids="";//"873,1870,1702,1893,1895";
-    //  if(nextPros.item && nextPros.page)
-    //  {
-    //      ids=nextPros.item.ReletedIds;
-    //  }
-    //  else
-    //  {
-    //     ids = getRecommendedProducts(_key.PRODUCT_RECOMMENDATIONS,"cart");
-    //  }
-    // if(ids!="")
-    // {
-    //  var idbKeyval = FetchIndexDB.fetchIndexDb();
-    //     idbKeyval.get('ProductList').then(val => {
-    //         if (!val || val.length == 0 || val == null || val == "") {
-    //         } 
-    //         else
-    //         {
-    //             var _productwithTax = getTaxAllProduct(val)
-    //             var productlist = _productwithTax;
-    //             const filter_products = productlist && productlist.filter(item =>{
-    //             return ids.includes(`${item.WPID}`)
-    //             });
-    //             // console.log("---getRecommendedProducts-"+JSON.stringify(filter_products));
-    //             this.setState({productList:filter_products});
-    //         }
-    //     });
-    // }
-    //  console.log("---_productData-"+JSON.stringify(_productData))
-    //  this.setState({productList:_productData});
-    }
     getProducts(nextPros)
     {
         var ids="";
         if(nextPros && nextPros.item && nextPros.page)
         {
             ids=nextPros.item.ReletedIds;
+            if(ids!="")
+            {
+                var tempArr = ids.split(',');
+                if(tempArr && tempArr.length>4)
+                {
+                    tempArr=tempArr.slice(0,4);
+                    ids=tempArr;
+                }
+            }
         }
         else
         {
@@ -78,19 +51,12 @@ export default class RecommendedProduct extends Component {
         }
     }
     componentWillReceiveProps(nextPros) {
-        //if(nextPros.item)
-        {
-            this.getProducts(nextPros);
-        }
-
-        //this.props.showSelected(nextPros.item);
+        this.getProducts(nextPros);
     }
     callMethods(item)
     {
-       // this.props.showSelected(item);
        if(item && item.Type=="variable" || item.Type=="variation" )
        {
-
         var productlist = this.state.AllProductList;
             if (productlist && productlist.length > 0) {
                 if (item) {
@@ -98,7 +64,6 @@ export default class RecommendedProduct extends Component {
                         return (filterItem.ParentId === item.WPID)
                     })
                     item['Variations'] = variationProdect
-                   // this.props.handleProductData(item);
                     this.props.handleSimpleProduct(item)
                 }
             }
@@ -107,15 +72,6 @@ export default class RecommendedProduct extends Component {
        {
         this.props.handleSimpleProduct(item)
        }
-        // if(props.handleSimpleProduct)
-        // {
-        //     this.props.handleSimpleProduct(item)
-        // }
-        // else
-        // {
-        //     this.props.handleProductData(item)
-        // }
-        //this.props.handleSimpleProduct?this.props.handleSimpleProduct(item):this.props.handleProductData(item);
     }
    render() {
        const {productList} = this.state;
@@ -127,7 +83,7 @@ export default class RecommendedProduct extends Component {
             <div className="row">
                 {productList && productList.map((item, index) => {
                     var display_expireTicketTime;
-                    var isVariableProduct = (item.Type !== "simple" && item.StockStatus !== "outofstock") ? true : false;
+                    //var isVariableProduct = (item.Type !== "simple" && item.StockStatus !== "outofstock") ? true : false;
                     if (item.IsTicket && item.IsTicket == true) {
                         var ticketInfo = JSON.parse(item.TicketInfo);
                         if (ticketInfo._ticket_availability.toLowerCase() == 'range' && (ticketInfo._ticket_availability_to_date)) {
@@ -141,8 +97,7 @@ export default class RecommendedProduct extends Component {
                             <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
                             <p className="price">starting at $ {item.Price}</p>
                             <div className="button">
-                          
-                            {/* {item.logo!=null?null: */}
+                            {this.props.page && this.props.page =='cart'?
 							<svg
 								width="28"
 								height="27"
@@ -158,9 +113,8 @@ export default class RecommendedProduct extends Component {
 									d="M20.7292 12.6562H14.7609V6.75H13.0557V12.6562H7.0874V14.3438H13.0557V20.25H14.7609V14.3438H20.7292V12.6562Z"
 									fill="white"
 								/>
-							</svg>
-                            {/* } */}
-                            <p key={index} data-toggle={isVariableProduct ? "modal" : ""} > View Item</p>
+							</svg>:null}
+                            <p key={index}>{this.props.page && this.props.page =='cart'?"Add Item":"View Item"}</p>
 						</div>
                         </button>
                     )

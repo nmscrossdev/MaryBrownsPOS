@@ -444,7 +444,7 @@ close_ext_modal = () => {
             }).length;
         }
     return (
-      <div>
+      <React.Fragment>
         <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
         <div className="category-header m-b-35">
           <div className="col">
@@ -463,7 +463,7 @@ close_ext_modal = () => {
           <p className="order-quantity">({checkList1 && checkList1.ListItem ? checkList1.ListItem.length : 'X'} items)</p>
         </div>
         <div className="order-summary">
-          <div className="order-products-wrapper" style={{height:"58vw"}}>
+          <div className="order-products-wrapper">
               {checkList1 && checkList1.ListItem && checkList1.ListItem.map((product, index) => {
                 //var _order_Meta = product.addons_meta_data && product.addons_meta_data.length > 0 ? CommonJs.showAddons("", product.addons_meta_data) : ""
                 return (
@@ -587,7 +587,7 @@ close_ext_modal = () => {
                   resize();
                   
                 }, 200)}</div>
-      </div>)
+      </React.Fragment>)
   }
 }
 export default CheckoutCart;

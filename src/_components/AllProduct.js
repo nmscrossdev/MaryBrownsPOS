@@ -746,6 +746,7 @@ class AllProduct extends React.Component {
                     this.props.showPopuponcartlistView(product, document.getElementById("qualityUpdater") ? document.getElementById("qualityUpdater").value : this.props.variationDefaultQunatity);
                 }
                 else {
+                    jQuery("#prodNote").val('');
                     showModal('VariationPopUp');
                     if (isMobileOnly == true && (ActiveUser.key.isSelfcheckout !== null && ActiveUser.key.isSelfcheckout == true)) {
                         if (isMobileOnly == true) { $('#variableproduct').addClass('show') }

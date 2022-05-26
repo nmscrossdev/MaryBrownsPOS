@@ -2879,7 +2879,7 @@ class CheckoutView extends React.Component {
                         selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt} />
                     :
                     (ActiveUser.key.isSelfcheckout == true && this.state.SelfCheckoutStatus == "sfcheckoutpayment") ?
-                        <div><CheckoutViewThird SelfCheckoutStatus={this.state.SelfCheckoutStatus}
+                        <React.Fragment><CheckoutViewThird SelfCheckoutStatus={this.state.SelfCheckoutStatus}
                             selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt}
                             env_type={this.state.envFocus} updateStoreCreditPayment={this.updateStoreCreditPayment}
                             InactiveStoreCredit={updateStoreCreditPayment} amountStoreCreditPayment={amountStoreCreditPayment}
@@ -2901,7 +2901,7 @@ class CheckoutView extends React.Component {
                     extLogo={this.state.extLogo}
                 />
                 {/* :null} */}
-                </div>
+                </React.Fragment>
                         :
                         (isMobileOnly == true) ?
                             <div>

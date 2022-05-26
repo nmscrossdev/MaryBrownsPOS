@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
-import {_key,getTitle,getBanners,getCategories,setThemeColor,initDropDown,getApps} from '../../settings/SelfCheckoutSettings';
+import {_key,getTitle,getBanners,getCategories,initDropDown,getApps} from '../../settings/SelfCheckoutSettings';
 class CategoriesList extends React.Component {
     constructor(props) {
         super(props);
@@ -135,9 +135,9 @@ class CategoriesList extends React.Component {
            
         }
         this.RemoveCategorySelection()
-        setTimeout(function () {
-            if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
-        }, 500);
+        // setTimeout(function () {
+        //     if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
+        // }, 500);
         this.props.tileFilterData(null, "product", null)
        
     }
@@ -151,16 +151,32 @@ class CategoriesList extends React.Component {
             this.setState({cat_breadcrumb:catList})
             }     
    }
-   RemoveCategorySelection(){
-    if(this.state.item==null){
-        this.state.cat_breadcrumb=[]
+//    RemoveCategorySelection(){
+//     if(this.state.item==null){
+//         this.state.cat_breadcrumb=[]
+//     }
+//     var catList=this.state.cat_breadcrumb;
+//     if(catList.length>0){
+//         catList.splice(-1)
+//         this.setState({cat_breadcrumb:catList})
+//     }     
+// }
+    RemoveCategorySelection(){
+        var tempItem=null;
+        if(this.state.item==null){
+            this.state.cat_breadcrumb=[]
+        }
+        var catList=this.state.cat_breadcrumb;
+        if(catList.length>0){
+            catList.splice(-1)
+            if(catList.length>0)
+            {
+                tempItem=catList[catList.length-1];
+                this.tileProductListFilter(tempItem,catList.length==1?"category":"sub-category" );
+            }
+            this.setState({cat_breadcrumb:catList,item:tempItem})
+        }     
     }
-    var catList=this.state.cat_breadcrumb;
-    if(catList.length>0){
-        catList.splice(-1)
-        this.setState({cat_breadcrumb:catList})
-    }     
-}
     showCategorySelection(){      
          var displayCat="";        
         if(this.state.cat_breadcrumb && this.state.cat_breadcrumb.length>0){
@@ -179,7 +195,7 @@ class CategoriesList extends React.Component {
                  <div className="category-header">
                     <div className="col">
                         <p className="path">{this.showCategorySelection()} </p>
-                        <p className="current">{item && item !==null && item !==""? item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+                        <p className="current">{item && item !==null && item !==""? item.Value  && item.Value .replace("&amp;","&"): getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
                         <div className="divider"></div> 
                     </div>
                    { 
@@ -208,27 +224,30 @@ class CategoriesList extends React.Component {
                     </button>
                     }
                 </div>:
-                <p className="section">{item && item !==null && item !==""? item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
-                 } <div className="category-tile-container">
+                <p className="section">{item && item !==null && item !==""?  item.Value && item.Value.replace("&amp;","&") : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+                 } 
                 {   
-                current_categories && current_categories.map((item, index) => {                 
-                        var titleName = item.Value
-                        return (
-                            item.parent==0 ?
-                            <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
-                            <p>{titleName}</p>
-                            </button>
-                        : item.parent!=0 ?
-                            <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                            <p>{titleName}</p>
-                            </button>
-                        : ''
-                        )
-                    })
-                }
+                current_categories && current_categories.length>0 &&
+                    <div className="category-tile-container">
+                    {current_categories.map((item, index) => {                 
+                            var titleName = item.Value
+                            return (
+                                item.parent==0 ?
+                                <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
+                                <p>{titleName && titleName.replace("&amp;","&")}</p>
+                                </button>
+                            : item.parent!=0 ?
+                                <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
+                                <p>{titleName && titleName.replace("&amp;","&")}</p>
+                                </button>
+                            : ''
+                            )
+                        })
+                    }</div>
+            }
                    
                   
-                </div>
+                
         </React.Fragment>           
       )
     }
