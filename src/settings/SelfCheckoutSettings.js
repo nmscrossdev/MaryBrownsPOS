@@ -1,9 +1,8 @@
 import paymentsType from './PaymentsType';
-import { store } from "../_helpers";
+import { store,history } from "../_helpers";
 import { get_UDid } from '../ALL_localstorage';
 import{cartProductActions} from '../_actions/cartProduct.action';
 import {checkoutActions} from '../CheckoutPage/actions/checkout.action';
-
 export const _key = {      
     TITLE_FOR_CATEGORY_SECTION:"title-for-category-section",
     TITLE_FOR_PRODUCT_SECTION:"title-for-product-section",
@@ -353,6 +352,8 @@ export function emptyCart() {
         localStorage.removeItem("PRODUCTX_DATA");
         //this.props.ticketDetail(status, item)
         store.dispatch(cartProductActions.addtoCartProduct(null));
+        // history.push("/SelfCheckoutView");
+        window.location="/SelfCheckoutView";
     }
 }
 export function initScreenSaver()
@@ -367,16 +368,18 @@ export function initScreenSaver()
         } 
         var timer;
         var cycle;
-        var countdown = document.getElementById("timeoutNumber");
+       
         var idleTimeout;
         function timeoutStart() {
             if( document.querySelector(".idle-screen")){
                  document.querySelector(".idle-screen").classList.remove("hide");
+                 setContinueBtnClick();
             }
            
             idleTimeout = setTimeout(decrementCountdown, 1000);
         }
         function decrementCountdown() {
+            var countdown = document.getElementById("timeoutNumber");
             if (parseInt(countdown.innerHTML) < 1) {
                 setScreensaver();
                 countdown.innerHTML = "30";
@@ -431,20 +434,37 @@ export function initScreenSaver()
             clearTimeout(timer);
             let screensaver = document.getElementById("screensaver");
             if (screensaver!=null && typeof screensaver!="undefined" && !screensaver.classList.contains("hide")) {
+               setTimeout(() => {
                 screensaver.classList.add("hide");
+               }, 500);
+                
             }
             //toggleScroll(false);
             timer = setTimeout(timeoutStart, _timer);
         }, true)
         
-        document.querySelector(".idle-screen > .body > button").addEventListener("click", function (e) {
-            clearTimeout(idleTimeout);
-            clearTimeout(timer);
-            document.querySelector(".idle-screen").classList.add("hide");
-            countdown.innerHTML = "30";
-            timer = setTimeout(timeoutStart, 30000);
-         
-        });
+        // const cbox = document.querySelectorAll(".idle-screen > .body > button");
+        // for (let i = 0; i < cbox.length; i++) {
+        //     cbox[i].addEventListener("click", function() {
+        //         var countdown = document.getElementById("timeoutNumber");
+        //         clearTimeout(idleTimeout);
+        //         clearTimeout(timer);
+        //         document.querySelector(".idle-screen").classList.add("hide");
+        //         countdown.innerHTML = "30";
+        //         timer = setTimeout(timeoutStart, 30000);
+        //     });
+        // }
+        function setContinueBtnClick()
+        {
+            document.querySelector(".idle-screen > .body > button").addEventListener("click", function (e) {
+            var countdown = document.getElementById("timeoutNumber");
+                clearTimeout(idleTimeout);
+                clearTimeout(timer);
+                document.querySelector(".idle-screen").classList.add("hide");
+                countdown.innerHTML = "30";
+                timer = setTimeout(timeoutStart, 30000);
+            });
+         }
        
 
         

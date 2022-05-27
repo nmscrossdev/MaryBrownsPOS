@@ -20,6 +20,7 @@ import paymentsType from '../../settings/PaymentsType'
 import { UPIPayments } from '../../_components/PaymentComponents/UPIPayments';
 // import '../../../assets/css_new/Pagewise.css'
 //import { CommonExtensionPopup } from '../../_components/CommonExtensionPopup';
+import ScreenSaver from '../../SelfCheckout/components/ScreenSaver';
 var cash_rounding = ActiveUser.key.cash_rounding;
 import {getPaymentMethods,getExtPaymentMethods,centerView,getCustomLogo,getParkSale} from '../../settings/SelfCheckoutSettings';
 import Config from '../../Config';
@@ -892,6 +893,7 @@ class CheckoutViewThird extends React.Component {
                                 {/* display the message terminal not connected */}
                                 <CommonMsgModal msg_text={LocalizedLanguage.terminalnotconnected} close_Msg_Modal={this.props.closeExtraPayModal} />
                             </div>
+                            <ScreenSaver hide={true}></ScreenSaver>
                             </React.Fragment>
                         :
                         <CardpaymentRes

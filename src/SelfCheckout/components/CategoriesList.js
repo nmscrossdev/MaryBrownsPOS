@@ -185,6 +185,7 @@ class CategoriesList extends React.Component {
                 displayCat +=cat.Value +" > "
             })
         }
+        displayCat = displayCat!=""?displayCat.replace("&amp;","&"):displayCat;
         return displayCat;       
     }
     render() {

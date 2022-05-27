@@ -280,6 +280,7 @@
 	justify-content: space-between;
 	min-width: 400px;
 	margin-right: -16px;
+	overflow-x: hidden;
 }
 
 .payment-row>button {
@@ -546,6 +547,9 @@
 .select-payment>.payment-options>.row button:only-child
 {
 	width: 100% !important;
+}
+.view-cart {
+    z-index: 1;
 }
 /* define this for fixing the font-weight issue */
 div{font-weight: normal !important;}

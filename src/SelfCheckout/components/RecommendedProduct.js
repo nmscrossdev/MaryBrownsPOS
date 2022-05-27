@@ -95,7 +95,7 @@ export default class RecommendedProduct extends Component {
                         <button type="button" className="prod" key={"product_"+index} onClick={()=>this.callMethods(item)}>
                             <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)}/>
                             <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
-                            <p className="price">starting at $ {item.Price}</p>
+                            <p className="price">starting at {parseFloat(item.Price).toFixed(2)}</p>
                             <div className="button">
                             {this.props.page && this.props.page =='cart'?
 							<svg

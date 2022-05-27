@@ -14,7 +14,7 @@ import { _key, isDisplay } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 
 import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
-import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
+// import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
 class CheckoutCart extends React.Component {
   constructor(props) {
     super(props);
@@ -570,8 +570,8 @@ close_ext_modal = () => {
         <div className="cover hide"></div>
           {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
-        {/* <IdleScreen></IdleScreen>
-        <ScreenSaver></ScreenSaver> */}
+        {/* <IdleScreen></IdleScreen> */}
+        <ScreenSaver hide={true}></ScreenSaver>
         <CommonExtensionPopup
           showExtIframe={this.state.extensionIframe}
           close_ext_modal={this.close_ext_modal}
