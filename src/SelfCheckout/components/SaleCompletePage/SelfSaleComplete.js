@@ -13,6 +13,7 @@ import {_key,setThemeColor,getCustomLogo,getApps,centerView} from '../../../sett
 import BottomApps from '../../../SelfCheckout/components/BottomApps';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 import Config from '../../../Config';
+import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 
@@ -239,6 +240,7 @@ class SelfSaleComplete extends React.Component {
                         </button>
                     </div> */}
                 </div>
+                <ScreenSaver hide={true}></ScreenSaver>
                 <div style={{display:"none"}}>
           {//Page Setup
           setTimeout(() => {

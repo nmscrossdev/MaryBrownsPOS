@@ -7,6 +7,7 @@ import Config from '../../../Config';
 import LocalizedLanguage from '../../../settings/LocalizedLanguage';
 import { history } from '../../../_helpers';
 import {getCustomLogo,centerView} from '../../../settings/SelfCheckoutSettings';
+import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
 class SendMailComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -130,7 +131,7 @@ class SendMailComponent extends React.Component {
     console.log("this.state", this.state)
     return (
       <div className="payment-view email-payment">
-         <div type="button" className="popup-close">
+        <div type="button" className="popup-close">
             <svg onClick={() => this.clear()}
                 width="22"
                 height="21"
@@ -143,7 +144,7 @@ class SendMailComponent extends React.Component {
                     fill="#050505"
                 />
             </svg>
-            </div>
+        </div>
         <div className="wrapper">
         {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
           {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
@@ -190,6 +191,7 @@ class SendMailComponent extends React.Component {
 
 }
         </div>
+        <ScreenSaver hide={true}></ScreenSaver>
       </div>
     )
   }

@@ -70,7 +70,7 @@ const ProductItemsView = (props) => {
                                 <img className="scale" src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)} />
                                 </div>
                                 <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
-                                <p className="price">starting at $ {parseFloat(item.Price).toFixed(2)}</p>
+                                <p className="price">starting at {parseFloat(item.Price).toFixed(2)}</p>
                                 <div className="button" key={index}
                             data-toggle={isVariableProduct ? "modal" : ""}>View Item</div>
                             </button>
