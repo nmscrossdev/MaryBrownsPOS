@@ -57,10 +57,10 @@ class SiteLinkViewFirst extends React.Component {
         var UserLocations = this.props.locations ? this.props.locations : localStorage.getItem('UserLocations');
         var Sitelist = localStorage.getItem('sitelist') ? (localStorage.getItem('sitelist')) : this.props.sitelist;
         if (Sitelist && Sitelist != null) {
-            setTimeout(function () {
-                $(".chooseregisterLinksScroll").niceScroll({ styler: "fb", cursorcolor: "#2BB6E2", cursorwidth: '3', cursorborderradius: '10px', background: '#d5d5d5', spacebarenabled: false, cursorborder: '', scrollspeed: 60, cursorfixedheight: 70 });
-                $(".chooseregisterLinksScroll").getNiceScroll().resize();
-            }, 500)
+            // setTimeout(function () {
+            //     $(".chooseregisterLinksScroll").niceScroll({ styler: "fb", cursorcolor: "#2BB6E2", cursorwidth: '3', cursorborderradius: '10px', background: '#d5d5d5', spacebarenabled: false, cursorborder: '', scrollspeed: 60, cursorfixedheight: 70 });
+            //     $(".chooseregisterLinksScroll").getNiceScroll().resize();
+            // }, 500)
         }
         // check for hardBlockerVersion
         if (nextProps.getversioninfo) {
