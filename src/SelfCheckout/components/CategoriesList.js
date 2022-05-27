@@ -246,7 +246,7 @@ class CategoriesList extends React.Component {
                             )
                         })
                     }
-                    <div>{setTimeout(() => {
+                    <div style={{display:"none"}}>{setTimeout(() => {
                         markup(".cat-name-temp")
                     }, 10)}</div>
                     </div>
