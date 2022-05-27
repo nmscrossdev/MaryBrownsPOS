@@ -21,7 +21,7 @@ import RecommendedProduct from '../SelfCheckout/components/RecommendedProduct'
 import { getProductSummery } from '../WrapperSettings/CommonWork';
 import { allProductActions } from '../_actions';
 import Navbar from '../SelfCheckout/components/Navbar';
-import {_key} from '../settings/SelfCheckoutSettings';
+import {_key,markup} from '../settings/SelfCheckoutSettings';
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
     constructor(props) {
@@ -352,6 +352,7 @@ class CommonProductPopupModal extends React.Component {
                 //--------------------------------------------------------------------
                 //   this.forceUpdate()
                 // $(".close").trigger("click");
+                //$(".button_with_checkbox input").prop("checked", false);
                 hideModal('VariationPopUp');
                 //$('#VariationPopUp').modal('hide')
                 if (isMobileOnly == true && ActiveUser.key.isSelfcheckout == false) {
@@ -1551,7 +1552,8 @@ class CommonProductPopupModal extends React.Component {
                                         </div>
                                         <div className="col">
                                             <p className="prod-description">
-                                            <Markup content={getVariationProductData.ShortDescription} /> 
+                                                { getVariationProductData.ShortDescription}
+                                            {/* <Markup content={getVariationProductData.ShortDescription} />  */}
                                             </p>
                                             <div className="inner-row">
                                                 <div className="text-row">
@@ -1615,26 +1617,33 @@ class CommonProductPopupModal extends React.Component {
                             }
                             </div>
                             <div className="overlay-cover hide"></div>
-                            <div class="popup add-note hide" id="add-note">
-                                <svg class="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
+                            <div className="popup add-note hide" id="add-note">
+                                <svg className="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
                                 <path
                                 d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
                                 fill="#050505"
                                 />
                                 </svg>
-                                <div class="popup-header">
-                                    <div class="col">
+                                <div className="popup-header">
+                                    <div className="col">
                                         <p>Add Product Note</p>
-                                        <div class="divider"></div>
+                                        <div className="divider"></div>
                                     </div>
                                 </div>
-                                <div class="popup-body">
+                                <div className="popup-body">
                                     <p>Add a note or any comments for the product.</p>
                                     <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
                                     <button onClick={()=>this.handleNote()} >Add Note to item</button>
                                 </div>
                             </div>
+                            <div style={{display:"none"}}>
+                            {setTimeout(() => {
+                                markup(".prod-description")
+                                markup(".prod-name")
+                            }, 10)}
+                            </div>
                         </div>
+                        
                     }
                 {/* </div> */}
             </div>

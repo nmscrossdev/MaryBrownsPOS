@@ -66,6 +66,31 @@ export const _key = {
 
 }
 
+
+export function encodeHtml(txt)
+{
+    return $('<textarea />').html(txt).text();
+}
+export function markup(p)
+{
+    if(p.includes("."))
+    {   
+        let dv = document.querySelectorAll(p);
+        dv && dv.forEach((input) => {
+            let data=$('<textarea />').html(input.innerHTML).text();
+            input.innerHTML=data;
+        });
+    }
+    else
+    {
+        let dv = document.getElementById(p);
+        if(dv && typeof dv!="undefined")
+        {
+            let data= $('<textarea />').html(dv.innerHTML).text();
+            dv.innerHTML=data;
+        }
+    }
+}
 export function setThemeColor()
 {
     document.documentElement.style.setProperty('--primary', getTitle(_key.THEME_PRIMARY_COLOR));
@@ -726,15 +751,20 @@ export function getApps(page)
 //Centers view for stage of payment
 export function centerView(viewName = null) {
 	let view;
+    let oliverMark = document.querySelector(".oliver-mark");
 	if (viewName) {
-		console.log("here");
-		let allViews = document.querySelectorAll(".payment-view").forEach((view) => {
+        console.log(viewName);
+		if (viewName == "complete-payment") {
+			oliverMark && oliverMark.classList.remove("hide");
+		}
+
+		document.querySelectorAll(".payment-view").forEach((view) => {
 			if (!view.classList.contains("hide")) {
 				view.classList.add("hide");
 			}
 		});
 		view = document.querySelector(`.${viewName}`);
-		view.classList.remove("hide");
+		view && view.classList.remove("hide");
 	} else {
 		view = document.querySelector(".payment-view:not(.hide)");
 	}
@@ -755,9 +785,20 @@ export function centerView(viewName = null) {
 
 export function centerWrapper(container) {
 	let wrapper = container.firstElementChild;
-	if (wrapper.classList && !wrapper.classList.contains("wrapper")) {
+	if (wrapper.classList && !wrapper.classList.contains("wrapper") && !wrapper.classList.contains("popup-close")) {
 		return;
 	}
-	let margin = (container.offsetHeight - wrapper.offsetHeight) / 2;
-	if (margin > 0) wrapper.style.marginTop = `${margin}px`;
+    //this code added when close button is there on send email screen START
+    if(wrapper.classList.contains("popup-close") && container.children.length>1)
+    {
+        let wrapper_new = container.children[1];
+        let margin = (container.offsetHeight - wrapper_new.offsetHeight) / 2;
+        if (margin > 0) wrapper_new.style.marginTop = `${margin}px`;
+    }
+    //END
+    else
+    {
+        let margin = (container.offsetHeight - wrapper.offsetHeight) / 2;
+        if (margin > 0) wrapper.style.marginTop = `${margin}px`;
+    }
 }

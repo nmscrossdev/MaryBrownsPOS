@@ -558,13 +558,18 @@
 .recommendations>.row>.prod>p.name{
 	white-space: nowrap;
 	text-overflow: ellipsis;
-  }
+	max-width: 17vw;
+}
 .noAttribute
   {
 	text-align: center;
     font-family: Poppins;
     font-size: 1.67vw;
   }
+.cat-name-temp{
+	/*  */
+	font-family: Poppins;
+}
 /* define this for fixing the font-weight issue */
 div{font-weight: normal !important;}
 p{font-weight: normal !important;}

@@ -10,7 +10,7 @@ import Navbar from '../../../SelfCheckout/components/Navbar'
 import { FetchIndexDB } from '../../../settings/FetchIndexDB'
 import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
-import { _key, isDisplay } from '../../../settings/SelfCheckoutSettings';
+import { _key, isDisplay,markup } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 
 import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
@@ -517,7 +517,7 @@ close_ext_modal = () => {
                           </svg>
                         </div>
                         <div className="col">
-                        <p>{product.Title}</p>
+                        <p className='cat-name-temp'>{product.Title}</p>
 
                         </div>
                       </div> : null)
@@ -587,6 +587,11 @@ close_ext_modal = () => {
                   resize();
                   
                 }, 200)}</div> */}
+                <div style={{display:"none"}}>
+        {setTimeout(() => {
+        markup(".cat-name-temp") 
+        }, 10)}
+    </div>
       </React.Fragment>)
   }
 }
