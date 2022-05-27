@@ -1226,17 +1226,16 @@ class SelfCheckoutView extends React.Component {
         // this.handletileFilterData(null, 'product', null)
         this.setState({favFilterSelect:'',favFilterPSelect:''});
       }
-      showProductPopup=(id)=>
-      {
+    showProductPopup=(id)=>
+    {
         const filter_products = this.state.AllProductList && this.state.AllProductList.find(item =>{
         return item.WPID==id;
         });
-        this.tileProductFilter .handleIsVariationProduct(filter_products.type,filter_products);
-        //this.showPopuponcartlistView(filter_products,null)
-        console.log("-filter_products"+JSON.stringify(filter_products))
-                    //this.setState({productList:filter_products,AllProductList:productlist});
-
-      }
+        if(filter_products && typeof filter_products!="undefined")
+        {
+            this.tileProductFilter.handleIsVariationProduct(filter_products.type,filter_products);
+        }
+    }
     /** 
      * Created By   : Aatifa
      * Created Date : 01-06-2020
