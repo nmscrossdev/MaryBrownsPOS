@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {_key,getRecommendedProducts} from '../../settings/SelfCheckoutSettings';
+import {_key,getRecommendedProducts,markup} from '../../settings/SelfCheckoutSettings';
 import { FetchIndexDB } from '../../settings/FetchIndexDB';
 import { getTaxAllProduct } from '../../_components';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
@@ -127,6 +127,11 @@ export default class RecommendedProduct extends Component {
                     </p>
                 </div>
             }    
+    <div style={{display:"none"}}>
+        {setTimeout(() => {
+        markup(".recommendations>.row>.prod>p.name") 
+        }, 10)}
+    </div>
     </div>
     )
   }

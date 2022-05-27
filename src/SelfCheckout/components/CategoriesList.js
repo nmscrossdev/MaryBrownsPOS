@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
 import { Markup } from 'interweave';
-import {_key,getTitle,getBanners,getCategories,initDropDown,getApps} from '../../settings/SelfCheckoutSettings';
+import {_key,getTitle,getBanners,getCategories,initDropDown,getApps,markup} from '../../settings/SelfCheckoutSettings';
 class CategoriesList extends React.Component {
     constructor(props) {
         super(props);
@@ -217,16 +217,16 @@ class CategoriesList extends React.Component {
                             <path
                                 d="M9.7737 1.8335L1.3695 10.0002L9.7737 18.1668M1.3695 10.0002L20.5791 10.0002L1.3695 10.0002Z"
                                 stroke="white"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                             />
                         </svg>
                         Go back to main menu
                     </button>
                     }
                 </div>:
-                <p className="section">{item && item !==null && item !==""?  item.Value && item.Value.replace("&amp;","&") : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
+                <p className="section cat-name-temp">{item && item !==null && item !==""?  item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
                  } 
                 {   
                 current_categories && current_categories.length>0 &&
@@ -236,16 +236,20 @@ class CategoriesList extends React.Component {
                             return (
                                 item.parent==0 ?
                                 <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
-                                <p>{titleName && titleName.replace("&amp;","&")}</p>
+                                <p className='cat-name-temp'>{titleName}</p>
                                 </button>
                             : item.parent!=0 ?
                                 <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                                <p>{titleName && titleName.replace("&amp;","&")}</p>
+                                <p className='cat-name-temp'>{titleName}</p>
                                 </button>
                             : ''
                             )
                         })
-                    }</div>
+                    }
+                    <div style={{display:"none"}}>{setTimeout(() => {
+                        markup(".cat-name-temp")
+                    }, 10)}</div>
+                    </div>
             }
                    
                   
