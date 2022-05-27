@@ -22,7 +22,7 @@ export const  GTM_ClientDetail=()=> {
             'is-demo-user': demoUser
         }
         if (process.env.ENVIRONMENT=='production' && clientDetail  && checkEventExist('',_clientData)==false) {    
-         //   dataLayer.push(_clientData);        
+           // dataLayer.push(_clientData);        
         }
     }
  }
@@ -101,24 +101,24 @@ const addUSDConversionRate=(_order)=>{
     return _order;
 }
 const checkEventExist=(event,_clientData =null)=>{0
-    var checkEventExit=false;
-    if(_clientData  && dataLayer){
-    //    dataLayer.map((item,index)=>{
+    // var checkEventExit=false;
+    // if(_clientData  && dataLayer){
+    //     dataLayer.map((item,index)=>{
     //         try { if(JSON.parse(JSON.stringify(item))["oliverpos-client-guid"]){
     //                // console.log("Duplicate")
     //               return  checkEventExit =true;                  
     //             }
     //          } catch (error) {  }
-    //         }); 
+    //         });
        
-    }
-     else  if(event !=='' && dataLayer){
-            // dataLayer.map((item,index)=>{               
-            //     if(item.event && item.event==event )
-            //     checkEventExit =true;            
-            // })
-        }
-        return checkEventExit;
+    // }
+    //  else  if(event !=='' && dataLayer){
+    //         dataLayer.map((item,index)=>{               
+    //             if(item.event && item.event==event )
+    //             checkEventExit =true;            
+    //         })
+    //     }
+    //     return checkEventExit;
 }
 
 export const GTM_OliverDemoUser=(pageDetails)=>{
