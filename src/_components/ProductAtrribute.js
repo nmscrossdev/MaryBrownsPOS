@@ -92,7 +92,7 @@ class ProductAtrribute extends React.Component {
                 )
             })
             )
-             : <div style={{textAlign:"center", fontFamily:"Poppins"}}>{LocalizedLanguage.noAvailable} </div>)
+             : <div className='noAttribute'>{LocalizedLanguage.noAvailable} </div>)
         // :
         //     isMobileOnly == true && (_isSelfcheckout == false) ?
         //     _DistictAttribute && _DistictAttribute.length > 0 ?
