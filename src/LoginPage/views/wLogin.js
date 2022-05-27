@@ -395,10 +395,10 @@ class WebLoginView extends React.Component {
 				</div>
 				Sign in with Apple
 			</button> */}
-			<div className="row">
+			{/* <div className="row">
 				<p className="standard">Don't have an account?</p>
                 <a className="bold" href="#" onClick={handleSignInClick} >Sign Up Now!</a>
-			</div>
+			</div> */}
 		</div>
             // <div className="user_login user_login_center scroll-auto">
             //     <div className="user_login_pages">

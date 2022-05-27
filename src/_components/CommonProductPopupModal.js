@@ -55,7 +55,8 @@ class CommonProductPopupModal extends React.Component {
             isFetchWarehouseQty: true,
             isAttributeDelete: false,
             //compositeProductActive:false
-            isRefereshIconInventory: false    // Syn icon inventory state
+            isRefereshIconInventory: false,    // Syn icon inventory state
+            productNotes:""
         }
         this.clicks = [];
         this.timeout;
@@ -307,6 +308,11 @@ class CommonProductPopupModal extends React.Component {
                 } else {
                     cartItemList.push(data);
                 }
+
+                if(this.state.productNotes && this.state.productNotes !=="" ){
+                    cartItemList.push({ "Title": this.state.productNotes })
+                    this.state.productNotes="";
+                }
                 //--------------------------------------------------------------------------------------------
                 localStorage.removeItem("PRODUCT");
                 localStorage.removeItem("SINGLE_PRODUCT")
@@ -390,6 +396,8 @@ class CommonProductPopupModal extends React.Component {
         var tick_data = this.state.getVariationProductData && this.state.getVariationProductData.TicketInfo ? JSON.parse(this.state.getVariationProductData.TicketInfo) : '';
         var data = null;
         var SingleProduct = null;
+
+        
         if (single_product) {
             if (single_product.WPID == this.state.getVariationProductData.WPID) {
                 SingleProduct = single_product
@@ -491,6 +499,10 @@ class CommonProductPopupModal extends React.Component {
                 showSelectStatus: false,
                 variationfound: null
             })
+            if(this.state.productNotes && this.state.productNotes !=="" ){
+                cartlist.push({ "Title": this.state.productNotes })
+                this.state.productNotes="";
+            }
             this.stockUpdateQuantity(cartlist, data);
             localStorage.removeItem("PRODUCT");
             localStorage.removeItem("SINGLE_PRODUCT")
@@ -1222,35 +1234,37 @@ class CommonProductPopupModal extends React.Component {
         localStorage.removeItem("SINGLE_PRODUCT")
         this.props.dispatch(cartProductActions.singleProductDiscount());
         this.props.dispatch(cartProductActions.showSelectedProduct(null));
+        this.state.productNotes=""
         hideModal("VariationPopUp");
     }
     handleNote() {
         var txtNote = jQuery("#prodNote").val();
         if (txtNote != "") {
-            var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
-            cartlist = cartlist == null ? [] : cartlist;
-            cartlist.push({ "Title": txtNote })
-            this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
-            var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
-            if (list != null) {
-                const CheckoutList = {
-                    ListItem: cartlist,
-                    customerDetail: list.customerDetail,
-                    totalPrice: list.totalPrice,
-                    discountCalculated: list.discountCalculated,
-                    tax: list.tax,
-                    subTotal: list.subTotal,
-                    TaxId: list.TaxId,
-                    order_id: list.order_id !== 0 ? list.order_id : 0,
-                    showTaxStaus: list.showTaxStaus,
-                    _wc_points_redeemed: list._wc_points_redeemed,
-                    _wc_amount_redeemed: list._wc_amount_redeemed,
-                    _wc_points_logged_redemption: list._wc_points_logged_redemption
-                }
-                localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
-                //location.reload();
+            this.state.productNotes=txtNote;
+            // var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
+            // cartlist = cartlist == null ? [] : cartlist;
+            // cartlist.push({ "Title": txtNote })
+            // this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
+            // var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+            // if (list != null) {
+            //     const CheckoutList = {
+            //         ListItem: cartlist,
+            //         customerDetail: list.customerDetail,
+            //         totalPrice: list.totalPrice,
+            //         discountCalculated: list.discountCalculated,
+            //         tax: list.tax,
+            //         subTotal: list.subTotal,
+            //         TaxId: list.TaxId,
+            //         order_id: list.order_id !== 0 ? list.order_id : 0,
+            //         showTaxStaus: list.showTaxStaus,
+            //         _wc_points_redeemed: list._wc_points_redeemed,
+            //         _wc_amount_redeemed: list._wc_amount_redeemed,
+            //         _wc_points_logged_redemption: list._wc_points_logged_redemption
+            //     }
+            //     localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
+            //     //location.reload();
 
-            }
+           // }
          jQuery("#prodNote").val('');
          hideModal("add-note");
          hideOverlay("overlay-cover");
@@ -1370,7 +1384,12 @@ class CommonProductPopupModal extends React.Component {
     selectProductAttributePopup() {
         showModal('attributeselection')
     }
-
+    showNotesModel(){
+        if(this.state.productNotes && this.state.productNotes !==""){
+             jQuery("#prodNote").val(this.state.productNotes);
+        }
+        showModal("add-note") 
+    }
     render() {
         
         const { getVariationProductData, hasVariationProductData, single_product, showSelectedProduct, isInventoryUpdate } = this.props;
@@ -1503,7 +1522,7 @@ class CommonProductPopupModal extends React.Component {
                         <div className="product-container" style={{height:"93.5%"}}>
 
                             <div id="productCloseButton" className="product-close">
-                                <svg onClick={()=>hideModal('VariationPopUp')} 
+                                <svg onClick={()=>this.handleClose()} 
                                     width="22"
                                     height="21"
                                     viewBox="0 0 22 21"
@@ -1578,7 +1597,7 @@ class CommonProductPopupModal extends React.Component {
                                         }
                                 <div className="col">
                                     <p className="center">Add a note to your order</p>
-                                    <button type="button" id="addNote" onClick={()=>showModal("add-note")}>Add Note</button>
+                                    <button type="button" id="addNote" onClick={()=>this.showNotesModel()}>Add Note</button>
                                 </div>
                             {/* </div> */}
                             </div>
