@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import {_key,getRecommendedProducts} from '../../settings/SelfCheckoutSettings';
+import React, { Component } from 'react';
+// import { connect } from 'react-redux';
+import {_key,getRecommendedProducts,markup} from '../../settings/SelfCheckoutSettings';
 import { FetchIndexDB } from '../../settings/FetchIndexDB';
 import { getTaxAllProduct } from '../../_components';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
@@ -11,6 +12,7 @@ export default class RecommendedProduct extends Component {
             productList:[],
             AllProductList:[]
         }
+        //this.getProducts(this.props);
     }
     getProducts(nextPros)
     {
@@ -55,6 +57,7 @@ export default class RecommendedProduct extends Component {
     }
     callMethods(item)
     {
+       this.props.clearFilterData && this.props.clearFilterData();
        if(item && item.Type=="variable" || item.Type=="variation" )
        {
         var productlist = this.state.AllProductList;
@@ -64,13 +67,13 @@ export default class RecommendedProduct extends Component {
                         return (filterItem.ParentId === item.WPID)
                     })
                     item['Variations'] = variationProdect
-                    this.props.handleSimpleProduct(item)
+                    this.props.handleSimpleProduct && this.props.handleSimpleProduct(item)
                 }
             }
        }
        else
        {
-        this.props.handleSimpleProduct(item)
+        this.props.handleSimpleProduct && this.props.handleSimpleProduct(item)
        }
     }
    render() {
@@ -95,7 +98,7 @@ export default class RecommendedProduct extends Component {
                         <button type="button" className="prod" key={"product_"+index} onClick={()=>this.callMethods(item)}>
                             <img src={item.ProductImage ? item.ProductImage : 'placeholder.png'} alt="new" onError={(e) => imgError(e.target)}/>
                             <p className="name">{item.Title ? item.Title : item.Sku ? item.Sku : 'N/A'}</p>
-                            <p className="price">starting at $ {item.Price}</p>
+                            <p className="price">starting at {parseFloat(item.Price).toFixed(2)}</p>
                             <div className="button">
                             {this.props.page && this.props.page =='cart'?
 							<svg
@@ -127,7 +130,20 @@ export default class RecommendedProduct extends Component {
                     </p>
                 </div>
             }    
+    <div style={{display:"none"}}>
+        {setTimeout(() => {
+        markup(".recommendations>.row>.prod>p.name") 
+        }, 10)}
+    </div>
     </div>
     )
   }
 }
+// function mapStateToProps(state) {
+//     const { single_product } = state;
+//     return {
+//         single_product: single_product.items,
+//     };
+// }
+// const connectedRecommendedProduct = connect(mapStateToProps)(RecommendedProduct);
+// export { connectedRecommendedProduct as RecommendedProduct };

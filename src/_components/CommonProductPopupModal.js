@@ -21,7 +21,7 @@ import RecommendedProduct from '../SelfCheckout/components/RecommendedProduct'
 import { getProductSummery } from '../WrapperSettings/CommonWork';
 import { allProductActions } from '../_actions';
 import Navbar from '../SelfCheckout/components/Navbar';
-import {_key} from '../settings/SelfCheckoutSettings';
+import {_key,markup} from '../settings/SelfCheckoutSettings';
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
     constructor(props) {
@@ -55,7 +55,8 @@ class CommonProductPopupModal extends React.Component {
             isFetchWarehouseQty: true,
             isAttributeDelete: false,
             //compositeProductActive:false
-            isRefereshIconInventory: false    // Syn icon inventory state
+            isRefereshIconInventory: false,    // Syn icon inventory state
+            productNotes:""
         }
         this.clicks = [];
         this.timeout;
@@ -307,6 +308,11 @@ class CommonProductPopupModal extends React.Component {
                 } else {
                     cartItemList.push(data);
                 }
+
+                if(this.state.productNotes && this.state.productNotes !=="" ){
+                    cartItemList.push({ "Title": this.state.productNotes })
+                    this.state.productNotes="";
+                }
                 //--------------------------------------------------------------------------------------------
                 localStorage.removeItem("PRODUCT");
                 localStorage.removeItem("SINGLE_PRODUCT")
@@ -340,12 +346,13 @@ class CommonProductPopupModal extends React.Component {
                     selectedOptionCode: null,
                     selectedOptions: []
                 });
-                $(".button_with_checkbox input").prop("checked", false);
+                $(".attribute-options-css").prop("checked", false);
                 this.state.variationStyles = { cursor: "no-drop", pointerEvents: "none" }
                 $("#add_variation_product_btn").css({ "cursor": "no-drop", "pointer-events": "none" });
                 //--------------------------------------------------------------------
                 //   this.forceUpdate()
                 // $(".close").trigger("click");
+                //$(".attribute-options-css").prop("checked", false);
                 hideModal('VariationPopUp');
                 //$('#VariationPopUp').modal('hide')
                 if (isMobileOnly == true && ActiveUser.key.isSelfcheckout == false) {
@@ -361,7 +368,7 @@ class CommonProductPopupModal extends React.Component {
                 }
                 // $('#VariationPopUp').modal('hide')
                 hideModal('VariationPopUp');
-                this.props.msg('Product is out of stock.');
+                this.props.msg(LocalizedLanguage.productOutOfStock);
                 //$('#common_msg_popup').modal('show');
                 showModal('common_msg_popup');
 
@@ -390,6 +397,8 @@ class CommonProductPopupModal extends React.Component {
         var tick_data = this.state.getVariationProductData && this.state.getVariationProductData.TicketInfo ? JSON.parse(this.state.getVariationProductData.TicketInfo) : '';
         var data = null;
         var SingleProduct = null;
+
+        
         if (single_product) {
             if (single_product.WPID == this.state.getVariationProductData.WPID) {
                 SingleProduct = single_product
@@ -491,6 +500,10 @@ class CommonProductPopupModal extends React.Component {
                 showSelectStatus: false,
                 variationfound: null
             })
+            if(this.state.productNotes && this.state.productNotes !=="" ){
+                cartlist.push({ "Title": this.state.productNotes })
+                this.state.productNotes="";
+            }
             this.stockUpdateQuantity(cartlist, data);
             localStorage.removeItem("PRODUCT");
             localStorage.removeItem("SINGLE_PRODUCT")
@@ -514,7 +527,7 @@ class CommonProductPopupModal extends React.Component {
             }
             //$('#VariationPopUp').modal('hide');
             hideModal('VariationPopUp');
-            this.props.msg('Product is out of stock.');
+            this.props.msg(LocalizedLanguage.productOutOfStock);
             //$('#common_msg_popup').modal('show');
             showModal('common_msg_popup');
         }
@@ -554,7 +567,7 @@ class CommonProductPopupModal extends React.Component {
     componentDidMount() {
         KeyAppsDisplay.DisplayApps(["print_label"]);
         setTimeout(() => {
-            $(".button_with_checkbox input").prop("checked", false);
+            $(".attribute-options-css").prop("checked", false);
         }, 300);
 
     }
@@ -1184,7 +1197,7 @@ class CommonProductPopupModal extends React.Component {
 
     handleClose() {
         this.state.isRefereshIconInventory = false;
-        $(".button_with_checkbox input").prop("checked", false);
+        $(".attribute-options-css").prop("checked", false);
         this.props.productData(false);
         //this.props.handleSimpleProduct(false);
         if (this.props.getVariationProductData) {
@@ -1221,6 +1234,7 @@ class CommonProductPopupModal extends React.Component {
         localStorage.removeItem("SINGLE_PRODUCT")
         this.props.dispatch(cartProductActions.singleProductDiscount());
         this.props.dispatch(cartProductActions.showSelectedProduct(null));
+        this.state.productNotes=""
         hideModal("VariationPopUp");
         hideModal('popupDisplayMessage');
     }
@@ -1228,30 +1242,31 @@ class CommonProductPopupModal extends React.Component {
     handleNote() {
         var txtNote = jQuery("#prodNote").val();
         if (txtNote != "") {
-            var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
-            cartlist = cartlist == null ? [] : cartlist;
-            cartlist.push({ "Title": txtNote })
-            this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
-            var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
-            if (list != null) {
-                const CheckoutList = {
-                    ListItem: cartlist,
-                    customerDetail: list.customerDetail,
-                    totalPrice: list.totalPrice,
-                    discountCalculated: list.discountCalculated,
-                    tax: list.tax,
-                    subTotal: list.subTotal,
-                    TaxId: list.TaxId,
-                    order_id: list.order_id !== 0 ? list.order_id : 0,
-                    showTaxStaus: list.showTaxStaus,
-                    _wc_points_redeemed: list._wc_points_redeemed,
-                    _wc_amount_redeemed: list._wc_amount_redeemed,
-                    _wc_points_logged_redemption: list._wc_points_logged_redemption
-                }
-                localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
-                //location.reload();
+            this.state.productNotes=txtNote;
+            // var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
+            // cartlist = cartlist == null ? [] : cartlist;
+            // cartlist.push({ "Title": txtNote })
+            // this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
+            // var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+            // if (list != null) {
+            //     const CheckoutList = {
+            //         ListItem: cartlist,
+            //         customerDetail: list.customerDetail,
+            //         totalPrice: list.totalPrice,
+            //         discountCalculated: list.discountCalculated,
+            //         tax: list.tax,
+            //         subTotal: list.subTotal,
+            //         TaxId: list.TaxId,
+            //         order_id: list.order_id !== 0 ? list.order_id : 0,
+            //         showTaxStaus: list.showTaxStaus,
+            //         _wc_points_redeemed: list._wc_points_redeemed,
+            //         _wc_amount_redeemed: list._wc_amount_redeemed,
+            //         _wc_points_logged_redemption: list._wc_points_logged_redemption
+            //     }
+            //     localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
+            //     //location.reload();
 
-            }
+           // }
          jQuery("#prodNote").val('');
          hideModal("add-note");
          hideOverlay("overlay-cover");
@@ -1327,8 +1342,9 @@ class CommonProductPopupModal extends React.Component {
      * Created date : 09-04-2020
      * Description : For clear selected attribute in variation popup
      */
-    clearCheckedField() {
-        $(".button_with_checkbox input").prop("checked", false);
+    clearCheckedField=()=> {
+        $(".attribute-options-css").prop("checked", false);
+        // $(".attribute-options-css").prop("checked", false);
         if (this.props.getVariationProductData) {
             this.setState({
                 showSelectStatus: false,
@@ -1371,7 +1387,12 @@ class CommonProductPopupModal extends React.Component {
     selectProductAttributePopup() {
         showModal('attributeselection')
     }
-
+    showNotesModel(){
+        if(this.state.productNotes && this.state.productNotes !==""){
+             jQuery("#prodNote").val(this.state.productNotes);
+        }
+        showModal("add-note") 
+    }
     render() {
         
         const { getVariationProductData, hasVariationProductData, single_product, showSelectedProduct, isInventoryUpdate } = this.props;
@@ -1504,7 +1525,7 @@ class CommonProductPopupModal extends React.Component {
                         <div className="product-container" style={{height:"93.5%"}}>
 
                             <div id="productCloseButton" className="product-close">
-                                <svg onClick={()=>this.handleClose()}
+                                <svg onClick={()=>this.handleClose()} 
                                     width="22"
                                     height="21"
                                     viewBox="0 0 22 21"
@@ -1517,7 +1538,7 @@ class CommonProductPopupModal extends React.Component {
                                     />
                                 </svg>
                             </div>
-                            <p className="prod-name" title={this.props.proTitle}>{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
+                            <p className="prod-name" title={this.props.proTitle}>{hasVariationProductData ? (variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle) : ''}</p>
 
                             {/* <div className="popup-header"> */}
                                 {/* <div className="popup-icon">
@@ -1533,7 +1554,8 @@ class CommonProductPopupModal extends React.Component {
                                         </div>
                                         <div className="col">
                                             <p className="prod-description">
-                                            <Markup content={getVariationProductData.ShortDescription} /> 
+                                                { getVariationProductData.ShortDescription}
+                                            {/* <Markup content={getVariationProductData.ShortDescription} />  */}
                                             </p>
                                             <div className="inner-row">
                                                 <div className="text-row">
@@ -1579,11 +1601,11 @@ class CommonProductPopupModal extends React.Component {
                                         }
                                 <div className="col">
                                     <p className="center">Add a note to your order</p>
-                                    <button type="button" id="addNote" onClick={()=>showModal("add-note")}>Add Note</button>
+                                    <button type="button" id="addNote" onClick={()=>this.showNotesModel()}>Add Note</button>
                                 </div>
                             {/* </div> */}
                             </div>
-                            <RecommendedProduct showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
+                            <RecommendedProduct clearFilterData={this.clearCheckedField} showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
                             <div className=''>
                                 <button data-target="#popupDisplayMessage" data-toggle="modal"  onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                 !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" style={{width:"84.59vw"}}>{LocalizedLanguage.addToCart}</button>
@@ -1597,26 +1619,33 @@ class CommonProductPopupModal extends React.Component {
                             }
                             </div>
                             <div className="overlay-cover hide"></div>
-                            <div class="popup add-note hide" id="add-note">
-                                <svg class="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
+                            <div className="popup add-note hide" id="add-note">
+                                <svg className="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
                                 <path
                                 d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
                                 fill="#050505"
                                 />
                                 </svg>
-                                <div class="popup-header">
-                                    <div class="col">
+                                <div className="popup-header">
+                                    <div className="col">
                                         <p>Add Product Note</p>
-                                        <div class="divider"></div>
+                                        <div className="divider"></div>
                                     </div>
                                 </div>
-                                <div class="popup-body">
+                                <div className="popup-body">
                                     <p>Add a note or any comments for the product.</p>
                                     <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
                                     <button onClick={()=>this.handleNote()} >Add Note to item</button>
                                 </div>
                             </div>
+                            <div style={{display:"none"}}>
+                            {setTimeout(() => {
+                                markup(".prod-description")
+                                markup(".prod-name")
+                            }, 10)}
+                            </div>
                         </div>
+                        
                     }
                 {/* </div> */}
             </div>

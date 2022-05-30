@@ -42,8 +42,8 @@ import { TickitDetailsPopupModal } from '../_components/TickitDetailsPopupModal/
 import Navbar from '../SelfCheckout/components/Navbar';
 import Carasoul from '../SelfCheckout/components/Carasoul';
 import ScreenSaver from '../SelfCheckout/components/ScreenSaver';
-import IdleScreen from '../SelfCheckout/components/IdleScreen';
-import {_key,getTitle,getBanners,getCategories,initDropDown,getApps} from '../settings/SelfCheckoutSettings';
+// import IdleScreen from '../SelfCheckout/components/IdleScreen';
+import {_key,getTitle,getBanners,getCategories,initDropDown,getApps, markup} from '../settings/SelfCheckoutSettings';
 import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 import { CommonExtensionPopup } from '../_components/CommonExtensionPopup';
 import { handleAppEvent } from '../ExtensionHandeler/commonAppHandler';
@@ -108,6 +108,8 @@ class SelfCheckoutView extends React.Component {
         this.handleScan = this.handleScan.bind(this);
         this.filterProduct=this.filterProduct.bind(this)
         this.handletileFilterData=this.handletileFilterData.bind(this)
+        localStorage.removeItem("oliver_order_payments")
+        localStorage.removeItem("CHECKLIST")
         
         
         if (!localStorage.getItem('UDID')) {
@@ -283,7 +285,7 @@ class SelfCheckoutView extends React.Component {
                                 this.filterProduct();
                             } else {
                                 //this.props.msg('Product is out of stock.');
-                                this.setState({common_Msg:'Product is out of stock.'});
+                                this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
                                 showModal('common_msg_popup');
                                 //$('#common_msg_popup').modal('show');
                             }
@@ -356,7 +358,7 @@ class SelfCheckoutView extends React.Component {
                              //-----------------------------------------
                                 
                                 } else {
-                                    this.setState({common_Msg:'Product is out of stock.'});
+                                    this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
                                     //this.props.msg('Product is out of stock.');
                                     //$('#common_msg_popup').modal('show');
                                      showModal('common_msg_popup');
@@ -759,7 +761,7 @@ class SelfCheckoutView extends React.Component {
             if (e.origin  && e.data && e.data !=="") { //&& _user && _user.instance
                 try {
                     var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
-                    console.log("clientEvent----->", JSON.stringify(extensionData))
+                    //console.log("clientEvent----->", JSON.stringify(extensionData))
                     // if (extensionData && extensionData !== "" && extensionData.oliverpos) {
                     //     this.showExtention(extensionData);
                     // }
@@ -973,7 +975,7 @@ class SelfCheckoutView extends React.Component {
             this.state.showSelectStatus = false;
             this.state.variationDefaultQunatity = 1;
         } else {
-            this.CommonMsg('Product is out of stock.');
+            this.CommonMsg(LocalizedLanguage.productOutOfStock);
             showModal('common_msg_popup');
         }
         //Android Call----------------------------
@@ -987,6 +989,7 @@ class SelfCheckoutView extends React.Component {
     getCompositeExtensionFinished = (_jsonMsg) => {
         // $('#VariationPopUp').modal('hide');
         //  console.log("ExtensionFinished");
+        $(".attribute-options-css").prop("checked", false);
         hideModal('VariationPopUp');
         this.windowCloseEv.close();
         this.handleProductData(false);
@@ -1223,17 +1226,16 @@ class SelfCheckoutView extends React.Component {
         // this.handletileFilterData(null, 'product', null)
         this.setState({favFilterSelect:'',favFilterPSelect:''});
       }
-      showProductPopup=(id)=>
-      {
+    showProductPopup=(id)=>
+    {
         const filter_products = this.state.AllProductList && this.state.AllProductList.find(item =>{
         return item.WPID==id;
         });
-        this.tileProductFilter .handleIsVariationProduct(filter_products.type,filter_products);
-        //this.showPopuponcartlistView(filter_products,null)
-        console.log("-filter_products"+JSON.stringify(filter_products))
-                    //this.setState({productList:filter_products,AllProductList:productlist});
-
-      }
+        if(filter_products && typeof filter_products!="undefined")
+        {
+            this.tileProductFilter.handleIsVariationProduct(filter_products.type,filter_products);
+        }
+    }
     /** 
      * Created By   : Aatifa
      * Created Date : 01-06-2020
@@ -1340,7 +1342,7 @@ class SelfCheckoutView extends React.Component {
                 closeCommonPopup = {()=>this.handleCloseCommonPopup()}
                 id = {'commonInfoPopup'}
                 /> */}
-                <IdleScreen></IdleScreen>
+                {/* <IdleScreen></IdleScreen> */}
                 <ScreenSaver></ScreenSaver>
                 <div style={{display:"none"}}>{
                     //Page Setup
@@ -1355,6 +1357,7 @@ class SelfCheckoutView extends React.Component {
                         // scaleSVG();
                         // scaleImages();
                         // resize();
+                        markup(".card-tile-container>.product-card>p.name")
                     }, 200)
 
 

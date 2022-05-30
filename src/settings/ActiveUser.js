@@ -161,7 +161,7 @@ exports.key = {
     pdfFormate:pdfFormate(),
     orderRecieptDateFormate : recieptDateFormate(),
     orderRecieptTimeFormate : recieptTimeFormate(),
-    isSelfcheckout:true,// _isSelfcheckout,
+    isSelfcheckout:_isSelfcheckout,
     companyLogo:companyLogo(),
     firebasePopupDetails : firebasePopupDetails
 }   

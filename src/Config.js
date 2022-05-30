@@ -15,7 +15,7 @@ exports.key = {
     DATE_FORMAT             :'DD, MMMM YYYY',
     DATETIME_FORMAT         :'DD, MMMM YYYY, h:mm a',
     TIMEDATE_FORMAT         :'h:mm A DD, MMMM YYYY',
-    RECIEPT_IMAGE_DOMAIN    : "https://"+ (process.env.ENVIRONMENT=='production'?'app.oliverpos.com' :process.env.ENVIRONMENT=='development'?'qa1.app.olivertest.com':'dev1.app.olivertest.com'),
+        RECIEPT_IMAGE_DOMAIN    : "https://"+ (process.env.ENVIRONMENT=='production'?'app.oliverpos.com' :process.env.ENVIRONMENT=='development'?'qa1.app.olivertest.com':'dev1.app.olivertest.com'),
     NOTIFICATION_LIMIT      : 100 ,
     NOTIFICATION_FORMAT     :'DD/MM/YY, h:mm a',
     SYNC_COUNT_LIMIT        :100,
@@ -31,7 +31,7 @@ exports.key = {
     SEGMENT_ANALYTIC_KEY    : 'xnSztkKDSndS5XpNN7rrj8sJBvfABbvh',
     FIREBASE_NOTIFICATION_COUNT : 5,
     ALTERNATIVE_PRODUCT_SEARCH_START:20000, // starting the product searching on alternative input character by this limit
-
+    APPLE_LOGIN_RETURN_URL:window.location.href.includes('dev1.selfcheckout.olivertest.com')?'https://dev1.selfcheckout.olivertest.com/login': window.location.href.includes('qa1.selfcheckout.olivertest.com')?'qa1.selfcheckout.olivertest.com':'https://kiosk.oliverpos.com/login'
     //New google tag script has been placed in live branch
    // GA_KEY                  : process.env.ENVIRONMENT=='production'? 'UA-114926859-8':'UA-141287502-1'
     

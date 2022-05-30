@@ -280,6 +280,7 @@
 	justify-content: space-between;
 	min-width: 400px;
 	margin-right: -16px;
+	overflow-x: hidden;
 }
 
 .payment-row>button {
@@ -546,6 +547,28 @@
 .select-payment>.payment-options>.row button:only-child
 {
 	width: 100% !important;
+}
+.view-cart {
+    z-index: 1;
+}
+.card-tile-container>.product-card>p.name{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.recommendations>.row>.prod>p.name{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 17vw;
+}
+.noAttribute
+  {
+	text-align: center;
+    font-family: Poppins;
+    font-size: 1.67vw;
+  }
+.cat-name-temp{
+	/*  */
+	font-family: Poppins;
 }
 /* define this for fixing the font-weight issue */
 div{font-weight: normal !important;}

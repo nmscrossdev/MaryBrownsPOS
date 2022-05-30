@@ -8,11 +8,13 @@ import $ from 'jquery'
 import { OnboardingShopViewPopup } from '../../../onboarding/components/OnboardingShopViewPopup';
 import { onBackTOLoginBtnClick,getHostURLsBySelectedExt } from '../../../_components/CommonJS';
 import ActiveUser from '../../../settings/ActiveUser'
-import {SendMailComponent} from './SendMailComponent;'
+import {SendMailComponent} from './SendMailComponent'
+import { cartProductActions } from '../../../_actions'
 import {_key,setThemeColor,getCustomLogo,getApps,centerView} from '../../../settings/SelfCheckoutSettings';
 import BottomApps from '../../../SelfCheckout/components/BottomApps';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 import Config from '../../../Config';
+import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 
@@ -38,6 +40,7 @@ class SelfSaleComplete extends React.Component {
             extLogo:''
         }
         this.sendMail = this.sendMail.bind(this);
+        this.clear = this.clear.bind(this);
         setThemeColor();
     }
     // get extension pageUrl and hostUrl of current clicked extension
@@ -59,10 +62,41 @@ class SelfSaleComplete extends React.Component {
         this.setState({ extensionIframe: false });
         hideModal('common_ext_popup');
     }
-    sendMail() {
-        this.setState({emailSend:true})
+    sendMail(isBack=false) {
+        if(isBack==true)
+        {
+            this.setState({emailSend:false})
+        }
+        else
+        {
+            this.setState({emailSend:true})
+        }
+       
     }
-
+    clear() {
+        localStorage.removeItem('CARD_PRODUCT_LIST');
+        localStorage.removeItem('GTM_ORDER');        
+        const { dispatch } = this.props;
+        localStorage.removeItem('ORDER_ID');
+        localStorage.removeItem('CHECKLIST');
+        localStorage.removeItem('oliver_order_payments');
+        localStorage.removeItem('AdCusDetail');
+        localStorage.removeItem('CARD_PRODUCT_LIST');
+        localStorage.removeItem("CART");
+        localStorage.removeItem("SINGLE_PRODUCT");
+        localStorage.removeItem("PRODUCT");
+        localStorage.removeItem('PRODUCTX_DATA');
+        localStorage.removeItem('PAYCONIQ_PAYMENT_RESPONSE');
+        localStorage.removeItem('ONLINE_PAYMENT_RESPONSE');
+        localStorage.removeItem('STRIPE_PAYMENT_RESPONSE');
+        localStorage.removeItem('GLOBAL_PAYMENT_RESPONSE');
+        localStorage.removeItem('PAYMENT_RESPONSE');
+        localStorage.removeItem('PENDING_PAYMENTS');
+        localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
+        dispatch(cartProductActions.addtoCartProduct(null));
+        history.push('/SelfCheckoutView')
+        // window.location='/SelfCheckoutView';
+    }
     render() {
         const { printReceipt, yur4, baseurl, barcode_image, orderId, tempOrderId, handleContinue } = this.props;
         var custom_logo=getCustomLogo();
@@ -110,6 +144,7 @@ class SelfSaleComplete extends React.Component {
                 this.state.emailSend == true  ? <SendMailComponent
                                                 {...this.props}
                                                 {...this.state}
+                                                goBack={this.sendMail}
                                                 orderId={this.props.orderId}
                                                 tempOrderId={this.props.tempOrderId}
                 /> : 
@@ -204,6 +239,7 @@ class SelfSaleComplete extends React.Component {
                     <p className="style4">How would you like to receive your reciept?</p>
                     <button onClick={() => printReceipt()} id="printButton">{LocalizedLanguage.print}</button>
                     <button onClick={() => this.sendMail()} id="emailButton">{LocalizedLanguage.email}</button>
+                    <button className='style2' onClick={() => this.clear()} id="noReceiptButton">No Receipt</button>
                     {/* <button onClick={() => handleContinue()}>{LocalizedLanguage.Continue}</button> */}
                    {apps && apps.length>0?
                     <BottomApps apps={apps}  showExtensionIframe={this.showExtensionIframe}></BottomApps>
@@ -239,6 +275,8 @@ class SelfSaleComplete extends React.Component {
                         </button>
                     </div> */}
                 </div>
+                {/* <img src="../../assets/images/SVG/oliver-watermark.svg" alt="" class="oliver-mark hide" /> */}
+                <ScreenSaver hide={true}></ScreenSaver>
                 <div style={{display:"none"}}>
           {//Page Setup
           setTimeout(() => {
