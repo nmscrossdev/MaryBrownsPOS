@@ -1217,13 +1217,14 @@ class CommonProductPopupModal extends React.Component {
             });
             this.state.variationDefaultQunatity = 1;
         }
-
         localStorage.removeItem("PRODUCT");
         localStorage.removeItem("SINGLE_PRODUCT")
         this.props.dispatch(cartProductActions.singleProductDiscount());
         this.props.dispatch(cartProductActions.showSelectedProduct(null));
         hideModal("VariationPopUp");
+        hideModal('popupDisplayMessage');
     }
+
     handleNote() {
         var txtNote = jQuery("#prodNote").val();
         if (txtNote != "") {
@@ -1503,7 +1504,7 @@ class CommonProductPopupModal extends React.Component {
                         <div className="product-container" style={{height:"93.5%"}}>
 
                             <div id="productCloseButton" className="product-close">
-                                <svg onClick={()=>hideModal('VariationPopUp')} 
+                                <svg onClick={()=>this.handleClose()}
                                     width="22"
                                     height="21"
                                     viewBox="0 0 22 21"

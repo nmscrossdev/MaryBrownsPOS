@@ -23,7 +23,7 @@ class PopupDisplayMessage extends React.Component {
         console.log(this.props, "variation popup")
         return (
             // <div className="popup hide" id="popupDisplayMessage" style={{overflowY:"hidden",textAlign:"center"}}>
-            <div className="popup hide" id="popupDisplayMessage" style={{overflowY:"hidden",textAlign:"center"}}>
+            <div className="popup hide" id="popupDisplayMessage" style={{overflowY:"hidden",textAlign:"left"}}>
                     <div className="product-container">
                 <div type="button" className="popup-close">
                     <svg onClick={() => this.closePopupDisplayMessage()}
@@ -42,8 +42,8 @@ class PopupDisplayMessage extends React.Component {
                 <p className="prod-name" id="epos_error_model_title">{LocalizedLanguage.messageTitle}</p>
                     <div className="modal-body center-center pt-5 pb-5">
                         <div className="plan-info">
-                            <p style={{ fontSize: "2.69vw" }}>{LocalizedLanguage.selectAllAttributes}</p>
-                            <p style={{ fontSize: "2.59vw" }}>{LocalizedLanguage.selectSpecificVariation}</p>
+                            <p style={{ fontSize:"20px" }} className='plan-info'>{LocalizedLanguage.selectAllAttributes}</p>
+                            <p className='plan-info'>{LocalizedLanguage.selectSpecificVariation}</p>
                             <button style={{ width: "50vw", marginTop: "20px" }} className="view-cart" type="button" onClick={() => this.closePopupDisplayMessage()}>{LocalizedLanguage.Continue}
                             </button>
                         </div>
