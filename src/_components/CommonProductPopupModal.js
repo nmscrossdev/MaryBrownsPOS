@@ -166,9 +166,15 @@ class CommonProductPopupModal extends React.Component {
         if ((!this.props.showSelectedProduct && filterLength !== productAttributsWithVariation.length)
             || (this.props.getVariationProductData.Type == 'variable' && productAttributsWithVariation.length == 0) || (this.state.isAttributeDelete == false)) {
             if (ActiveUser.key.isSelfcheckout == true) {
+                showOverlay();
+                showModal('popupDisplayMessage');
+               
+            }
+            else{
+                showOverlay();
                 showModal('popupDisplayMessage');
             }
-            showModal('popupDisplayMessage');
+           
         }
         else {
             var showSelectedProduct = this.props.showSelectedProduct;
@@ -281,7 +287,9 @@ class CommonProductPopupModal extends React.Component {
                 /* Created By:priyanka,Created Date:14/6/2019,Description:quantity msg poppup */
                 this.props.msg(LocalizedLanguage.productQty)
                 // $('#common_msg_popup').modal('show')
+                showOverlay();
                 showModal('common_msg_popup');
+              
                 return;
             } else if (variationQantity == 'Unlimited' || qty <= variationQantity || qty <= this.state.variationStockQunatity) {
                 //checking if variation reacord editing and  new variation added then remove first one from cart----------------------
@@ -370,6 +378,7 @@ class CommonProductPopupModal extends React.Component {
                 hideModal('VariationPopUp');
                 this.props.msg(LocalizedLanguage.productOutOfStock);
                 //$('#common_msg_popup').modal('show');
+                showOverlay();
                 showModal('common_msg_popup');
 
             }
@@ -469,6 +478,7 @@ class CommonProductPopupModal extends React.Component {
             /* Created By:priyanka,Created Date:14/6/2019,Description:quantity msg poppup */
             this.props.msg(LocalizedLanguage.productQty)
             //$('#common_msg_popup').modal('show')
+            showOverlay();
             showModal('common_msg_popup');
             return;
         }
@@ -529,6 +539,7 @@ class CommonProductPopupModal extends React.Component {
             hideModal('VariationPopUp');
             this.props.msg(LocalizedLanguage.productOutOfStock);
             //$('#common_msg_popup').modal('show');
+            showOverlay();
             showModal('common_msg_popup');
         }
 
@@ -1236,6 +1247,7 @@ class CommonProductPopupModal extends React.Component {
         this.props.dispatch(cartProductActions.showSelectedProduct(null));
         this.state.productNotes=""
         hideModal("VariationPopUp");
+        hideOverlay();
         hideModal('popupDisplayMessage');
     }
 
@@ -1607,7 +1619,7 @@ class CommonProductPopupModal extends React.Component {
                             </div>
                             <RecommendedProduct clearFilterData={this.clearCheckedField} showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
                             <div className=''>
-                                <button data-target="#popupDisplayMessage" data-toggle="modal"  onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
+                                <button  onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                 !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" style={{width:"84.59vw"}}>{LocalizedLanguage.addToCart}</button>
                             </div>
                             <div style={{display:"none"}}>

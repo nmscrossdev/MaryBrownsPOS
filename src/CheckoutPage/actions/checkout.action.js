@@ -312,7 +312,14 @@ function save(shopOrder, path) {
                             localStorage.removeItem('CHECKLIST');
                             localStorage.removeItem('AdCusDetail');
                             localStorage.removeItem('CARD_PRODUCT_LIST');
-                            window.location = '/shopview';
+                            if(ActiveUser.key.isSelfcheckout == true)
+                            {
+                                history.push('/salecomplete');
+                            }
+                            else
+                            {
+                                window.location = '/shopview';
+                            }
                         }
                     }, 500)
                     dispatch(alertActions.success('save custmoer order successfully'));

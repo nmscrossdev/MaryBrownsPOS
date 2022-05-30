@@ -1215,11 +1215,13 @@ class SelfCheckoutView extends React.Component {
           })
         this.setState({ extensionIframe: true })
         setTimeout(() => {
+            showOverlay();
             showModal('common_ext_popup')
         }, 500);
     }
     close_ext_modal = () => {
         this.setState({ extensionIframe: false });
+        hideOverlay();
         hideModal('common_ext_popup');
     }
     GoBackhandleClick=()=> {
@@ -1257,7 +1259,7 @@ class SelfCheckoutView extends React.Component {
         //console.log("--length--"+length)
         return (
             <React.Fragment /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
-            <div className="cover hide"></div>
+           
             <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={length} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
@@ -1344,6 +1346,7 @@ class SelfCheckoutView extends React.Component {
                 /> */}
                 {/* <IdleScreen></IdleScreen> */}
                 <ScreenSaver></ScreenSaver>
+                <div className="cover hide"></div>
                 <div style={{display:"none"}}>{
                     //Page Setup
                     setTimeout(() => {

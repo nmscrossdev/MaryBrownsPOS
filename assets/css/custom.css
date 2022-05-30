@@ -582,3 +582,7 @@ span{font-weight: normal !important;}
     overflow-y: scroll;
     max-height: 22.22vw;
 }
+.slider-container>.slider>img
+{
+	border-radius: 0.74vw;
+}
