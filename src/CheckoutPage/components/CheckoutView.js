@@ -1010,6 +1010,20 @@ class CheckoutView extends React.Component {
         var update_local_payment = [];
         var order_meta = [];
         var oliver_order_payments = this.getOrderPayments(order_id);
+
+        // this code for park sale from selfcheckout PAY AT COUNTER START
+        if(oliver_order_payments && oliver_order_payments.length==1 && ActiveUser.key.isSelfcheckout==true)
+        {
+            var _status=oliver_order_payments[0].payment_type;
+            if(_status && typeof _status!="undefined" && _status==="park-sale")
+            {
+                status="park_sale";
+                oliver_order_payments=null;
+            }
+        }
+        //this code for park sale from selfcheckout PAY AT COUNTER END
+
+
         var redeemAmount = checkList && checkList._wc_amount_redeemed ? parseFloat(checkList._wc_amount_redeemed) : 0;
         var productXArray = localStorage.getItem("PRODUCTX_DATA") ? JSON.parse(localStorage.getItem("PRODUCTX_DATA")) : "";
         var checkoutProductList = [];
@@ -1066,7 +1080,7 @@ class CheckoutView extends React.Component {
             checkList.ListItem.push(customfeeData)
         
         }
-        if (typeof oliver_order_payments !== "undefined") {
+        if (oliver_order_payments && typeof oliver_order_payments !== "undefined") {
             var _paymentNotes = [];
             oliver_order_payments.map(items => {
                 var amountForPayType=0.0;

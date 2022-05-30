@@ -12,6 +12,7 @@ class PopupDisplayMessage extends React.Component {
      * Description: for closing the popup
      */
     closePopupDisplayMessage() {
+        hideOverlay();
         hideModal('popupDisplayMessage');
     }
 

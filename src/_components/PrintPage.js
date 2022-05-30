@@ -1016,6 +1016,10 @@ if(order_reciept.ShowCustomText)
                   if(total_cashround==0 && cash_rounding_amount && cash_rounding_amount !== 0 && cash_rounding_amount !== '')
                   {total_cashround=cash_rounding_amount}
                  
+  if(isPaymentCash==false && ActiveUser.key.isSelfcheckout == true)
+  {
+    total_cashround=0;
+  }
 
   // console.log("Shop Name", data && data.ShopName);
   var topLogo = '';

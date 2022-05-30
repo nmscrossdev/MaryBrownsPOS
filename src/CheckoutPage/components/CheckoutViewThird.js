@@ -756,7 +756,7 @@ class CheckoutViewThird extends React.Component {
               
                     (this.state.isPaymentStart == false || !global_payment) ?
                     <React.Fragment>
-                    <div class="cover hide"></div>
+                    <div className="cover hide"></div>
                             <div className='bodyCenterBg'>
                                 {this.state.loading == true ? <LoadingModal /> : ''}
                                 {/* <div className="payment-nav">

@@ -56,6 +56,7 @@ changeURL=(msg,itemCount)=>
     if(itemCount==0)
     { 
       msg(LocalizedLanguage.messageCartNoProduct);
+      showOverlay();
       showModal('common_msg_popup');
 
     }

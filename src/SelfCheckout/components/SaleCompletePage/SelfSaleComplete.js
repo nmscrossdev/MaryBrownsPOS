@@ -277,6 +277,7 @@ class SelfSaleComplete extends React.Component {
                 </div>
                 {/* <img src="../../assets/images/SVG/oliver-watermark.svg" alt="" class="oliver-mark hide" /> */}
                 <ScreenSaver hide={true}></ScreenSaver>
+                <div className="cover hide"></div>
                 <div style={{display:"none"}}>
           {//Page Setup
           setTimeout(() => {
