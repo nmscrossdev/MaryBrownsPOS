@@ -9,7 +9,7 @@
  
  export const CommonMsgModal = (props) => {
      return (
-         <div id="common_msg_popup" className="popup hide" style={{overflow:"hidden",}}>
+         <div id="common_msg_popup" className="popup hide" style={{overflow:"hidden"}}>
          <div className="product-container">
             <div type="button" className="popup-close">
             <svg onClick={() => hideModal('common_msg_popup')}

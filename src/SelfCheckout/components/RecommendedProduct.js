@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+// import { connect } from 'react-redux';
 import {_key,getRecommendedProducts,markup} from '../../settings/SelfCheckoutSettings';
 import { FetchIndexDB } from '../../settings/FetchIndexDB';
 import { getTaxAllProduct } from '../../_components';
@@ -11,6 +12,7 @@ export default class RecommendedProduct extends Component {
             productList:[],
             AllProductList:[]
         }
+        //this.getProducts(this.props);
     }
     getProducts(nextPros)
     {
@@ -55,6 +57,7 @@ export default class RecommendedProduct extends Component {
     }
     callMethods(item)
     {
+       this.props.clearFilterData && this.props.clearFilterData();
        if(item && item.Type=="variable" || item.Type=="variation" )
        {
         var productlist = this.state.AllProductList;
@@ -64,13 +67,13 @@ export default class RecommendedProduct extends Component {
                         return (filterItem.ParentId === item.WPID)
                     })
                     item['Variations'] = variationProdect
-                    this.props.handleSimpleProduct(item)
+                    this.props.handleSimpleProduct && this.props.handleSimpleProduct(item)
                 }
             }
        }
        else
        {
-        this.props.handleSimpleProduct(item)
+        this.props.handleSimpleProduct && this.props.handleSimpleProduct(item)
        }
     }
    render() {
@@ -136,3 +139,11 @@ export default class RecommendedProduct extends Component {
     )
   }
 }
+// function mapStateToProps(state) {
+//     const { single_product } = state;
+//     return {
+//         single_product: single_product.items,
+//     };
+// }
+// const connectedRecommendedProduct = connect(mapStateToProps)(RecommendedProduct);
+// export { connectedRecommendedProduct as RecommendedProduct };

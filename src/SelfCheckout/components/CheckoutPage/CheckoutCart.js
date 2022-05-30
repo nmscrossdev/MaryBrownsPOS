@@ -12,6 +12,7 @@ import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
 import { _key, isDisplay,markup } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
+import { CommonMsgModal } from '../../../_components';
 
 import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
 // import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
@@ -27,6 +28,7 @@ class CheckoutCart extends React.Component {
       extName:'',
       extLogo:'',
       extensionIframe: false,
+      common_Msg:''
     }
 
     this.GoBackhandleClick = this.GoBackhandleClick.bind(this);
@@ -35,9 +37,12 @@ class CheckoutCart extends React.Component {
     // this.decrementDefaultQuantity = this.decrementDefaultQuantity.bind(this);
     this.CartCalulation = this.CartCalulation.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
+    this.closeMsgModal = this.closeMsgModal.bind(this)
   }
 
-
+  closeMsgModal() {
+    this.setState({ common_Msg: '' });
+  }
   getProductFromIndexDB() {
     var idbKeyval = FetchIndexDB.fetchIndexDb();
     idbKeyval.get('ProductList').then(val => {
@@ -58,6 +63,12 @@ class CheckoutCart extends React.Component {
     setTimeout(() => {
       var product = null;
       product = this.state.productlist.find(prd => prd.WPID == item.product_id);
+      if(product && product.StockStatus == "outofstock" )
+      {
+        this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+        showModal('common_msg_popup');
+        return;
+      }
       if (product && product !== null && product !== undefined) {
         if (item.variation_id !== 0) {
           var variationProdect = this.state.productlist.filter(item => {
@@ -182,6 +193,16 @@ class CheckoutCart extends React.Component {
             // }
             if (item.selectedIndex == _index) {
               isItemFoundToUpdate = true;
+
+              if (item.StockStatus == 'Unlimited' || cart.quantity+1 <= item.StockQuantity ) {
+              }
+              else
+              {
+                this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+                showModal('common_msg_popup');
+                return;
+              }
+
               cartlist[index] = item;
             }
             //}
@@ -208,7 +229,194 @@ class CheckoutCart extends React.Component {
 
   }
 
+  handleSimpleProduct = (item) => {
+    // if (action == 0 && item.quantity <= 1) {
+    //   return;
+    // }
+    this.getProductFromIndexDB();
+    setTimeout(() => {
+      var product = null;
+      product = this.state.productlist.find(prd => prd.WPID == item.WPID);
+     
+      if(product && product.StockStatus == "outofstock" )
+      {
+        this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+        showModal('common_msg_popup');
+        return;
+      }
+      if (product && product !== null && product !== undefined) {
+        if (item.variation_id !== 0) {
+          var variationProdect = this.state.productlist.filter(item => {
+            if (product.WPID !== null && product.WPID !== undefined) {
+              return (item.ParentId === product.WPID)
+            }
+          })
+          if (product) {
+            product['Variations'] = variationProdect;
+          }
+        }
+        if (product && product.Type !== 'variable') {
+          product['after_discount'] = item.after_discount;
+          product['cart_after_discount'] = item.cart_after_discount;
+          product['cart_discount_amount'] = item.cart_discount_amount;
+          product['discount_amount'] = item.discount_amount;
+          product['discount_type'] = item.discount_type;
+          // product['excl_tax'] = item.excl_tax;
+          // product['incl_tax'] = item.incl_tax;
+          product['new_product_discount_amount'] = item.new_product_discount_amount;
+          product['old_price'] = item.old_price;
+          product['product_after_discount'] = item.product_after_discount;
+          product['product_discount_amount'] = item.product_discount_amount;
+          // product['selectedIndex'] = index;
+          product['addons_meta_data'] = item.addons_meta_data;
 
+          item['ProductAttributes'] = product.ProductAttributes;
+          item['combination'] = product.combination;
+          item['StockQuantity'] = product.StockQuantity;
+          item['StockStatus'] = product.StockStatus;
+          item['InStock'] = product.InStock;
+          item['IsTicket'] = product.IsTicket;
+          item['ManagingStock'] = product.ManagingStock;
+          item['ParentId'] = product.ParentId;
+          item['WPID'] = product.WPID;
+          item['product_id'] = product.WPID;
+          // item['selectedIndex'] = index;
+          product['ticket_info'] = item.ticket_info;
+          //item['quantity']=1;
+          // var new_excl_tax=item.excl_tax;
+          // var new_incl_tax=item.incl_tax;
+          // if(item.quantity > 1)
+          // {
+          //   new_excl_tax=item.excl_tax/item.quantity;
+          //   new_incl_tax=item.incl_tax/item.quantity;
+          // }
+          // if (action == 1) {
+            item['quantity'] = 1;
+            item['Price'] = item.old_price
+            // item['Price'] = parseInt(item.quantity) * parseFloat(item.Price);
+          // }
+          // else {
+          //   item['quantity'] = item['quantity'] - 1;
+          //   item['Price'] = item['Price'] - item.old_price
+          // }
+
+
+          // item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
+          // item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
+        } else {
+          product !== null && product !== undefined && product.Variations && product.Variations.map(vartion => {
+            if (vartion.WPID == item.variation_id) {
+              vartion['after_discount'] = item.after_discount;
+              vartion['cart_after_discount'] = item.cart_after_discount;
+              vartion['cart_discount_amount'] = item.cart_discount_amount;
+              vartion['discount_amount'] = item.discount_amount;
+              vartion['discount_type'] = item.discount_type;
+              vartion['excl_tax'] = item.excl_tax;
+              vartion['incl_tax'] = item.incl_tax;
+              vartion['new_product_discount_amount'] = item.new_product_discount_amount;
+              vartion['old_price'] = item.old_price;
+              vartion['product_after_discount'] = item.product_after_discount;
+              vartion['product_discount_amount'] = item.product_discount_amount;
+              // vartion['selectedIndex'] = index;
+
+              item['ProductAttributes'] = vartion.ProductAttributes;
+              item['combination'] = vartion.combination;
+              item['StockQuantity'] = vartion.StockQuantity;
+              item['StockStatus'] = vartion.StockStatus;
+              item['InStock'] = vartion.InStock;
+              item['IsTicket'] = vartion.IsTicket;
+              item['ManagingStock'] = vartion.ManagingStock;
+              item['ParentId'] = vartion.ParentId;
+              item['WPID'] = vartion.WPID;
+              item['product_id'] = vartion.WPID;
+              // item['selectedIndex'] = index;
+              vartion['ticket_info'] = vartion.ticket_info;
+
+              // var new_excl_tax=item.excl_tax;
+              // var new_incl_tax=item.incl_tax;
+              // if(item.quantity > 1)
+              // {
+              //   new_excl_tax=item.excl_tax/item.quantity;
+              //   new_incl_tax=item.incl_tax/item.quantity;
+              // }
+              // if (action == 1) {
+                item['quantity'] = 1;
+                 item['Price'] = item.old_price
+                // item['Price'] = parseInt(item.quantity) * parseFloat(item.Price);
+              // }
+              // else {
+              //   item['quantity'] = item['quantity'] - 1;
+              //   item['Price'] = item['Price'] - item.old_price
+              // }
+
+              // item['excl_tax'] = parseFloat(item.quantity * new_excl_tax)
+              // item['incl_tax'] = parseFloat(item.quantity * new_incl_tax);
+            }
+          })
+        }
+      }
+      var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
+
+      if (item && cartlist.length > 0) {
+        var isItemFoundToUpdate = false;
+
+        cartlist.map((cart, index) => {
+          if (product.WPID === cart.product_id || product.WPID === cart.WPID ) {
+            isItemFoundToUpdate=true;
+            item['quantity'] = cart.quantity+1;
+            item['Price'] = parseInt(item.quantity) * parseFloat(item.old_price);
+
+            if (item.StockStatus == 'Unlimited' || cart.quantity+1 <= item.StockQuantity ) {
+
+            }
+            else
+            {
+              this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+              showModal('common_msg_popup');
+              //show out of stock messgage
+              return;
+            }
+
+            cartlist[index]=item;
+        }
+        });
+        
+        //var _index=0;
+        // if (action == 0) {
+        //   cartlist.map((_item, _index) => {
+        //     //if (typeof showSelectedProduct !== 'undefined' && showSelectedProduct !== null) {
+        //     //var _index = -1;
+        //     // if (item['selectedIndex'] >= 0) 
+        //     // { 
+        //     //   _index = parseInt(_item.selectedIndex) 
+        //     // }
+        //     if (item.selectedIndex == _index) {
+        //       isItemFoundToUpdate = true;
+        //       cartlist[index] = item;
+        //     }
+        //     //}
+        //   })
+        // }
+
+        if (isItemFoundToUpdate == false) {
+          cartlist.push(item);
+        }
+      }
+
+
+      // var checkList = localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
+      // var cartItemList =localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
+      // //var cartItemList = []
+      // cartItemList.push(item);
+
+      const { dispatch } = this.props;
+      //this.CartCalulation(cartlist);
+      // dispatch(cartProductActions.showSelectedProduct(item));
+      // this.props.showPopuponcartlistView(product, item)
+      dispatch(cartProductActions.addtoCartProduct(cartlist));
+    }, 500);
+
+  }
 
   CartCalulation = (cartproductlist) => {
     var _subtotal = 0.0;
@@ -565,7 +773,7 @@ close_ext_modal = () => {
           <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
         </div>
         {display_rec_products == "true" ?
-          <RecommendedProduct page={"cart"} />
+          <RecommendedProduct page={"cart"}   handleSimpleProduct={this.handleSimpleProduct}/>
           : <div></div>}
         <div className="cover hide"></div>
           {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
@@ -579,6 +787,7 @@ close_ext_modal = () => {
           extPageUrl={this.state.extPageUrl}
           extName={this.state.extName}
           extLogo={this.state.extLogo} />
+          <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />                    
            {/* <IdleScreen></IdleScreen>
                 <ScreenSaver></ScreenSaver> */}
                 {/* <div style={{display:"none"}}>{setTimeout(() => {

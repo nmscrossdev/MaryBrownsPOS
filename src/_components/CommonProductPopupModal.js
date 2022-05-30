@@ -346,13 +346,13 @@ class CommonProductPopupModal extends React.Component {
                     selectedOptionCode: null,
                     selectedOptions: []
                 });
-                $(".button_with_checkbox input").prop("checked", false);
+                $(".attribute-options-css").prop("checked", false);
                 this.state.variationStyles = { cursor: "no-drop", pointerEvents: "none" }
                 $("#add_variation_product_btn").css({ "cursor": "no-drop", "pointer-events": "none" });
                 //--------------------------------------------------------------------
                 //   this.forceUpdate()
                 // $(".close").trigger("click");
-                //$(".button_with_checkbox input").prop("checked", false);
+                //$(".attribute-options-css").prop("checked", false);
                 hideModal('VariationPopUp');
                 //$('#VariationPopUp').modal('hide')
                 if (isMobileOnly == true && ActiveUser.key.isSelfcheckout == false) {
@@ -368,7 +368,7 @@ class CommonProductPopupModal extends React.Component {
                 }
                 // $('#VariationPopUp').modal('hide')
                 hideModal('VariationPopUp');
-                this.props.msg('Product is out of stock.');
+                this.props.msg(LocalizedLanguage.productOutOfStock);
                 //$('#common_msg_popup').modal('show');
                 showModal('common_msg_popup');
 
@@ -527,7 +527,7 @@ class CommonProductPopupModal extends React.Component {
             }
             //$('#VariationPopUp').modal('hide');
             hideModal('VariationPopUp');
-            this.props.msg('Product is out of stock.');
+            this.props.msg(LocalizedLanguage.productOutOfStock);
             //$('#common_msg_popup').modal('show');
             showModal('common_msg_popup');
         }
@@ -567,7 +567,7 @@ class CommonProductPopupModal extends React.Component {
     componentDidMount() {
         KeyAppsDisplay.DisplayApps(["print_label"]);
         setTimeout(() => {
-            $(".button_with_checkbox input").prop("checked", false);
+            $(".attribute-options-css").prop("checked", false);
         }, 300);
 
     }
@@ -1197,7 +1197,7 @@ class CommonProductPopupModal extends React.Component {
 
     handleClose() {
         this.state.isRefereshIconInventory = false;
-        $(".button_with_checkbox input").prop("checked", false);
+        $(".attribute-options-css").prop("checked", false);
         this.props.productData(false);
         //this.props.handleSimpleProduct(false);
         if (this.props.getVariationProductData) {
@@ -1341,8 +1341,9 @@ class CommonProductPopupModal extends React.Component {
      * Created date : 09-04-2020
      * Description : For clear selected attribute in variation popup
      */
-    clearCheckedField() {
-        $(".button_with_checkbox input").prop("checked", false);
+    clearCheckedField=()=> {
+        $(".attribute-options-css").prop("checked", false);
+        // $(".attribute-options-css").prop("checked", false);
         if (this.props.getVariationProductData) {
             this.setState({
                 showSelectStatus: false,
@@ -1536,7 +1537,7 @@ class CommonProductPopupModal extends React.Component {
                                     />
                                 </svg>
                             </div>
-                            <p className="prod-name" title={this.props.proTitle}>{hasVariationProductData ? <Markup content={(variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle)}></Markup> : ''}</p>
+                            <p className="prod-name" title={this.props.proTitle}>{hasVariationProductData ? (variation_single_data ? variation_single_data.Title ? variation_single_data.Title.replace(" - ", "-") : variation_single_data.Sku : SelectedTitle) : ''}</p>
 
                             {/* <div className="popup-header"> */}
                                 {/* <div className="popup-icon">
@@ -1603,7 +1604,7 @@ class CommonProductPopupModal extends React.Component {
                                 </div>
                             {/* </div> */}
                             </div>
-                            <RecommendedProduct showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
+                            <RecommendedProduct clearFilterData={this.clearCheckedField} showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
                             <div className=''>
                                 <button data-target="#popupDisplayMessage" data-toggle="modal"  onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                 !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" style={{width:"84.59vw"}}>{LocalizedLanguage.addToCart}</button>
