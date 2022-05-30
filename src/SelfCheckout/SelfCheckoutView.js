@@ -285,7 +285,7 @@ class SelfCheckoutView extends React.Component {
                                 this.filterProduct();
                             } else {
                                 //this.props.msg('Product is out of stock.');
-                                this.setState({common_Msg:'Product is out of stock.'});
+                                this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
                                 showModal('common_msg_popup');
                                 //$('#common_msg_popup').modal('show');
                             }
@@ -358,7 +358,7 @@ class SelfCheckoutView extends React.Component {
                              //-----------------------------------------
                                 
                                 } else {
-                                    this.setState({common_Msg:'Product is out of stock.'});
+                                    this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
                                     //this.props.msg('Product is out of stock.');
                                     //$('#common_msg_popup').modal('show');
                                      showModal('common_msg_popup');
@@ -975,7 +975,7 @@ class SelfCheckoutView extends React.Component {
             this.state.showSelectStatus = false;
             this.state.variationDefaultQunatity = 1;
         } else {
-            this.CommonMsg('Product is out of stock.');
+            this.CommonMsg(LocalizedLanguage.productOutOfStock);
             showModal('common_msg_popup');
         }
         //Android Call----------------------------

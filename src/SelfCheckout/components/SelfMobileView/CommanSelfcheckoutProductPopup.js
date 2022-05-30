@@ -318,7 +318,7 @@ class CommonSelfcheckoutProductPopupModal extends React.Component {
                     this.setState({ isloadMoreVari : false});
                     $('#variableproduct').modal('hide')    
                 }
-                this.props.msg('Product is out of stock.');
+                this.props.msg(LocalizedLanguage.productOutOfStock);
                 $('#common_msg_popup').modal('show');
             }
             this.setState({variationDefaultQunatity: 1})
@@ -467,7 +467,7 @@ class CommonSelfcheckoutProductPopupModal extends React.Component {
                 this.setState({ isloadMoreVari : false});
             }
             $('#variableproduct').modal('hide');
-            this.props.msg('Product is out of stock.');
+            this.props.msg(LocalizedLanguage.productOutOfStock);
             $('#common_msg_popup').modal('show');
         }
 

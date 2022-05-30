@@ -314,7 +314,7 @@ input[type="number"] {
 	box-sizing: border-box;
 	border: 0;
 	margin-bottom: 0.28vw;
-	border-radius: 8px;
+	border-radius: 0.74vw;
 }
 
 .header > .row > .col > p {
@@ -793,6 +793,7 @@ p.section {
 	justify-content: center;
 	background-color: var(--primary);
 	margin-right: 2.87vw;
+	border-radius: 0.37vw;
 }
 
 .popup>.popup-header>.col {
@@ -1906,7 +1907,16 @@ body>div>div>div>.text-row>p.order-quantity {
 .complete-payment>.wrapper>button:active {
 	transform: scale(0.95);
 }
-
+.complete-payment > .wrapper > button.style2 {
+	box-sizing: border-box;
+	width: 23.06vw;
+	height: 5.74vw;
+	margin-top: 3.98vw;
+	background-color: #fff;
+	border: 0.093vw solid var(--secondary);
+	color: var(--secondary);
+	font-weight: 400;
+}
 .complete-payment>.wrapper>.divider {
 	width: 45.19vw;
 	height: 0.19vw;
@@ -1966,7 +1976,25 @@ body>div>div>div>.text-row>p.order-quantity {
 	display: flex;
 	flex-direction: column;
 }
+.email-payment > .wrapper > .back-button {
+	align-self: flex-start;
+	width: 5.56vw;
+	height: 5.56vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--secondary);
+	border-radius: 0.74vw;
+	margin-left: 4.17vw;
+}
 
+.email-payment > .wrapper > .back-button:hover {
+	cursor: pointer;
+}
+
+.email-payment > .wrapper > .back-button:active {
+	transform: scale(0.9);
+}
 .email-payment>.wrapper>img {
 	margin: 4.63vw auto 9.26vw auto;
 }

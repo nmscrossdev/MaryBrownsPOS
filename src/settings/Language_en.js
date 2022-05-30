@@ -80,7 +80,7 @@ const language_en = {
         },
         {
             "key": " subTotal",
-            "value": "Sub-Total"
+            "value": "Subtotal"
         },
         {
             "key": " selectTax",
