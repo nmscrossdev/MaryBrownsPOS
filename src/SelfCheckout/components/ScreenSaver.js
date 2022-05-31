@@ -10,6 +10,7 @@ const ScreenSaver=(props)=> {
     return (
 		<React.Fragment>
 		<div className= "idle-screen hide">
+		<div className="cover-screen-saver"></div>
 			<div className="body">
 				<p className="bold">Are you still there?</p>
 				<div className="icon-container">
@@ -24,7 +25,7 @@ const ScreenSaver=(props)=> {
 				<button>Continue Shopping</button>
 			</div>
 		</div>
-		<div id="screensaver" className={props && props.hide==true?"screensaver hide":"screensaver"}>
+		<div id="screensaver" className={props && props.hide==true?"screensaver hide": "screensaver"}>
 			{
 				screenSaverImages?
 				<img className={"front"} key={'ssaver_'+0} src={Config.key.RECIEPT_IMAGE_DOMAIN +screenSaverImages.Value} alt="" />

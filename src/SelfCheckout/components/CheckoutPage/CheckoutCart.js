@@ -14,6 +14,7 @@ import { _key, isDisplay,markup } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 import { CommonMsgModal } from '../../../_components';
 
+
 import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
 // import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
 class CheckoutCart extends React.Component {
@@ -28,7 +29,7 @@ class CheckoutCart extends React.Component {
       extName:'',
       extLogo:'',
       extensionIframe: false,
-      common_Msg:''
+      common_Msg:'',
     }
 
     this.GoBackhandleClick = this.GoBackhandleClick.bind(this);
@@ -37,7 +38,8 @@ class CheckoutCart extends React.Component {
     // this.decrementDefaultQuantity = this.decrementDefaultQuantity.bind(this);
     this.CartCalulation = this.CartCalulation.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
-    this.closeMsgModal = this.closeMsgModal.bind(this)
+    this.closeMsgModal = this.closeMsgModal.bind(this);
+    this.getProductFromIndexDB();
   }
 
   closeMsgModal() {
@@ -59,8 +61,8 @@ class CheckoutCart extends React.Component {
     if (action == 0 && item.quantity <= 1) {
       return;
     }
-    this.getProductFromIndexDB();
-    setTimeout(() => {
+    // this.getProductFromIndexDB();
+    // setTimeout(() => {
       var product = null;
       product = this.state.productlist.find(prd => prd.WPID == item.product_id);
       if(product && product.StockStatus == "outofstock" )
@@ -194,7 +196,7 @@ class CheckoutCart extends React.Component {
             if (item.selectedIndex == _index) {
               isItemFoundToUpdate = true;
 
-              if (item.StockStatus == 'Unlimited' || cart.quantity+1 <= item.StockQuantity ) {
+              if (item.StockStatus == 'Unlimited' || _item.quantity+1 <= item.StockQuantity ) {
               }
               else
               {
@@ -214,7 +216,7 @@ class CheckoutCart extends React.Component {
         }
       }
 
-
+      localStorage.setItem("CARD_PRODUCT_LIST", JSON.stringify(cartlist));
       // var checkList = localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
       // var cartItemList =localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
       // //var cartItemList = []
@@ -225,7 +227,7 @@ class CheckoutCart extends React.Component {
       // dispatch(cartProductActions.showSelectedProduct(item));
       // this.props.showPopuponcartlistView(product, item)
       dispatch(cartProductActions.addtoCartProduct(cartlist));
-    }, 500);
+    // }, 500);
 
   }
 
@@ -522,7 +524,8 @@ class CheckoutCart extends React.Component {
   componentWillReceiveProps(nextProps) {
 
     var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
-    this.CartCalulation(cartlist)
+    this.CartCalulation(cartlist);
+    scaleSVG();
     // if (nextProps.checkList && nextProps.checkList.ListItem)
     // {
 
@@ -629,6 +632,42 @@ close_ext_modal = () => {
     this.setState({ extensionIframe: false });
     hideModal('common_ext_popup');
 }
+showNotesModel(){
+  // if(this.state.productNotes && this.state.productNotes !==""){
+  //      jQuery("#prodNote").val(this.state.productNotes);
+  // }
+  showModal("add-note"); 
+}
+handleNote() {
+  var txtNote = jQuery("#prodNote").val();
+  if (txtNote != "") {
+     var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
+            cartlist = cartlist == null ? [] : cartlist;
+            cartlist.push({ "Title": txtNote })
+            this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
+            var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+            if (list != null) {
+                const CheckoutList = {
+                    ListItem: cartlist,
+                    customerDetail: list.customerDetail,
+                    totalPrice: list.totalPrice,
+                    discountCalculated: list.discountCalculated,
+                    tax: list.tax,
+                    subTotal: list.subTotal,
+                    TaxId: list.TaxId,
+                    order_id: list.order_id !== 0 ? list.order_id : 0,
+                    showTaxStaus: list.showTaxStaus,
+                    _wc_points_redeemed: list._wc_points_redeemed,
+                    _wc_amount_redeemed: list._wc_amount_redeemed,
+                    _wc_points_logged_redemption: list._wc_points_logged_redemption
+                }
+                localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
+                jQuery("#prodNote").val('');
+                hideModal("add-note");
+                hideOverlay("overlay-cover");
+              }
+  }
+}
   render() {
     const { checkList, cash_round, payments, count, paid_amount, Markup, NumberFormat, RoundAmount, RemoveCustomer, cartDiscountAmount, selfcheckoutstatusmanagingevnt, SelfCheckoutStatus } = this.props;
 
@@ -651,6 +690,7 @@ close_ext_modal = () => {
                 return item.Price && item.Price!="";
             }).length;
         }
+        
     return (
       <React.Fragment>
         <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
@@ -768,13 +808,19 @@ close_ext_modal = () => {
             </div>
           </div>
         </div>
-        <div className="order-instructions">
+        <div className="add-note-row" onClick={()=>this.showNotesModel()}>
+          <div className="icon" >
+            <img src="../../../../assets/images/SVG/plus-circled.svg" alt="" />
+          </div>
+          <p>Add Order Note</p>
+        </div>
+        {/* <div className="order-instructions">
           <p>Order Instructions</p>
           <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
         </div>
         {display_rec_products == "true" ?
           <RecommendedProduct page={"cart"}   handleSimpleProduct={this.handleSimpleProduct}/>
-          : <div></div>}
+          : <div></div>} */}
         <div className="cover hide"></div>
           {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
@@ -787,7 +833,26 @@ close_ext_modal = () => {
           extPageUrl={this.state.extPageUrl}
           extName={this.state.extName}
           extLogo={this.state.extLogo} />
-          <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />                    
+          <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} /> 
+          <div className="popup add-note hide" id="add-note">
+          <svg className="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
+            <path
+              d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
+              fill="#050505"
+            />
+          </svg>
+			<div className="popup-header">
+				<div className="col">
+					<p>Add Order Note</p>
+					<div className="divider"></div>
+				</div>
+			</div>
+			<div className="popup-body">
+				<p>Add a note or any comments for this order.</p>
+				<textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
+				<button onClick={()=>this.handleNote()}>Add Note here</button>
+			</div>
+		</div>                   
            {/* <IdleScreen></IdleScreen>
                 <ScreenSaver></ScreenSaver> */}
                 {/* <div style={{display:"none"}}>{setTimeout(() => {
