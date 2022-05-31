@@ -312,8 +312,8 @@ class WebLoginView extends React.Component {
                   value={username} onChange={handleChange} onKeyDown={handleKey}/>
 				
                 <label htmlFor="password">{Language.key.PASSWORD}</label>
-                <input autoComplete="off" className="form-control"  placeholder="******" id="password"
-                name="password" tabIndex="1" type="password" value={password} onChange={handleChange} 
+                <input  autoComplete="off" className="form-control"  placeholder="******" id="password"
+                name="password" tabIndex="0" type="password" value={password} onChange={handleChange} 
                 onKeyDown={handleKey} />
 
 				<div className="row apart">					

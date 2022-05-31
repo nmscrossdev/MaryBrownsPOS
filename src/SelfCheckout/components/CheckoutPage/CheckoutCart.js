@@ -194,7 +194,7 @@ class CheckoutCart extends React.Component {
             if (item.selectedIndex == _index) {
               isItemFoundToUpdate = true;
 
-              if (item.StockStatus == 'Unlimited' || cart.quantity+1 <= item.StockQuantity ) {
+              if (item.StockStatus == 'Unlimited' || item.quantity+1 <= item.StockQuantity ) {
               }
               else
               {
