@@ -163,16 +163,16 @@ class CommonProductPopupModal extends React.Component {
         var productAttributsWithVariation = [];
         productAttributsWithVariation = this.props.getVariationProductData.ProductAttributes && this.props.getVariationProductData.ProductAttributes.filter(item => item.Variation == true);
         // var productAttributeLength = this.props.getVariationProductData && this.props.getVariationProductData.ProductAttributes && this.props.getVariationProductData.ProductAttributes.length;
-        if ((!this.props.showSelectedProduct && filterLength !== productAttributsWithVariation.length)
+        if (((!this.props.showSelectedProduct || typeof this.props.showSelectedProduct=="undefined") && filterLength !== productAttributsWithVariation.length)
             || (this.props.getVariationProductData.Type == 'variable' && productAttributsWithVariation.length == 0) || (this.state.isAttributeDelete == false)) {
             if (ActiveUser.key.isSelfcheckout == true) {
                 showOverlay();
-                showModal('popupDisplayMessage');
+                showModal('no-variation');
                
             }
             else{
                 showOverlay();
-                showModal('popupDisplayMessage');
+                showModal('no-variation');
             }
            
         }
@@ -976,6 +976,7 @@ class CommonProductPopupModal extends React.Component {
         var cartItemList = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];
         var qty = 0;
         if (cartItemList && cartItemList.length > 0) {
+            scaleSVG();
             cartItemList.map(item => {
                 if (nextPros.getVariationProductData && nextPros.getVariationProductData.Type == "variable") {
                     if (nextPros.getVariationProductData && nextPros.getVariationProductData.WPID == item.product_id) {
@@ -1248,7 +1249,7 @@ class CommonProductPopupModal extends React.Component {
         this.state.productNotes=""
         hideModal("VariationPopUp");
         hideOverlay();
-        hideModal('popupDisplayMessage');
+        hideModal('no-variation');
     }
 
     handleNote() {
@@ -1404,6 +1405,10 @@ class CommonProductPopupModal extends React.Component {
              jQuery("#prodNote").val(this.state.productNotes);
         }
         showModal("add-note") 
+    }
+    closePopupDisplayMessage() {
+        hideOverlay();
+        hideModal('no-variation');
     }
     render() {
         
@@ -1649,6 +1654,12 @@ class CommonProductPopupModal extends React.Component {
                                     <textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
                                     <button onClick={()=>this.handleNote()} >Add Note to item</button>
                                 </div>
+                            </div>
+                            {/* No Attribute selected Message POPUP */}
+                            <div className="popup no-variation hide" id="no-variation">
+                                <p className="title">Variations Not Selected</p>
+                                <p className="body">Please select your product variations before adding an item to your cart.</p>
+                                <button onClick={() => this.closePopupDisplayMessage()}>Back to Product</button>
                             </div>
                             <div style={{display:"none"}}>
                             {setTimeout(() => {

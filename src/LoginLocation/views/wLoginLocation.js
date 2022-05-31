@@ -27,14 +27,14 @@ const WebLoginLocation = (props) => {
            UserLocations && UserLocations.length > 0 ? UserLocations.map((item, index) => {
             return (
                
-              <button class="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} >
-              <div class="icon-container">
-                  <img src="../Assets/Images/SVG/Store.svg" alt="" class="fix-1" />
+              <button className="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} >
+              <div className="icon-container">
+                  <img src="../Assets/Images/SVG/Store.svg" alt="" className="fix-1" />
               </div>
-              <div class="text-group" id={`loginLocationTab${index}`} >
+              <div className="text-group" id={`loginLocationTab${index}`} >
                   <p><Markup content= {item && item.name }></Markup> </p>
               </div>
-              <div class="button">Select</div>
+              <div className="button">Select</div>
           </button>
             )
         }) :
