@@ -10,7 +10,7 @@ import Navbar from '../../../SelfCheckout/components/Navbar'
 import { FetchIndexDB } from '../../../settings/FetchIndexDB'
 import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
-import { _key, isDisplay,markup } from '../../../settings/SelfCheckoutSettings';
+import { _key, isDisplay,markup,showNotes } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 import { CommonMsgModal } from '../../../_components';
 
@@ -549,7 +549,6 @@ class CheckoutCart extends React.Component {
     // }
   }
   deleteProduct = (item) => {
-    console.log("deleteProduct calling-->")
 
     var product = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//
     var productx = localStorage.getItem("PRODUCTX_DATA") ? JSON.parse(localStorage.getItem("PRODUCTX_DATA")) : [];//
@@ -566,7 +565,7 @@ class CheckoutCart extends React.Component {
     var index;
     for (i = 0; i < product.length; i++) {
       if ((typeof item.product_id !== 'undefined') && item.product_id !== null) {
-        if (item.variation_id !== 0) {
+        if (item.variation_id && typeof item.variation_id!="undefined" && item.variation_id !== 0) {
           if (product[i].variation_id == item.variation_id)
             index = i;
         }
@@ -699,7 +698,6 @@ handleNote() {
     //     })
     // }
     var checkList1 = this.state.checkList;//localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
-    console.log("this.props---------->", checkList1)
     var length="";
         if(checkList1 && checkList1.ListItem && checkList1.ListItem.length>0)
         {
@@ -707,7 +705,7 @@ handleNote() {
                 return item.Price && item.Price!="";
             }).length;
         }
-        
+    var isShowNotes=showNotes(_key.DISPLAY_CART_PAGE);
     return (
       <React.Fragment>
         <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
@@ -825,12 +823,13 @@ handleNote() {
             </div>
           </div>
         </div>
+        {isShowNotes!=null && isShowNotes.Value=="true"?
         <div className="add-note-row" onClick={()=>this.showNotesModel()}>
           <div className="icon" >
             <img src="../../../../assets/images/SVG/plus-circled.svg" alt="" />
           </div>
           <p>Add Order Note</p>
-        </div>
+        </div>:null}
         {/* <div className="order-instructions">
           <p>Order Instructions</p>
           <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
@@ -839,7 +838,7 @@ handleNote() {
           <RecommendedProduct page={"cart"}   handleSimpleProduct={this.handleSimpleProduct}/>
           : <div></div>} 
         <div className="cover hide"></div>
-          {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
+          {length < 1? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
         {/* <IdleScreen></IdleScreen> */}
         <ScreenSaver hide={true}></ScreenSaver>

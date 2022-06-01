@@ -163,6 +163,29 @@ export function isDisplay(key) {
     return null;
    
 }
+export function showNotes(key)
+{
+    let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
+    if(settings&& settings.length>0)
+    {
+       var found = settings.find(function (indx) {
+           return indx.LabelSlug ===  _key.DISPLAY_ORDER_NOTES;
+       });
+       
+       if(found && found.Value=="true")
+       {
+        var showNote = settings.find(function (indx) {
+            return indx.LabelSlug ===  key && indx.Section=="GeneralSetting" && indx.SubSection=="section-3";
+        });
+        return showNote;
+       }
+       return null;
+    }
+    else
+    {
+        return null;
+    }
+}
 
 export  function getSettingByKey(key) {
     let settings= localStorage.getItem("selfcheckout_setting")?JSON.parse( localStorage.getItem("selfcheckout_setting")):[]
