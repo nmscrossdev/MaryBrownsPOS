@@ -21,7 +21,7 @@ import RecommendedProduct from '../SelfCheckout/components/RecommendedProduct'
 import { getProductSummery } from '../WrapperSettings/CommonWork';
 import { allProductActions } from '../_actions';
 import Navbar from '../SelfCheckout/components/Navbar';
-import {_key,markup} from '../settings/SelfCheckoutSettings';
+import {_key,markup,showNotes} from '../settings/SelfCheckoutSettings';
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
     constructor(props) {
@@ -1480,7 +1480,7 @@ class CommonProductPopupModal extends React.Component {
         if (isAttributeDelete == true && productAttributsWithVariation && (filterLength !== 0 && filterLength == productAttributsWithVariation.length)) {
             AddtocartDisabled = false;
         }
-
+        var isShowNotes=showNotes(_key.DISPLAY_PRODUCT_PAGE);
         return (
             <div className= "popup hide productPopup" id="VariationPopUp">
                  {HostUrl == "" ?<Navbar msg={this.props.msg} showExtensionIframe={this.props.showExtensionIframe} itemCount={this.props.itemCount} page={_key.PRODUCT_PAGE} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
@@ -1616,10 +1616,11 @@ class CommonProductPopupModal extends React.Component {
                                                 selectedOptions={this.state.selectedOptions} /></div>
                                         // : null
                                         }
+                                {isShowNotes!=null && isShowNotes.Value=="true"?
                                 <div className="col">
                                     <p className="center">Add a note to your order</p>
                                     <button type="button" id="addNote" onClick={()=>this.showNotesModel()}>Add Note</button>
-                                </div>
+                                </div>:null}
                             {/* </div> */}
                             </div>
                             <RecommendedProduct clearFilterData={this.clearCheckedField} showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>

@@ -147,6 +147,9 @@ class SelfCheckoutView extends React.Component {
                 var _productwithTax = getTaxAllProduct(val)
                 this.setState({ AllProductList: _productwithTax });
 
+                _productwithTax = _productwithTax && _productwithTax.filter(filterItem => {
+                    return (filterItem.ParentId === 0)
+                })
                 let searchDataNew=_productwithTax?_productwithTax.map(item=>item.Title):[];
                 // let searchData = [
                 //     "Plant 1",
@@ -1257,7 +1260,6 @@ class SelfCheckoutView extends React.Component {
                 return item.Price && item.Price!="";
             }).length;
         }
-        //console.log("--length--"+length)
         return (
             <React.Fragment /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
            

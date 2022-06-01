@@ -115,6 +115,7 @@ function showOverlay()
 function hideOverlay()
 {
 	document.querySelector(".overlay-cover") && document.querySelector(".overlay-cover").classList.add("hide");
+	document.querySelector(".cover") && document.querySelector(".cover").classList.add("hide");
 }
 
 function toggleScroll(toggle = true) {
