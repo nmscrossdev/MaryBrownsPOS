@@ -1282,7 +1282,7 @@ class CommonProductPopupModal extends React.Component {
            // }
          jQuery("#prodNote").val('');
          hideModal("add-note");
-         hideOverlay("overlay-cover");
+         hideOverlay();
         }
     }
     // Apply discount for selected product

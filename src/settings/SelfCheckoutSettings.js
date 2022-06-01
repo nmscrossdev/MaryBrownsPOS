@@ -245,9 +245,9 @@ export function getCategories(key) {
        {
         const ids = categories.Categories.map(cat => cat.CategoryId);  
 
-        var categorieslist= localStorage.getItem("categorieslist")?JSON.parse( localStorage.getItem("categorieslist")):[]
+        var categorieslist = localStorage.getItem("categorieslist")?JSON.parse( localStorage.getItem("categorieslist")):[]
       
-        const filter_categories = categorieslist.filter(item =>{
+        const filter_categories = categorieslist && categorieslist.filter(item =>{
             return ids.includes(item.id)
         })
 
@@ -405,7 +405,7 @@ export function initScreenSaver()
         }
         function decrementCountdown() {
             var countdown = document.getElementById("timeoutNumber");
-            if (parseInt(countdown.innerHTML) < 1) {
+            if (countdown && typeof countdown !="undefined" && parseInt(countdown.innerHTML) < 1) {
                 setScreensaver();
                 countdown.innerHTML = "30";
                if(document.querySelector(".idle-screen")){
@@ -414,7 +414,10 @@ export function initScreenSaver()
                emptyCart();
                 return;
             }
-            countdown.innerHTML = parseInt(countdown.innerHTML) - 1;
+            if(countdown && typeof countdown !="undefined")
+            {
+                countdown.innerHTML = parseInt(countdown.innerHTML) - 1;
+            }
             idleTimeout = setTimeout(decrementCountdown, 1000);
         }
 
@@ -736,7 +739,7 @@ export function getApps(page)
         var ext_Apps_Fields = localStorage.getItem('GET_EXTENTION_FIELD') ? JSON.parse(localStorage.getItem('GET_EXTENTION_FIELD')) : []; 
 
         if (ext_Apps_Fields && ext_Apps_Fields !== []) {
-            const filerapps = ext_Apps_Fields.filter(item =>{
+            const filerapps = ext_Apps_Fields && ext_Apps_Fields.filter(item =>{
                 return appNames.includes(`${item.PluginId}`)
             })
             //console.log("------extension apps for"+page+"--"+JSON.stringify(filerapps))

@@ -1,23 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkShopSTatusAction } from '../../_actions';
+import { checkShopSTatusAction,cartProductActions,taxRateAction } from '../../_actions';
 import WebSiteLinkView from '../views/wSiteLink';
 import MobileSiteLinkView from '../views/mSiteLink';
 import { BrowserView, MobileView, isBrowser, isMobileOnly, isIOS } from "react-device-detect";
 import $ from 'jquery';
 import {trackPage} from '../../_components/SegmentAnalytic'
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
+import { selfCheckoutActions } from '../../SelfCheckout/actions/selfCheckout.action';
 class SiteLinkView extends React.Component {
     constructor(props) {
         super(props);
         if (!localStorage.getItem("shopstatus") && localStorage.getItem('UDID')) {
             this.props.dispatch(checkShopSTatusAction.getStatus());
-            
-            if (sessionStorage.getItem("AUTH_KEY")) {
-                this.props.dispatch(checkShopSTatusAction.getProductCount());
-            }
         }
-
+        if (sessionStorage.getItem("AUTH_KEY")) {
+            this.props.dispatch(checkShopSTatusAction.getProductCount());
+            this.props.dispatch(selfCheckoutActions.get_selfcheckout_setting());
+            this.props.dispatch(cartProductActions.getTaxRateList());
+            this.props.dispatch(taxRateAction.getGetRates());
+            this.props.dispatch(taxRateAction.getIsMultipleTaxSupport());
+        }
     }
 
     componentWillMount() {

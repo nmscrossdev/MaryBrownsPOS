@@ -125,17 +125,18 @@ class SelfCheckoutView extends React.Component {
         this.handletileFilterData = this.handletileFilterData.bind(this);
         var udid = get_UDid('UDID');
         const { dispatch } = this.props;
+        dispatch(selfCheckoutActions.get_selfcheckout_setting());
         //----- update product qty-------------------------------------------------
         dispatch(idbProductActions.updateProductDB());
         dispatch(taxRateAction.getGetRates());
-        //dispatch(taxRateAction.getIsMultipleTaxSupport());
+        dispatch(taxRateAction.getIsMultipleTaxSupport());
         dispatch(checkoutActions.getPaymentTypeName(udid, localStorage.getItem('register')));
-        // dispatch(checkoutActions.GetExtensions())
+        dispatch(checkoutActions.GetExtensions());
         // fetch cloud printer as per the location
         var locationId = localStorage.getItem('Location')
         dispatch(cloudPrinterActions.getCloudPrinters(locationId))
 
-        dispatch(selfCheckoutActions.get_selfcheckout_setting());
+        
 
         //----------Fetch All product from indexDB--------------
         var idbKeyval = FetchIndexDB.fetchIndexDb();
