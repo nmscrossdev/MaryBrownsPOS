@@ -39,8 +39,14 @@ class LoadingIndexDB extends React.Component {
         if (sessionStorage.getItem("AUTH_KEY")) {
            
             this.props.dispatch(checkShopSTatusAction.getStatus());
+            // this.props.dispatch(selfCheckoutActions.get_selfcheckout_setting());
+            // this.props.dispatch(cartProductActions.getTaxRateList());
+            // this.props.dispatch(taxRateAction.getGetRates());
+            // this.props.dispatch(taxRateAction.getIsMultipleTaxSupport());
+            this.props.dispatch(checkoutActions.GetExtensions());
+
             this.props.dispatch(favouriteListActions.userList());
-            this.props.dispatch(selfCheckoutActions.get_selfcheckout_setting());
+            
             
             this.props.dispatch(favouriteListActions.get_TickeraSetting());
             this.props.dispatch(checkoutActions.cashRounding());
@@ -49,15 +55,15 @@ class LoadingIndexDB extends React.Component {
             this.props.dispatch(categoriesActions.getAll());
             this.props.dispatch(attributesActions.getAll());
             //this.props.dispatch(pinLoginActions.getBlockerInfo())
-            this.props.dispatch(cartProductActions.getTaxRateList());
+            // this.props.dispatch(cartProductActions.getTaxRateList());
             
             this.props.dispatch(exchangerateActions.getUSDConversionRate());
            
             const register_Id = localStorage.getItem('register');
             this.props.dispatch(registerActions.GetRegisterPermission(register_Id));
-            this.props.dispatch(checkoutActions.GetExtensions());
+            // this.props.dispatch(checkoutActions.GetExtensions());
             if (UID && register_Id) {
-                this.props.dispatch(favouriteListActions.getAll(UID, register_Id));
+                // this.props.dispatch(favouriteListActions.getAll(UID, register_Id));
                 var client = localStorage.getItem("clientDetail") ? JSON.parse(localStorage.getItem("clientDetail")) : '';
                 var selectedRegister = localStorage.getItem('selectedRegister') ? JSON.parse(localStorage.getItem("selectedRegister")) : '';
                 if (client && client.subscription_permission && client.subscription_permission.AllowCashManagement == true && selectedRegister && selectedRegister.EnableCashManagement == true) {
@@ -99,7 +105,7 @@ class LoadingIndexDB extends React.Component {
         //     redirectToURL()
         //     // history.push('/loginpin');
         // }
-        var RedirectUrl ='/selfcheckoutview';// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
+        var RedirectUrl ='/SelfCheckoutView';// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
 
         var udid = get_UDid(localStorage.getItem("UDID"));
         var reloadCount = localStorage.getItem("ReloadCount") ? localStorage.getItem("ReloadCount") : 0;
@@ -239,7 +245,7 @@ class LoadingIndexDB extends React.Component {
 
         // }
         //To Clear indexDB----------------------------
-        var RedirectUrl ='/selfcheckoutview'// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
+        var RedirectUrl ='/SelfCheckoutView'// ActiveUser.key.isSelfcheckout && ActiveUser.key.isSelfcheckout == true ? '/selfcheckout' : '/shopview';
         var udid = get_UDid(localStorage.getItem("UDID"));
         var pcount = localStorage.getItem('productcount');
         if(isDemoUser ==false){

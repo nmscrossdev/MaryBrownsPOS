@@ -102,7 +102,7 @@ function hideModal(e) {
 	//  		c.classList.add('hide');
 	// 	}
 	// }
-	if(parent && parent.id=="add-note")
+	//if(parent && parent.id=="add-note")
 	{
 		hideOverlay();
 	}

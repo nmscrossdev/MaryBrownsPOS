@@ -850,6 +850,11 @@ class CheckoutViewThird extends React.Component {
                                         }, 100);
                                     });
                                                                         }, 100)} */}
+                                 <div style={{display:"none"}}>
+                                {setTimeout(() => {
+                                scaleSVG();  
+                                }, 10)}
+                             </div>
                                 </div>
                                         {/* <div className="payment-button-group overflowscroll payment-otp overflowscroll pb-0 pt-0">
                                             <div style={{ display: "none" }}>

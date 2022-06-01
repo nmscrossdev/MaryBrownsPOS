@@ -196,7 +196,7 @@ class CheckoutCart extends React.Component {
             if (item.selectedIndex == _index) {
               isItemFoundToUpdate = true;
 
-              if (item.StockStatus == 'Unlimited' || _item.quantity+1 <= item.StockQuantity ) {
+              if (item.StockStatus == 'Unlimited' || item.quantity+1 <= item.StockQuantity ) {
               }
               else
               {
@@ -208,6 +208,23 @@ class CheckoutCart extends React.Component {
               cartlist[index] = item;
             }
             //}
+          })
+        }
+        else if(action==1)
+        {
+          cartlist.map((_item, _index) => {
+            if (item.selectedIndex == _index) {
+            //  isItemFoundToUpdate = true;
+              if (item.StockStatus == 'Unlimited' || _item.quantity+1 <= item.StockQuantity ) {
+              }
+              else
+              {
+                isItemFoundToUpdate = true;
+                this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+                showModal('common_msg_popup');
+                return;
+              }
+            }
           })
         }
 
@@ -235,8 +252,8 @@ class CheckoutCart extends React.Component {
     // if (action == 0 && item.quantity <= 1) {
     //   return;
     // }
-    this.getProductFromIndexDB();
-    setTimeout(() => {
+    //this.getProductFromIndexDB();
+    //setTimeout(() => {
       var product = null;
       product = this.state.productlist.find(prd => prd.WPID == item.WPID);
      
@@ -247,7 +264,7 @@ class CheckoutCart extends React.Component {
         return;
       }
       if (product && product !== null && product !== undefined) {
-        if (item.variation_id !== 0) {
+        if (item.variation_id && typeof item.variation_id!="undefined" && item.variation_id !== 0) {
           var variationProdect = this.state.productlist.filter(item => {
             if (product.WPID !== null && product.WPID !== undefined) {
               return (item.ParentId === product.WPID)
@@ -416,7 +433,7 @@ class CheckoutCart extends React.Component {
       // dispatch(cartProductActions.showSelectedProduct(item));
       // this.props.showPopuponcartlistView(product, item)
       dispatch(cartProductActions.addtoCartProduct(cartlist));
-    }, 500);
+    //}, 500);
 
   }
 
@@ -525,7 +542,7 @@ class CheckoutCart extends React.Component {
 
     var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
     this.CartCalulation(cartlist);
-    scaleSVG();
+    // scaleSVG();
     // if (nextProps.checkList && nextProps.checkList.ListItem)
     // {
 
@@ -664,7 +681,7 @@ handleNote() {
                 localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
                 jQuery("#prodNote").val('');
                 hideModal("add-note");
-                hideOverlay("overlay-cover");
+                hideOverlay();
               }
   }
 }
@@ -708,7 +725,7 @@ handleNote() {
         </div>
         <div className="text-row">
           <p >Review your order</p>
-          <p className="order-quantity">({checkList1 && checkList1.ListItem ? checkList1.ListItem.length : 'X'} items)</p>
+          <p className="order-quantity">({length ? length : 'X'} items)</p>
         </div>
         <div className="order-summary">
           <div className="order-products-wrapper">
@@ -817,10 +834,10 @@ handleNote() {
         {/* <div className="order-instructions">
           <p>Order Instructions</p>
           <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
-        </div>
+        </div>*/}
         {display_rec_products == "true" ?
           <RecommendedProduct page={"cart"}   handleSimpleProduct={this.handleSimpleProduct}/>
-          : <div></div>} */}
+          : <div></div>} 
         <div className="cover hide"></div>
           {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
@@ -857,13 +874,13 @@ handleNote() {
                 <ScreenSaver></ScreenSaver> */}
                 {/* <div style={{display:"none"}}>{setTimeout(() => {
                   scaleSVG();
-                  scaleImages();
-                  resize();
-                  
-                }, 200)}</div> */}
+                  // scaleImages();
+                  // resize();
+                }, 10)}</div> */}
                 <div style={{display:"none"}}>
         {setTimeout(() => {
-        markup(".cat-name-temp") 
+        markup(".cat-name-temp");
+        scaleSVG(); 
         }, 10)}
     </div>
       </React.Fragment>)
