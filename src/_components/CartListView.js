@@ -478,10 +478,12 @@ class CartListView extends React.Component {
             IsExist = false
             checkProductUpdate = nextProps.checkout_list.find(item => item.success == false);
             if (checkProductUpdate && checkProductUpdate.ProductId !== 0) {
-                IsExist = false;
+                // IsExist = false;
+                IsExist = true;
                 this.setState({ isLoading: false })
-                //$('#checkout1').modal('show')
-                showModal('checkout1');
+                
+                //This popup message shows when product quantity is exceeded
+               // showModal('checkout1');
             } else {
                 IsExist = true;
             }

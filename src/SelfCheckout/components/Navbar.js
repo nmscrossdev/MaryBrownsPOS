@@ -67,7 +67,7 @@ changeURL=(msg,itemCount)=>
     
   }
 render() {
-  const {showExtensionIframe,margin,page,itemCount,msg,GoBackhandleClick,catName,catPName}=this.props;
+  const {showExtensionIframe,margin,page,itemCount,msg,GoBackhandleClick}=this.props;
   var apps=page?getApps(page):null;
   var custom_logo=getCustomLogo();
   

@@ -117,7 +117,28 @@ function hideOverlay()
 	document.querySelector(".overlay-cover") && document.querySelector(".overlay-cover").classList.add("hide");
 	document.querySelector(".cover") && document.querySelector(".cover").classList.add("hide");
 }
-
+function disableIncrementButton(id)
+{
+	if(document.getElementById("btn_dv_plus_"+id))
+	{
+		document.getElementById("btn_dv_plus_"+id).style.pointerEvents = 'none';
+	}
+	if(document.getElementById("btn_svg_plus_"+id))
+	{
+		document.getElementById("btn_svg_plus_"+id).style.opacity = "0.5";
+	}
+}
+function enableIncrementButton(id)
+{
+	if(document.getElementById("btn_dv_plus_"+id))
+	{
+		document.getElementById("btn_dv_plus_"+id).style.pointerEvents = 'auto';
+	}
+	if(document.getElementById("btn_svg_plus_"+id))
+	{
+		document.getElementById("btn_svg_plus_"+id).style.opacity = "1";
+	}
+}
 function toggleScroll(toggle = true) {
 	if (toggle) {
 		if (document.querySelector(".category-tile-container")) {

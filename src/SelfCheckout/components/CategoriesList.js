@@ -139,7 +139,7 @@ class CategoriesList extends React.Component {
         // setTimeout(function () {
         //     if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
         // }, 500);
-        this.props.tileFilterData(null, "product", null)
+        //this.props.tileFilterData(null, "product", null)
        
     }
    fillCategorySelection(item){
@@ -165,7 +165,7 @@ class CategoriesList extends React.Component {
     RemoveCategorySelection(){
         var tempItem=null;
         if(this.state.item==null){
-            this.state.cat_breadcrumb=[]
+            this.state.cat_breadcrumb=[];
         }
         var catList=this.state.cat_breadcrumb;
         if(catList.length>0){
@@ -175,8 +175,16 @@ class CategoriesList extends React.Component {
                 tempItem=catList[catList.length-1];
                 this.tileProductListFilter(tempItem,catList.length==1?"category":"sub-category" );
             }
+            else
+            {
+                this.props.tileFilterData(null, "product", null)
+            }
             this.setState({cat_breadcrumb:catList,item:tempItem})
-        }     
+        } 
+        else
+        {
+            this.props.tileFilterData(null, "product", null)
+        }    
     }
     showCategorySelection(){      
          var displayCat="";        

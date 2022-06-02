@@ -21,7 +21,7 @@ import RecommendedProduct from '../SelfCheckout/components/RecommendedProduct'
 import { getProductSummery } from '../WrapperSettings/CommonWork';
 import { allProductActions } from '../_actions';
 import Navbar from '../SelfCheckout/components/Navbar';
-import {_key,markup,showNotes} from '../settings/SelfCheckoutSettings';
+import {_key,markup,showNotes,isDisplay} from '../settings/SelfCheckoutSettings';
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
     constructor(props) {
@@ -96,12 +96,20 @@ class CommonProductPopupModal extends React.Component {
                 if (maxQty == 'Unlimited' || qty < maxQty) {
                     qty++;
                 }
+                else
+                {
+                   disableIncrementButton("popup");
+                }
 
                 this.setDefaultQuantity(qty);
             } else {
                 var maxQty = $("#txtInScock").text();
                 if (maxQty == 'Unlimited' || qty < maxQty) {
                     qty++;
+                }
+                else
+                {
+                    disableIncrementButton("popup");
                 }
                 if (qty > this.state.variationStockQunatity)
                     qty = this.state.variationStockQunatity;
@@ -120,6 +128,10 @@ class CommonProductPopupModal extends React.Component {
                 if (maxQty == 'Unlimited' || qty < maxQty) {
                     qty++;
                 }
+                else
+                {
+                    disableIncrementButton("popup");
+                }
                 if (qty > this.state.variationStockQunatity)
                     qty = this.state.variationStockQunatity;
                 this.setDefaultQuantity(qty);
@@ -133,9 +145,9 @@ class CommonProductPopupModal extends React.Component {
             var qty = parseInt(this.state.variationDefaultQunatity);
             qty--;
             this.setDefaultQuantity(qty);
+            enableIncrementButton("popup");
         }
     }
-
     setDefaultQuantity(qty) {
         this.setState({
             variationDefaultQunatity: qty,
@@ -1481,6 +1493,7 @@ class CommonProductPopupModal extends React.Component {
             AddtocartDisabled = false;
         }
         var isShowNotes=showNotes(_key.DISPLAY_PRODUCT_PAGE);
+        var display_rec_products = isDisplay(_key.DISPLAY_PRODUCT_RECOMMENDATIONS_ON_PRODUCT_PAGE)
         return (
             <div className= "popup hide productPopup" id="VariationPopUp">
                  {HostUrl == "" ?<Navbar msg={this.props.msg} showExtensionIframe={this.props.showExtensionIframe} itemCount={this.props.itemCount} page={_key.PRODUCT_PAGE} catName={null} catPName={null} GoBackhandleClick={null}></Navbar>:null}
@@ -1592,8 +1605,8 @@ class CommonProductPopupModal extends React.Component {
                                                         (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity 
                                                         : ''} onChange={this.handleChange.bind(this)} />
 
-                                                <div onClick = {this.incrementDefaultQuantity} className="increment">
-                                                    <svg className='checkout-increament-mr' width={16} height={16} viewBox="0 0 16 16">
+                                                <div onClick = {this.incrementDefaultQuantity} className="increment" id="btn_dv_plus_popup">
+                                                    <svg className='checkout-increament-mr' width={16} height={16} viewBox="0 0 16 16" id="btn_svg_plus_popup">
                                                         <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                                                     </svg>
                                                 </div>
@@ -1623,7 +1636,9 @@ class CommonProductPopupModal extends React.Component {
                                 </div>:null}
                             {/* </div> */}
                             </div>
-                            <RecommendedProduct clearFilterData={this.clearCheckedField} showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>
+                            {display_rec_products=="true"?
+                            <RecommendedProduct clearFilterData={this.clearCheckedField} showSelected={this.showSelected} page={"product"} item={this.props.getVariationProductData} handleSimpleProduct={this.props.handleSimpleProduct} handleProductData={this.props.handleProductData}></RecommendedProduct>:
+                            <div></div>}
                             <div className=''>
                                 <button  onClick={this.props.getVariationProductData ? this.props.getVariationProductData.Type 
                                 !== 'variable' ? this.addSimpleProducttoCart.bind(this) : this.addVariationProductToCart.bind(this) : null} className="view-cart" style={{width:"84.59vw"}}>{LocalizedLanguage.addToCart}</button>
