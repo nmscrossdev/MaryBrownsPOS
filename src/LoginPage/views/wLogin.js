@@ -304,17 +304,17 @@ class WebLoginView extends React.Component {
                                  </div>
                              </div>
                          </div> : ''}
-			<form action="#">
+			<form onSubmit={handleSubmit}>
 				<img src="../Assets/Images/SVG/oliverlogo.svg" alt="" />
 				<p>Sign in to your Oliver POS Account</p>
 				<label htmlFor="email">Email</label>
 				<input type="email" id="username" name="username" placeholder="Enter Email" 
-                  value={username} onChange={handleChange} onKeyDown={handleKey} tabIndex="1"/>
+                  value={username} onChange={handleChange} onKeyDown={handleKey} required/>
 				
                 <label htmlFor="password">{Language.key.PASSWORD}</label>
-                <input autoComplete="off" className="form-control"  placeholder="******" id="password"
-                name="password" tabIndex="2" type="password" value={password} onChange={handleChange} 
-                onKeyDown={handleKey} />
+                <input  autoComplete="off" className="form-control"  placeholder="******" id="password"
+                name="password" tabIndex="0" type="password" value={password} onChange={handleChange} 
+                onKeyDown={handleKey}  required/>
 
 				<div className="row apart">					
                     <a href={bridgDomain + "/Account/ForgotPassword?_refrence=sell"} id="kt_login_forgot" className="kt-login__link">Forgot your Password?</a>
@@ -332,9 +332,7 @@ class WebLoginView extends React.Component {
             {fieldErr !== '' ? <img src='../../assets/img/images/error.svg' /> : usernamedErr !== "" ? <img src='../../assets/img/images/error.svg' /> : passwordErr !== '' ? <img src='../../assets/img/images/error.svg' /> : loggedIn == false ? <img src='../../assets/img/images/error.svg' /> : ""}
             {wentWrongErr !== '' ? wentWrongErr : fieldErr !== '' ? fieldErr : usernamedErr !== "" ? usernamedErr : passwordErr !== '' ? passwordErr : loggedIn == false ? loginError : ""}
             </div>}
-                <button tabIndex="3"
-                    className="btn btn-primary btn-block user_login_btn_success user_login-margin-t-20" type="button"
-                    onClick={handleSubmit} onKeyDown={handleKey}>
+                <button>
                     Sign In
                     </button>
 			</form>
@@ -343,7 +341,7 @@ class WebLoginView extends React.Component {
 				<p className="largethin">OR</p>
 				<div className="divider"></div>
 			</div>
-			<button tabIndex="4" className="logo google" type="submit" ref="googleLoginBtn" title="Log in using your Google account">
+			<button className="logo google" type="submit" ref="googleLoginBtn" title="Log in using your Google account">
 				<div className="logo-container">
 					<img src="../assets/images/svg/googleicon.svg" alt="google logo" className="logo" />
 				</div>
@@ -367,7 +365,7 @@ class WebLoginView extends React.Component {
 				
 			</button>
          */}
-           <button className="logo facebook" tabIndex="5">
+           <button className="logo facebook">
 				<div className="logo-container">
 					<img
 						src="../Assets/Images/SVG/facebooklogo.svg"
@@ -384,7 +382,7 @@ class WebLoginView extends React.Component {
                                                         textButton="Sign in with Facebook">
              </FacebookLogin>
 			</button>
-            <button tabIndex="6" type="submit" id="appleid-signin" title="Log in using your Apple account" className="btn btn-outline-secondary btn-block user_login__social appleid-signin-dv" >
+            <button type="submit" id="appleid-signin" title="Log in using your Apple account" className="btn btn-outline-secondary btn-block user_login__social appleid-signin-dv" >
                 <span>Sing in with Apple</span>
             </button>
            
