@@ -376,10 +376,11 @@ class CheckoutCart extends React.Component {
       }
       var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
 
-      if (item && cartlist.length > 0) {
+      //if (item && cartlist.length > 0) {
+        if (item ) {
         var isItemFoundToUpdate = false;
 
-        cartlist.map((cart, index) => {
+        cartlist && cartlist.map((cart, index) => {
           if (product.WPID === cart.product_id || product.WPID === cart.WPID ) {
             isItemFoundToUpdate=true;
             item['quantity'] = cart.quantity+1;
