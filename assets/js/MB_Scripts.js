@@ -102,7 +102,7 @@ function hideModal(e) {
 	//  		c.classList.add('hide');
 	// 	}
 	// }
-	if(parent && parent.id=="add-note")
+	//if(parent && parent.id=="add-note")
 	{
 		hideOverlay();
 	}
@@ -115,6 +115,7 @@ function showOverlay()
 function hideOverlay()
 {
 	document.querySelector(".overlay-cover") && document.querySelector(".overlay-cover").classList.add("hide");
+	document.querySelector(".cover") && document.querySelector(".cover").classList.add("hide");
 }
 
 function toggleScroll(toggle = true) {

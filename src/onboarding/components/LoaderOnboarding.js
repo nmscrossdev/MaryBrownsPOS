@@ -1,5 +1,7 @@
 import React from 'react';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
+import {_key,getCustomLogo} from '../../settings/SelfCheckoutSettings';
+import Config from '../../Config';
 import {OnboardingFooter} from './commonComponents/OnboardingFooter'
 class LoaderOnboarding extends React.Component {
     constructor(props) {
@@ -8,10 +10,12 @@ class LoaderOnboarding extends React.Component {
 
     render() {
         var isDemoUser= localStorage.getItem("demoUser") ? localStorage.getItem("demoUser") : false;
+        var custom_logo=getCustomLogo();
         return (
             <div className="login-wrapper">
                 <form action="#">
-                <img src="../assets/images/logo-dark.svg" alt="" />
+                {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+                {/* <img src="../assets/images/logo-dark.svg" alt="" /> */}
                 </form>
                     {/* <div className="login-header">
                         <div className="user_login_container">

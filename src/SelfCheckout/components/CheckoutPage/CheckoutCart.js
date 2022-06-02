@@ -10,9 +10,10 @@ import Navbar from '../../../SelfCheckout/components/Navbar'
 import { FetchIndexDB } from '../../../settings/FetchIndexDB'
 import { getTaxAllProduct } from '../../../_components';
 import { cartProductActions } from '../../../_actions';
-import { _key, isDisplay,markup } from '../../../settings/SelfCheckoutSettings';
+import { _key, isDisplay,markup,showNotes } from '../../../settings/SelfCheckoutSettings';
 import { CommonExtensionPopup } from '../../../_components/CommonExtensionPopup';
 import { CommonMsgModal } from '../../../_components';
+
 
 import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
 // import IdleScreen from '../../../SelfCheckout/components/IdleScreen';
@@ -28,7 +29,7 @@ class CheckoutCart extends React.Component {
       extName:'',
       extLogo:'',
       extensionIframe: false,
-      common_Msg:''
+      common_Msg:'',
     }
 
     this.GoBackhandleClick = this.GoBackhandleClick.bind(this);
@@ -37,7 +38,8 @@ class CheckoutCart extends React.Component {
     // this.decrementDefaultQuantity = this.decrementDefaultQuantity.bind(this);
     this.CartCalulation = this.CartCalulation.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
-    this.closeMsgModal = this.closeMsgModal.bind(this)
+    this.closeMsgModal = this.closeMsgModal.bind(this);
+    this.getProductFromIndexDB();
   }
 
   closeMsgModal() {
@@ -59,8 +61,8 @@ class CheckoutCart extends React.Component {
     if (action == 0 && item.quantity <= 1) {
       return;
     }
-    this.getProductFromIndexDB();
-    setTimeout(() => {
+    // this.getProductFromIndexDB();
+    // setTimeout(() => {
       var product = null;
       product = this.state.productlist.find(prd => prd.WPID == item.product_id);
       if(product && product.StockStatus == "outofstock" )
@@ -208,13 +210,30 @@ class CheckoutCart extends React.Component {
             //}
           })
         }
+        else if(action==1)
+        {
+          cartlist.map((_item, _index) => {
+            if (item.selectedIndex == _index) {
+            //  isItemFoundToUpdate = true;
+              if (item.StockStatus == 'Unlimited' || _item.quantity+1 <= item.StockQuantity ) {
+              }
+              else
+              {
+                isItemFoundToUpdate = true;
+                this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+                showModal('common_msg_popup');
+                return;
+              }
+            }
+          })
+        }
 
         if (isItemFoundToUpdate == false) {
           cartlist.push(item);
         }
       }
 
-
+      localStorage.setItem("CARD_PRODUCT_LIST", JSON.stringify(cartlist));
       // var checkList = localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
       // var cartItemList =localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
       // //var cartItemList = []
@@ -225,7 +244,7 @@ class CheckoutCart extends React.Component {
       // dispatch(cartProductActions.showSelectedProduct(item));
       // this.props.showPopuponcartlistView(product, item)
       dispatch(cartProductActions.addtoCartProduct(cartlist));
-    }, 500);
+    // }, 500);
 
   }
 
@@ -233,8 +252,8 @@ class CheckoutCart extends React.Component {
     // if (action == 0 && item.quantity <= 1) {
     //   return;
     // }
-    this.getProductFromIndexDB();
-    setTimeout(() => {
+    //this.getProductFromIndexDB();
+    //setTimeout(() => {
       var product = null;
       product = this.state.productlist.find(prd => prd.WPID == item.WPID);
      
@@ -245,7 +264,7 @@ class CheckoutCart extends React.Component {
         return;
       }
       if (product && product !== null && product !== undefined) {
-        if (item.variation_id !== 0) {
+        if (item.variation_id && typeof item.variation_id!="undefined" && item.variation_id !== 0) {
           var variationProdect = this.state.productlist.filter(item => {
             if (product.WPID !== null && product.WPID !== undefined) {
               return (item.ParentId === product.WPID)
@@ -357,10 +376,11 @@ class CheckoutCart extends React.Component {
       }
       var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
 
-      if (item && cartlist.length > 0) {
+      //if (item && cartlist.length > 0) {
+        if (item ) {
         var isItemFoundToUpdate = false;
 
-        cartlist.map((cart, index) => {
+        cartlist && cartlist.map((cart, index) => {
           if (product.WPID === cart.product_id || product.WPID === cart.WPID ) {
             isItemFoundToUpdate=true;
             item['quantity'] = cart.quantity+1;
@@ -414,7 +434,7 @@ class CheckoutCart extends React.Component {
       // dispatch(cartProductActions.showSelectedProduct(item));
       // this.props.showPopuponcartlistView(product, item)
       dispatch(cartProductActions.addtoCartProduct(cartlist));
-    }, 500);
+    //}, 500);
 
   }
 
@@ -515,6 +535,7 @@ class CheckoutCart extends React.Component {
   }
 
   GoBackhandleClick() {
+    localStorage.setItem("screen_saver","false");
     history.push('/SelfCheckoutView');
     //setTimeout(function () { selfCheckoutJs(); }, 100)
   }
@@ -522,14 +543,14 @@ class CheckoutCart extends React.Component {
   componentWillReceiveProps(nextProps) {
 
     var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
-    this.CartCalulation(cartlist)
+    this.CartCalulation(cartlist);
+    // scaleSVG();
     // if (nextProps.checkList && nextProps.checkList.ListItem)
     // {
 
     // }
   }
   deleteProduct = (item) => {
-    console.log("deleteProduct calling-->")
 
     var product = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//
     var productx = localStorage.getItem("PRODUCTX_DATA") ? JSON.parse(localStorage.getItem("PRODUCTX_DATA")) : [];//
@@ -546,7 +567,7 @@ class CheckoutCart extends React.Component {
     var index;
     for (i = 0; i < product.length; i++) {
       if ((typeof item.product_id !== 'undefined') && item.product_id !== null) {
-        if (item.variation_id !== 0) {
+        if (item.variation_id && typeof item.variation_id!="undefined" && item.variation_id !== 0) {
           if (product[i].variation_id == item.variation_id)
             index = i;
         }
@@ -629,6 +650,42 @@ close_ext_modal = () => {
     this.setState({ extensionIframe: false });
     hideModal('common_ext_popup');
 }
+showNotesModel(){
+  // if(this.state.productNotes && this.state.productNotes !==""){
+  //      jQuery("#prodNote").val(this.state.productNotes);
+  // }
+  showModal("add-note"); 
+}
+handleNote() {
+  var txtNote = jQuery("#prodNote").val();
+  if (txtNote != "") {
+     var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//this.state.cartproductlist;
+            cartlist = cartlist == null ? [] : cartlist;
+            cartlist.push({ "Title": txtNote })
+            this.props.dispatch(cartProductActions.addtoCartProduct(cartlist));
+            var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+            if (list != null) {
+                const CheckoutList = {
+                    ListItem: cartlist,
+                    customerDetail: list.customerDetail,
+                    totalPrice: list.totalPrice,
+                    discountCalculated: list.discountCalculated,
+                    tax: list.tax,
+                    subTotal: list.subTotal,
+                    TaxId: list.TaxId,
+                    order_id: list.order_id !== 0 ? list.order_id : 0,
+                    showTaxStaus: list.showTaxStaus,
+                    _wc_points_redeemed: list._wc_points_redeemed,
+                    _wc_amount_redeemed: list._wc_amount_redeemed,
+                    _wc_points_logged_redemption: list._wc_points_logged_redemption
+                }
+                localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
+                jQuery("#prodNote").val('');
+                hideModal("add-note");
+                hideOverlay();
+              }
+  }
+}
   render() {
     const { checkList, cash_round, payments, count, paid_amount, Markup, NumberFormat, RoundAmount, RemoveCustomer, cartDiscountAmount, selfcheckoutstatusmanagingevnt, SelfCheckoutStatus } = this.props;
 
@@ -643,7 +700,6 @@ close_ext_modal = () => {
     //     })
     // }
     var checkList1 = this.state.checkList;//localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
-    console.log("this.props---------->", checkList1)
     var length="";
         if(checkList1 && checkList1.ListItem && checkList1.ListItem.length>0)
         {
@@ -651,6 +707,7 @@ close_ext_modal = () => {
                 return item.Price && item.Price!="";
             }).length;
         }
+    var isShowNotes=showNotes(_key.DISPLAY_CART_PAGE);
     return (
       <React.Fragment>
         <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
@@ -668,7 +725,7 @@ close_ext_modal = () => {
         </div>
         <div className="text-row">
           <p >Review your order</p>
-          <p className="order-quantity">({checkList1 && checkList1.ListItem ? checkList1.ListItem.length : 'X'} items)</p>
+          <p className="order-quantity">({length ? length : 'X'} items)</p>
         </div>
         <div className="order-summary">
           <div className="order-products-wrapper">
@@ -768,15 +825,22 @@ close_ext_modal = () => {
             </div>
           </div>
         </div>
-        <div className="order-instructions">
+        {isShowNotes!=null && isShowNotes.Value=="true"?
+        <div className="add-note-row" onClick={()=>this.showNotesModel()}>
+          <div className="icon" >
+            <img src="../../../../assets/images/SVG/plus-circled.svg" alt="" />
+          </div>
+          <p>Add Order Note</p>
+        </div>:null}
+        {/* <div className="order-instructions">
           <p>Order Instructions</p>
           <textarea name="orderInstrucions" id="orderInstrucions"  cols={30} rows={10} placeholder="Enter your instructions" defaultValue={""} />
-        </div>
+        </div>*/}
         {display_rec_products == "true" ?
           <RecommendedProduct page={"cart"}   handleSimpleProduct={this.handleSimpleProduct}/>
-          : <div></div>}
+          : <div></div>} 
         <div className="cover hide"></div>
-          {checkList1 && checkList1.ListItem && checkList1.ListItem.length  <= 0 ? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
+          {length < 1? <button  className="view-cart productv2-parrent">{LocalizedLanguage.continueToPayment}</button> :<button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button>  }
         {/* <button id="toPaymentButton" onClick={() => selfcheckoutstatusmanagingevnt("sfcheckoutpayment")} className="view-cart">{LocalizedLanguage.continueToPayment}</button> */}
         {/* <IdleScreen></IdleScreen> */}
         <ScreenSaver hide={true}></ScreenSaver>
@@ -787,18 +851,37 @@ close_ext_modal = () => {
           extPageUrl={this.state.extPageUrl}
           extName={this.state.extName}
           extLogo={this.state.extLogo} />
-          <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} />                    
+          <CommonMsgModal msg_text={this.state.common_Msg} close_Msg_Modal={this.closeMsgModal} /> 
+          <div className="popup add-note hide" id="add-note">
+          <svg className="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>hideModal("add-note")}>
+            <path
+              d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
+              fill="#050505"
+            />
+          </svg>
+			<div className="popup-header">
+				<div className="col">
+					<p>Add Order Note</p>
+					<div className="divider"></div>
+				</div>
+			</div>
+			<div className="popup-body">
+				<p>Add a note or any comments for this order.</p>
+				<textarea name="productNote" id="prodNote" placeholder="Add your note here."></textarea>
+				<button onClick={()=>this.handleNote()}>Add Note here</button>
+			</div>
+		</div>                   
            {/* <IdleScreen></IdleScreen>
                 <ScreenSaver></ScreenSaver> */}
                 {/* <div style={{display:"none"}}>{setTimeout(() => {
                   scaleSVG();
-                  scaleImages();
-                  resize();
-                  
-                }, 200)}</div> */}
+                  // scaleImages();
+                  // resize();
+                }, 10)}</div> */}
                 <div style={{display:"none"}}>
         {setTimeout(() => {
-        markup(".cat-name-temp") 
+        markup(".cat-name-temp");
+        scaleSVG(); 
         }, 10)}
     </div>
       </React.Fragment>)

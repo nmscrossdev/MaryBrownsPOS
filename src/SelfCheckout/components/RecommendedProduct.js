@@ -57,9 +57,14 @@ export default class RecommendedProduct extends Component {
     }
     callMethods(item)
     {
+        
        this.props.clearFilterData && this.props.clearFilterData();
        if(item && item.Type=="variable" || item.Type=="variation" )
        {
+        if(this.props.page && this.props.page =='cart' &&  item.ParentId==0)
+        {
+            return;
+        }
         var productlist = this.state.AllProductList;
             if (productlist && productlist.length > 0) {
                 if (item) {
@@ -132,7 +137,8 @@ export default class RecommendedProduct extends Component {
             }    
     <div style={{display:"none"}}>
         {setTimeout(() => {
-        markup(".recommendations>.row>.prod>p.name") 
+        markup(".recommendations>.row>.prod>p.name");
+        scaleSVG();  
         }, 10)}
     </div>
     </div>

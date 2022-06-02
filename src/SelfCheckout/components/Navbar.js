@@ -56,6 +56,7 @@ changeURL=(msg,itemCount)=>
     if(itemCount==0)
     { 
       msg(LocalizedLanguage.messageCartNoProduct);
+      showOverlay();
       showModal('common_msg_popup');
 
     }
@@ -74,7 +75,7 @@ render() {
   <React.Fragment>
     <div className={margin?margin:"header m-b-9"}>
         {/* <img src="assets/image/Mary_Browns_Logo.png" alt="" /> */}
-        {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+        {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:<img/>}
         <div className="row">
           {
             apps &&  apps.map((item, index) => {

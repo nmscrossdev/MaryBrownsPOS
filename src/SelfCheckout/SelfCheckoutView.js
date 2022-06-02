@@ -125,17 +125,18 @@ class SelfCheckoutView extends React.Component {
         this.handletileFilterData = this.handletileFilterData.bind(this);
         var udid = get_UDid('UDID');
         const { dispatch } = this.props;
+        dispatch(selfCheckoutActions.get_selfcheckout_setting());
         //----- update product qty-------------------------------------------------
         dispatch(idbProductActions.updateProductDB());
         dispatch(taxRateAction.getGetRates());
-        //dispatch(taxRateAction.getIsMultipleTaxSupport());
+        dispatch(taxRateAction.getIsMultipleTaxSupport());
         dispatch(checkoutActions.getPaymentTypeName(udid, localStorage.getItem('register')));
-        // dispatch(checkoutActions.GetExtensions())
+        dispatch(checkoutActions.GetExtensions());
         // fetch cloud printer as per the location
         var locationId = localStorage.getItem('Location')
         dispatch(cloudPrinterActions.getCloudPrinters(locationId))
 
-        dispatch(selfCheckoutActions.get_selfcheckout_setting());
+        
 
         //----------Fetch All product from indexDB--------------
         var idbKeyval = FetchIndexDB.fetchIndexDb();
@@ -146,6 +147,9 @@ class SelfCheckoutView extends React.Component {
                 var _productwithTax = getTaxAllProduct(val)
                 this.setState({ AllProductList: _productwithTax });
 
+                _productwithTax = _productwithTax && _productwithTax.filter(filterItem => {
+                    return (filterItem.ParentId === 0)
+                })
                 let searchDataNew=_productwithTax?_productwithTax.map(item=>item.Title):[];
                 // let searchData = [
                 //     "Plant 1",
@@ -175,6 +179,8 @@ class SelfCheckoutView extends React.Component {
         // getApps(_key.RECEIPT_PAGE);
         // getApps(_key.CHECKOUT_PAGE);
         /* Created By:priyanka,Created Date:13/06/2019,Description:using tickera for check default field*/
+        this.screen_saver = localStorage.getItem("screen_saver")? localStorage.getItem("screen_saver"):null;
+        localStorage.removeItem("screen_saver");
     }
   // Created By: 
     // created Date: 
@@ -1215,11 +1221,13 @@ class SelfCheckoutView extends React.Component {
           })
         this.setState({ extensionIframe: true })
         setTimeout(() => {
+            showOverlay();
             showModal('common_ext_popup')
         }, 500);
     }
     close_ext_modal = () => {
         this.setState({ extensionIframe: false });
+        hideOverlay();
         hideModal('common_ext_popup');
     }
     GoBackhandleClick=()=> {
@@ -1254,10 +1262,10 @@ class SelfCheckoutView extends React.Component {
                 return item.Price && item.Price!="";
             }).length;
         }
-        //console.log("--length--"+length)
+        
         return (
             <React.Fragment /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
-            <div className="cover hide"></div>
+           
             <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={length} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
             {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
@@ -1343,7 +1351,8 @@ class SelfCheckoutView extends React.Component {
                 id = {'commonInfoPopup'}
                 /> */}
                 {/* <IdleScreen></IdleScreen> */}
-                <ScreenSaver></ScreenSaver>
+                <ScreenSaver hide={this.screen_saver!=null?true:false}></ScreenSaver>
+                <div className="cover hide"></div>
                 <div style={{display:"none"}}>{
                     //Page Setup
                     setTimeout(() => {

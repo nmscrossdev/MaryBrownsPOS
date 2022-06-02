@@ -4,6 +4,7 @@ import LocalizedLanguage from '../../settings/LocalizedLanguage';
 import { isMobileOnly, isIOS, isAndroid } from "react-device-detect";
 import { AndroidAndIOSLoader ,Footer} from '../../_components';
 import { Markup } from 'interweave';
+import {encodeHtml} from '../../settings/SelfCheckoutSettings';
 const WebLoginLocation = (props) => {
     //console.log("%cWebLoginLocation state", 'color:green', props);
     var subscriptionClientDetail = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail')) : '';
@@ -26,15 +27,14 @@ const WebLoginLocation = (props) => {
            
            UserLocations && UserLocations.length > 0 ? UserLocations.map((item, index) => {
             return (
-               
-              <button class="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} >
-              <div class="icon-container">
-                  <img src="../Assets/Images/SVG/Store.svg" alt="" class="fix-1" />
+              <button key={"item_"+index} className="login-card" onClick={() => handleSubmit(item)} onKeyDown={handleBack} >
+              <div className="icon-container">
+                  <img src="../Assets/Images/SVG/Store.svg" alt="" className="fix-1" />
               </div>
-              <div class="text-group" id={`loginLocationTab${index}`} >
-                  <p><Markup content= {item && item.name }></Markup> </p>
+              <div className="text-group" id={`loginLocationTab${index}`} >
+                  <p>{item && item.name ?encodeHtml(item && item.name ):''}</p>
               </div>
-              <div class="button">Select</div>
+              <div className="button">Select</div>
           </button>
             )
         }) :
