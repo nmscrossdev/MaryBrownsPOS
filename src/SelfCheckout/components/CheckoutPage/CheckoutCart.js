@@ -534,6 +534,7 @@ class CheckoutCart extends React.Component {
   }
 
   GoBackhandleClick() {
+    localStorage.setItem("screen_saver","false");
     history.push('/SelfCheckoutView');
     //setTimeout(function () { selfCheckoutJs(); }, 100)
   }

@@ -179,6 +179,8 @@ class SelfCheckoutView extends React.Component {
         // getApps(_key.RECEIPT_PAGE);
         // getApps(_key.CHECKOUT_PAGE);
         /* Created By:priyanka,Created Date:13/06/2019,Description:using tickera for check default field*/
+        this.screen_saver = localStorage.getItem("screen_saver")? localStorage.getItem("screen_saver"):null;
+        localStorage.removeItem("screen_saver");
     }
   // Created By: 
     // created Date: 
@@ -1260,6 +1262,7 @@ class SelfCheckoutView extends React.Component {
                 return item.Price && item.Price!="";
             }).length;
         }
+        
         return (
             <React.Fragment /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
            
@@ -1348,7 +1351,7 @@ class SelfCheckoutView extends React.Component {
                 id = {'commonInfoPopup'}
                 /> */}
                 {/* <IdleScreen></IdleScreen> */}
-                <ScreenSaver></ScreenSaver>
+                <ScreenSaver hide={this.screen_saver!=null?true:false}></ScreenSaver>
                 <div className="cover hide"></div>
                 <div style={{display:"none"}}>{
                     //Page Setup
