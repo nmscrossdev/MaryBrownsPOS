@@ -433,12 +433,12 @@ class AllProduct extends React.Component {
     filterProductByTile(type, item) {
         this.setState({ pageNumber: 0 })
         switch (type) {
-            // case "attribute":
-            //     this.filterProductForAttribute(item);
-            //     break;
-            // case "sub-attribute":
-            //     this.filterProductForSubAttribute(item);
-            //     break;
+            case "attribute":
+                this.filterProductForAttribute(item);
+                break;
+            case "sub-attribute":
+                this.filterProductForSubAttribute(item);
+                break;
             case "category":
                 this.filterProductForCateGory(item);
                 break;
@@ -468,6 +468,14 @@ class AllProduct extends React.Component {
     // filterProductForSubAttribute(item) {
     //     this.productDataSearch(item.attribute_slug, 3, item.parent_attribute.replace("pa_", ""));
     // }
+    filterProductForAttribute(item) {
+        this.productDataSearch(item.Code, 1)
+    }
+
+    filterProductForSubAttribute(item) {
+        this.productDataSearch(item.Code, 3, item.taxonomy.replace("pa_", ""));
+    }
+
 
     filterProductForCateGory(item) {
         this.productDataSearch(item.Code, 2,item)
@@ -504,7 +512,7 @@ class AllProduct extends React.Component {
         this.setState({ isLoading: true });
         var filtered = []
         var value = item1;
-        //var parentAttribute = parent;
+        var parentAttribute = parent;
         this.state.product_List = [];
         this.setState({
             search: value,
@@ -546,25 +554,25 @@ class AllProduct extends React.Component {
             this.state.totalRecords = filtered.length;
             this.loadingFilterData()
         }
-        // if (index == 1) { //attribute
-        //     ParentProductList && ParentProductList.map((item) => {
-        //         item.ProductAttributes && item.ProductAttributes.map(attri => {
-        //             if (String(attri.Slug).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1 ||
-        //                 String(attri.Name).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1) {
-        //                 filtered.push(item)
-        //             }
-        //         })
-        //     })
-        //     this.setState({
-        //         filteredProuctList: filtered,
-        //         totalRecords: filtered.length
-        //     })
-        //     this.state.filteredProuctList = filtered;
-        //     this.state.totalRecords = filtered.length;
-        //     this.state.product_List = filtered;
-        //     this.loadingFilterData()
-        // }
-        //else 
+        if (index == 1) { //attribute
+            ParentProductList && ParentProductList.map((item) => {
+                item.ProductAttributes && item.ProductAttributes.map(attri => {
+                    if (String(attri.Slug).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1 ||
+                        String(attri.Name).toLowerCase().toString().indexOf(String(value).toLowerCase()) != -1) {
+                        filtered.push(item)
+                    }
+                })
+            })
+            this.setState({
+                filteredProuctList: filtered,
+                totalRecords: filtered.length
+            })
+            this.state.filteredProuctList = filtered;
+            this.state.totalRecords = filtered.length;
+            this.state.product_List = filtered;
+            this.loadingFilterData()
+        }
+        else 
         if (index == 2) {
             // category
             ///------Get Subcategory Code------------------------------------------------ 
@@ -609,68 +617,69 @@ class AllProduct extends React.Component {
             this.state.product_List = filtered
             this.loadingFilterData();
         }
-        //  else if (index == 3) {
-        //     ///------Get attribute Code------------------------------------------------ 
-        //     var filterAttribyteCode = []
-        //     filterAttribyteCode.push(value);
-        //     var attributelist = [];
-        //     if (localStorage.getItem("attributelist") && Array.isArray(JSON.parse(localStorage.getItem("attributelist"))) === true)
-        //         attributelist = JSON.parse(localStorage.getItem("attributelist"))
-        //     if (attributelist && attributelist !== undefined && attributelist.length > 0 ) {
-        //         var found = attributelist.find(function (element) {
-        //             return (element.Code.replace(/-/g, "").toLowerCase() == value.replace(/-/g, "").toLowerCase())
-        //         });
-        //         if (found) {
-        //             found.SubAttributes.map(item => {
-        //                 filterAttribyteCode.push(item.Code);
-        //             })
-        //         }
-        //     }
-        //     ParentProductList && ParentProductList.map((item) => {
-        //         item.ProductAttributes && item.ProductAttributes.map(proAtt => {
-        //             var dataSplitArycomma = proAtt.Option.split(',');
-        //             dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(opt => {
-        //                 filterAttribyteCode !== undefined && filterAttribyteCode.map(filterAttribute => {
-        //                     opt = opt.replace(/-/g, "");
-        //                     value = filterAttribute.replace(/-/g, ""); // value.replace(/-/g, ""); 
-        //                     if (opt.toString().toUpperCase() === String(value).toUpperCase() && String(proAtt.Slug).toUpperCase() === String(parentAttribute).toUpperCase()) {
-        //                         if (filtered.indexOf(item) === -1) {
-        //                             filtered.push(item)
-        //                         }
-        //                     }
-        //                 })
-        //             })
-        //         })
-        //     })
-        //     this.setState({
-        //         filteredProuctList: filtered,
-        //         totalRecords: filtered.length
-        //     })
-        //     this.state.product_List = filtered
-        //     this.state.filteredProuctList = filtered;
-        //     this.state.totalRecords = filtered.length;
-        //     this.loadingFilterData();
-        // } else if (index == 4) {
-        //     ParentProductList && ParentProductList !== undefined && ParentProductList.map((item) => {
-        //         var dataSplitAry = item.ProductAttributes && item.ProductAttributes !== undefined && item.ProductAttributes.map(Opt => {
-        //             var dataSplitArycomma = Opt.Option.split(',');
-        //             dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(optValve => {
-        //                 var itemCode = this.getAttributeCode(optValve, parent);
-        //                 if (itemCode !== null && itemCode !== undefined && itemCode.toString().toUpperCase() === String(value).toUpperCase()) {
-        //                     filtered.push(item)
-        //                 }
-        //             })
-        //         })
-        //     })
-        //     this.setState({
-        //         filteredProuctList: filtered,
-        //         totalRecords: filtered.length
-        //     })
-        //     this.state.product_List = filtered
-        //     this.state.filteredProuctList = filtered;
-        //     this.state.totalRecords = filtered.length;
-        //     this.loadingFilterData()
-        // }
+         else if (index == 3) {
+            ///------Get attribute Code------------------------------------------------ 
+            var filterAttribyteCode = []
+            filterAttribyteCode.push(value);
+            var attributelist = [];
+            if (localStorage.getItem("attributelist") && Array.isArray(JSON.parse(localStorage.getItem("attributelist"))) === true)
+                attributelist = JSON.parse(localStorage.getItem("attributelist"))
+            if (attributelist && attributelist !== undefined && attributelist.length > 0 ) {
+                var found = attributelist.find(function (element) {
+                    return (element.Code.replace(/-/g, "").toLowerCase() == value.replace(/-/g, "").toLowerCase())
+                });
+                if (found) {
+                    found.SubAttributes.map(item => {
+                        filterAttribyteCode.push(item.Code);
+                    })
+                }
+            }
+            ParentProductList && ParentProductList.map((item) => {
+                item.ProductAttributes && item.ProductAttributes.map(proAtt => {
+                    var dataSplitArycomma = proAtt.Option.split(',');
+                    dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(opt => {
+                        filterAttribyteCode !== undefined && filterAttribyteCode.map(filterAttribute => {
+                            opt = opt.replace(/-/g, "");
+                            value = filterAttribute.replace(/-/g, ""); // value.replace(/-/g, ""); 
+                            if (opt.toString().toUpperCase() === String(value).toUpperCase() && String(proAtt.Slug).toUpperCase() === String(parentAttribute).toUpperCase()) {
+                                if (filtered.indexOf(item) === -1) {
+                                    filtered.push(item)
+                                }
+                            }
+                        })
+                    })
+                })
+            })
+            this.setState({
+                filteredProuctList: filtered,
+                totalRecords: filtered.length
+            })
+            this.state.product_List = filtered
+            this.state.filteredProuctList = filtered;
+            this.state.totalRecords = filtered.length;
+            this.loadingFilterData();
+        } 
+        else if (index == 4) {
+            ParentProductList && ParentProductList !== undefined && ParentProductList.map((item) => {
+                var dataSplitAry = item.ProductAttributes && item.ProductAttributes !== undefined && item.ProductAttributes.map(Opt => {
+                    var dataSplitArycomma = Opt.Option.split(',');
+                    dataSplitArycomma && dataSplitArycomma !== undefined && dataSplitArycomma.map(optValve => {
+                        var itemCode = this.getAttributeCode(optValve, parent);
+                        if (itemCode !== null && itemCode !== undefined && itemCode.toString().toUpperCase() === String(value).toUpperCase()) {
+                            filtered.push(item)
+                        }
+                    })
+                })
+            })
+            this.setState({
+                filteredProuctList: filtered,
+                totalRecords: filtered.length
+            })
+            this.state.product_List = filtered
+            this.state.filteredProuctList = filtered;
+            this.state.totalRecords = filtered.length;
+            this.loadingFilterData()
+        }
         this.setState({ isLoading: false });
     }
 

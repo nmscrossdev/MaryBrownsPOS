@@ -11,7 +11,8 @@ class CategoriesList extends React.Component {
             item: null,
             num: '',
             current_categories:[],
-            cat_breadcrumb:[]
+            cat_breadcrumb:[],
+            attributes:[]
         }
         this.ActiveList = this.ActiveList.bind(this);
         this.updateActiveStateOnRef = this.updateActiveStateOnRef.bind(this);
@@ -26,7 +27,13 @@ class CategoriesList extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({current_categories:this.props.categories});
+        var attributelist = [];
+        // if (localStorage.getItem("attributelist") && Array.isArray(JSON.parse(localStorage.getItem("attributelist"))) === true)
+        // {
+        //     attributelist = JSON.parse(localStorage.getItem("attributelist"))
+        // }
+   
+        this.setState({current_categories:this.props.categories,attributes:attributelist,all_attributes:attributelist});
     }
 
     tileProductListFilter(data, type, parent) {
@@ -42,7 +49,12 @@ class CategoriesList extends React.Component {
 
         if (item.id) {
             var _sub= item && item.Subcategories; 
-            this.setState({ item: item, num: index,current_categories:_sub});
+            this.setState({ item: item, num: index,current_categories:_sub,attributes:[]});
+        }
+        if(item.Id)
+        {
+            var _subAtt=item && item.SubAttributes;
+            this.setState({ item: item, num: index,attributes:_subAtt,current_categories:[]});
         }
         this.fillCategorySelection(item)
     }
@@ -71,87 +83,135 @@ class CategoriesList extends React.Component {
      }
         
     }
+    getParentAttribute(item,Id,taxanomy)
+    {
+     if(item && item.SubAttributes && item.SubAttributes.length>0)
+     {
+        var _data= item.SubAttributes.find((itm) => itm.Id==Id && itm.taxonomy==taxanomy);
+        if(_data==null || _data.length==0)
+        {
+            item.SubAttributes && item.SubAttributes.map((_item, index) => {
+                _data= this.getParentAttribute(_item,Id,taxanomy);
+                if(_data!=null)
+                {
+                    return _item;
+                }
+            })
+        }
+        if(_data!=null)
+        {
+            return item;
+        }
+        return null;
+     }
+     else
+     {
+        return null;
+     }
+    }
 
     updateActiveStateOnRef(st) {
         var _sub= null;
-        this.props.categories.map((item, index) => {
+        if(this.state.item && this.state.item.hasOwnProperty("id"))
+        {
+            this.props.categories.map((item, index) => {
+                if(_sub==null || _sub.length==0)
+                {
+                    _sub =  this.getParent(item,this.state.item.id);
+                }
+            })
+
             if(_sub==null || _sub.length==0)
             {
-                _sub =  this.getParent(item,this.state.item.id);
+                _sub = this.props.categories;
             }
-        })
-
-        if(_sub==null || _sub.length==0)
-        {
-            _sub = this.props.categories;
-        }
-        this.state.active = st;
-        if(_sub!=null && _sub.length==1)
-        {
-            if(_sub[0].id==this.state.item.id)
+            this.state.active = st;
+            if(_sub!=null && _sub.length==1)
             {
-                var _sub2= null;
-                    this.props.categories.map((item2, index) => {
-                        if(_sub2==null || _sub2.length==0)
-                        {
-                            _sub2 =  this.getParent(item2,this.state.item.parent);
-                        }
-                    })
-                //console.log("------searched _sub2--"+JSON.stringify(_sub2))
-            } 
-            this.setState({active:st, current_categories:_sub,item:Array.isArray(_sub2)?_sub2[0]:_sub2})
-        }
-        else
-        {
-            if(Array.isArray(_sub))
-            {
-                this.setState({active:st, current_categories:_sub })
+                if(_sub[0].id==this.state.item.id)
+                {
+                    var _sub2= null;
+                        this.props.categories.map((item2, index) => {
+                            if(_sub2==null || _sub2.length==0)
+                            {
+                                _sub2 =  this.getParent(item2,this.state.item.parent);
+                            }
+                        })
+                    //console.log("------searched _sub2--"+JSON.stringify(_sub2))
+                } 
+                this.setState({active:st, current_categories:_sub,item:Array.isArray(_sub2)?_sub2[0]:_sub2})
             }
             else
             {
-                if(_sub.parent==0)
+                if(Array.isArray(_sub))
                 {
-                    _sub=this.props.categories.filter((itm) => itm.parent==0);
-                    this.setState({active:st, current_categories:_sub,item:null }) 
+                    this.setState({active:st, current_categories:_sub })
                 }
                 else
                 {
-                    //_sub=this.props.categories.filter((itm) => itm.parent==0);
-                    var _sub3= null;
-                    if(_sub.id==this.state.item.id)
+                    if(_sub.parent==0)
                     {
-                       
-                        this.props.categories.map((item3, index) => {
-                            if(_sub3==null || _sub2.length==0)
-                            {
-                                _sub3 =  this.getParent(item3,this.state.item.parent);
-                            }
-                        })
-                    //console.log("------searched _sub3--"+JSON.stringify(_sub3))
-                    } 
-                    this.setState({active:st, current_categories:[_sub],item:Array.isArray(_sub3)?_sub3[0]:_sub3 })
-                }
+                        _sub=this.props.categories.filter((itm) => itm.parent==0);
+                        this.setState({active:st, current_categories:_sub,item:null,attributes:this.state.all_attributes }) 
+                    }
+                    else
+                    {
+                        //_sub=this.props.categories.filter((itm) => itm.parent==0);
+                        var _sub3= null;
+                        if(_sub.id==this.state.item.id)
+                        {
+                        
+                            this.props.categories.map((item3, index) => {
+                                if(_sub3==null || _sub2.length==0)
+                                {
+                                    _sub3 =  this.getParent(item3,this.state.item.parent);
+                                }
+                            })
+                        //console.log("------searched _sub3--"+JSON.stringify(_sub3))
+                        } 
+                        this.setState({active:st, current_categories:[_sub],item:Array.isArray(_sub3)?_sub3[0]:_sub3 })
+                    }
 
+                }
+            
             }
-           
+        }
+        else if(this.state.item && this.state.item.hasOwnProperty("Id"))
+        {
+            this.state.all_attributes &&  this.state.all_attributes.map((item, index) => {
+                    var _taxanomy=this.state.item.hasOwnProperty("taxonomy")?this.state.item.taxonomy:'';
+                    if(_taxanomy!="")
+                    {
+                        _sub =  this.getParentAttribute(item,this.state.item.Id,_taxanomy);
+                        if(_sub!=null)
+                        {
+                            this.setState({active:st, attributes:_sub.SubAttributes,item:_sub }) ;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if(this.state.item.Id==item.Id)
+                        {
+                            _sub= this.state.all_attributes && this.state.all_attributes;
+                            this.setState({active:st, attributes:_sub,item:null,current_categories:this.props.categories }) ;
+                            return;
+                        }
+                    }
+            })
         }
         this.RemoveCategorySelection()
-        // setTimeout(function () {
-        //     if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
-        // }, 500);
-        //this.props.tileFilterData(null, "product", null)
-       
     }
-   fillCategorySelection(item){
-        if(this.state.item==null){
-            this.state.cat_breadcrumb=[]
-        }
-            var catList=this.state.cat_breadcrumb;
-        if(item){
-            catList.push(item)
-            this.setState({cat_breadcrumb:catList})
-            }     
-   }
+    fillCategorySelection(item){
+            if(this.state.item==null){
+                this.state.cat_breadcrumb=[]
+            }
+                var catList=this.state.cat_breadcrumb;
+            if(item){
+                catList.push(item)
+                this.setState({cat_breadcrumb:catList})
+                }     
+    }
 //    RemoveCategorySelection(){
 //     if(this.state.item==null){
 //         this.state.cat_breadcrumb=[]
@@ -173,7 +233,15 @@ class CategoriesList extends React.Component {
             if(catList.length>0)
             {
                 tempItem=catList[catList.length-1];
-                this.tileProductListFilter(tempItem,catList.length==1?"category":"sub-category" );
+                //this.tileProductListFilter(tempItem,catList.length==1?"category":"sub-category" );
+                if(this.state.item.hasOwnProperty("id"))
+                {
+                    this.tileProductListFilter(tempItem,catList.length==1?"category":"sub-category" );
+                }
+                else if(this.state.item.hasOwnProperty("Id"))
+                {
+                    this.tileProductListFilter(tempItem,catList.length==1?"attribute":"sub-attribute" );
+                }
             }
             else
             {
@@ -197,8 +265,8 @@ class CategoriesList extends React.Component {
         return displayCat;       
     }
     render() {
-        const { current_categories,item } = this.state;
-       console.log("current_categories",current_categories,"item",item)
+        const { current_categories,item,attributes } = this.state;
+    //    console.log("current_categories",current_categories,"item",item)
         return (
             <React.Fragment> 
                 {item && item !==null && item !==""?
@@ -236,30 +304,44 @@ class CategoriesList extends React.Component {
                 </div>:
                 <p className="section cat-name-temp">{item && item !==null && item !==""?  item.Value : getTitle(_key.TITLE_FOR_CATEGORY_SECTION)}</p>
                  } 
+                <div className="category-tile-container">
                 {   
-                current_categories && current_categories.length>0 &&
-                    <div className="category-tile-container">
-                    {current_categories.map((item, index) => {                 
-                            var titleName = item.Value
-                            return (
-                                item.parent==0 ?
-                                <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
-                                <p className='cat-name-temp'>{titleName}</p>
-                                </button>
-                            : item.parent!=0 ?
-                                <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
-                                <p className='cat-name-temp'>{titleName}</p>
-                                </button>
-                            : ''
-                            )
-                        })
-                    }
-                    <div style={{display:"none"}}>{setTimeout(() => {
-                        markup(".cat-name-temp")
-                    }, 10)}</div>
-                    </div>
-            }
-                   
+                    current_categories && current_categories.map((item, index) => {                 
+                        var titleName = item.Value
+                        var _isCat=item.parent==0 ?"category":"sub_category";
+                        return (
+                            <button className="category-tile mb10"  key={_isCat + item.id} onClick={() => this.ActiveList(item, _isCat=="category" ? 2:4, _isCat)}>
+                            <p className='cat-name-temp'>{titleName}</p>
+                            </button>
+
+                        //     item.parent==0 ?
+                        //     <button className="category-tile mb10"  key={"category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value}  onClick={() => this.ActiveList(item, 2, "category")}>
+                        //     <p className='cat-name-temp'>{titleName}</p>
+                        //     </button>
+                        // : item.parent!=0 ?
+                        //     <button className="category-tile mb10" key={"sub_category" + item.id} data-category-id={item.id} data-id={`attr_${item.id}`} data-category-slug={item.Value} onClick={() => this.ActiveList(item, 4, "sub-category")}>
+                        //     <p className='cat-name-temp'>{titleName}</p>
+                        //     </button>
+                        // : ''
+                        )
+                    })
+                    
+                }
+                {attributes && attributes.map((_item, index) => {    
+                        var titleName = _item.Value
+                        var _isAtt=_item.hasOwnProperty('parent')?"sub-attribute":"attribute";
+                        return (
+                            <button className="category-tile mb10" key={_isAtt + _item.Id} onClick={() => this.ActiveList(_item, _isAtt=="attribute" ? 1: 3, _isAtt)}>
+                            <p className='cat-name-temp'>{titleName}</p>
+                            </button>
+                        )
+                    })
+                }
+
+                <div style={{display:"none"}}>{setTimeout(() => {
+                    markup(".cat-name-temp")
+                }, 10)}</div>
+                </div>
                   
                 
         </React.Fragment>           
