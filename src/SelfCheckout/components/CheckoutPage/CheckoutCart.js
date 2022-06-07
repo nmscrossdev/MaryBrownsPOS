@@ -67,8 +67,9 @@ class CheckoutCart extends React.Component {
       product = this.state.productlist.find(prd => prd.WPID == item.product_id);
       if(product && product.StockStatus == "outofstock" )
       {
-        this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
-        showModal('common_msg_popup');
+        disableIncrementButton(item.product_id);
+        // this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+        // showModal('common_msg_popup');
         return;
       }
       if (product && product !== null && product !== undefined) {
@@ -196,12 +197,14 @@ class CheckoutCart extends React.Component {
             if (item.selectedIndex == _index) {
               isItemFoundToUpdate = true;
 
-              if (item.StockStatus == 'Unlimited' || item.quantity+1 <= item.StockQuantity ) {
+              if (item.StockStatus == 'Unlimited' || item.ManagingStock==false || item.quantity+1 <= item.StockQuantity ) {
+                enableIncrementButton(item.product_id);
               }
               else
               {
-                this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
-                showModal('common_msg_popup');
+                disableIncrementButton(item.product_id);
+                // this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+                // showModal('common_msg_popup');
                 return;
               }
 
@@ -215,13 +218,16 @@ class CheckoutCart extends React.Component {
           cartlist.map((_item, _index) => {
             if (item.selectedIndex == _index) {
             //  isItemFoundToUpdate = true;
-              if (item.StockStatus == 'Unlimited' || _item.quantity+1 <= item.StockQuantity ) {
+              if (item.StockStatus == 'Unlimited' || item.ManagingStock==false || _item.quantity+1 <= item.StockQuantity ) {
+                enableIncrementButton(item.product_id);
               }
               else
               {
                 isItemFoundToUpdate = true;
-                this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
-                showModal('common_msg_popup');
+                disableIncrementButton(item.product_id);
+
+                // this.setState({common_Msg:LocalizedLanguage.productOutOfStock});
+                // showModal('common_msg_popup');
                 return;
               }
             }
@@ -376,16 +382,17 @@ class CheckoutCart extends React.Component {
       }
       var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
 
-      if (item && cartlist.length > 0) {
+      //if (item && cartlist.length > 0) {
+        if (item ) {
         var isItemFoundToUpdate = false;
 
-        cartlist.map((cart, index) => {
+        cartlist && cartlist.map((cart, index) => {
           if (product.WPID === cart.product_id || product.WPID === cart.WPID ) {
             isItemFoundToUpdate=true;
             item['quantity'] = cart.quantity+1;
             item['Price'] = parseInt(item.quantity) * parseFloat(item.old_price);
 
-            if (item.StockStatus == 'Unlimited' || cart.quantity+1 <= item.StockQuantity ) {
+            if (item.StockStatus == 'Unlimited' || item.ManagingStock==false || cart.quantity+1 <= item.StockQuantity ) {
 
             }
             else
@@ -743,8 +750,8 @@ handleNote() {
                                 </svg>
                               </div>
                               <input type="number" value={product.quantity} />
-                              <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment">
-                                <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px" }}>
+                              <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment" id={"btn_dv_plus_"+product.product_id}>
+                                <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px" }} id={"btn_svg_plus_"+product.product_id}>
                                   <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                                 </svg>
                               </div>

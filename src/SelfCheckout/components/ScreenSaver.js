@@ -27,7 +27,7 @@ const ScreenSaver=(props)=> {
 		</div>
 		<div id="screensaver" className={props && props.hide==true?"screensaver hide": "screensaver"}>
 			{
-				screenSaverImages?
+				screenSaverImages && screenSaverImages.Value !="" && screenSaverImages.Value !=null ? 
 				<img className={"front"} key={'ssaver_'+0} src={Config.key.RECIEPT_IMAGE_DOMAIN +screenSaverImages.Value} alt="" />
 				:null
 			}

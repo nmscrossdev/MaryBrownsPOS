@@ -74,9 +74,7 @@ class SelfCheckoutView extends React.Component {
             pageWidth: null,
             pageHeight: window.innerHeight,
             datetime:Date.now(),//to open product into iframe,
-            favFilterSelect:'',
-            favFilterPSelect:'',
-            showBackProduct:false,
+            categorySelect:false,
             banners:[],
             categories:[],
             extHostUrl: '',
@@ -685,27 +683,25 @@ class SelfCheckoutView extends React.Component {
 
     handletileFilterData(data, type, parent) {
         console.log("---handletileFilterData---"+JSON.stringify(data)+"--parent---"+JSON.stringify(parent))
-        if(type!="product")
+        // if(type!="product")
+        // {
+        //     if(typeof data === 'object' && data !== null)
+        //     {
+        //         var titleName = data.Value;
+        //     }
+        //     else
+        //     {
+        //         this.setState({categorySelect:'dontShowBanner'});
+        //     }
+        // }
+        // else 
+        if(data==null)
         {
-            if(typeof data === 'object' && data !== null)
-            {
-                var titleName = data.Value;
-                this.setState({favFilterPSelect:titleName});
-            }
-            else
-            {
-                if(this.state.favFilterPSelect!='')
-                {
-                    this.setState({showBackProduct:true});
-                }
-                this.setState({favFilterSelect:data});
-
-            }
+            this.setState({categorySelect:false});
         }
-        else if(data==null)
+        else
         {
-            this.setState({favFilterSelect:'',favFilterPSelect:'',showBackProduct:false});
-
+            this.setState({categorySelect:true});
         }
         
         // console.log("loog", data);
@@ -1232,7 +1228,7 @@ class SelfCheckoutView extends React.Component {
     }
     GoBackhandleClick=()=> {
         // this.handletileFilterData(null, 'product', null)
-        this.setState({favFilterSelect:'',favFilterPSelect:''});
+        this.setState({categorySelect:false});
       }
     showProductPopup=(id)=>
     {
@@ -1266,9 +1262,9 @@ class SelfCheckoutView extends React.Component {
         return (
             <React.Fragment /*style={{padding: "35px 40px 0 40px",backgroundColor:'#f1f1f1'}}*/>
            
-            <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={length} catName={this.state.favFilterSelect} catPName={this.state.favFilterPSelect} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
+            <Navbar  msg={this.CommonMsg} showExtensionIframe={this.showExtensionIframe} page={_key.HOME_PAGE} itemCount={length} GoBackhandleClick={this.GoBackhandleClick}></Navbar>
             {/* {this.state.main_banner_image && this.state.main_banner_image !== '' ? */}
-            {this.state.favFilterSelect=='' && this.state.favFilterPSelect==''?
+            {this.state.categorySelect==false ?
             <Carasoul banners={this.state.banners} showProductPopup={this.showProductPopup}></Carasoul>
             :null}
             {/* :''} */}
@@ -1312,7 +1308,7 @@ class SelfCheckoutView extends React.Component {
             status={this.state.addFavouriteStatus} addStatus={this.tileModalAddStatus} msg={this.CommonMsg}
             tilePosition={this.tilePosition} isShopView={true}/>
             <p className="section">{getTitle(_key.TITLE_FOR_PRODUCT_SECTION)}</p>  
-            <AllProduct categories={this.state.categories} showPopuponcartlistView={this.showPopuponcartlistView} showBackProduct={this.state.showBackProduct} productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
+            <AllProduct categories={this.state.categories} showPopuponcartlistView={this.showPopuponcartlistView}  productData={this.handleProductData} onRef={ref => (this.tileProductFilter = ref)} simpleProductData={this.handleSimpleProduct} msg={this.CommonMsg} 
             searchProduct={this.state.searchProduct}
             ></AllProduct>
             </div>
