@@ -38,7 +38,7 @@ import { CommonExtensionPopup } from '../../_components/CommonExtensionPopup';
 import { CommonAppPopup } from '../../appManager/CommonAppPopup';
 import {addEventListener} from '../../appManager/FramManager'
 import { GroupSaleModal } from '../../_components/GroupSaleModal';
-import { handleAppEvent,postmessage } from '../../ExtensionHandeler/commonAppHandler';
+// import { handleAppEvent,postmessage } from '../../ExtensionHandeler/commonAppHandler';
 
 var cash_rounding = ActiveUser.key.cash_rounding;
 var clientExtensionData = new Object();
@@ -986,7 +986,7 @@ class CheckoutView extends React.Component {
      * @param {*} get_order_status return order status
      * Description : Add productx data
      */
-    setPayment(get_order_status) {
+    setPayment(get_order_status,updatedBy="") {
         var location_id = localStorage.getItem('Location');
         const activityToCheckout = localStorage.getItem("BACK_CHECKOUT");
         const { extensionMetaData, cash_payment, change_amount, cash_round, PhoneNumber, Email, FirstName, LastName, Notes, checkList, UDID, user_id, orderType, extensionUpdateCart, AllProductList } = this.state;
@@ -1551,7 +1551,7 @@ class CheckoutView extends React.Component {
             localStorage.setItem("GTM_ORDER", JSON.stringify(place_order));
             if (status.includes("park_sale") || status.includes("lay_away")) {
                 setTimeout(() => {
-                   dispatch(checkoutActions.save(place_order, 2));
+                   dispatch(checkoutActions.save(place_order, 2,updatedBy));
                 }, 500);
             } else {
                dispatch(checkoutActions.save(place_order, 1));
@@ -2890,7 +2890,8 @@ class CheckoutView extends React.Component {
                         cash_round={cash_round}
                         changeComponent={this.changeComponent}
                         activeComponent={this.state.activeComponent}
-                        selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt} />
+                        selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt}
+                        setPayment={this.setPayment} />
                     :
                     (ActiveUser.key.isSelfcheckout == true && this.state.SelfCheckoutStatus == "sfcheckoutpayment") ?
                         <React.Fragment><CheckoutViewThird SelfCheckoutStatus={this.state.SelfCheckoutStatus}

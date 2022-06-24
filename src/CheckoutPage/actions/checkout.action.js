@@ -14,7 +14,7 @@ import { history } from '../../_helpers';
 import {cashManagementAction} from '../../CashManagementPage/actions/cashManagement.action'
 import { GTM_OliverDemoUser } from '../../_components/CommonfunctionGTM';
 import {trackOliverOrderComplete} from '../../_components/SegmentAnalytic'
-
+import { handleAppEvent } from '../../ExtensionHandeler/commonAppHandler';
 const tick_event = []
 export const checkoutActions = {
     getAll,
@@ -99,7 +99,7 @@ function checkItemList(checkout_list) {
  *  Modified Date: 26/06/2019
  *  Decription: Update for saving order on temp DB
 */
-function save(shopOrder, path) {
+function save(shopOrder, path, updatedBy="") {
     localStorage.removeItem("BACK_CHECKOUT");
     localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
     //localStorage.removeItem('TAXT_RATE_LIST');
@@ -122,6 +122,37 @@ function save(shopOrder, path) {
                     if(demoUser){                   
                          GTM_OliverDemoUser("CheckoutView: Order placed ")
                     }
+                    //if parked by extension app, it is returning temp order id to the app 
+                    if(updatedBy=="byExtApp")
+                    {
+                        handleAppEvent({method:"post",command:"ParkSale",tempOrderId:shop_order.content?shop_order.content.tempOrderId:0},null);
+                     }
+                    // //if parked by extension app, it is returning temp order id to the app 
+                    // if(updatedBy=="byExtApp")
+                    // {
+                    //     var udid=get_UDid();
+                    //     var orderIdToSync= shop_order.content?shop_order.content.tempOrderId:0
+                    //     dispatch(request(udid, orderIdToSync));
+                    //     checkoutService.checkTempOrderStatus(udid, orderIdToSync).then(
+                    //         void_order => {
+                    //             dispatch(success(void_order));
+                    //             if (void_order && void_order.message == "Success") {
+                    //                 var OrderID = void_order.content.OrderNumber;
+                    //                 handleAppEvent({method:"post",command:"ParkSale",tempOrderId:OrderID},null);
+                    //             }
+                    //             else {
+                    //                 handleAppEvent({method:"post",command:"ParkSale",tempOrderId:orderIdToSync},null);
+                    //             }
+                    //             //--------------------------------------------------------------
+                    //         },
+                    //         error => {
+                    //             dispatch(failure(error.toString()));
+                    //             dispatch(alertActions.error(error.toString()));
+                    //         }
+                    //     );
+                       
+                    // }
+
                     dispatch(success(shop_order));
 
                 //Created By : Nagendra
@@ -303,7 +334,17 @@ function save(shopOrder, path) {
                             {
                                 // localStorage.removeItem("PRODUCTX_DATA");
                                // window.location = '/salecomplete';
-                                history.push('/salecomplete');
+                               // history.push('/salecomplete');
+                               if(updatedBy=="byExtApp")
+                                {
+                                    setTimeout(() => {
+                                        history.push('/salecomplete');
+                                    }, 1000);
+                                }
+                                else
+                                {
+                                    history.push('/salecomplete');          
+                                }
                             }
                         } else {
                             localStorage.removeItem("PRODUCTX_DATA");
@@ -314,7 +355,17 @@ function save(shopOrder, path) {
                             localStorage.removeItem('CARD_PRODUCT_LIST');
                             if(ActiveUser.key.isSelfcheckout == true)
                             {
-                                history.push('/salecomplete');
+                                if(updatedBy=="byExtApp")
+                                {
+                                    setTimeout(() => {
+                                        history.push('/salecomplete');
+                                    }, 1000);
+                                }
+                                else
+                                {
+                                    history.push('/salecomplete');          
+                                }
+                               
                             }
                             else
                             {

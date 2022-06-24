@@ -716,7 +716,7 @@ handleNote() {
     var isShowNotes=showNotes(_key.DISPLAY_CART_PAGE);
     return (
       <React.Fragment>
-        <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
+        <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} setPayment={this.props.setPayment}/>
         <div className="category-header m-b-35">
           <div className="col">
             <p className="current">Order Summary</p>

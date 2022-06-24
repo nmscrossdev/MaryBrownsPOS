@@ -8,6 +8,7 @@ import LocalizedLanguage from '../../../settings/LocalizedLanguage';
 import { history } from '../../../_helpers';
 import {getCustomLogo,centerView} from '../../../settings/SelfCheckoutSettings';
 import ScreenSaver from '../../../SelfCheckout/components/ScreenSaver';
+import moment from 'moment';
 class SendMailComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -31,17 +32,18 @@ class SendMailComponent extends React.Component {
         mailsucces: nextProp.getSuccess ? nextProp.getSuccess.is_success : null,
         emailSendingMessage: nextProp.getSuccess && nextProp.getSuccess.message ? nextProp.getSuccess.message : '',
         loader: false
-      })
+      });
+      if (nextProp.getSuccess && nextProp.getSuccess.is_success == true) {
+        setTimeout(() => {
+          this.clear()
+        }, 2000);  
+      }else if(nextProp.getSuccess && nextProp.getSuccess.is_success == false){
+        // setTimeout(
+        //   this.clear()
+        //   , 10000);
+      }
     }
-    if (nextProp.getSuccess && nextProp.getSuccess.is_success == true) {
-      setTimeout(
-        this.clear()
-        , 1000);
-    }else if(nextProp.getSuccess && nextProp.getSuccess.is_success == false){
-      setTimeout(
-        this.clear()
-        , 10000);
-    }
+    
 
   }
   clear() {
@@ -64,7 +66,9 @@ class SendMailComponent extends React.Component {
     localStorage.removeItem('PAYMENT_RESPONSE');
     localStorage.removeItem('PENDING_PAYMENTS');
     localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
+    localStorage.removeItem('PrintCHECKLIST');
     dispatch(cartProductActions.addtoCartProduct(null));
+    dispatch(saveCustomerInOrderAction.saveCustomerToTempOrder(null,null,null))
     // if(isMobileOnly == true){
     //     history.push('/shopview')
     // }else{

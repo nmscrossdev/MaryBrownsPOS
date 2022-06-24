@@ -434,7 +434,7 @@ class CartListView extends React.Component {
         }
         _taxRate = this.state.taxRate;
         nextProps.cartproductlist && nextProps.cartproductlist.map((item, index) => {            
-            if (item.Price) {
+            if (item && item.Price) {
                 _subtotalPrice += item.Price
                 _subtotalDiscount += parseFloat(item.discount_amount ==null || isNaN(item.discount_amount)==true?0:item.discount_amount)
                 if (item.product_id) {//donothing  

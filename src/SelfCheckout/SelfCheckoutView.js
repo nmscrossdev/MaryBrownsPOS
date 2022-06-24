@@ -1255,7 +1255,7 @@ class SelfCheckoutView extends React.Component {
         if(this.props.cartproductlist && this.props.cartproductlist.length>0)
         {
             length = this.props.cartproductlist.filter(function(item){
-                return item.Price && item.Price!="";
+                return item && item.Price && item.Price!="";
             }).length;
         }
         

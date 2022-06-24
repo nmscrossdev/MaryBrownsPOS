@@ -74,7 +74,7 @@ function addtoCartProduct(cartproductlist) {
     //-----update quantity and price for multiple product ----------------------------------------
     var newCartList = []
     cartproductlist && cartproductlist.map((item, index) => {
-        var isProdAddonsType = CommonJs.checkForProductXAddons(item.product_id);// check for productX is Addons type products
+        var isProdAddonsType =item && item.hasOwnProperty(item.product_id)? CommonJs.checkForProductXAddons(item.product_id):false;// check for productX is Addons type products
         var _discount_amount = 0.00;
         if (typeof item.product_id == 'undefined') {
             newCartList.push(item);
