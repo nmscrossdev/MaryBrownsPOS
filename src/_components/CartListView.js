@@ -510,9 +510,9 @@ class CartListView extends React.Component {
 
                 //if (isMobileOnly)
                   
-                    history.push('/checkout');
+                   // history.push('/checkout');
                 // else
-                //     window.location = '/checkout';
+                    window.location = '/checkout';
             }
             this.setState({
                 updateProductStatus: false
@@ -572,8 +572,8 @@ class CartListView extends React.Component {
 
         if (IsExist === true && !IsSeatExsit && this.state.IsSeatNotExsitStatus == true) {
             localStorage.removeItem("oliver_order_payments")
-            // window.location = '/checkout';
-            history.push('/checkout')
+            window.location = '/checkout';
+            // history.push('/checkout')
         }
 
         // Adding productX title from card_produc_list 

@@ -773,7 +773,7 @@ class SelfCheckoutView extends React.Component {
                       var appresponse=  handleAppEvent(extensionData,"ActivityView");
                         console.log("appResponse---->",appresponse)
                       if(appresponse){
-                          if(this.setState.appreposnse !==appresponse){
+                          if(this.state.appreposnse !==appresponse){
                                this.setState({"appreposnse": appresponse});
                           }
                       }

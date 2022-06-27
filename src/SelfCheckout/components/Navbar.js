@@ -62,7 +62,9 @@ changeURL=(msg,itemCount)=>
     }
     else
     {
-      history.push('/checkout');
+      // history.push('/checkout');
+
+      window.location = '/checkout';
     }
     
   }
