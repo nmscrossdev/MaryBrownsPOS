@@ -1684,35 +1684,84 @@ export const sendClientsDetails=(RequestData)=>{
     postmessage(clientJSON);
 }
 
+// export const getOrderStatus=(RequestData)=>{
+//   var clientJSON ={};
+
+//       var UID = get_UDid('UDID');
+//       store.dispatch(activityActions.getDetail(529, UID));     
+//       setTimeout(() => {
+//          const state = store.getState();
+//          if(state.single_Order_list &&  state.single_Order_list.items  && state.single_Order_list.items.content){
+//            var _order=state.single_Order_list && state.single_Order_list.items.content;
+//           clientJSON= {
+//             oliverpos:
+//             {
+//               command: RequestData.command,
+//               method: RequestData.method,
+//               version: 2.0,
+//               status: 200,
+//             },
+//             data:
+//             {
+//               wc_status: _order.order_status,
+//               wc_order_id:_order.order_id,
+//               oliver_order_id:_order.OliverReciptId
+//             }
+//             }
+//             postmessage(clientJSON) ;
+//          }
+//       }, 2000);
+// }
 export const getOrderStatus=(RequestData)=>{
+  var tempOrdrId = localStorage.getItem('tempOrder_Id') && localStorage.getItem('tempOrder_Id') !== undefined ? JSON.parse(localStorage.getItem("tempOrder_Id")) : null;
   var clientJSON ={};
-
-      var UID = get_UDid('UDID');
-      store.dispatch(activityActions.getDetail(529, UID));     
-      setTimeout(() => {
-         const state = store.getState();
-         if(state.single_Order_list &&  state.single_Order_list.items  && state.single_Order_list.items.content){
-           var _order=state.single_Order_list && state.single_Order_list.items.content;
-          clientJSON= {
-            oliverpos:
-            {
-              command: RequestData.command,
-              method: RequestData.method,
-              version: 2.0,
-              status: 200,
-            },
-            data:
-            {
-              wc_status: _order.order_status,
-              wc_order_id:_order.order_id,
-              oliver_order_id:_order.OliverReciptId
-            }
-            }
-            postmessage(clientJSON) ;
-         }
-      }, 2000);
+ 
+  const { Email } = ActiveUser.key;
+        var TempOrders = localStorage.getItem(`TempOrders_${Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${Email}`)) : []; if (TempOrders && TempOrders.length > 0) {
+              var filteredOrder=null;
+                if(TempOrders && TempOrders.length>0){
+                  filteredOrder= TempOrders && TempOrders.filter(tOrder=>tOrder.TempOrderID==tempOrdrId)
+              } 
+            }  
+          if(RequestData.method=='get'){   
+                    clientJSON= {
+                      command: RequestData.command,
+                      version:"2.0",
+                      method: RequestData.method,
+                      status: 200,
+                    }
+                    
+                    if(filteredOrder && filteredOrder.length>0){
+                      clientJSON['data']={
+                                      wc_status: filteredOrder && filteredOrder[0].order_status,
+                                      wc_order_no: filteredOrder && filteredOrder[0].OrderID,
+                                      oliver_order_id: filteredOrder && filteredOrder[0].TempOrderID
+                              
+                                  }
+                    }else{
+                      const state = store.getState();
+                              if(state.single_Order_list && state.single_Order_list.items && state.single_Order_list.items.content){
+                               var _order= state.single_Order_list.items.content
+                                if(_order){
+                                  clientJSON['data']={
+                                    wc_status: _order.order_status,
+                                    wc_order_no: _order.order_id,
+                                    oliver_order_id: _order.OliverReciptId
+                                }
+                                }
+                                
+                              
+                            }
+                    }
+              }
+              else
+              {
+                clientJSON['error']=="no transaction found"
+              }
+    
+  postmessage(clientJSON);
+   
 }
-
 export const doParkSale=(RequestData)=>{
   var clientJSON={};
   if(RequestData.method=="get" && RequestData.wc_order_no)
