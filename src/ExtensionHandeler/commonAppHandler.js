@@ -116,6 +116,9 @@ export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
               case "ReceiptData":
                 appResponse=getReceiptData(jsonMsg)
               break
+              case "Transaction":
+                appResponse=transactionApp(jsonMsg)
+              break
             default: // extensionFinished
                   var clientJSON = {
                     command: jsonMsg.command,
@@ -416,6 +419,20 @@ export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
           }else{
             isValidationSuccess=false;        
             clientJSON['error']= "Invalid Attribute" 
+          }
+      }
+      else if(RequestData.command=='Transaction' ){ 
+        if (RequestData && !RequestData.method ) { //missing attribut/invalid attribute name
+          isValidationSuccess=false;        
+          clientJSON['error']= "Invalid Attribute"          
+        }
+          if(RequestData.method=='post')
+          {
+              if (RequestData && (RequestData.method  && 
+                ( !RequestData.data || !RequestData.data || !RequestData.data.processor  || !RequestData.data.amount  ) )) { //missing attribut/invalid attribute name
+                isValidationSuccess=false;        
+                clientJSON['error']= "Invalid Attribute"          
+              }
           }
       }
       else if(RequestData.command=='rawProductData' ){ 
@@ -1537,6 +1554,101 @@ export const CloseExtension=()=>{
   hideModal('common_ext_popup');   
 }
 
+//app 2.0 implementation------
+// *** Payment Detail ***************
+export const  transactionApp = (RequestData) => {
+  var clientJSON = ""
+   
+ var validationResponse= validateRequest(RequestData) 
+
+ if(validationResponse.isValidationSuccess==false){
+      clientJSON=validationResponse.clientJSON;
+       postmessage(clientJSON) 
+ }  
+  else{
+    if(RequestData.method=='post')  //for payment through APP
+     {    
+       return 'app_do_transaction'   //on checkoutview, we check this value and process according      
+     }
+    else if(RequestData.method=='get'){     
+      var UID = get_UDid('UDID');
+      
+      const state = store.getState();
+     
+    var refundPayments=null;
+      
+      var orderPayments= localStorage.getItem("oliver_order_payments") ? JSON.parse(localStorage.getItem("oliver_order_payments")):null;
+      if(orderPayments==null){
+        if(state.single_Order_list && state.single_Order_list.items && state.single_Order_list.items.content){
+          orderPayments= state.single_Order_list.items.content.order_payments;
+          if(state.single_Order_list.items.content.order_Refund_payments){
+            refundPayments=state.single_Order_list.items.content.order_Refund_payments;
+          }
+          
+        }
+      }
+
+         if(orderPayments){          
+           var _totalAmount=0;
+           var _payments=[]
+            // All sale payments ---------------------
+            orderPayments && orderPayments.map(payment=>{
+              
+                var obj={"processor": payment.type?payment.type: payment.payment_type,
+                          "amount": payment.amount?payment.amount: payment.payment_amount,
+                        "transaction_id":payment.transaction_id,
+                        "emv_data": payment.emv_data,
+                        "transaction_type":"sale"
+                        }
+
+                _payments.push(obj);             
+            })
+            // // All refund payments ---------------------
+            refundPayments && refundPayments.length>0 && refundPayments.map(payment=>{
+             
+                var obj={"processor": payment.type?payment.type: payment.payment_type,
+                          "amount": payment.amount?payment.amount: payment.payment_amount,
+                        "transaction_id":payment.transaction_id,
+                        "emv_data": payment.emv_data,
+                        "transaction_type":"refund"
+                      }
+                _payments.push(obj);                         
+            })
+             //if request has processor then remove other payment except the processor
+             if(RequestData.processor && RequestData.processor !==""){
+              _payments=  _payments.filter(p=>p.processor==RequestData.processor)
+              }
+             //if request has transaction_type then remove other payment except the transaction_type
+          if(RequestData.transaction_type && RequestData.transaction_type !==""){
+            _payments=  _payments.filter(p=>p.transaction_type==RequestData.transaction_type)
+           }
+
+           if(_payments){
+            _payments && _payments.map(p=>{
+              _totalAmount +=p.amount;
+            })
+           }
+          clientJSON= {
+            command: RequestData.command,
+            version:"2.0",
+            method: RequestData.method,
+            status: 200,
+            error: null,
+            data: {
+              total_amount: _totalAmount,           
+              payments: _payments ?_payments:[]
+            }
+          }
+
+            postmessage(clientJSON) ;
+         }
+      // }, 1000);
+     
+    }
+      
+  } 
+}
+
 export const sendClientsDetails=(RequestData)=>{
   var clientDetails = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail'))  : 0 
   var guid = clientDetails && clientDetails.subscription_detail ? clientDetails.subscription_detail.client_guid : '';
@@ -1983,27 +2095,30 @@ export const doCustomFee=(RequestData)=>{
         }
         
         store.dispatch(cartProductActions.addtoCartProduct(cartlist));
-        var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
-        if (list != null) {
-            var subTotal = parseFloat(list.subTotal + data.Price).toFixed(2);
-            //var tax= parseFloat(list.tax +  data.Price).toFixed(2);
-            const CheckoutList = {
-                ListItem: cartlist,
-                customerDetail: list.customerDetail,
-                totalPrice: parseFloat((subTotal) + parseFloat(list.tax)),
-                discountCalculated: list.discountCalculated,
-                tax: list.tax,
-                subTotal: subTotal,
-                TaxId: list.TaxId,
-                order_id: list.order_id !== 0 ? list.order_id : 0,
-                showTaxStaus: list.showTaxStaus,
-                _wc_points_redeemed: list._wc_points_redeemed,
-                _wc_amount_redeemed: list._wc_amount_redeemed,
-                _wc_points_logged_redemption: list._wc_points_logged_redemption,
-
-            }
-            localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
-          }        
+        setTimeout(() => {
+          var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+          if (list != null) {
+             // var subTotal = parseFloat(list.subTotal + data.Price).toFixed(2);
+              //var tax= parseFloat(list.tax +  data.Price).toFixed(2);
+              const CheckoutList = {
+                  ListItem: cartlist,
+                  customerDetail: list.customerDetail,
+                  totalPrice: parseFloat((list.subTotal) + parseFloat(list.tax)),
+                  discountCalculated: list.discountCalculated,
+                  tax: list.tax,
+                  subTotal: list.subTotal,
+                  TaxId: list.TaxId,
+                  order_id: list.order_id !== 0 ? list.order_id : 0,
+                  showTaxStaus: list.showTaxStaus,
+                  _wc_points_redeemed: list._wc_points_redeemed,
+                  _wc_amount_redeemed: list._wc_amount_redeemed,
+                  _wc_points_logged_redemption: list._wc_points_logged_redemption,
+  
+              }
+              localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
+            } 
+        }, 500);
+              
     }
     clientJSON =
     {

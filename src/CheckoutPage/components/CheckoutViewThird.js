@@ -896,7 +896,7 @@ class CheckoutViewThird extends React.Component {
                                 </div> */}
                               
                                 {/* display the message terminal not connected */}
-                                <CommonMsgModal msg_text={LocalizedLanguage.terminalnotconnected} close_Msg_Modal={this.props.closeExtraPayModal} />
+                                <CommonMsgModal msg_text={this.props.msg_text && this.props.msg_text!=""?this.props.msg_text:LocalizedLanguage.terminalnotconnected} close_Msg_Modal={this.props.closeExtraPayModal} />
                             </div>
                             <ScreenSaver hide={true}></ScreenSaver>
                             </React.Fragment>
