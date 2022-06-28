@@ -2218,11 +2218,18 @@ export const doCustomFee=(RequestData)=>{
         {
           cartlist.push(data)
         }
-        
+        cartlist && cartlist.map(itm=>{
+          if(itm.TaxStatus=="none")
+          {
+            itm.incl_tax=0;
+            itm.excl_tax=0;
+          }
+        });
         store.dispatch(cartProductActions.addtoCartProduct(cartlist));
         setTimeout(() => {
           var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
           if (list != null) {
+            
              // var subTotal = parseFloat(list.subTotal + data.Price).toFixed(2);
               //var tax= parseFloat(list.tax +  data.Price).toFixed(2);
               const CheckoutList = {
