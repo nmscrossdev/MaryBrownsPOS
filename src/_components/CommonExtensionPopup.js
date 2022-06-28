@@ -16,7 +16,9 @@ render() {
             }
             let inName = extName?getInitials(extName):"";
             let uid=get_uuid();
-console.log("extentionUrl",extentionUrl)
+
+            // extentionUrl="https://dev1.sell.olivertest.com/externalApp/new_apps.html";
+            console.log("extentionUrl",extentionUrl)
     return (
         <div id="common_ext_popup" className="popup hide" style={{minWidth:"80%", minHeight:"80%",overflowY:"hidden",padding: "2.78vw"}}>
            

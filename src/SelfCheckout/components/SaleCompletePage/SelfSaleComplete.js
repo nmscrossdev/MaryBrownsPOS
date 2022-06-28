@@ -92,6 +92,7 @@ class SelfSaleComplete extends React.Component {
         localStorage.removeItem('GLOBAL_PAYMENT_RESPONSE');
         localStorage.removeItem('PAYMENT_RESPONSE');
         localStorage.removeItem('PENDING_PAYMENTS');
+        localStorage.removeItem('PrintCHECKLIST');
         localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
         dispatch(cartProductActions.addtoCartProduct(null));
         history.push('/SelfCheckoutView')

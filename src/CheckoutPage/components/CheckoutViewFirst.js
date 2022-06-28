@@ -14,6 +14,8 @@ import CheckoutCart from '../../SelfCheckout/components/CheckoutPage/CheckoutCar
 import ActiveUser from '../../settings/ActiveUser';
 import CommonJs from '../../_components/CommonJS';
 import { checkoutActions } from "../../CheckoutPage/actions/checkout.action";
+import { handleAppEvent } from '../../ExtensionHandeler/commonAppHandler';
+
 var checkList = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
 class CheckoutViewFirst extends React.Component {
     constructor(props) {
@@ -38,6 +40,45 @@ class CheckoutViewFirst extends React.Component {
         this.getPaymentDetails();
         var list = this.props.checkList && this.props.checkList;
         list && this.UpdateCartDiscount(list.ListItem);
+
+        if(!window.isListner)
+        {
+        window.isListner=true;
+        window.removeEventListener("message", function () {});
+        window.addEventListener('message', (e) => {
+            if (e.origin  && e.data && e.data !=="") { //&& _user && _user.instance
+                try {
+                    var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
+                    if (extensionData && extensionData !== "" ) {     
+                        
+                    if(extensionData.method=="post" && extensionData.command=="ParkSale")
+                    {
+                        this.props.setPayment('park_sale','byExtApp');
+                    }
+                    else if(extensionData.method=="get" && extensionData.command=="ParkSale")
+                    {
+                        handleAppEvent(extensionData,"");
+                        //this.props.setPayment('park_sale','byExtApp');
+                    }
+                    else
+                    {
+                        // var appresponse=  handleAppEvent(extensionData,"ActivityView",false);
+                        // console.log("appResponse---->",appresponse)
+                        // if(appresponse){
+                        //     if(this.setState.appreposnse !==appresponse){
+                        //     this.setState({"appreposnse": appresponse});
+                        //     }
+                        // }
+                    }
+                    }
+                    //----------------------------------------
+                }
+                catch (err) {
+                    console.error('App Error : ', err)
+                }
+            }
+        }, false);
+     }
     }
 
     /**
@@ -137,7 +178,7 @@ class CheckoutViewFirst extends React.Component {
         //-----------------------------------------
     }
 
-    componentWillReceiveProps(props) {
+    componentWillReceiveProps(props,nextProp) {
         setTimeout(function () {
             //Put All Your Code Here, Which You Want To Execute After Some Delay Time.
             if (typeof setHeightDesktop != "undefined"){  setHeightDesktop()};
@@ -296,7 +337,9 @@ class CheckoutViewFirst extends React.Component {
                     Markup={Markup}
                     SelfCheckoutStatus={this.props.SelfCheckoutStatus}
                     selfcheckoutstatusmanagingevnt={this.props.selfcheckoutstatusmanagingevnt}
-                    continuetoPayment={this.continuetoPayment}/>                    
+                    continuetoPayment={this.continuetoPayment}
+                    setPayment={this.props.setPayment}
+                    />                    
             // :
             // isMobileOnly == true ?
             //     this.props.activeComponent == "notes" ?
@@ -511,9 +554,10 @@ class CheckoutViewFirst extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { checkoutlist } = state;
+    const { checkoutlist,shop_order } = state;
     return {
         checkoutlist: checkoutlist.items,
+        shop_order: shop_order,
     };
 }
 const connectedCheckoutViewFirst = connect(mapStateToProps)(CheckoutViewFirst);

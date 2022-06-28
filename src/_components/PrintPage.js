@@ -142,7 +142,7 @@ var RoundAmount = (val) => {
 }
 //
 var currentWidth = screen.width;
-function PrintElem(data, getPdfdateTime, isTotalRefund, cash_rounding_amount, print_bar_code, orderList, type, productxList, AllProductList, TotalTaxByName, redeemPointsToPrint,appResponse) {
+function PrintElem(data, getPdfdateTime, isTotalRefund, cash_rounding_amount, print_bar_code, orderList, type, productxList, AllProductList, TotalTaxByName, redeemPointsToPrint,appResponse,doPrint=true) {
   console.log("------------------data------------",data)
 
  var displayExtensionAppData;
@@ -1261,10 +1261,10 @@ var tipPercent= order_reciept.PercentageTipsOfEntireOrder==true ? "("+((_tipAmou
     {
      rowNumber +=1;
      var _Add= (address && address.address_1 ? address.address_1 : '')+' '+ (address && address.address_2 ? address.address_2 : '');
-     PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":_Add,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
-     rowNumber +=1;
+    //  PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":_Add,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
+    //  rowNumber +=1;
      var _Add1= (address && address.zip ? address.zip : '')+''+ (address && address.city ? ', '+address.city : '' )+''+(address && address.country_name ?', '+ address.country_name : '');
-     PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":_Add1,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
+     PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":_Add +' '+_Add1,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
     }
    
 //-----------------------------------------
@@ -1516,28 +1516,36 @@ table {
       //console.log("---------drawer opening-------");
     }
   }
-
+  PrintAndroidReceiptData["data"]=PrintAndroidData;
   var env = localStorage.getItem("env_type");
-  if(  (env && env !='' && env !='ios')){ //typeof Android != "undefined" || Android != null ||
-       PrintAndroidReceiptData["data"]=PrintAndroidData;
-       showAndroidReceipt( receipt,PrintAndroidReceiptData) 
-  }else{
-      var mywindow = window.open('#', 'my div', "width='400', 'A2'");
-      mywindow && mywindow.document && mywindow.document.write(htmlbody);
-      // document.write(htmlbody);
+  if(doPrint==true)
+  {
+    if(  (env && env !='' && env !='ios')){ //typeof Android != "undefined" || Android != null ||
+      
+        showAndroidReceipt( receipt,PrintAndroidReceiptData) 
+    }else{
+        var mywindow = window.open('#', 'my div', "width='400', 'A2'");
+        mywindow && mywindow.document && mywindow.document.write(htmlbody);
+        // document.write(htmlbody);
 
-     // console.log("htmlbody",htmlbody)
+      // console.log("htmlbody",htmlbody)
 
-      if (mywindow) {
-        setTimeout(() => {
-          mywindow.print();
-          mywindow.close();
-        }, 300);
-      }
+        if (mywindow) {
+          setTimeout(() => {
+            mywindow.print();
+            mywindow.close();
+          }, 300);
+        }
+    }
+    return true;
+  }
+  else
+  {
+    // if doPrint variable value is false, then we are retruing PrintAndroidReceiptData object to ReceiptData extension app
+    return PrintAndroidReceiptData;
   }
 
 
-  return true;
 }
 
 //TAx

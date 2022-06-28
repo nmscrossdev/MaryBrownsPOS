@@ -460,7 +460,7 @@ class CheckoutCart extends React.Component {
       if (item.Price) {
         _subtotalPrice += item.Price
         _subtotalDiscount += parseFloat(item.discount_amount)
-        if (item.product_id) {//donothing
+        if (item.product_id || item.Price) {//donothing
           _exclTax += item.excl_tax ? item.excl_tax : 0,
             _inclTax += item.incl_tax ? item.incl_tax : 0
         }
@@ -542,7 +542,8 @@ class CheckoutCart extends React.Component {
 
   GoBackhandleClick() {
     localStorage.setItem("screen_saver","false");
-    history.push('/SelfCheckoutView');
+    //history.push('/SelfCheckoutView');
+    window.location = '/SelfCheckoutView'
     //setTimeout(function () { selfCheckoutJs(); }, 100)
   }
 
@@ -705,7 +706,7 @@ handleNote() {
     //         landingScreen = permission.value;
     //     })
     // }
-    var checkList1 = this.state.checkList;//localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
+    var checkList1 = localStorage.getItem("CHECKLIST") ? JSON.parse(localStorage.getItem("CHECKLIST")) : [];
     var length="";
         if(checkList1 && checkList1.ListItem && checkList1.ListItem.length>0)
         {
@@ -716,7 +717,7 @@ handleNote() {
     var isShowNotes=showNotes(_key.DISPLAY_CART_PAGE);
     return (
       <React.Fragment>
-        <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} />
+        <Navbar showExtensionIframe={this.showExtensionIframe} page={_key.CHECKOUT_PAGE} itemCount={length} setPayment={this.props.setPayment}/>
         <div className="category-header m-b-35">
           <div className="col">
             <p className="current">Order Summary</p>
@@ -743,7 +744,7 @@ handleNote() {
                       <div className="row">
                           <p className="prod-name" style={{width:"50%"}}>{product.Title}</p>
                           <div className="inner-row" style={{width:"50%",justifyContent:"space-between"}}>
-                            <div className="increment-input">
+                          {product.product_id && product.product_id != null ?<div className="increment-input">
                               <div onClick={() => this.incrementDefaultQuantity(product, index, 0)} className="decrement">
                                 <svg width="16" height="2" viewBox="0 0 16 2" style={{ width: "30px" }}>
                                   <rect width="16" height="2" fill="#758696" />
@@ -755,7 +756,7 @@ handleNote() {
                                   <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />
                                 </svg>
                               </div>
-                            </div>
+                            </div>:<div className="increment-input" style={{border:0}}></div>}
                             <p> {parseFloat(product.Price).toFixed(2)}</p>
                               <svg
                                 width="15"

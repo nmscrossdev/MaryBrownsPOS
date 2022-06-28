@@ -9,10 +9,25 @@ import { activityActions } from "../ActivityPage";
 import FetchIndexDB from "../settings/FetchIndexDB";
 import { cartProductActions } from "../_actions";
 import { checkoutActions } from "../CheckoutPage";
-import { changeTaxRate, getTaxAllProduct } from "../_components";
-
+import { changeTaxRate, getTaxAllProduct,PrintPage } from "../_components";
+import ActiveUser from '../settings/ActiveUser';
+import { serverRequest } from "../CommonServiceRequest/serverRequest";
+import { TaxSetting } from "../_components/TaxSetting";
+import moment from 'moment';
+var JsBarcode = require('jsbarcode');
+var print_bar_code;
+export const textToBase64Barcode=(text)=> {
+    var canvas = document.createElement("canvas");
+    JsBarcode(canvas, text, {
+        format: "CODE39", displayValue: false, width: 1,
+        height: 30,
+    });
+    print_bar_code = canvas.toDataURL("image/png");
+    return print_bar_code;
+}
 export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
-  
+
+
     var jsonMsg = value ? value : '';
     var clientEvent = jsonMsg && jsonMsg !== '' && jsonMsg.command ? jsonMsg.command : '';
     // console.log("whereToview",whereToview)
@@ -86,7 +101,24 @@ export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
               case "CloseExtension":
                 CloseExtension();
                   break;
-  
+              case "ClientInfo":
+                appResponse=sendClientsDetails(jsonMsg)
+              break
+              case "OrderStatus":
+                appResponse=getOrderStatus(jsonMsg)
+              break
+              case "ParkSale":
+                appResponse=doParkSale(jsonMsg)
+              break
+              case "CustomFee":
+                appResponse=doCustomFee(jsonMsg)
+              break
+              case "ReceiptData":
+                appResponse=getReceiptData(jsonMsg)
+              break
+              case "Transaction":
+                appResponse=transactionApp(jsonMsg)
+              break
             default: // extensionFinished
                   var clientJSON = {
                     command: jsonMsg.command,
@@ -387,6 +419,20 @@ export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
           }else{
             isValidationSuccess=false;        
             clientJSON['error']= "Invalid Attribute" 
+          }
+      }
+      else if(RequestData.command=='Transaction' ){ 
+        if (RequestData && !RequestData.method ) { //missing attribut/invalid attribute name
+          isValidationSuccess=false;        
+          clientJSON['error']= "Invalid Attribute"          
+        }
+          if(RequestData.method=='post')
+          {
+              if (RequestData && (RequestData.method  && 
+                ( !RequestData.data || !RequestData.data || !RequestData.data.processor  || !RequestData.data.amount  ) )) { //missing attribut/invalid attribute name
+                isValidationSuccess=false;        
+                clientJSON['error']= "Invalid Attribute"          
+              }
           }
       }
       else if(RequestData.command=='rawProductData' ){ 
@@ -1506,4 +1552,773 @@ export const postClientExtensionResponse=(method,isSuccess,message,command="Cust
 // Product Detail end****************
 export const CloseExtension=()=>{
   hideModal('common_ext_popup');   
+}
+
+//app 2.0 implementation------
+// *** Payment Detail ***************
+export const  transactionApp = (RequestData) => {
+  var clientJSON = ""
+   
+ var validationResponse= validateRequest(RequestData) 
+
+ if(validationResponse.isValidationSuccess==false){
+      clientJSON=validationResponse.clientJSON;
+       postmessage(clientJSON) 
+ }  
+  else{
+    if(RequestData.method=='post')  //for payment through APP
+     {    
+       return 'app_do_transaction'   //on checkoutview, we check this value and process according      
+     }
+    else if(RequestData.method=='get'){     
+      var UID = get_UDid('UDID');
+      
+      const state = store.getState();
+     
+    var refundPayments=null;
+      
+      var orderPayments= localStorage.getItem("oliver_order_payments") ? JSON.parse(localStorage.getItem("oliver_order_payments")):null;
+      if(orderPayments==null){
+        if(state.single_Order_list && state.single_Order_list.items && state.single_Order_list.items.content){
+          orderPayments= state.single_Order_list.items.content.order_payments;
+          if(state.single_Order_list.items.content.order_Refund_payments){
+            refundPayments=state.single_Order_list.items.content.order_Refund_payments;
+          }
+          
+        }
+      }
+
+         if(orderPayments){          
+           var _totalAmount=0;
+           var _payments=[]
+            // All sale payments ---------------------
+            orderPayments && orderPayments.map(payment=>{
+              
+                var obj={"processor": payment.type?payment.type: payment.payment_type,
+                          "amount": payment.amount?payment.amount: payment.payment_amount,
+                        "transaction_id":payment.transaction_id,
+                        "emv_data": payment.emv_data,
+                        "transaction_type":"sale"
+                        }
+
+                _payments.push(obj);             
+            })
+            // // All refund payments ---------------------
+            refundPayments && refundPayments.length>0 && refundPayments.map(payment=>{
+             
+                var obj={"processor": payment.type?payment.type: payment.payment_type,
+                          "amount": payment.amount?payment.amount: payment.payment_amount,
+                        "transaction_id":payment.transaction_id,
+                        "emv_data": payment.emv_data,
+                        "transaction_type":"refund"
+                      }
+                _payments.push(obj);                         
+            })
+             //if request has processor then remove other payment except the processor
+             if(RequestData.processor && RequestData.processor !==""){
+              _payments=  _payments.filter(p=>p.processor==RequestData.processor)
+              }
+             //if request has transaction_type then remove other payment except the transaction_type
+          if(RequestData.transaction_type && RequestData.transaction_type !==""){
+            _payments=  _payments.filter(p=>p.transaction_type==RequestData.transaction_type)
+           }
+
+           if(_payments){
+            _payments && _payments.map(p=>{
+              _totalAmount +=p.amount;
+            })
+           }
+          clientJSON= {
+            command: RequestData.command,
+            version:"2.0",
+            method: RequestData.method,
+            status: 200,
+            error: null,
+            data: {
+              total_amount: _totalAmount,           
+              payments: _payments ?_payments:[]
+            }
+          }
+
+            postmessage(clientJSON) ;
+         }
+      // }, 1000);
+     
+    }
+      
+  } 
+}
+
+export const sendClientsDetails=(RequestData)=>{
+  var clientDetails = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail'))  : 0 
+  var guid = clientDetails && clientDetails.subscription_detail ? clientDetails.subscription_detail.client_guid : '';
+  var account_type = clientDetails && clientDetails.subscription_detail ? clientDetails.subscription_detail.subscription_name : '';
+  var store_url = clientDetails && clientDetails.subscription_detail ? clientDetails.subscription_detail.url : '';
+  var business_name= clientDetails && clientDetails.subscription_detail ? clientDetails.subscription_detail.company_name : '';
+  var account_monthly_price = clientDetails && clientDetails.subscription_detail ? clientDetails.subscription_detail.MonthlyPrice : ''
+  var email = clientDetails && clientDetails.user_email ? clientDetails.user_email : ''
+  var currency = clientDetails && clientDetails.currency ? clientDetails.currency : '';
+  var account_creation_date = clientDetails && clientDetails.register_unix_date ? clientDetails.register_unix_date : '';
+  
+    var clientJSON =
+    {
+        oliverpos:
+        {
+          command: RequestData.command,
+          method: RequestData.method,
+          version: 2.0,
+          status: 200,
+        },
+        data:
+        {
+          guid: guid,
+          account_creation_date:account_creation_date,
+          account_type:account_type,
+          account_monthly_price:account_monthly_price,
+          store_url:store_url,
+          email:email,
+          currency:currency,
+          business_name:business_name
+        }
+    };
+    postmessage(clientJSON);
+}
+
+// export const getOrderStatus=(RequestData)=>{
+//   var clientJSON ={};
+
+//       var UID = get_UDid('UDID');
+//       store.dispatch(activityActions.getDetail(529, UID));     
+//       setTimeout(() => {
+//          const state = store.getState();
+//          if(state.single_Order_list &&  state.single_Order_list.items  && state.single_Order_list.items.content){
+//            var _order=state.single_Order_list && state.single_Order_list.items.content;
+//           clientJSON= {
+//             oliverpos:
+//             {
+//               command: RequestData.command,
+//               method: RequestData.method,
+//               version: 2.0,
+//               status: 200,
+//             },
+//             data:
+//             {
+//               wc_status: _order.order_status,
+//               wc_order_id:_order.order_id,
+//               oliver_order_id:_order.OliverReciptId
+//             }
+//             }
+//             postmessage(clientJSON) ;
+//          }
+//       }, 2000);
+// }
+export const getOrderStatus=(RequestData)=>{
+  var tempOrdrId = localStorage.getItem('tempOrder_Id') && localStorage.getItem('tempOrder_Id') !== undefined ? JSON.parse(localStorage.getItem("tempOrder_Id")) : null;
+  var clientJSON ={};
+ 
+  const { Email } = ActiveUser.key;
+        var TempOrders = localStorage.getItem(`TempOrders_${Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${Email}`)) : []; if (TempOrders && TempOrders.length > 0) {
+              var filteredOrder=null;
+                if(TempOrders && TempOrders.length>0){
+                  filteredOrder= TempOrders && TempOrders.filter(tOrder=>tOrder.TempOrderID==tempOrdrId)
+              } 
+            }  
+          if(RequestData.method=='get'){   
+                    clientJSON= {
+                      command: RequestData.command,
+                      version:"2.0",
+                      method: RequestData.method,
+                      status: 200,
+                    }
+                    
+                    if(filteredOrder && filteredOrder.length>0){
+                      clientJSON['data']={
+                                      wc_status: filteredOrder && filteredOrder[0].order_status,
+                                      wc_order_no: filteredOrder && filteredOrder[0].OrderID,
+                                      oliver_order_id: filteredOrder && filteredOrder[0].TempOrderID
+                              
+                                  }
+                    }else{
+                      const state = store.getState();
+                              if(state.single_Order_list && state.single_Order_list.items && state.single_Order_list.items.content){
+                               var _order= state.single_Order_list.items.content
+                                if(_order){
+                                  clientJSON['data']={
+                                    wc_status: _order.order_status,
+                                    wc_order_no: _order.order_id,
+                                    oliver_order_id: _order.OliverReciptId
+                                }
+                                }
+                                
+                              
+                            }
+                    }
+              }
+              else
+              {
+                clientJSON['error']=="no transaction found"
+              }
+    
+  postmessage(clientJSON);
+   
+}
+export const doParkSale=(RequestData)=>{
+  var clientJSON={};
+  if(RequestData.method=="get" && RequestData.wc_order_no)
+  {
+    var productList = []
+    var idbKeyval = FetchIndexDB.fetchIndexDb();
+    idbKeyval.get('ProductList').then(val => {
+        if (!val || val.length == 0 || val == null || val == "") {
+        } else { productList = val; }
+    });
+    //var wc_order_no= RequestData.wc_order_no;
+    var UID = get_UDid('UDID');
+    store.dispatch(activityActions.getDetail(RequestData.wc_order_no, UID));   
+    var single_Order_list={};  
+    setTimeout(() => {
+       const state = store.getState();
+       if(state.single_Order_list &&  state.single_Order_list.items  && state.single_Order_list.items.content){
+        single_Order_list=state.single_Order_list && state.single_Order_list.items.content;
+
+      localStorage.removeItem("oliver_order_payments"); //remove existing payments   
+      // sessionStorage.getItem("OrderDetail") for mobile view.............
+      //var single_Order_list = sessionStorage.getItem("OrderDetail") && sessionStorage.getItem("OrderDetail") !== undefined ? JSON.parse(sessionStorage.getItem("OrderDetail")) : this.props.single_Order_list.content;
+      var addcust;
+      var typeOfTax = TaxSetting.typeOfTax()
+      var setOrderPaymentsToLocalStorage = new Array();
+      if (typeof single_Order_list.order_payments !== 'undefined') {
+          single_Order_list.order_payments.map(pay => {
+              var _payDetail={
+                  "Id": pay.Id,
+                  "payment_type": pay.type,
+                  "payment_amount": pay.amount,
+                  "order_id": single_Order_list.order_id,
+                  "type": pay.type,
+                  "transection_id": pay.transection_id
+              }
+              if(pay.payment_date && pay.payment_date !=""){
+                  _payDetail["payment_date"]=pay.payment_date;
+              }
+              setOrderPaymentsToLocalStorage.push(_payDetail);
+              
+          })
+      }
+      localStorage.setItem("oliver_order_payments", JSON.stringify(setOrderPaymentsToLocalStorage))
+      localStorage.setItem("VOID_SALE", "void_sale");
+      var deafult_tax = localStorage.getItem('APPLY_DEFAULT_TAX') && localStorage.getItem('APPLY_DEFAULT_TAX') !== undefined ? JSON.parse(localStorage.getItem("APPLY_DEFAULT_TAX")) : null;
+      var ListItem = new Array();
+      var taxIds = null;
+      if (single_Order_list.line_items !== null && single_Order_list.line_items[0] && single_Order_list.line_items[0].Taxes !== null && single_Order_list.line_items[0].Taxes !== 'undefined' && single_Order_list.line_items.length > 0) {
+          taxIds = single_Order_list.line_items && single_Order_list.line_items[0].Taxes;
+      }
+      var taxArray = taxIds && taxIds !== undefined ? JSON.parse(taxIds).total : null;
+      var Taxes = taxArray ? Object.entries(taxArray).map(item => ({ [item[0]]: item[1] })) : deafult_tax;
+      // console.log("taxIds", taxIds)
+      // console.log("Taxes", Taxes)
+      single_Order_list.line_items.map(item => {
+          //productList from mobile view
+          var _productList = productList && productList.length > 0 ? productList : this.state.productList;
+          var productData = _productList.find(prdID => prdID.WPID == item.product_id && (item.bundled_parent_key == '' || item.bundled_parent_key == null));
+          var SingleOrderMetaData = single_Order_list && single_Order_list.meta_datas && single_Order_list.meta_datas.find(data => data.ItemName == '_order_oliverpos_product_discount_amount')
+          SingleOrderMetaData = SingleOrderMetaData ? SingleOrderMetaData.ItemValue : []
+          var productDiscountData = SingleOrderMetaData && SingleOrderMetaData !== undefined ? SingleOrderMetaData.length > 0 && JSON.parse(SingleOrderMetaData) : []
+          var orderMetaData = productDiscountData && productDiscountData != [] && productDiscountData.find(metaData => metaData.variation_id ? metaData.variation_id == item.product_id : metaData.product_id == item.product_id);
+          if (orderMetaData && orderMetaData.discountCart) {
+              var cart = {
+                  type: 'card',
+                  discountType: (orderMetaData.discountCart.discountType == '%' || orderMetaData.discountCart.discountType=="Percentage") ? "Percentage" : "Number",
+                  discount_amount: orderMetaData.discountCart.discount_amount,
+                  Tax_rate: orderMetaData.discountCart.Tax_rate
+              }
+              localStorage.setItem("CART", JSON.stringify(cart))
+          }
+          if (productData || orderMetaData) {
+              ListItem.push({
+                  Price: orderMetaData && orderMetaData.Price ? orderMetaData.Price : item.subtotal,
+                  // Price: item.subtotal,
+                  // Title: item.name,
+                  Title: orderMetaData ? orderMetaData.Title : item.name,
+                  Sku: orderMetaData ? orderMetaData.Sku : productData && productData.Sku,
+                  // product_id: 
+                  product_id: orderMetaData ? orderMetaData.product_id : (productData && productData.Type == "variation") ? productData.ParentId : item.product_id,
+                  // quantity: item.quantity,
+                  quantity: orderMetaData ? orderMetaData.quantity : item.quantity,
+                  after_discount: orderMetaData ? orderMetaData.after_discount : (item.total == item.subtotal) ? 0 : item.total,
+                  discount_amount: orderMetaData ? orderMetaData.discount_amount : (item.total == item.subtotal) ? 0 : item.subtotal - item.total,
+                  // variation_id: (productData.Type == "variation") ? item.product_id : 0,
+                  variation_id: orderMetaData ? orderMetaData.variation_id : (productData && productData.Type == "variation") ? item.product_id : 0,
+                  cart_after_discount: orderMetaData ? orderMetaData.cart_after_discount : (item.total == item.subtotal) ? 0 : item.total,
+                  cart_discount_amount: orderMetaData ? orderMetaData.cart_discount_amount : 0,
+                  product_after_discount: orderMetaData ? orderMetaData.product_after_discount : 0,
+                  product_discount_amount: orderMetaData ? orderMetaData && orderMetaData.product_discount_amount ? orderMetaData.product_discount_amount : 0 : 0,
+                  old_price: orderMetaData ? orderMetaData.old_price : productData ? productData.Price : 0,
+                  discount_type: orderMetaData ? orderMetaData.discount_type : null,
+                  new_product_discount_amount: orderMetaData ? orderMetaData.new_product_discount_amount : 0,
+                  line_item_id: item.line_item_id,
+                  subtotalPrice: item.subtotal,
+                  subtotaltax: item.subtotal_tax,
+                  totalPrice: item.total,
+                  totaltax: item.total_tax,
+                  // after_discount: (item.total == item.subtotal) ? 0 : item.total,
+                  // discount_amount: (item.total == item.subtotal) ? 0 : item.subtotal - item.total,
+                  // old_price: productData.Price,
+                  incl_tax: typeOfTax == 'incl' ? item.subtotal_tax : 0,
+                  excl_tax: typeOfTax == 'Tax' ? item.subtotal_tax : 0,
+                  Taxes: item.Taxes,
+                  // product_discount_amount: (item.total == item.subtotal) ? 0 : item.subtotal - item.total,
+                  // TaxClass: productData.TaxClass,
+                  // TaxStatus: productData.TaxStatus,
+                  isTaxable: productData && productData.Taxable,
+                  // ticket_status: productData.IsTicket,
+                  ticket_status: orderMetaData ? orderMetaData.ticket_status : null,
+                  tick_event_id: orderMetaData ? orderMetaData.tick_event_id : null,
+                  ticket_info: orderMetaData ? orderMetaData.ticket_info : null,
+                  product_ticket: orderMetaData ? orderMetaData.product_ticket : null,
+                  TaxStatus: orderMetaData ? orderMetaData.TaxStatus : productData && productData.TaxStatus,
+                  tcForSeating: orderMetaData ? orderMetaData.tcForSeating : null,
+                  TaxClass: orderMetaData ? orderMetaData.TaxClass : productData && productData.TaxClass,
+                  addons: item.meta && item.meta ? JSON.parse(item.meta) : '',
+                  strProductX : ''
+              })
+          }
+      })
+
+      // add custom fee to the CARD_PRODUCT_LIST
+      var orderMeta = single_Order_list && single_Order_list.meta_datas && single_Order_list.meta_datas.find(data => data.ItemName == '_order_oliverpos_product_discount_amount');
+      orderMeta = orderMeta ? orderMeta.ItemValue : [];
+      var parsedFeeData = orderMeta && orderMeta !== undefined ? orderMeta.length > 0 && JSON.parse(orderMeta) : [];
+      var orderFeeData = parsedFeeData && parsedFeeData !== [] && parsedFeeData.find(item => item.order_custom_fee);
+
+      if (orderFeeData && orderFeeData.order_custom_fee.length > 0 && orderFeeData.order_custom_fee) {
+          orderFeeData && orderFeeData.order_custom_fee.map(item => {
+              ListItem.push({
+                  Title: item.note,
+                  Price: item.amount !== 0 ? item.amount : null,
+                  TaxClass: item.TaxClass,
+                  TaxStatus: item.TaxStatus,
+                  after_discount: item.after_discount,
+                  cart_after_discount: item.cart_after_discount,
+                  cart_discount_amount: item.cart_discount_amount,
+                  discount_amount: item.discount_amount,
+                  discount_type: item.discount_type,
+                  excl_tax: item.excl_tax,
+                  incl_tax: item.incl_tax,
+                  isTaxable: item.isTaxable,
+                  new_product_discount_amount: item.new_product_discount_amount,
+                  old_price: item.old_price,
+                  product_after_discount: item.product_after_discount,
+                  product_discount_amount: item.product_discount_amount,
+                  quantity: item.quantity,
+
+              })
+          })
+      }
+
+      // add notes in cart list
+      if ((typeof single_Order_list.order_notes !== 'undefined') && single_Order_list.order_notes.length !== 0) {
+          single_Order_list.order_notes.map(item => {
+              ListItem.push({
+                  Title: item.note,
+                  id: item.note_id
+              })
+          })
+      }
+
+      if ((typeof single_Order_list.order_payments !== 'undefined') && single_Order_list.order_payments.length == 0 && single_Order_list && single_Order_list.order_id == 0) {
+          //this.props.single_Order_list && this.props.single_Order_list.order_id == 0) {
+          localStorage.setItem("CARD_PRODUCT_LIST", JSON.stringify(ListItem))
+          localStorage.removeItem("VOID_SALE")
+      } else {
+          if (single_Order_list.order_status != "park_sale" && single_Order_list.order_status != "pending" && single_Order_list.order_status !== 'on-hold' && single_Order_list.order_status !== 'lay_away') {
+              // if (single_Order_list.order_status != "park_sale" && single_Order_list.order_status != "pending") {
+              localStorage.setItem("VOID_SALE", "void_sale")
+              localStorage.removeItem("CARD_PRODUCT_LIST")
+              // remove void sale for park_sale
+          } else {
+              localStorage.setItem("CARD_PRODUCT_LIST", JSON.stringify(ListItem))
+              if (localStorage.getItem("oliver_order_payments") == null || (typeof single_Order_list.order_payments !== 'undefined') && single_Order_list.order_payments.length == 0) {
+                  localStorage.removeItem("VOID_SALE")
+              }
+          }
+      }
+      var orderCustomerInfo = (typeof single_Order_list.orderCustomerInfo !== 'undefined') && single_Order_list.orderCustomerInfo !== null ? single_Order_list.orderCustomerInfo : null;
+      if (orderCustomerInfo !== null) {
+          addcust = {
+              content: {
+                  AccountBalance: 0,
+                  City: orderCustomerInfo.customer_city ? orderCustomerInfo.customer_city : '',
+                  Email: orderCustomerInfo.customer_email ? orderCustomerInfo.customer_email : '',
+                  FirstName: orderCustomerInfo.customer_first_name ? orderCustomerInfo.customer_first_name : '',
+                  Id: orderCustomerInfo.customer_id ? orderCustomerInfo.customer_id : single_Order_list.customer_id,
+                  LastName: orderCustomerInfo.customer_last_name ? orderCustomerInfo.customer_last_name : '',
+                  Notes: orderCustomerInfo.customer_note ? orderCustomerInfo.customer_note : '',
+                  Phone: orderCustomerInfo.customer_phone ? orderCustomerInfo.customer_phone : '',
+                  Pin: 0,
+                  Pincode: orderCustomerInfo.customer_post_code ? orderCustomerInfo.customer_post_code : '',
+                  StoreCredit: orderCustomerInfo.store_credit ? orderCustomerInfo.store_credit : '',
+                  StreetAddress: orderCustomerInfo.customer_address ? orderCustomerInfo.customer_address : '',
+                  UID: 0,
+                  WPId: orderCustomerInfo.customer_id ? orderCustomerInfo.customer_id : single_Order_list.customer_id,
+              }
+          }
+          localStorage.setItem('AdCusDetail', JSON.stringify(addcust));
+          sessionStorage.setItem("CUSTOMER_ID", orderCustomerInfo.customer_id ? orderCustomerInfo.customer_id : single_Order_list.customer_id)
+      }
+      // single_Order_list.line_items.map(item => {
+
+      // var discountOrderMeta = single_Order_list && single_Order_list.meta_datas[2] ? single_Order_list.meta_datas[2].ItemValue : []
+      var SingleOrderMetaData = single_Order_list && single_Order_list.meta_datas && single_Order_list.meta_datas.find(data => data.ItemName == '_order_oliverpos_product_discount_amount')
+      SingleOrderMetaData = SingleOrderMetaData && SingleOrderMetaData !== undefined ? SingleOrderMetaData.ItemValue : []
+      var productDiscountData = SingleOrderMetaData.length > 0 && JSON.parse(SingleOrderMetaData)
+      // var orderMetaData = productDiscountData && productDiscountData != [] && productDiscountData.find(metaData => metaData.product_id);
+
+      // total_subTotal_fileds sent from checkout in meta when we order as a park or lay-away
+      var orderMetaData = productDiscountData && productDiscountData != [] && productDiscountData.find(itm => itm.total_subTotal_fileds);
+      // });
+      orderMetaData = orderMetaData && orderMetaData.total_subTotal_fileds && orderMetaData.total_subTotal_fileds.totalPrice && orderMetaData.total_subTotal_fileds.subTotal? orderMetaData.total_subTotal_fileds : null
+      var CheckoutList = {
+          ListItem: ListItem,
+          customerDetail: orderCustomerInfo ? addcust : null,
+          totalPrice: orderMetaData ? orderMetaData.totalPrice : single_Order_list.total_amount,
+          // totalPrice: single_Order_list.total_amount,
+          discountCalculated: single_Order_list.discount,
+          tax: single_Order_list.total_tax,
+          subTotal: orderMetaData ? parseFloat(orderMetaData.subTotal) : parseFloat(single_Order_list.total_amount) - parseFloat(single_Order_list.total_tax),
+          // subTotal: parseFloat(single_Order_list.total_amount) - parseFloat(single_Order_list.total_tax),
+          // TaxId: deafult_tax && deafult_tax[0] ? deafult_tax[0].TaxId : 0,
+          TaxId: Taxes ? Taxes : 0,
+          status: single_Order_list.order_status,
+          order_id: single_Order_list && single_Order_list.order_id,
+          oliver_pos_receipt_id: single_Order_list && single_Order_list.OliverReciptId,
+          order_date: moment(single_Order_list.OrderDateTime).format(Config.key.DATETIME_FORMAT),
+          showTaxStaus: typeOfTax == 'Tax' ? typeOfTax : 'Incl. Tax',
+      }
+      localStorage.removeItem('PENDING_PAYMENTS');
+      localStorage.setItem("CHECKLIST", JSON.stringify(CheckoutList))
+      var addonsItem = []
+      ListItem && ListItem.map((list) => {
+          if (list && list.addons && list.addons !== '' && list.addons.length > 0) {
+              list['Type'] = list.variation_id && list.variation_id !== 0 ? 'variable' : 'simple'
+              list['line_subtotal'] = list.Price
+              list['line_subtotal_tax'] = list.subtotaltax
+              list['line_tax'] = list.totaltax
+              list['strProductX'] = ''
+              addonsItem.push(list)
+          }
+      })
+      localStorage.setItem("PRODUCTX_DATA", JSON.stringify(addonsItem))
+      localStorage.setItem("BACK_CHECKOUT", true)
+      window.location = '/checkout';
+    
+  }
+  clientJSON =
+  {
+      oliverpos:
+      {
+        command: RequestData.command,
+        method: RequestData.method,
+        version: 2.0,
+        status: 200,
+      }
+  };
+},2000);
+
+    //var wc_order_no= RequestData.wc_order_no;
+  }
+  else if(RequestData.method=="post" && RequestData.tempOrderId)
+  {
+    clientJSON =
+    {
+        oliverpos:
+        {
+          command: RequestData.command,
+          method: RequestData.method,
+          version: 2.0,
+          status: 200,
+        },
+        data:
+        {
+          wc_order_no:RequestData.tempOrderId,
+        }
+    };
+  }
+  postmessage(clientJSON);
+}
+
+export const doCustomFee=(RequestData)=>{
+
+  var clientJSON={};
+  if(RequestData.method=="get")
+  {
+      var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
+      var customFes=[];
+      if (cartlist.length > 0) {
+        cartlist.map(item => {
+        if(item && !item.hasOwnProperty("product_id") && item.Price)
+        {
+          customFes.push({name:item.Title,amount:item.Price,is_taxable:item.TaxStatus=="taxable"?true:false});
+        }
+        });
+        if(RequestData.hasOwnProperty('name') && RequestData.name!="")
+        {
+          customFes=customFes.filter(item =>(item.name==RequestData.name));
+        }
+      }
+      clientJSON =
+      {
+          oliverpos:
+          {
+            command: RequestData.command,
+            method: RequestData.method,
+            version: 2.0,
+            status: 200,
+          },
+          data:
+          {
+            fees:customFes
+          }
+      };
+    postmessage(clientJSON);
+  }
+  else if(RequestData.method=="post" || RequestData.method=="put")
+  {
+    let amount = RequestData.data.amount;
+    let add_title = RequestData.data.name;
+    let isfeeTaxable=RequestData.data.is_taxable;
+    
+    var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
+    cartlist = cartlist == null ? [] : cartlist;
+    var new_title = add_title !== '' ? add_title : LocalizedLanguage.customFee;
+    var title = new_title;
+    var new_array = [];
+    if (cartlist.length > 0) {
+        cartlist.map(item => {
+
+        if(item && RequestData.method=="put" && (typeof item.product_id == 'undefined' || item.product_id==null))
+        {
+          if(item.Title==add_title)
+          {
+            item.Price = parseFloat(amount);
+            item.old_price = isfeeTaxable==true && parseFloat(amount);
+            item.isTaxable =isfeeTaxable;
+            item.TaxStatus = isfeeTaxable==true?"taxable":"none";
+          }
+        }
+
+          if (item && typeof item.product_id == 'undefined') {
+              if (item.Price !== null) {
+                  new_array.push(item)
+              }
+          }
+        })
+    }
+
+    if (amount != 0) {
+        if (new_array.length > 0) {
+            var withNoDigits = new_array.map(item => {
+                var remveNum = item.Title.replace(/[0-9]/g, '')
+                return remveNum;
+            });
+            withNoDigits.length > 0 && withNoDigits.map((item, index) => {
+                if (item == title) {
+                    var incr = index + 1
+                    new_title = item + incr;
+                } else {
+                    new_title = new_title
+                }
+            })
+        }
+        var data = {
+            Title: new_title,
+            Price: parseFloat(amount),
+            old_price: isfeeTaxable==true && parseFloat(amount),
+            isTaxable:isfeeTaxable,
+            TaxStatus: isfeeTaxable==true?"taxable":"none",               
+            TaxClass:'',
+            quantity:1
+        }
+        if(RequestData.method!="put")
+        {
+          cartlist.push(data)
+        }
+        
+        store.dispatch(cartProductActions.addtoCartProduct(cartlist));
+        setTimeout(() => {
+          var list = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : null;
+          if (list != null) {
+             // var subTotal = parseFloat(list.subTotal + data.Price).toFixed(2);
+              //var tax= parseFloat(list.tax +  data.Price).toFixed(2);
+              const CheckoutList = {
+                  ListItem: cartlist,
+                  customerDetail: list.customerDetail,
+                  totalPrice: parseFloat((list.subTotal) + parseFloat(list.tax)),
+                  discountCalculated: list.discountCalculated,
+                  tax: list.tax,
+                  subTotal: list.subTotal,
+                  TaxId: list.TaxId,
+                  order_id: list.order_id !== 0 ? list.order_id : 0,
+                  showTaxStaus: list.showTaxStaus,
+                  _wc_points_redeemed: list._wc_points_redeemed,
+                  _wc_amount_redeemed: list._wc_amount_redeemed,
+                  _wc_points_logged_redemption: list._wc_points_logged_redemption,
+  
+              }
+              localStorage.setItem('CHECKLIST', JSON.stringify(CheckoutList))
+            } 
+        }, 500);
+              
+    }
+    clientJSON =
+    {
+        oliverpos:
+        {
+          command: RequestData.command,
+          method: RequestData.method,
+          version: 2.0,
+          status: 200,
+        }
+    };
+    if(RequestData.method=="put")
+    {
+        clientJSON["data"]={
+        name: add_title,
+        amount: amount
+        }
+    }
+    postmessage(clientJSON);
+  }
+  else if(RequestData.method=="delete")
+  {
+    var name='';
+    var amount=0;
+    var is_taxable=false;
+    var cartlist_fee=[];
+    var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//
+    var i = 0;
+    var index=null;
+    if(RequestData.hasOwnProperty('name') && RequestData.name!="")
+    {
+      for (i = 0; i < cartlist.length; i++) {
+        if (cartlist[i].Title == RequestData.name && cartlist[i].Price && cartlist[i].Price!=0) {
+            index = i;
+            name= cartlist[i].Title;
+            amount = cartlist[i].Price;
+            is_taxable=cartlist[i].TaxStatus=="taxable"?true:false
+        }
+      }
+      if(index!=null)
+        cartlist.splice(index, 1);
+    }
+    else
+    {
+      cartlist_fee =  cartlist.filter(item => !item.hasOwnProperty("product_id") && item.Price)
+      cartlist = cartlist.filter( ( el ) => !cartlist_fee.includes( el ) );
+    }
+    localStorage.setItem("CARD_PRODUCT_LIST",JSON.stringify(cartlist));
+    store.dispatch(cartProductActions.addtoCartProduct(cartlist));
+
+    clientJSON =
+    {
+        oliverpos:
+        {
+          command: RequestData.command,
+          method: RequestData.method,
+          version: 2.0,
+          status: 200,
+        },
+        data:
+        {
+          name:name,
+          amount:amount,
+          is_taxable:is_taxable
+        }
+    };
+    if(cartlist_fee && cartlist_fee.length>0)
+    {
+      var deleted_fees=[];
+      cartlist_fee.map(itm=>{
+        deleted_fees.push({name:itm.Title,amount:itm.Price,is_taxable:itm.TaxStatus=="taxable"?true:false})
+      });
+      clientJSON["data"]={};
+      clientJSON.data["fees"]=deleted_fees;
+    }
+    postmessage(clientJSON);
+  }
+}
+
+export const getReceiptData=(RequestData)=>{
+
+    var type = 'completecheckout';
+    var address;
+    var site_name;
+    var register_id = localStorage.getItem('register')
+    var location_name = localStorage.getItem('UserLocations') && JSON.parse(localStorage.getItem('UserLocations'));
+    var tempOrderId = localStorage.getItem('tempOrder_Id') ? JSON.parse(localStorage.getItem('tempOrder_Id')) : ''
+    var siteName = localStorage.getItem('clientDetail') && JSON.parse(localStorage.getItem('clientDetail')) ;
+
+    var udid = get_UDid('UDID');
+    var AllProductList = []
+    var idbKeyval = FetchIndexDB.fetchIndexDb();
+    idbKeyval.get('ProductList').then(val => {
+        if (!val || val.length == 0 || val == null || val == "") {
+        } else { AllProductList = val; }
+    });
+
+    if(siteName && siteName.subscription_detail && siteName.subscription_detail  !== ""){
+        if (siteName.subscription_detail.udid == udid) {
+            site_name = siteName.subscription_detail.host_name && siteName.subscription_detail.host_name
+        }
+    }
+
+    location_name && location_name.map(item => {
+        if (item.Id == register_id) {
+            address = item;
+        }
+    })
+    var order_reciept = localStorage.getItem('orderreciept') && localStorage.getItem('orderreciept') !== 'undefined' ? JSON.parse(localStorage.getItem('orderreciept')) : "";
+    var productxList = localStorage.getItem('PRODUCTX_DATA') ? JSON.parse(localStorage.getItem('PRODUCTX_DATA')) : "";
+    var TotalTaxByName = (order_reciept && order_reciept.ShowCombinedTax == false) ? getTotalTaxByName(type, productxList) : "";
+    var checkList = localStorage.getItem('PrintCHECKLIST') ? JSON.parse(localStorage.getItem('PrintCHECKLIST')) : ""; // localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem('CHECKLIST')) : "";
+    var orderList = localStorage.getItem('oliver_order_payments') ? JSON.parse(localStorage.getItem('oliver_order_payments')) : "";
+    var orderMeta = localStorage.getItem("GTM_ORDER") && localStorage.getItem("GTM_ORDER") !== undefined ? JSON.parse(localStorage.getItem("GTM_ORDER")) : null;
+    var cash_rounding_total = '';
+    if(orderMeta !== null && orderMeta.order_meta !==null && orderMeta.order_meta !== undefined)
+    {
+        cash_rounding_total = orderMeta.order_meta[0].cash_rounding && orderMeta.order_meta[0].cash_rounding !== null && orderMeta.order_meta[0].cash_rounding !== undefined && orderMeta.order_meta[0].cash_rounding !== 0 ? orderMeta.order_meta[0].cash_rounding : '';
+    }
+    var findTicketInfo = "";
+    if (checkList && checkList != "") {
+        findTicketInfo = checkList.ListItem.find(findTicketInfo => (findTicketInfo.ticket_info && findTicketInfo.ticket_info.length > 0))
+    }
+
+    var printData={};
+    if (tempOrderId) {
+        var getPdfdateTime = ''; var isTotalRefund = ''; var cash_rounding_amount = '';
+        if (ActiveUser.key.isSelfcheckout == true) {
+          printData=PrintPage.PrintElem(checkList, getPdfdateTime = '', isTotalRefund = '', cash_rounding_amount = cash_rounding_total, textToBase64Barcode(tempOrderId), orderList, type, productxList, AllProductList, TotalTaxByName,0,null,false)
+        }
+        else {
+          printData=PrintPage.PrintElem(checkList, getPdfdateTime = '', isTotalRefund = '', cash_rounding_amount = cash_rounding_total, print_bar_code, orderList, type, productxList, AllProductList, TotalTaxByName, 0,null,false)
+        }
+    }
+    
+    var clientJSON =
+    {
+        oliverpos:
+        {
+          command: RequestData.command,
+          method: RequestData.method,
+          version: 2.0,
+          status: 200,
+        },
+        data:
+        {
+          logo_img:printData.logo_img,
+          logo_text:printData.logo_text,
+          print_slip_size:printData.print_slip_size,
+          rows:printData.data
+        }
+    };
+    postmessage(clientJSON);
 }

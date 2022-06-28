@@ -310,71 +310,74 @@ class CheckoutView extends React.Component {
 
        // addEventListener();
         // //*** */  for checkout payment App ***// App 1.0
-    //    var _user = JSON.parse(localStorage.getItem("user"));  
-    //     window.removeEventListener("message", function () {});     
-    //     window.addEventListener('message', (e) => {
+       //var _user = JSON.parse(localStorage.getItem("user"));  
+        window.removeEventListener("message", function () {});     
+        window.addEventListener('message', (e) => {
 
-    //         if (e.origin && _user && _user.instance) {
-    //             try {
-    //                 var extensionData = e.data && typeof e.data == 'string' ? JSON.parse(e.data) : e.data;                   
-    //                 if (extensionData && extensionData !== "" ) {    //app version 1.0   
-    //                     //For selfchcekout wrapper app
-    //                     // if(extensionData && typeof extensionData.oliverpos!="undefined")
-    //                     // {
-    //                     //     //console.log("======"+JSON.stringify(extensionData))
+            //if (e.origin && _user && _user.instance) {
+                try {
+                    var extensionData = e.data && typeof e.data == 'string' ? JSON.parse(e.data) : e.data;                   
+                    if (extensionData && extensionData !== "" ) {    //app version 1.0   
+                        //For selfchcekout wrapper app
+                        // if(extensionData && typeof extensionData.oliverpos!="undefined")
+                        // {
+                        //     //console.log("======"+JSON.stringify(extensionData))
                             
-    //                     //     if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" && extensionData.oliverpos.event=="extensionPayment")
-    //                     //     {
-    //                     //             this.showExtention(extensionData,'');
-    //                     //     }
-    //                     //     else if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" )  //&& extensionData.oliverpos.event=="extensionReady"
-    //                     //     {
-    //                     //         // if((typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true) && ActiveUser.key.isSelfcheckout == true)
-    //                     //         if(ActiveUser.key.isSelfcheckout == true && extensionData.oliverpos.event=="extensionReady")
-    //                     //         {
-    //                     //             this.extension_pay_selfcheckout();
-    //                     //         }
-    //                     //         else if(ActiveUser.key.isSelfcheckout == true ){
-    //                     //             this.showExtention(extensionData,'');
-    //                     //         }
-    //                     //     }
-    //                     // }
-    //                     //--------
-    //                 //    var appResponse= handleAppEvent(extensionData,"CheckoutView");
-    //                    var appResponse= handleAppEvent(extensionData,"");                     
-    //                     if(appResponse=='app_do_payment'){                          
-    //                        this.handleAppPayment(extensionData)
-    //                     }
-    //                     else if(appResponse=='app-modificaiton-external'){    
-    //                         this.setState({ UpdateCartByApp: true }) //To Refresh the cart need to update the state
-    //                      }
-    //                      else if(appResponse=='app-modificaiton-lock-env'){
-    //                          setTimeout(() => {
-    //                             this.setState({ "appLock": true })  
-    //                          }, 200);
+                        //     if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" && extensionData.oliverpos.event=="extensionPayment")
+                        //     {
+                        //             this.showExtention(extensionData,'');
+                        //     }
+                        //     else if(extensionData.oliverpos && typeof extensionData.oliverpos.event!="undefined" )  //&& extensionData.oliverpos.event=="extensionReady"
+                        //     {
+                        //         // if((typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true) && ActiveUser.key.isSelfcheckout == true)
+                        //         if(ActiveUser.key.isSelfcheckout == true && extensionData.oliverpos.event=="extensionReady")
+                        //         {
+                        //             this.extension_pay_selfcheckout();
+                        //         }
+                        //         else if(ActiveUser.key.isSelfcheckout == true ){
+                        //             this.showExtention(extensionData,'');
+                        //         }
+                        //     }
+                        // }
+                        //--------
+                    //    var appResponse= handleAppEvent(extensionData,"CheckoutView");
+                       var appResponse= handleAppEvent(extensionData,""); 
+                       if(appResponse=='app_do_transaction'){      // Transection App 2.0                     
+                        this.handleAppTransaction(extensionData)
+                        }                       
+                        if(appResponse=='app_do_payment'){                          
+                           this.handleAppPayment(extensionData)
+                        }
+                        else if(appResponse=='app-modificaiton-external'){    
+                            this.setState({ UpdateCartByApp: true }) //To Refresh the cart need to update the state
+                         }
+                         else if(appResponse=='app-modificaiton-lock-env'){
+                             setTimeout(() => {
+                                this.setState({ "appLock": true })  
+                             }, 200);
                            
-    //                      }
-    //                      else if(appResponse=='app-modificaiton-unlock-env'){
-    //                         setTimeout(() => {
-    //                             this.setState({ "appLock": false })  
-    //                         }, 200);
-    //                      }else if(appResponse=='app-get-lock-env'){
-    //                          var  clientJSON = {
-    //                             command: extensionData.command,
-    //                             version:extensionData.version,
-    //                             method: extensionData.method,
-    //                             status: 200,
-    //                             state:this.state.appLock==true?"lock":'unlock'
-    //                           }
-    //                          postmessage(clientJSON)
-    //                      }
-    //                 }
-    //             }
-    //             catch (err) {
-    //                 console.error(err);
-    //             }
-    //         }
-    //     }, false);
+                         }
+                         else if(appResponse=='app-modificaiton-unlock-env'){
+                            setTimeout(() => {
+                                this.setState({ "appLock": false })  
+                            }, 200);
+                         }else if(appResponse=='app-get-lock-env'){
+                             var  clientJSON = {
+                                command: extensionData.command,
+                                version:extensionData.version,
+                                method: extensionData.method,
+                                status: 200,
+                                state:this.state.appLock==true?"lock":'unlock'
+                              }
+                             postmessage(clientJSON)
+                         }
+                    }
+                }
+                catch (err) {
+                    console.error(err);
+                }
+           // }
+        }, false);
     }
     handleAppPayment(RequesteData){
         try {
@@ -398,6 +401,45 @@ class CheckoutView extends React.Component {
                     )
               //  this.orderPayments.updateClosingTab(true)
               hideModal('common_ext_popup')
+              this.close_ext_modal()
+                setTimeout(() => {                   
+                    this.orderPayments.setPartialPayment(type,_amount)                
+                }, 500);
+            }
+            else {
+                console.error('App Error : Invalid Data');
+            }
+        } catch (error) {
+            console.error('App Error : ', error);
+        }
+    }
+    handleAppTransaction(RequesteData){
+        try {
+            var data =RequesteData && RequesteData.data;
+            var checkList  = this.state.checkList;
+            if(checkList==null)
+            {
+                checkList = localStorage.getItem('CHECKLIST') ?JSON.parse(localStorage.getItem('CHECKLIST')):{};
+            }
+
+            if (data ) {
+                var type = data && data.processor ? data.processor : ''
+                checkList['transection_id'] = data && data.transaction_id ? data.transaction_id : ''
+               var _amount = data && data.amount ? data.amount : 0
+               var _emv = data && data.emv_data ? data.emv_data : ""
+                var allEmvData=[];
+                allEmvData= this.state.EmvData?this.state.EmvData:[];
+                if(_emv){
+                    var obj={};
+                    obj[type]=_emv;
+                    allEmvData.push(obj)
+                }
+                
+                this.setState({ checkList: checkList, isPaymentByExtension: true, extensionPaymentType: type ,
+                    EmvData:allEmvData}
+                    )
+              //  this.orderPayments.updateClosingTab(true)
+             // hideModal('common_ext_popup')
               this.close_ext_modal()
                 setTimeout(() => {                   
                     this.orderPayments.setPartialPayment(type,_amount)                
@@ -986,11 +1028,17 @@ class CheckoutView extends React.Component {
      * @param {*} get_order_status return order status
      * Description : Add productx data
      */
-    setPayment(get_order_status) {
+    setPayment(get_order_status,updatedBy="") {
+
+        if(this.state.checkList==null && localStorage.getItem('CHECKLIST'))
+        {
+            this.state.checkList=localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'));
+        }
         var location_id = localStorage.getItem('Location');
         const activityToCheckout = localStorage.getItem("BACK_CHECKOUT");
         const { extensionMetaData, cash_payment, change_amount, cash_round, PhoneNumber, Email, FirstName, LastName, Notes, checkList, UDID, user_id, orderType, extensionUpdateCart, AllProductList } = this.state;
         const { dispatch } = this.props;
+        
         var checkoutList = checkList && checkList.customerDetail && checkList.customerDetail.content;
         var place_order;
         var order_payments = [];
@@ -1551,7 +1599,7 @@ class CheckoutView extends React.Component {
             localStorage.setItem("GTM_ORDER", JSON.stringify(place_order));
             if (status.includes("park_sale") || status.includes("lay_away")) {
                 setTimeout(() => {
-                   dispatch(checkoutActions.save(place_order, 2));
+                   dispatch(checkoutActions.save(place_order, 2,updatedBy));
                 }, 500);
             } else {
                dispatch(checkoutActions.save(place_order, 1));
@@ -2890,7 +2938,8 @@ class CheckoutView extends React.Component {
                         cash_round={cash_round}
                         changeComponent={this.changeComponent}
                         activeComponent={this.state.activeComponent}
-                        selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt} />
+                        selfcheckoutstatusmanagingevnt={this.selfcheckoutstatusmanagingevnt}
+                        setPayment={this.setPayment} />
                     :
                     (ActiveUser.key.isSelfcheckout == true && this.state.SelfCheckoutStatus == "sfcheckoutpayment") ?
                         <React.Fragment><CheckoutViewThird SelfCheckoutStatus={this.state.SelfCheckoutStatus}
@@ -2902,6 +2951,7 @@ class CheckoutView extends React.Component {
                             paymentType={this.paymentType} extraPayAmount={this.extraPayAmount} onRef={ref => (this.orderPayments = ref)}
                             {...this.props} checkList={localStorage.getItem('CHECKLIST') && JSON.parse(localStorage.getItem('CHECKLIST'))} addPayment={this.getPayment} setOrderPartialPayments={this.setOrderPartialPayments}
                             orderPopup={this.openOrderPopup}
+                            msg_text={common_Msg}
                             handleExtensionPaymentClick={this.handleExtensionPaymentClick} 
                             showExtIframe={this.state.extensionIframe}/>
                             {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)? */}
@@ -3071,6 +3121,7 @@ class CheckoutView extends React.Component {
                                                             handleExtensionPaymentClick={this.handleExtensionPaymentClick}
                                                             appLock={this.state.appLock}
                                                             showExtIframe={this.state.extensionIframe}
+                                                            msg_text={common_Msg}
                                                         />
                                                         {/* enterManualCard={this.enterManualCard} */}
                                                     </div>
