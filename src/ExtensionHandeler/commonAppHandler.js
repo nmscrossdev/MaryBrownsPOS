@@ -119,6 +119,9 @@ export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
               case "Transaction":
                 appResponse=transactionApp(jsonMsg)
               break
+              case "TransactionStatus": //same as payment
+               appResponse=transactionStatus(jsonMsg,isbackgroudApp)
+              break;
             default: // extensionFinished
                   var clientJSON = {
                     command: jsonMsg.command,
@@ -430,6 +433,20 @@ export const handleAppEvent = (value,whereToview,isbackgroudApp=false) => {
           {
               if (RequestData && (RequestData.method  && 
                 ( !RequestData.data || !RequestData.data || !RequestData.data.processor  || !RequestData.data.amount  ) )) { //missing attribut/invalid attribute name
+                isValidationSuccess=false;        
+                clientJSON['error']= "Invalid Attribute"          
+              }
+          }
+      }
+      else if(RequestData.command=='TransactionStatus' ){ 
+        if (RequestData && !RequestData.method ) { //missing attribut/invalid attribute name
+          isValidationSuccess=false;        
+          clientJSON['error']= "Invalid Attribute"          
+        }
+          if(RequestData.method=='put')
+          {
+              if (RequestData && (RequestData.method  && 
+                ( !RequestData.data || !RequestData.data || !RequestData.data.transaction_status ) )) { //missing attribut/invalid attribute name
                 isValidationSuccess=false;        
                 clientJSON['error']= "Invalid Attribute"          
               }
@@ -1648,6 +1665,58 @@ export const  transactionApp = (RequestData) => {
       
   } 
 }
+export const  transactionStatus = (RequestData,isbackgroudApp) => {
+  var clientJSON = ""
+  
+var validationResponse= validateRequest(RequestData) 
+
+if(validationResponse.isValidationSuccess==false){
+      clientJSON=validationResponse.clientJSON;
+      postmessage(clientJSON) 
+}  
+else{
+      var tempOrdrId=localStorage.getItem("tempOrder_Id")?JSON.parse(localStorage.getItem("tempOrder_Id")):null ;
+      const { Email } = ActiveUser.key;
+                    var TempOrders = localStorage.getItem(`TempOrders_${Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${Email}`)) : []; if (TempOrders && TempOrders.length > 0) {
+                  var filteredOrder=null;
+                    if(TempOrders && TempOrders.length>0){
+                      filteredOrder= TempOrders && TempOrders.filter(tOrder=>tOrder.TempOrderID==tempOrdrId)
+                  }   
+        if(RequestData.method=='get'){   
+                  clientJSON= {
+                    command: RequestData.command,
+                    version:"2.0",
+                    method: RequestData.method,
+                    status: 200,
+                  }
+                  
+                  if(filteredOrder && filteredOrder.length>0){
+                    clientJSON['data']={transaction_status: filteredOrder && filteredOrder[0].order_status}
+                  }
+                  else
+                  {
+                    clientJSON['error']=="no transaction found"
+                  }
+                  
+                      postmessage(clientJSON) ;
+                
+          }
+        else if(RequestData.method=='put'){     
+          var _orderID=tempOrdrId;
+          if(filteredOrder && filteredOrder.length>0 &&  filteredOrder[0].OrderID !==0){
+            _orderID= filteredOrder[0].OrderID;
+          }
+  
+          //setTimeout(() => {
+              if (tempOrdrId && tempOrdrId !== '' && tempOrdrId > 0) { 
+                  var option = { "udid": get_UDid('UDID'), "orderId": _orderID, "status": RequestData.data.transaction_status }
+                  store.dispatch(checkoutActions.updateOrderStatus(option));    
+          }
+         // }, 500);
+        }
+   }
+}  
+} 
 
 export const sendClientsDetails=(RequestData)=>{
   var clientDetails = localStorage.getItem('clientDetail') ? JSON.parse(localStorage.getItem('clientDetail'))  : 0 
