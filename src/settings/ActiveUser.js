@@ -47,7 +47,7 @@ const pdfFormate = () => {
 
 if(typeof window !== 'undefined')
 {
-     _user= localStorage.getItem('user')?localStorage.getItem('user'):null;
+     _user= localStorage.getItem('clientDetail')?localStorage.getItem('clientDetail'):null;
      _tempOrder=localStorage.getItem('tempOrder_Id');
 
         if( _user &&(typeof _user !=='undefined') && _user!==null && _user !==''  )

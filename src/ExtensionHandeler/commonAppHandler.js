@@ -1682,13 +1682,14 @@ else{
                     if(TempOrders && TempOrders.length>0){
                       filteredOrder= TempOrders && TempOrders.filter(tOrder=>tOrder.TempOrderID==tempOrdrId)
                   }   
+      clientJSON= {
+        command: RequestData.command,
+        version:"2.0",
+        method: RequestData.method,
+        status: 200,
+      }
         if(RequestData.method=='get'){   
-                  clientJSON= {
-                    command: RequestData.command,
-                    version:"2.0",
-                    method: RequestData.method,
-                    status: 200,
-                  }
+                
                   
                   if(filteredOrder && filteredOrder.length>0){
                     clientJSON['data']={transaction_status: filteredOrder && filteredOrder[0].order_status}
@@ -1698,6 +1699,7 @@ else{
                     clientJSON['error']=="no transaction found"
                   }
                   
+               
                       postmessage(clientJSON) ;
                 
           }
@@ -1713,6 +1715,8 @@ else{
                   store.dispatch(checkoutActions.updateOrderStatus(option));    
           }
          // }, 500);
+         clientJSON['data']={transaction_status: RequestData.data.transaction_status}
+         postmessage(clientJSON) ;
         }
    }
 }  
