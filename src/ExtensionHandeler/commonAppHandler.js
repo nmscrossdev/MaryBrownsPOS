@@ -1849,9 +1849,11 @@ export const doParkSale=(RequestData)=>{
     var UID = get_UDid('UDID');
     store.dispatch(activityActions.getDetail(RequestData.wc_order_no, UID));   
     var single_Order_list={};  
-    setTimeout(() => {
+    //setTimeout(() => {
+      const myInterval = setInterval(() => {
        const state = store.getState();
-       if(state.single_Order_list &&  state.single_Order_list.items  && state.single_Order_list.items.content){
+       if(state.single_Order_list &&  state.single_Order_list.items  && state.single_Order_list.items.content)
+       {
         single_Order_list=state.single_Order_list && state.single_Order_list.items.content;
 
       localStorage.removeItem("oliver_order_payments"); //remove existing payments   
@@ -2083,19 +2085,20 @@ export const doParkSale=(RequestData)=>{
       localStorage.setItem("PRODUCTX_DATA", JSON.stringify(addonsItem))
       localStorage.setItem("BACK_CHECKOUT", true)
       window.location = '/checkout';
-    
-  }
-  clientJSON =
-  {
-      oliverpos:
+      clientJSON =
       {
-        command: RequestData.command,
-        method: RequestData.method,
-        version: "2.0",
-        status: 200,
-      }
-  };
-},2000);
+          oliverpos:
+          {
+            command: RequestData.command,
+            method: RequestData.method,
+            version: "2.0",
+            status: 200,
+          }
+      };
+      clearInterval(myInterval);
+  }
+  
+},500);
 
     //var wc_order_no= RequestData.wc_order_no;
   }
