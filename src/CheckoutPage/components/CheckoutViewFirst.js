@@ -46,7 +46,7 @@ class CheckoutViewFirst extends React.Component {
         window.isListner=true;
         window.removeEventListener("message", function () {});
         window.addEventListener('message', (e) => {
-            if (e.origin  && e.data && e.data !=="") { //&& _user && _user.instance
+            if (e.origin  && e.data && typeof e.data!="undefined" && e.data !=="") { //&& _user && _user.instance
                 try {
                     var extensionData = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
                     if (extensionData && extensionData !== "" ) {     
@@ -74,7 +74,7 @@ class CheckoutViewFirst extends React.Component {
                     //----------------------------------------
                 }
                 catch (err) {
-                    console.error('App Error : ', err)
+                    console.log('App Error : ', err)
                 }
             }
         }, false);
