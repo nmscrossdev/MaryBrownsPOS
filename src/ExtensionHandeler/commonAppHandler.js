@@ -1666,7 +1666,7 @@ export const sendClientsDetails=(RequestData)=>{
         {
           command: RequestData.command,
           method: RequestData.method,
-          version: 2.0,
+          version: "2.0",
           status: 200,
         },
         data:
@@ -1698,7 +1698,7 @@ export const sendClientsDetails=(RequestData)=>{
 //             {
 //               command: RequestData.command,
 //               method: RequestData.method,
-//               version: 2.0,
+//               version: "2.0",
 //               status: 200,
 //             },
 //             data:
@@ -2018,7 +2018,7 @@ export const doParkSale=(RequestData)=>{
       {
         command: RequestData.command,
         method: RequestData.method,
-        version: 2.0,
+        version: "2.0",
         status: 200,
       }
   };
@@ -2034,7 +2034,7 @@ export const doParkSale=(RequestData)=>{
         {
           command: RequestData.command,
           method: RequestData.method,
-          version: 2.0,
+          version: "2.0",
           status: 200,
         },
         data:
@@ -2071,7 +2071,7 @@ export const doCustomFee=(RequestData)=>{
           {
             command: RequestData.command,
             method: RequestData.method,
-            version: 2.0,
+            version: "2.0",
             status: 200,
           },
           data:
@@ -2175,7 +2175,7 @@ export const doCustomFee=(RequestData)=>{
         {
           command: RequestData.command,
           method: RequestData.method,
-          version: 2.0,
+          version: "2.0",
           status: 200,
         }
     };
@@ -2224,7 +2224,7 @@ export const doCustomFee=(RequestData)=>{
         {
           command: RequestData.command,
           method: RequestData.method,
-          version: 2.0,
+          version: "2.0",
           status: 200,
         },
         data:
@@ -2309,7 +2309,7 @@ export const getReceiptData=(RequestData)=>{
         {
           command: RequestData.command,
           method: RequestData.method,
-          version: 2.0,
+          version: "2.0",
           status: 200,
         },
         data:
