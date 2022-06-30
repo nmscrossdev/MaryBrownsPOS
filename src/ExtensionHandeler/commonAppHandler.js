@@ -2285,7 +2285,7 @@ export const doCustomFee = (RequestData) => {
           cartlist.push(data)
         }
         cartlist && cartlist.map(itm => {
-          if (itm.TaxStatus == "none") {
+          if ((!itm.TaxStatus) ||itm.TaxStatus == "none") {
             itm.incl_tax = 0;
             itm.excl_tax = 0;
           }
