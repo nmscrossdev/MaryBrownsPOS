@@ -2297,17 +2297,29 @@ export const doCustomFee = (RequestData) => {
       var new_title = add_title !== '' ? add_title : LocalizedLanguage.customFee;
       var title = new_title;
       var new_array = [];
+      var isCustomFeeFound=false;
       if (cartlist.length > 0) {
         cartlist.map(item => {
 
           if (item && RequestData.method == "put" && (typeof item.product_id == 'undefined' || item.product_id == null)) {
             if (item.Title == add_title) {
+              isCustomFeeFound==true;
               item.Price = parseFloat(amount);
               item.old_price = isfeeTaxable == true && parseFloat(amount);
               item.isTaxable = isfeeTaxable;
               item.TaxStatus = isfeeTaxable == true ? "taxable" : "none";
             }
-            else
+            
+          }
+
+          if (item && typeof item.product_id == 'undefined') {
+            if (item.Price !== null) {
+              new_array.push(item)
+            }
+          }
+        })
+      }
+      if(isCustomFeeFound==false)
             {
               _error="No matching fee found"
               clientJSON =
@@ -2324,15 +2336,6 @@ export const doCustomFee = (RequestData) => {
               postmessage(clientJSON);
               return;
             }
-          }
-
-          if (item && typeof item.product_id == 'undefined') {
-            if (item.Price !== null) {
-              new_array.push(item)
-            }
-          }
-        })
-      }
      if(_error==""){
       if (amount != 0) {
         if (new_array.length > 0) {
