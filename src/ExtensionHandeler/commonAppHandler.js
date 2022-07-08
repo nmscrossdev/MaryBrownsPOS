@@ -2319,7 +2319,7 @@ export const doCustomFee = (RequestData) => {
           }
         })
       }
-      if(isCustomFeeFound==false)
+      if(isCustomFeeFound==false && RequestData.method == "put")
             {
               _error="No matching fee found"
               clientJSON =
