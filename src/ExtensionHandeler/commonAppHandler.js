@@ -14,6 +14,7 @@ import ActiveUser from '../settings/ActiveUser';
 import { serverRequest } from "../CommonServiceRequest/serverRequest";
 import { TaxSetting } from "../_components/TaxSetting";
 import moment from 'moment';
+import {  checkOrderStatus } from '../_components/CommonJS';
 var JsBarcode = require('jsbarcode');
 var print_bar_code;
 export const textToBase64Barcode = (text) => {
@@ -629,7 +630,7 @@ const validateRequest = (RequestData) => {
     }
     if (RequestData.method == 'put' || RequestData.method == 'post') {
       if (RequestData && (RequestData.method &&
-        (!RequestData.data || !RequestData.data.amount || !RequestData.data.name || !RequestData.data.is_taxable))) { //missing attribut/invalid attribute name
+        (!RequestData.data || !RequestData.data.amount || !RequestData.data.name || !RequestData.data.hasOwnProperty("is_taxable")))) { //missing attribut/invalid attribute name
         isValidationSuccess = false;
         clientJSON['error'] = "Missing Attribute"
       }
@@ -1714,14 +1715,19 @@ export const transactionApp = (RequestData) => {
 }
 export const transactionStatus = (RequestData, isbackgroudApp) => {
   var clientJSON = ""
+      clientJSON= {
+        command: RequestData.command,
+        version:"2.0",
+        method: RequestData.method,
+        status: 200,
+      }
+    var validationResponse= validateRequest(RequestData) 
 
-  var validationResponse = validateRequest(RequestData)
-
-  if (validationResponse.isValidationSuccess == false) {
-    clientJSON = validationResponse.clientJSON;
-    postmessage(clientJSON)
-  }
-  else {
+    if(validationResponse.isValidationSuccess==false){
+          clientJSON=validationResponse.clientJSON;
+          postmessage(clientJSON) 
+    }  
+    else{
     var tempOrdrId = localStorage.getItem("tempOrder_Id") ? JSON.parse(localStorage.getItem("tempOrder_Id")) : null;
     const { Email } = ActiveUser.key;
     var TempOrders = localStorage.getItem(`TempOrders_${Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${Email}`)) : []; if (TempOrders && TempOrders.length > 0) {
@@ -1735,35 +1741,42 @@ export const transactionStatus = (RequestData, isbackgroudApp) => {
         method: RequestData.method,
         status: 200,
       }
-      if (RequestData.method == 'get') {
-
-
-        if (filteredOrder && filteredOrder.length > 0) {
-          clientJSON['data'] = { transaction_status: filteredOrder && filteredOrder[0].order_status }
+      if(RequestData.method=='get'){   
+        var transStatus=localStorage.getItem("CurrentTransactionStatus")? JSON.parse(localStorage.getItem("CurrentTransactionStatus")) :"";
+        
+        if(transStatus){
+          clientJSON['data']={transaction_status: transStatus.status}
         }
-        else {
-          clientJSON['error'] == "no transaction found"
+        else
+        {
+          clientJSON['error']=="no transaction found"
         }
-
-
-        postmessage(clientJSON);
-
       }
       else if (RequestData.method == 'put') {
-        var _orderID = tempOrdrId;
-        if (filteredOrder && filteredOrder.length > 0 && filteredOrder[0].OrderID !== 0) {
-          _orderID = filteredOrder[0].OrderID;
-        }
+        if(RequestData.data && (RequestData.data.transaction_status=="cancel" || RequestData.data.transaction_status=="cancelled")) {
+          return 'app_cancle_transaction' 
+         }
+        //  else if(RequestData.data && RequestData.data.transaction_status=="cancel") {
+        //   return 'app_cancle_transaction' 
+        //  }
+        //  else if(RequestData.data && RequestData.data.transaction_status=="cancel") {
+        //   return 'app_cancle_transaction' 
+        //  }
+        // var _orderID = tempOrdrId;
+        // if (filteredOrder && filteredOrder.length > 0 && filteredOrder[0].OrderID !== 0) {
+        //   _orderID = filteredOrder[0].OrderID;
+        // }
 
-        //setTimeout(() => {
-        if (tempOrdrId && tempOrdrId !== '' && tempOrdrId > 0) {
-          var option = { "udid": get_UDid('UDID'), "orderId": _orderID, "status": RequestData.data.transaction_status }
-          store.dispatch(checkoutActions.updateOrderStatus(option));
-        }
-        // }, 500);
-        clientJSON['data'] = { transaction_status: RequestData.data.transaction_status }
-        postmessage(clientJSON);
+        // //setTimeout(() => {
+        // if (tempOrdrId && tempOrdrId !== '' && tempOrdrId > 0) {
+        //   var option = { "udid": get_UDid('UDID'), "orderId": _orderID, "status": RequestData.data.transaction_status }
+        //   store.dispatch(checkoutActions.updateOrderStatus(option));
+        // }
+        // // }, 500);
+        // clientJSON['data'] = { transaction_status: RequestData.data.transaction_status }
+        
       }
+      postmessage(clientJSON);
     }
   }
 }
@@ -2169,28 +2182,71 @@ export const doParkSale = (RequestData) => {
       //var wc_order_no= RequestData.wc_order_no;
     }
     else if (RequestData.method == "post" && RequestData.tempOrderId) {
-      clientJSON =
-      {
-        oliverpos:
-        {
-          command: RequestData.command,
-          method: RequestData.method,
-          version: "2.0",
-          status: 200,
-        },
-        data:
-        {
-          wc_order_no: RequestData.tempOrderId,
+
+    var tempOrdrId = RequestData.tempOrderId;
+
+
+    const { Email } = ActiveUser.key;
+
+    const myInterval = setInterval(() => {
+      
+    var TempOrders = localStorage.getItem(`TempOrders_${Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${Email}`)) : []; if (TempOrders && TempOrders.length > 0) {
+      var filteredOrder = null;
+      if (TempOrders && TempOrders.length > 0) {
+        filteredOrder = TempOrders && TempOrders.filter(tOrder => tOrder.TempOrderID == tempOrdrId)
+      }
+       var _orderID = tempOrdrId;
+        if (filteredOrder && filteredOrder.length > 0 && filteredOrder[0].OrderID !== 0) {
+          _orderID = filteredOrder[0].OrderID;
+
+          clientJSON =
+          {
+            oliverpos:
+            {
+              command: RequestData.command,
+              method: RequestData.method,
+              version: "2.0",
+              status: 200,
+            },
+            data:
+            {
+              oliver_order_id: RequestData.tempOrderId,
+              wc_order_no: _orderID,
+            }
+          };
+          postmessage(clientJSON);
+          clearInterval(myInterval);
+          setTimeout(() => {
+            history.push('/salecomplete');
+        }, 3000);
         }
-      };
+        else
+        {
+          checkOrderStatus(tempOrdrId);
+        }
     }
-    postmessage(clientJSON);
+  }, 300);
+    }
+    clientJSON =
+          {
+            oliverpos:
+            {
+              command: RequestData.command,
+              method: RequestData.method,
+              version: "2.0",
+              status: 200,
+            },
+            data:
+              'Processing...'
+          };
+    postmessage(clientJSON)
   }
 }
 
 export const doCustomFee = (RequestData) => {
 
   var clientJSON = {};
+  var _error="";
   var validationResponse = validateRequest(RequestData)
 
   if (validationResponse.isValidationSuccess == false) {
@@ -2228,7 +2284,11 @@ export const doCustomFee = (RequestData) => {
       postmessage(clientJSON);
     }
     else if (RequestData.method == "post" || RequestData.method == "put") {
-      let amount = RequestData.data.amount;
+      var amount = RequestData.data.amount;
+      if(parseFloat(amount)>=100)
+      {
+        amount=parseFloat(amount)/100;
+      }
       let add_title = RequestData.data.name;
       let isfeeTaxable = RequestData.data.is_taxable;
 
@@ -2247,6 +2307,23 @@ export const doCustomFee = (RequestData) => {
               item.isTaxable = isfeeTaxable;
               item.TaxStatus = isfeeTaxable == true ? "taxable" : "none";
             }
+            else
+            {
+              _error="No matching fee found"
+              clientJSON =
+              {
+                oliverpos:
+                {
+                  command: RequestData.command,
+                  method: RequestData.method,
+                  version: "2.0",
+                  status: 200,
+                },
+                data:{error:_error}
+              };
+              postmessage(clientJSON);
+              return;
+            }
           }
 
           if (item && typeof item.product_id == 'undefined') {
@@ -2256,7 +2333,7 @@ export const doCustomFee = (RequestData) => {
           }
         })
       }
-
+     if(_error==""){
       if (amount != 0) {
         if (new_array.length > 0) {
           var withNoDigits = new_array.map(item => {
@@ -2334,6 +2411,7 @@ export const doCustomFee = (RequestData) => {
         }
       }
       postmessage(clientJSON);
+    }
     }
     else if (RequestData.method == "delete") {
       var name = '';

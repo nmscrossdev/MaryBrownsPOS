@@ -52,8 +52,10 @@ function refundOrder(data) {
                                         var user = JSON.parse(localStorage.getItem("user"));
                                         
                                         var refundLog=[];
+                                        var refundPaymentStatus={}
                                         if(refundPayments && refundPayments.order_refund_payments && refundPayments.order_refund_payments.length){
                                             refundPayments.order_refund_payments.map(item=>{
+                                                refundPaymentStatus= {"paymentType":item.payment_type,"status": "completed"}
                                                 refundLog.push({
                                                     CashManagementId: cashmanagementID,
                                                     AmountIn: 0,
@@ -78,12 +80,15 @@ function refundOrder(data) {
                                             // if(demoUser){                   
                                             //     GTM_OliverDemoUser("Refund: Adding refund payment list")
                                             // }
+                                            // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                                            localStorage.setItem("CurrentTransactionStatus", JSON.stringify(refundPaymentStatus))
                                             dispatch(cashManagementAction.addPaymentListLog(refundLog));
                                         }
                                         //----------------------------------------------------------
                     
                                 } catch (error) {
                                     console.log("cashManagementLog Error",error)
+                                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":"","status": "cancelled"}))
                                 }
                                 setTimeout(function () {
                                     if (JSON.parse(localStorage.getItem("user")).display_sale_refund_complete_screen == false) {

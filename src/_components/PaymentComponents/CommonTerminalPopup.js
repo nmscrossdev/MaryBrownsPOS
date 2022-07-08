@@ -1,7 +1,7 @@
 import React from 'react';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
 export const CommonTerminalPopup = (props) => {
-    const { showTerinalwaitingMsg, errorMsgColor, error_msg, handleCancelButton, handleButton1Click, handleButton2Click, button1Title, button2Title } = props;
+    const { showTerinalwaitingMsg, errorMsgColor, error_msg, handleCancelButton, handleButton1Click, handleButton2Click, button1Title, button2Title,cancleTransaction } = props;
     return (
         // <div className="loader-fixed">
             <div className="popup productPopup bodyCenter">
@@ -96,7 +96,7 @@ export const CommonTerminalPopup = (props) => {
                                                         </button> */}
                                                     {/* show regenrate QR code in case of payment status 'EXPIRED' */}
                                                     <p style={{ color: errorMsgColor, paddingTop: "20px" }}>{error_msg}</p>
-
+                                                    {/* <button onClick={cancleTransaction}> Cancle Transation</button> */}
                                                 </div>
                                             </div>
                                         </div>

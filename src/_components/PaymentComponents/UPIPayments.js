@@ -23,7 +23,8 @@ class UPIPayments extends React.Component {
             pageSatus: true,
             minutesLeft: 0,
             secondsLeft: 0,
-            sessionMsg: ''
+            sessionMsg: '',
+            cancleTrancationCount:0
             // payconiq_payment_cancel_url: 'https://api.ext.payconiq.com/v3/payments/f23d8c4362936d00650987e6'
         }
     }
@@ -91,7 +92,8 @@ class UPIPayments extends React.Component {
                     }));
                     this.payconiq_expires_time_diff(payconiq_response.expiresAt, payconiq_response.createdAt)
                     this.props.dispatch(paymentActions.make_payconiq_payment(null))
-
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"               
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "processing"}))
                 }
             }
         }
@@ -101,6 +103,8 @@ class UPIPayments extends React.Component {
                 this.setState({
                     UPI_error_msg: nextprops.payconiq_payment.error
                 })
+                 // set the current trnasaction status, Used for APP Command "TransactionStatus"               
+                 localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "cancelled"}))
             } else if (nextprops.check_payconiq_pay_status.items && nextprops.check_payconiq_pay_status.items.content) {
                 var _payconiq_status_res = nextprops.check_payconiq_pay_status.items.content
                 var _payconiq_status = _payconiq_status_res && _payconiq_status_res.Status ? _payconiq_status_res.Status : ''
@@ -124,6 +128,8 @@ class UPIPayments extends React.Component {
                         payConiqPayAmount= parseFloat(_payconiq_status_res.Amount)/100
                     }                  
                     this.props.pay_amount(this.props.code, 0,  '', '', payConiqPayAmount )
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"               
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "completed"}))
                 }
                 if ((_payconiq_status == "CANCELLED")) {
                     this.setState({
@@ -133,6 +139,8 @@ class UPIPayments extends React.Component {
                     })
                     clearInterval(this.checkStatusInterval)
                     clearInterval(this.countdownInterval);
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"               
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "cancelled"}))
                 }
 
                 // regenerate QR code in case of status 'EXPIRED' and clear status interval
@@ -145,7 +153,8 @@ class UPIPayments extends React.Component {
                         //barcodeURl: ''
                     })
                     this.props.dispatch(paymentActions.check_payconiq_pay_status(null))
-
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"               
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "cancelled"}))
                 }
             }
         }
@@ -161,6 +170,8 @@ class UPIPayments extends React.Component {
                     barcodeURl: '',
                     payconiq_current_status: 'PENDING'
                 })
+                // set the current trnasaction status, Used for APP Command "TransactionStatus"               
+                localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "cancelled"}))
                 // window.location = '/checkout';
                 this.props.dispatch(paymentActions.cancel_payconiq_payment(null))
             } else if (nextprops.cancel_payconiq_payment.error) {
@@ -176,6 +187,15 @@ class UPIPayments extends React.Component {
                 UPI_error_msg: nextprops.payconiqRefundError,
                 payconiq_payment_cancel_url: ''
             })
+        }
+        if(this.props.cancleTransaction==true){
+            var  cancleTrancationCount =this.state.cancleTrancationCount;
+            cancleTrancationCount +=1;
+            if(cancleTrancationCount==1){
+                  this.cancel_UPI_payment();
+            }
+          
+            this.state.cancleTrancationCount=cancleTrancationCount;
         }
     }
     // fucntion to make payconiq payment request to get barcode, cancel payment response 
@@ -277,7 +297,17 @@ class UPIPayments extends React.Component {
             }
         }, 1000);
     }
-
+    cancleTransaction=()=>{
+        var jsonMsg = {
+             "command": "TransactionStatus",
+             "method": "put",
+             "version": "2.0",
+             "data": {
+                      "transaction_status": "cancel"
+                 }
+         }
+         window.parent.postMessage(JSON.stringify( jsonMsg), '*');
+     }
     render() {
         const { activeDisplayStatus, UPI_error_msg } = this.state;
         const { color, Name, code, pay_amount, styles } = this.props;

@@ -126,8 +126,8 @@ class CheckoutView extends React.Component {
             appLock:null, //For APP lock environment 
 
             extbuttonClicked:false,  //check extension button double clicked
-            PaymentExtensionCallData:"" // Used to check duplicate payemnt call
-
+            PaymentExtensionCallData:"", // Used to check duplicate payemnt call
+            cancleTransaction:false
         }
         this.selfcheckoutstatusmanagingevnt = this.selfcheckoutstatusmanagingevnt.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -371,6 +371,9 @@ class CheckoutView extends React.Component {
                               }
                              postmessage(clientJSON)
                          }
+                         else if(appResponse=='app_cancle_transaction'){
+                            this.setState({ "cancleTransaction": true })  
+                        }
                     }
                 }
                 catch (err) {
@@ -399,6 +402,8 @@ class CheckoutView extends React.Component {
                 this.setState({ checkList: checkList, isPaymentByExtension: true, extensionPaymentType: type ,
                     EmvData:allEmvData}
                     )
+                // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":type,"status": "completed"}))
               //  this.orderPayments.updateClosingTab(true)
               hideModal('common_ext_popup')
               this.close_ext_modal()
@@ -438,6 +443,8 @@ class CheckoutView extends React.Component {
                 this.setState({ checkList: checkList, isPaymentByExtension: true, extensionPaymentType: type ,
                     EmvData:allEmvData}
                     )
+                // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":type,"status": "completed"}))           
               //  this.orderPayments.updateClosingTab(true)
              // hideModal('common_ext_popup')
               this.close_ext_modal()
@@ -1946,7 +1953,8 @@ class CheckoutView extends React.Component {
                     this.state.PaymentExtensionCallData=data;
                      this.close_ext_modal()
                 }
-                   
+                // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":type,"status": "completed"}))
                 }, 500);
             }
             else {
@@ -2917,6 +2925,7 @@ class CheckoutView extends React.Component {
             //         orderPopup={this.openOrderPopup} 
             //         handleExtensionPaymentClick={this.handleExtensionPaymentClick}
             //         showExtIframe={this.state.extensionIframe}
+            //         cancleTransaction={this.state.cancleTransaction}
             //         />
             //         {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)?
             //         <CommonExtensionPopup
@@ -2953,7 +2962,8 @@ class CheckoutView extends React.Component {
                             orderPopup={this.openOrderPopup}
                             msg_text={common_Msg}
                             handleExtensionPaymentClick={this.handleExtensionPaymentClick} 
-                            showExtIframe={this.state.extensionIframe}/>
+                            showExtIframe={this.state.extensionIframe}
+                            cancleTransaction={this.state.cancleTransaction}/>
                             {/* {(typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true)? */}
                             {/* <div className="cover hide"></div> */}
                             <CommonExtensionPopup
@@ -3077,6 +3087,7 @@ class CheckoutView extends React.Component {
                                                             voidSale={() => this.cancel_VoidSale()}
                                                             handleExtensionPaymentClick={this.handleExtensionPaymentClick}
                                                             showExtIframe={this.state.extensionIframe}
+                                                            cancleTransaction={this.state.cancleTransaction}
                                                         />}
                                 <ReturnCashPopup
                                     closeModal={this.closeModal}
@@ -3121,6 +3132,7 @@ class CheckoutView extends React.Component {
                                                             handleExtensionPaymentClick={this.handleExtensionPaymentClick}
                                                             appLock={this.state.appLock}
                                                             showExtIframe={this.state.extensionIframe}
+                                                            cancleTransaction={this.state.cancleTransaction} 
                                                             msg_text={common_Msg}
                                                         />
                                                         {/* enterManualCard={this.enterManualCard} */}

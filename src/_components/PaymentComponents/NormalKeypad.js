@@ -35,6 +35,8 @@ class NormalKeypad extends React.Component {
                 paidAmountStatus: true,
                 temporary_vaule: value,
             })
+            // set the current trnasaction status, Used for APP Command "TransactionStatus"
+            localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "completed"}))
         }
     }
 

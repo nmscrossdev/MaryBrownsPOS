@@ -256,6 +256,8 @@ class CheckoutViewThird extends React.Component {
                 })
                 if (RoundAmount(parseFloat(getRemainingPriceForCash)).toFixed(2) == 0) {
                     this.props.setOrderPartialPayments(0, paymentType);
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":"cash","status": "completed"})) 
                 } else {
                     this.props.extraPayAmount(LocalizedLanguage.zeroPaymentMsg)
                 }
@@ -268,6 +270,8 @@ class CheckoutViewThird extends React.Component {
                 })
                 if (paymentType !== true && RoundAmount(parseFloat(getRemainingPrice)) == 0) {
                     this.props.setOrderPartialPayments(0, paymentType);
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":paymentType,"status": "completed"})) 
                 } else if (paymentType !== true) {
                     this.props.extraPayAmount(LocalizedLanguage.zeroPaymentMsg)
                 }
@@ -294,6 +298,8 @@ class CheckoutViewThird extends React.Component {
                     this.setState({
                         isPaymentStart: true
                     })
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":paymentType,"status": "processing"})) 
                     this.globalPayments(paymentType, global_amount)
                 } else if (parseFloat(global_amount) == 0) {
                     this.setState({ paidAmount: parseFloat(payment_amount).toFixed(2) })
@@ -456,6 +462,8 @@ class CheckoutViewThird extends React.Component {
             if (nextProp.global_payment.is_success === true) {
                 this.setPartialPayment(this.state.globalPayments, this.state.paidAmount)
                 this.setState({ isPaymentStart: false })
+                // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.state.globalPayments,"status": "completed"}))
             }
         }
         if (nextProp && nextProp.online_payment) {
@@ -464,6 +472,8 @@ class CheckoutViewThird extends React.Component {
                 if (nextProp.online_payment.content.RefranseCode && nextProp.online_payment.content.IsSuccess == true)
                 // if(nextProp.online_payment.content.transactionResponse && nextProp.online_payment.content.transactionResponse.transId != 0)
                 {
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.state.onlinePayments,"status": "completed"}))
                     //Set the actual amount paid from card
                     if(nextProp.online_payment.content.Amount && nextProp.online_payment.content.Amount !==""){ 
                         let _paidAmount=parseFloat(nextProp.online_payment.content.Amount)/100
@@ -617,6 +627,7 @@ class CheckoutViewThird extends React.Component {
                 pay_amount={(text) => this.pay_amount(text, pay_name.TerminalCount, pay_name.Support)}
                 activeDisplay={(text) => this.activeDisplay(text)}
                 styles={activeDisplay == false || activeDisplay == `${pay_name.Code}_true` ? '' : 'none'}
+                cancleTransaction={this.props.cancleTransaction} 
             />
             :
             (pay_name.HasTerminal == true && pay_name.Support == "Terminal" && pay_name.Code != paymentsType.typeName.stripePayment) ?
@@ -631,6 +642,7 @@ class CheckoutViewThird extends React.Component {
                     closingTab={(text) => this.closingTab(text)}
                     paymentDetails={pay_name}
                     terminalPopup = {(msg) => this.props.extraPayAmount(msg)}
+                    cancleTransaction={this.props.cancleTransaction} 
                 />
                 :
                 // for Online payment
@@ -690,6 +702,7 @@ class CheckoutViewThird extends React.Component {
                                     paymentDetails={pay_name}
                                     terminalPopup = {(msg) => this.props.extraPayAmount(msg)}
                                     paidAmount={this.state.paidAmount}
+                                    cancleTransaction={this.props.cancleTransaction}
                                 />
                                 :
                                 <OtherPayment

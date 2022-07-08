@@ -10,11 +10,14 @@ class GlobalPayment extends React.Component {
         super(props);
         this.state = {
             paymentButtonDisplay: true,
-            buttonClicked:false
+            buttonClicked:false,
+            cancleTrancationCount:0
         }
     }
 
     cancel_payment() {
+        // set the current trnasaction status, Used for APP Command "TransactionStatus"
+        localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":this.props.code,"status": "cancelled"}))
         if (this.props.type == 'refund') {
             $('.accordion_close').click();
             this.handlePayDisplay2(!this.state.paymentButtonDisplay);
@@ -37,6 +40,8 @@ class GlobalPayment extends React.Component {
                 setTimeout(function () {
                     if (code !== true) {
                         pay_amount(code);
+                        // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                        localStorage.setItem("CurrentTransactionStatus",{"paymentType":code,"status": "completed"}) 
                     }
                 }, 500)
             }
@@ -50,7 +55,29 @@ class GlobalPayment extends React.Component {
         this.setState({ paymentButtonDisplay: true })
         this.props.activeDisplay(false)
     }
-
+    componentWillReceiveProps(){   
+        if(this.props.cancleTransaction==true){
+            var  cancleTrancationCount =this.state.cancleTrancationCount;
+            cancleTrancationCount +=1;
+            if(cancleTrancationCount==1){
+                this.cancel_payment();
+            }      
+            this.state.cancleTrancationCount=cancleTrancationCount;
+        }
+    }
+    
+    //For Teting App 20. TransactionStatus
+    cancleTransaction=()=>{
+        var jsonMsg = {
+             "command": "TransactionStatus",
+             "method": "put",
+             "version": "2.0",
+             "data": {
+                      "transaction_status": "cancel"
+                 }
+         }
+         window.parent.postMessage(JSON.stringify( jsonMsg), '*');
+     }
     render() {
         const { isOrderPaymentGlobal, color, Name, code, pay_amount, msg, styles } = this.props;
         return (
@@ -100,6 +127,7 @@ class GlobalPayment extends React.Component {
                                     button2Title={LocalizedLanguage.manualAccept}
                                     handleButton2Click={() => pay_amount("manual_global_payment")}
                                     showTerinalwaitingMsg = {msg  && msg !=='' ? false : true}
+                                    cancleTransaction={this.cancleTransaction}
                                 /> </div> : ''
         )
     }

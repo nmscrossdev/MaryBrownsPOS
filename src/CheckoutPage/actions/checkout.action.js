@@ -357,9 +357,9 @@ function save(shopOrder, path, updatedBy="") {
                             {
                                 if(updatedBy=="byExtApp")
                                 {
-                                    setTimeout(() => {
-                                        history.push('/salecomplete');
-                                    }, 1000);
+                                    // setTimeout(() => {
+                                    //     history.push('/salecomplete');
+                                    // }, 3000);
                                 }
                                 else
                                 {
@@ -602,11 +602,14 @@ function getMakePayment(udid, registerId, paycode, amount, command, transId = ''
                     }
                     localStorage.setItem('GLOBAL_PAYMENT_RESPONSE', JSON.stringify(global_payment));
                     localStorage.setItem('PAYMENT_RESPONSE', JSON.stringify(global_payment));
-
+                    // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                    localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":paycode,"status": "completed"}))
                     dispatch(success(global_payment));
                 }, 1000)
             },
             error => {
+                // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":paycode,"status": "cancelled"}))
                 dispatch(failure(error.toString()));
             }
         );

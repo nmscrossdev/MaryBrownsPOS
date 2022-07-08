@@ -46,7 +46,8 @@ class StripePayment extends React.Component {
             connectReedersErr: '',
             processingStart: false,
             paymentCancelClicked: false,
-            cancelManually: false
+            cancelManually: false,
+            cancleTrancationCount:0
         }
         // this.handleCardChange = this.handleCardChange.bind(this)
     }
@@ -102,7 +103,14 @@ class StripePayment extends React.Component {
         if(nextprops.stripRefundError !==''){
             this.setState({ connectReedersErr: nextprops.stripRefundError, loading: false, msgColor: 'red',})
         }
-
+        if(this.props.cancleTransaction==true){
+            var  cancleTrancationCount =this.state.cancleTrancationCount;
+            cancleTrancationCount +=1;
+            if(cancleTrancationCount==1){
+                this.cancelPendingPayment();
+            }      
+            this.state.cancleTrancationCount=cancleTrancationCount;
+        }    
 
     }
 

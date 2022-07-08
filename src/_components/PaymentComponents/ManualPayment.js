@@ -261,6 +261,8 @@ class ManualPayment extends React.Component {
             hideModal(`onlinePaymentPopup${code}`)
             this.setState({ CustInfor: 'cardInfo', cardData: '' })
             this.props.dispatch(checkoutActions.makeOnlinePayments(null))
+            // set the current trnasaction status, Used for APP Command "TransactionStatus"
+            localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":code,"status": "cancelled"}))
         } else {
             this.setState({ CustInfor: itm, cardData: '' })
         }

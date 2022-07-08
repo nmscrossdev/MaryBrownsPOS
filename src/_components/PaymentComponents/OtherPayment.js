@@ -20,7 +20,8 @@ class OtherPayment extends React.Component {
             closingTab(true);
             setTimeout(function () {
                 pay_amount(code);
-
+                // set the current trnasaction status, Used for APP Command "TransactionStatus"
+                localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":code,"status": "completed"}))
             }, 500)
             setTimeout(() => { //enabled after 2 second
                 this.state.buttonClicked=false
