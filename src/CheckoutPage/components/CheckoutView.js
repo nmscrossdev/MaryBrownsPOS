@@ -447,9 +447,16 @@ class CheckoutView extends React.Component {
                 localStorage.setItem("CurrentTransactionStatus", JSON.stringify({"paymentType":type,"status": "completed"}))           
               //  this.orderPayments.updateClosingTab(true)
              // hideModal('common_ext_popup')
-              this.close_ext_modal()
+              //this.close_ext_modal()
                 setTimeout(() => {                   
-                    this.orderPayments.setPartialPayment(type,_amount)                
+                    this.orderPayments &&  this.orderPayments.setPartialPayment(type,_amount)
+                    var  clientJSON = {
+                        command: RequesteData.command,
+                        version:RequesteData.version,
+                        method: RequesteData.method,
+                        status: 200,
+                      }
+                    postmessage(clientJSON);                 
                 }, 500);
             }
             else {

@@ -2303,7 +2303,7 @@ export const doCustomFee = (RequestData) => {
 
           if (item && RequestData.method == "put" && (typeof item.product_id == 'undefined' || item.product_id == null)) {
             if (item.Title == add_title) {
-              isCustomFeeFound==true;
+              isCustomFeeFound=true;
               item.Price = parseFloat(amount);
               item.old_price = isfeeTaxable == true && parseFloat(amount);
               item.isTaxable = isfeeTaxable;
@@ -2467,6 +2467,8 @@ export const doCustomFee = (RequestData) => {
         clientJSON["data"] = {};
         clientJSON.data["fees"] = deleted_fees;
       }
+      if(name=="")
+      clientJSON["data"] = {};
       postmessage(clientJSON);
     }
   } 
@@ -2533,6 +2535,8 @@ export const getReceiptData = (RequestData) => {
       printData = PrintPage.PrintElem(checkList, getPdfdateTime = '', isTotalRefund = '', cash_rounding_amount = cash_rounding_total, print_bar_code, orderList, type, productxList, AllProductList, TotalTaxByName, 0, null, false)
     }
   }
+  var DataToSend=printData.data;
+  DataToSend.push({"rn": 0,"cms":1,"c1": "d_img","c2": Config.key.RECIEPT_IMAGE_DOMAIN +printData.logo_img,"c3":"","bold":"0,0,0","fs":"24","alg":"1"} )  
 
   var clientJSON =
   {
@@ -2548,7 +2552,7 @@ export const getReceiptData = (RequestData) => {
       logo_img: printData.logo_img,
       logo_text: printData.logo_text,
       print_slip_size: printData.print_slip_size,
-      rows: printData.data
+      rows: DataToSend
     }
   };
   postmessage(clientJSON);
