@@ -1854,6 +1854,7 @@ export const sendClientsDetails = (RequestData) => {
 // }
 export const getOrderStatus = (RequestData) => {
   var clientJSON = {};
+  var dataFromApi=false;
   var validationResponse = validateRequest(RequestData)
 
   if (validationResponse.isValidationSuccess == false) {
@@ -1861,9 +1862,14 @@ export const getOrderStatus = (RequestData) => {
     postmessage(clientJSON)
   }
   else {
+    clientJSON = {
+      command: RequestData.command,
+      version: "2.0",
+      method: RequestData.method,
+      status: 200,
+    }
+
     var tempOrdrId = localStorage.getItem('tempOrder_Id') && localStorage.getItem('tempOrder_Id') !== undefined ? JSON.parse(localStorage.getItem("tempOrder_Id")) : null;
-
-
     const { Email } = ActiveUser.key;
     var TempOrders = localStorage.getItem(`TempOrders_${Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${Email}`)) : []; if (TempOrders && TempOrders.length > 0) {
       var filteredOrder = null;
@@ -1872,19 +1878,32 @@ export const getOrderStatus = (RequestData) => {
       }
     }
     if (RequestData.method == 'get') {
-      clientJSON = {
-        command: RequestData.command,
-        version: "2.0",
-        method: RequestData.method,
-        status: 200,
-      }
-
       if (filteredOrder && filteredOrder.length > 0) {
         clientJSON['data'] = {
           wc_status: filteredOrder && filteredOrder[0].order_status,
           wc_order_no: filteredOrder && filteredOrder[0].OrderID,
           oliver_order_id: filteredOrder && filteredOrder[0].TempOrderID
-
+        }
+        
+        if(filteredOrder[0].OrderID!=0)
+        {
+          dataFromApi=true;
+          var UID = get_UDid('UDID');
+          store.dispatch(activityActions.getDetail(filteredOrder[0].OrderID, UID));
+            setTimeout(() => {
+            const state = store.getState();
+            if (state.single_Order_list && state.single_Order_list.items && state.single_Order_list.items.content) {
+            var  _order = state.single_Order_list && state.single_Order_list.items.content;
+            if (_order) {
+              clientJSON['data'] = {
+                wc_status: _order.order_status,
+                wc_order_no: _order.order_id,
+                oliver_order_id: _order.OliverReciptId
+              }
+            }
+            postmessage(clientJSON);
+            }
+          }, 2000);
         }
       } else {
         const state = store.getState();
@@ -1897,14 +1916,13 @@ export const getOrderStatus = (RequestData) => {
               oliver_order_id: _order.OliverReciptId
             }
           }
-
-
         }
       }
     }
     else {
       clientJSON['error'] == "no transaction found"
     }
+    if(dataFromApi==false)
     postmessage(clientJSON);
   }
 
