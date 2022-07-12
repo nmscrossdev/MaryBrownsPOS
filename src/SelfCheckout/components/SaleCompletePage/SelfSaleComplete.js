@@ -95,8 +95,8 @@ class SelfSaleComplete extends React.Component {
         localStorage.removeItem('PrintCHECKLIST');
         localStorage.setItem('DEFAULT_TAX_STATUS', 'true');
         dispatch(cartProductActions.addtoCartProduct(null));
-        history.push('/SelfCheckoutView')
-        // window.location='/SelfCheckoutView';
+        //history.push('/SelfCheckoutView')
+         window.location='/SelfCheckoutView';
     }
     render() {
         const { printReceipt, yur4, baseurl, barcode_image, orderId, tempOrderId, handleContinue } = this.props;

@@ -4,14 +4,32 @@ import { handleAppEvent,postmessage } from '../../ExtensionHandeler/commonAppHan
 import { history } from '../../_helpers';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
 import Config from '../../Config';
+import ActiveUser from '../../settings/ActiveUser';
+import { checkOrderStatus} from '../../_components/CommonJS';
 class  Navbar extends React.PureComponent{
   constructor(props) {
       super(props);
   }
   componentDidMount()
   {
+    var syncTempOrder  = setInterval(() => {
+      var tempOrderId = localStorage.getItem('tempOrder_Id') ? JSON.parse(localStorage.getItem('tempOrder_Id')) : ''
+      var TempOrders = localStorage.getItem(`TempOrders_${ActiveUser.key.Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${ActiveUser.key.Email}`)) : [];
+      TempOrders && TempOrders.map(ele => {
+
+        if (tempOrderId && ele.TempOrderID == tempOrderId && ele.Status != "true") {
+          checkOrderStatus(tempOrderId)
+        }
+        else
+        {
+          clearInterval(syncTempOrder)
+        }
+  });
+
+  }, 1000);
     setThemeColor();
   }
+
   //   var _user = JSON.parse(localStorage.getItem("user"));
   //       // ************ Update _user.instance for local testing ************* //
   //       // _user.instance = window.location.origin
