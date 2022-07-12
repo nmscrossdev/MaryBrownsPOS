@@ -750,7 +750,7 @@ handleNote() {
                                   <rect width="16" height="2" fill="#758696" />
                                 </svg>
                               </div>
-                              <input type="number" value={product.quantity} />
+                              <input type="number" value={product.quantity} readOnly={true}/>
                               <div onClick={() => this.incrementDefaultQuantity(product, index, 1)} className="increment" id={"btn_dv_plus_"+product.product_id}>
                                 <svg width={16} height={16} viewBox="0 0 16 16" style={{ width: "30px" }} id={"btn_svg_plus_"+product.product_id}>
                                   <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="#758696" />

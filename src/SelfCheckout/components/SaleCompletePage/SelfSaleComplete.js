@@ -228,7 +228,7 @@ class SelfSaleComplete extends React.Component {
                 // </div>
                 <div className="payment-view complete-payment">
                 <div className="wrapper">
-                {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+                {custom_logo && custom_logo.Value?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
                     {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
                     <svg width={118} height={120} viewBox="0 0 118 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M114.782 59.7733C114.782 91.331 89.7651 116.82 59.0197 116.82C28.2744 116.82 3.25781 91.331 3.25781 59.7733C3.25781 28.2156 28.2744 2.72656 59.0197 2.72656C89.7651 2.72656 114.782 28.2156 114.782 59.7733Z" fill="var(--secondary)" fillOpacity="0.1" stroke="var(--primary)" strokeWidth={5} />

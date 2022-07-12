@@ -159,7 +159,7 @@ class SendMailComponent extends React.Component {
 						/>
 					</svg>
 				</div>
-        {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+        {custom_logo && custom_logo.Value?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
           {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
           <p>Please enter your email address</p>
           <input type="email" defaultValue={(checkList.customerDetail && checkList.customerDetail.content &&

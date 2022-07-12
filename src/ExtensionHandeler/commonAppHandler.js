@@ -2226,20 +2226,21 @@ export const doParkSale = (RequestData) => {
         }
     }
   }, 300);
-    }
-    clientJSON =
-          {
-            oliverpos:
-            {
-              command: RequestData.command,
-              method: RequestData.method,
-              version: "2.0",
-              status: 200,
-            },
-            data:
-              'Processing...'
-          };
-    postmessage(clientJSON)
+  clientJSON =
+  {
+    oliverpos:
+    {
+      command: RequestData.command,
+      method: RequestData.method,
+      version: "2.0",
+      status: 200,
+    },
+    data:
+      'Processing...'
+  };
+postmessage(clientJSON)    
+}
+    
   }
 }
 
@@ -2467,7 +2468,7 @@ export const doCustomFee = (RequestData) => {
         clientJSON["data"] = {};
         clientJSON.data["fees"] = deleted_fees;
       }
-      if(name=="")
+      if(name=="" && cartlist_fee && cartlist_fee.length==0)
       clientJSON["data"] = {};
       postmessage(clientJSON);
     }

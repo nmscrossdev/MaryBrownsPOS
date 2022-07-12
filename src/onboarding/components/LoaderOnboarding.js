@@ -14,7 +14,7 @@ class LoaderOnboarding extends React.Component {
         return (
             <div className="login-wrapper">
                 <form action="#">
-                {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+                {custom_logo && custom_logo.Value?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
                 {/* <img src="../assets/images/logo-dark.svg" alt="" /> */}
                 </form>
                     {/* <div className="login-header">

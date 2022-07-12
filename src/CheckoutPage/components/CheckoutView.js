@@ -430,7 +430,7 @@ class CheckoutView extends React.Component {
             if (data ) {
                 var type = data && data.processor ? data.processor : ''
                 checkList['transection_id'] = data && data.transaction_id ? data.transaction_id : ''
-               var _amount = data && data.amount ? data.amount : 0
+               var _amount = data && data.amount ? data.amount/100 : 0
                var _emv = data && data.emv_data ? data.emv_data : ""
                 var allEmvData=[];
                 allEmvData= this.state.EmvData?this.state.EmvData:[];

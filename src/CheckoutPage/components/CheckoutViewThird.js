@@ -790,7 +790,7 @@ class CheckoutViewThird extends React.Component {
                                                 />
                                             </svg>
                                         </div>
-                                        {custom_logo?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
+                                        {custom_logo && custom_logo.Value?<img src={Config.key.RECIEPT_IMAGE_DOMAIN+custom_logo.Value} alt="" />:""}
                                         {/* <img src="../assets/image/mblogobig.png" alt="" /> */}
                                         </div>
                                     

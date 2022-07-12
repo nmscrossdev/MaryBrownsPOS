@@ -32,7 +32,7 @@ const ScreenSaver=(props)=> {
 				:null
 			}
 			<div className="footer" style={{backgroundColor:btnBackColor}}>
-			<img src={bottomImage?(Config.key.RECIEPT_IMAGE_DOMAIN +bottomImage.Value):""} alt="" />
+			<img src={bottomImage && bottomImage.Value?(Config.key.RECIEPT_IMAGE_DOMAIN +bottomImage.Value):""} alt="" />
 			<p style={{color:btnTitleColor}}>{btnTitle?btnTitle:"Tap to Begin"}</p>
 			</div>
 			<div style={{display:"none"}}>{
