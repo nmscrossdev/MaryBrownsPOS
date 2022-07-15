@@ -101,6 +101,14 @@ export function isOpenCashDrawer(orderList,isSale=true)
         }
         if((isPaymentCash==true && (typeof whenToOpenDrawer!="undefined" && whenToOpenDrawer!="" && whenToOpenDrawer=="cash-only"))|| (typeof whenToOpenDrawer!="undefined" && whenToOpenDrawer!="" && whenToOpenDrawer=="every-sale"))
         {
+            var isTizenWrapper = localStorage.getItem("isTizenWrapper");
+            if(isTizenWrapper && isTizenWrapper!=null && typeof isTizenWrapper!="undefined" && isTizenWrapper=="true")
+            {
+                if(Tizen && Tizen!=null && typeof Tizen!="undefined")
+                {
+                    Tizen.openCashBox();
+                }
+            }
             Android.openCahsDrawer();
             //console.log("---------drawer opening isOpenCashDrawer-------")
         }

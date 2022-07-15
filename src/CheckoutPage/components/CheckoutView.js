@@ -14,7 +14,7 @@ import { cartProductActions } from '../../_actions';
 import { checkoutActions, CheckoutViewFirst, CheckoutViewSecond, CheckoutViewThird } from '../';
 import LocalizedLanguage from '../../settings/LocalizedLanguage';
 import { androidDisplayScreen } from '../../settings/AndroidIOSConnect';
-import { isMobileOnly, isIOS, isTablet } from "react-device-detect";
+import { isMobileOnly, isIOS, isTablet,isSafari } from "react-device-detect";
 import { ParkAndLayaway } from '../views/m.ParkAndLayaway';
 import CustomerEdit from '../../CustomerPage/views/m.CustomerEdit';
 import Header from '../../_components/views/m.Header';
@@ -39,7 +39,7 @@ import { CommonAppPopup } from '../../appManager/CommonAppPopup';
 import {addEventListener} from '../../appManager/FramManager'
 import { GroupSaleModal } from '../../_components/GroupSaleModal';
 import { handleAppEvent,postmessage } from '../../ExtensionHandeler/commonAppHandler';
-
+import Config from '../../Config'
 var cash_rounding = ActiveUser.key.cash_rounding;
 var clientExtensionData = new Object();
 var RoundAmount = (val) => {
@@ -1583,7 +1583,7 @@ class CheckoutView extends React.Component {
             device_type: deviceType,
             // device_ip: deviceIP,
             device_id: deviceName,
-            _currentTime: moment().format('YYYY-MM-DD, h:mm:ss a') //date used for cloud print
+            _currentTime: moment().format(isSafari? Config.key.DATETIME_FORMAT_SAFARI:'YYYY-MM-DD, h:mm:ss a')  //date used for cloud print
         }
         localStorage.setItem('placedOrderList', JSON.stringify(newList));
         // add cash rounding amount in localstorage for android and ios section

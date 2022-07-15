@@ -39,7 +39,23 @@ function Print(data)
 {
     //console.log("prinData",JSON.stringify(data));
 
-    if(typeof Android !== "undefined" && Android !== null && Android.getDatafromDevice("isWrapper")==true){
+    var isTizenWrapper = localStorage.getItem("isTizenWrapper");
+    if(isTizenWrapper && isTizenWrapper!=null && typeof isTizenWrapper!="undefined" && isTizenWrapper=="true")
+     {
+      var PrintAndroidReceiptData={};
+      var PrintAndroidData=[];
+      if(data && data.url)
+      {
+        PrintAndroidData.push({"rn": 1,"cms":1,"c1":"d_img","c2":data.url,"c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
+      }
+      PrintAndroidReceiptData["data"]=PrintAndroidData;
+      if(Tizen && Tizen!=null && typeof Tizen!="undefined")
+      {
+        Tizen.generateReceipt("",JSON.stringify(PrintAndroidReceiptData))
+      }
+     }
+
+    else if(typeof Android !== "undefined" && Android !== null && Android.getDatafromDevice("isWrapper")==true){
       if(!data || !data.url || data.url == ""){}
       else
       {

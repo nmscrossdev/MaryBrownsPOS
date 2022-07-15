@@ -319,8 +319,8 @@ class WebLoginView extends React.Component {
 				<div className="row apart">					
                     <a href={bridgDomain + "/Account/ForgotPassword?_refrence=sell"} id="kt_login_forgot" className="kt-login__link">Forgot your Password?</a>
 					<label className="checkbox-wrapper">
-						<input type="checkbox" />
-						<div className="custom-checkbox" id="remember" name='rememberUser'>
+						<input type="checkbox" id="remember"/>
+						<div className="custom-checkbox"  name='rememberUser'>
 							<img src="../Assets/Images/SVG/Checkmark.svg" alt="" />
 						</div>
 						Remember Me?

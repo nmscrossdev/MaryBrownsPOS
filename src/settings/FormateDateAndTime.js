@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Config from '../Config';
+import { isSafari } from "react-device-detect";
 var moment_time_zone = require('moment-timezone');
 
 /**
@@ -10,21 +11,24 @@ var moment_time_zone = require('moment-timezone');
  * @param {*} time_zone 
  */
 function formatDateAndTime(date_time, time_zone) {
+   //CHANGING THE DATE FORMAT FOR SAFARI BROWSER
+    var dtformat = isSafari? Config.key.DATETIME_FORMAT_SAFARI:Config.key.DATETIME_FORMAT;
+    var dformat = isSafari ? Config.key.DATE_FORMAT_SAFARI: Config.key.DATE_FORMAT;
     if (time_zone == '+00:00') {
         var DateTime = moment.utc(date_time)
-        return DateTime.local().format(Config.key.DATE_FORMAT);
+        return DateTime.local().format(dformat);
     } else {
       if( !date_time || !time_zone){
-        var _date = moment(date_time).format(Config.key.DATETIME_FORMAT);
-        var m = moment_time_zone.tz(_date, Config.key.DATETIME_FORMAT, time_zone);
+        var _date = moment(date_time).format(dtformat);
+        var m = moment_time_zone.tz(_date, dtformat, time_zone);
         //m.utc();
-        return m.format(Config.key.DATE_FORMAT);
+        return m.format(dformat);
       }
        
         var cutoffString = date_time; // in utc
         var utcCutoff = moment.utc(cutoffString, 'YYYYMMDD HH:mm:ss');
         var displayCutoff = utcCutoff.clone().tz(time_zone);
-        return displayCutoff.format(Config.key.DATE_FORMAT);
+        return displayCutoff.format(dformat);
     }
   }
 
@@ -56,6 +60,9 @@ function recieptFormatDateAndTime(date_time, time_zone) {
   }
 
   function formatDateWithTime(date_time, time_zone) {
+    //CHANGING THE DATE FORMAT FOR SAFARI BROWSER
+    var dtformat = isSafari? Config.key.DATETIME_FORMAT_SAFARI:Config.key.DATETIME_FORMAT;
+
     if ( ! time_zone) {//if timezone not avilable
       var gmtDateTime = moment.utc(date_time)
       return gmtDateTime.format('LT');
@@ -64,8 +71,10 @@ function recieptFormatDateAndTime(date_time, time_zone) {
          var gmtDateTime = moment.utc(date_time)
          return gmtDateTime.local().format('LT');
            } else {
-         var _date = moment(date_time).format(Config.key.DATETIME_FORMAT);
-         var m = moment_time_zone.tz(_date, Config.key.DATETIME_FORMAT, time_zone);
+              // var _date = moment(date_time).format(Config.key.DATETIME_FORMAT);
+              // var m = moment_time_zone.tz(_date, Config.key.DATETIME_FORMAT, time_zone);
+         var _date = moment(date_time).format(dtformat);
+         var m = moment_time_zone.tz(_date, dtformat, time_zone);
          //m.utc();
          return m.local().format('LT');
      }

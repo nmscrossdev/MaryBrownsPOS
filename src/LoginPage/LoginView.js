@@ -133,6 +133,7 @@ class LoginPage extends React.Component {
             if (versionCompare == false) {
                 setTimeout(() => {
                     //history.push('/site_link');
+                    this.doRemember();
                     isShowWrapperSetting("LoginView.js->check version",'site_link','push');
                 }, 200);
 
@@ -239,6 +240,7 @@ class LoginPage extends React.Component {
             if(nextProps.authentication.user.subscriptions.length > 0){
                 if (nextProps.authentication.user && nextProps.authentication.user.subscriptions[0].subscription_detail.bridge_version=="") {
                     //history.push('/site_link');
+                    this.doRemember();
                     isShowWrapperSetting("LoginView.js->WillReceive",'site_link','push');
                 }
                 else if (nextProps.authentication.user && nextProps.authentication.user.subscriptions[0].subscription_detail.bridge_version) {
@@ -265,7 +267,26 @@ class LoginPage extends React.Component {
     }
 
     componentDidMount() {
+        //Fill credentials from cookies
+        if(cookies.get('remember') && cookies.get('remember') !== 'undefined')
+        {
+            var remem = cookies.get('remember')
+            if (remem == 'true') {
+                this.setState({ check:true, username: cookies.get('user'),password: cookies.get('pwd') });
+                if(document.getElementById('remember'))
+                {
+                   document.getElementById('remember').checked=true;
+                } 
+            }
+        }
         localStorage.setItem("showExtention", false);
+        //TIZEN WRAPPER -> USING MESSAGE EVENT SETTING LOCAL STORAGE
+        window.addEventListener('message', function (e) {
+        var data = e && e.data;
+        if (typeof data == 'string' && data !== "" && e.data==="isTizenWrapper") {
+            this.localStorage.setItem("isTizenWrapper",'true')
+        }
+         });
         //localStorage.removeItem("env_type");
         // console.log(
         //     "BrowserView", BrowserView,
@@ -315,6 +336,7 @@ class LoginPage extends React.Component {
              //----------------------------------------------------------------   
             setTimeout(() => {
                 //history.push('/site_link');
+                this.doRemember();
                 isShowWrapperSetting("LoginView.js->DidMount",'site_link','push');
             }, 200);
         }
@@ -453,16 +475,14 @@ class LoginPage extends React.Component {
     handleChange(e) {
         const { name, value } = e.target;
         this.setState({ [name]: value });
-        if ($('#remember').attr('checked')) {
-            var username = $('#username').attr("value");
-            var password = $('#password').attr("value");
+        if (document.getElementById('remember') && document.getElementById('remember').checked) {
             if (name == "username") {
                 cookies.set("user", value);
             }
             if (name == "password") {
                 cookies.set("pwd", value);
             }
-            cookies.set('remember', this.state.check);
+            //cookies.set('remember', this.state.check);
         }
     }
 
@@ -484,8 +504,8 @@ class LoginPage extends React.Component {
                 cookies.set('pwd', '');
             }
             dispatch(userActions.login(username, password));
-            this.state.username = "";
-            this.state.password = "";
+            // this.state.username = "";
+            // this.state.password = "";
 
         } else {
             if (!username && !password) {
@@ -516,20 +536,29 @@ class LoginPage extends React.Component {
         }
         e.preventDefault();
     }
-
+    doRemember=()=>
+    {
+        if(document.getElementById('remember') && document.getElementById('remember').checked)
+        {
+            this.checkStatus(true);
+        }
+        else
+        {
+            this.checkStatus(false);
+        }
+    }
     checkStatus = (value) => {
         this.setState({ check: value })
         if (value == false) {
-            var username = $('#username').attr("value");
-            var password = $('#password').attr("value");
             cookies.set('user', '');
             cookies.set('pwd', '');
             cookies.set('remember', value);
+            this.setState({ username: '',password:'' });
         } else {
-            var username = $('#username').attr("value");
-            var password = $('#password').attr("value");
-            cookies.set('user', '');
-            cookies.set('pwd', '');
+            var username = document.getElementById('username')?document.getElementById('username').value:'' ;
+            var password = document.getElementById('password')?document.getElementById('password').value:'' ;
+            cookies.set('user', username);
+            cookies.set('pwd', password);
             cookies.set('remember', value);
         }
         var remem = cookies.get('remember')

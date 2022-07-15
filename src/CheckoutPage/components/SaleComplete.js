@@ -248,6 +248,9 @@ class SaleComplete extends React.Component {
         var redeemedPointsToPrint = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem("CHECKLIST"))._wc_points_redeemed : 0;
         var redeemedAmountToPrint = localStorage.getItem('CHECKLIST') ? JSON.parse(localStorage.getItem("CHECKLIST"))._wc_amount_redeemed : 0;
         var PrototalDis = PrintDetails && PrintDetails !== undefined && PrintDetails.order_discount && parseFloat(PrintDetails.order_discount).toFixed(3).slice(0, -1)
+        //CHANGING THE DATE FORMAT FOR SAFARI BROWSER
+        var dtformat=isSafari? Config.key.DATETIME_FORMAT_SAFARI: Config.key.DATETIME_FORMAT;
+        
         var CheckoutList = {
             ListItem: ListItem,
             customerDetail: addcust ? addcust : null,
@@ -261,14 +264,15 @@ class SaleComplete extends React.Component {
             status: PrintDetails && PrintDetails.status,
             order_id: PrintDetails && PrintDetails && PrintDetails.order_id,
             oliver_pos_receipt_id: PrintDetails && PrintDetails.OliverReciptId,
-            order_date: PrintDetails && PrintDetails.OrderDateTime ? moment(PrintDetails.OrderDateTime).format(Config.key.DATETIME_FORMAT) : 
-                                    PrintDetails &&  PrintDetails._currentTime ? moment(PrintDetails._currentTime).format(Config.key.DATETIME_FORMAT) : null,
+            order_date: PrintDetails && PrintDetails.OrderDateTime ? moment(PrintDetails.OrderDateTime).format(dtformat) : 
+            PrintDetails &&  PrintDetails._currentTime ? moment(PrintDetails._currentTime).format(dtformat) : null,
             showTaxStaus: typeOfTax == 'Tax' ? typeOfTax : 'Incl. Tax',
             order_notes: PrintDetails && PrintDetails.order_notes,
             // PUTTING redeemedPointsToPrint IN Printcheckout
             redeemedPoints: redeemedPointsToPrint ? redeemedPointsToPrint : 0,
             redeemedAmountToPrint: redeemedAmountToPrint ? redeemedAmountToPrint : 0,
             meta_datas: PrintDetails && PrintDetails.order_meta,
+            _currentTime:PrintDetails._currentTime
         }
         localStorage.setItem("PrintCHECKLIST", JSON.stringify(CheckoutList));
         //localStorage.removeItem("CHECKLIST");

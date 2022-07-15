@@ -10,10 +10,9 @@ import { showAndroidToast,showAndroidReceipt } from '../settings/AndroidIOSConne
 import { history } from '../_helpers';
 import { taxratelist } from '../_reducers/taxrate.reducer';
 import CommonJs from './CommonJS';
-
+import { isSafari,isBrowser} from "react-device-detect";
 
 const pageSize = ActiveUser.key.pdfFormate;
-
 function stripHtml(html) {
   // Create a new div element
   var temporalDivElement = document && document.createElement("div");
@@ -87,7 +86,7 @@ function getProductShortDesc(data,type,productID){
   }        
     if(getorderlist){
       getorderlist.filter(itm=>  itm.product_id && itm.product_id== productID).map(prd=>{
-        console.log("prd",prd)
+       // console.log("prd",prd)
         shortdesc=prd.shortDescription
       })
     }
@@ -129,7 +128,81 @@ function getDiscountPerItem(data,type,productID){
 function calculateTaxRate(totalAmount, itemvalue){
   return  Math.round(((itemvalue)*100)/totalAmount,0)
 }
+function reCalculateDiscount(props,x,view)
+{
+  var _tempProductIndividualDiscount=0;
 
+  var _totalProductIndividualDiscount=0;
+  var  _indivisualProductDiscountArray=[];
+  var  _indivisualProductCartDiscountArray=[];
+  var price=0;
+  var itemCalculated={};
+  if(view!="activity" && localStorage.getItem("getorder"))
+  {
+    props = localStorage.getItem("getorder")?JSON.parse(localStorage.getItem("getorder")):"";
+  }
+  if(x && typeof x.quantity_refunded=="undefined")
+  {x["quantity_refunded"]=0};
+
+  props && props !=="" && props.meta_datas && props.meta_datas.map((_item, index)=> {                                                           
+    if(_item.ItemName=='_order_oliverpos_product_discount_amount'){
+        var _arrNote=_item.ItemValue && _item.ItemValue !="" && JSON.parse(_item.ItemValue);
+        _arrNote && _arrNote !="" && _arrNote.map((item, index)=> {
+              if(item.product_discount_amount || item.cart_discount_amount){  
+                if((x.product_id === item.product_id || x.parent_id ===item.product_id) && (x.quantity -Math.abs(x.quantity_refunded) )>0)
+                {
+                  price=item.Price;
+                  itemCalculated["Price"]=parseFloat(price) ;
+                  if(item.product_discount_amount){  //getting the product discount amount
+                      itemCalculated["singleDiscountType"]="Percentage";
+                      _tempProductIndividualDiscount=(item.product_discount_amount * (item.discount_type=="Percentage"?(x.quantity+ (x.quantity_refunded?x.quantity_refunded:0)):1))
+                      price = item.old_price * (x.quantity+ (x.quantity_refunded?x.quantity_refunded:0));
+                      if(item.discount_type=="Number")
+                      {
+                        itemCalculated["singleDiscountType"]="Number";
+                        _tempProductIndividualDiscount=(_tempProductIndividualDiscount/item.quantity)*(x.quantity+ (x.quantity_refunded?x.quantity_refunded:0));
+                      }
+                      price = price - _tempProductIndividualDiscount;
+                      itemCalculated["newPrice"]=parseFloat(price);
+                      itemCalculated["singleDiscount"]=parseFloat(_tempProductIndividualDiscount);
+                      _totalProductIndividualDiscount+=_tempProductIndividualDiscount;
+                      _indivisualProductDiscountArray.push({"ProductId": item.variation_id && item.variation_id !==0?item.variation_id: item.product_id,"discountAmount":_tempProductIndividualDiscount})
+                  }
+                  let cart_discount=0;
+                  if(item.discountCart && item.discountCart.discountType)
+                  {
+                      if(item.discountCart && item.discountCart.discountType && item.discountCart.discountType=="Percentage")
+                      {
+                          if(!item.product_discount_amount)
+                          {
+                              price = item.old_price * (x.quantity+ (x.quantity_refunded?x.quantity_refunded:0));
+                          }
+                          cart_discount =(price*item.discountCart.discount_amount)/100;
+                          _indivisualProductCartDiscountArray.push({"ProductId":item.variation_id && item.variation_id !==0?item.variation_id:item.product_id,"discountAmount":cart_discount})
+                          itemCalculated["cartDiscountType"]="Percentage";
+                          itemCalculated["cart_discount"]=parseFloat(cart_discount);
+                        }
+                      else
+                      {
+                          cart_discount =((item.cart_discount_amount)/x.quantity)* (x.quantity+ (x.quantity_refunded?x.quantity_refunded:0));
+                          _indivisualProductCartDiscountArray.push({"ProductId":item.variation_id && item.variation_id !==0?item.variation_id:item.product_id,"discountAmount":cart_discount})
+                          itemCalculated["cartDiscountType"]="Number";
+                          itemCalculated["cart_discount"]=parseFloat(cart_discount);
+                      }
+                  }
+                }
+              }
+            })
+          }
+
+  });
+  
+    console.log("---itemCalculated---"+JSON.stringify(itemCalculated) );
+    return itemCalculated && itemCalculated.Price?itemCalculated:null;
+    // console.log("---_totalProductIndividualDiscount---"+_totalProductIndividualDiscount );
+    // console.log("---_indivisualProductDiscountArray---"+JSON.stringify(_indivisualProductDiscountArray));
+    // console.log("---_indivisualProductCartDiscountArray---"+JSON.stringify(_indivisualProductCartDiscountArray));
+}
 // }
 export const PrintPage = {
   PrintElem
@@ -354,6 +427,16 @@ if(data.orderCustomerInfo)
   PrintAndroidReceiptData['logo_text']=shopName;
 
   PrintAndroidReceiptData['print_slip_size']=pageSize.width;
+  if(!isBrowser) // setting print_slip_size value from pdf_format local storage, and defualt balue is 80mm
+  {
+    const _pageSize=localStorage.getItem("pdf_format") && JSON.parse(localStorage.getItem("pdf_format")); 
+    var _pageSizeValue="80mm";
+    if(_pageSize && _pageSize.length>0)
+    {
+      _pageSizeValue=_pageSize[0].recipt_format_value;
+    }
+    PrintAndroidReceiptData['print_slip_size']=_pageSizeValue;
+  }
   var printerIds=[]
   var printersList = localStorage.getItem('cloudPrinters') ? JSON.parse(localStorage.getItem('cloudPrinters')) : []
    printersList && printersList.content && printersList.content.map(item=> {
@@ -362,9 +445,26 @@ if(data.orderCustomerInfo)
   
   PrintAndroidReceiptData['printer_ids']=printerIds; 
   
+  var oprationalDate = null
+  if (data !== null && data.date_time !== undefined && Reflect.has(data, data.date_time)) {
+    oprationalDate = data.date_time;
+  }
+  else if(data.create_date) {
+    oprationalDate = data.create_date;
+  }
+  else
+  {
+    oprationalDate= isSafari?data._currentTime.replace(/-/g, "/"):data._currentTime;
+  }
+
   if(order_reciept.ShowDate == true)
   {
-    gmtDateTime = FormateDateAndTime.formatDateAndTime(oprationalDate, data.time_zone);
+    if(data.time_zone)
+      gmtDateTime = FormateDateAndTime.formatDateAndTime(oprationalDate, data.time_zone);
+    else
+      gmtDateTime = FormateDateAndTime.formatDateAndTime(oprationalDate);
+
+   
     gmtDateTime = moment(gmtDateTime).format(ActiveUser.key.orderRecieptDateFormate)
 
     var ckdateisValid = false
@@ -372,20 +472,40 @@ if(data.orderCustomerInfo)
       ckdateisValid = moment(gmtDateTime).isValid();
       if (ckdateisValid == false) {
         var currentdate = new Date;
-        gmtDateTime = FormateDateAndTime.formatDateAndTime(currentdate, data.time_zone);
+        if(data.time_zone)
+          gmtDateTime = FormateDateAndTime.formatDateAndTime(currentdate, data.time_zone);
+        else
+          gmtDateTime = FormateDateAndTime.formatDateAndTime(currentdate);
         gmtDateTime = moment(gmtDateTime).format(ActiveUser.key.orderRecieptDateFormate)
       }
     }
+
+    if(gmtDateTime !== null && gmtDateTime !== undefined && gmtDateTime=="Invalid date")
+    {
+        gmtDateTime = new Date().toLocaleDateString(navigator.language || navigator.userLanguage,new Date().toLocaleDateString(navigator.language || navigator.userLanguage,{ day: 'numeric', month: 'short', year: 'numeric' }));
+    }
+
     receipt+=(order_reciept.DateDisplayLabel)+": "+gmtDateTime +"\n";   
     PrintAndroidData.push({ "rn": rowNumber,"cms": 1,"c1": labelDateDisplay+": "+gmtDateTime,"c2": "","c3": "", "bold": "0,0,0","fs": "24","alg": "0"}); 
   }
   if(order_reciept.ShowTime == true)
   {
-   
+    // if(data.time_zone)
+    //  time=FormateDateAndTime.formatDateWithTime(data.date_time, data.time_zone);
+    //  else
+    //  time=FormateDateAndTime.formatDateWithTime(data.order_date);//date_time
+
     if(data.time_zone)
-     time=FormateDateAndTime.formatDateWithTime(data.date_time, data.time_zone);
-     else
-     time=FormateDateAndTime.formatDateWithTime(data.order_date);//date_time
+      time=FormateDateAndTime.formatDateWithTime(data.date_time, data.time_zone);
+    else if(data.order_date && data.order_date!="Invalid date")
+      time=FormateDateAndTime.formatDateWithTime(data.order_date);//date_time
+    else
+      time=FormateDateAndTime.formatDateWithTime(isSafari?data._currentTime.replace(/-/g, "/"):data._currentTime);
+    
+    if(time=="Invalid date")
+    {
+      time=new Date().toLocaleString([], { hour: 'numeric', minute: 'numeric' });
+    }
 
     receipt+="Time: "+time+"\n";
     rowNumber +=1;
@@ -441,6 +561,7 @@ if(data.orderCustomerInfo)
       { 
         CustomerAddress= data.customerDetail.content.StreetAddress+ " "+data.customerDetail.content.City+ " "+data.customerDetail.content.Pincode;
       }
+      CustomerAddress=CustomerAddress && CustomerAddress.trim();
     }
      if(CustomerAddress !==""){
       receipt+=labelCustomerAddress+": "+CustomerAddress+"\n";
@@ -483,7 +604,7 @@ if(data.orderCustomerInfo)
 if(order_reciept.ShowCustomText)
   {
       customeText= order_reciept.CustomText == "*CUSTOM TEXT HERE*" ? "" : order_reciept.CustomText;
-      if(customeText !==""){
+      if(customeText !=="" && customeText!=null){
         receipt+=order_reciept.CustomText+"\n" ;
         rowNumber +=1;
         PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":order_reciept.CustomText,"c2":"","c3":"","bold":"1,1,1","fs":"24","alg":"1"}); 
@@ -525,14 +646,7 @@ if(order_reciept.ShowCustomText)
   var refundpayments = data ? data.order_Refund_payments : '';
   var barcode_image = order_reciept.AddBarcode == true ? Config.key.RECIEPT_IMAGE_DOMAIN + "/Content/img/ic_barcode.svg" : ''
   
-  var oprationalDate = null
-  if (data !== null && data.date_time !== undefined && Reflect.has(data, data.date_time)) {
-    oprationalDate = data.date_time;
-  }
-  else {
-    oprationalDate = data.create_date;
-  }
-
+ 
   
   var displayRefundPayment = '';
   var refundPay = '';
@@ -644,27 +758,48 @@ if(order_reciept.ShowCustomText)
 
 
   var item_detail = data.line_items ? data.line_items : data.ListItem
-  var lineItem = '';
+function getCompositItemDetail(item){
+  var compositChield=[]
+          item_detail.map(compositItem=>{
+                if(compositItem.composite_parent_key && compositItem.composite_parent_key ==item.composite_product_key ){
+                compositChield.push(compositItem.name)
+                }
+            })
+       return compositChield.join(', ')
+}
   
-  item_detail && item_detail.filter(u => !u.extention_custom_id ).map(item => { //Remove tip item into itemlist
+
+  var lineItem = '';
+  var _cartDiscount=0.0;
+  var _itemData={}
+  item_detail && item_detail.filter(u => !u.extention_custom_id && ( !u.composite_parent_key || (u.composite_parent_key && u.composite_parent_key=="")) ).map(item => { //Remove tip item into itemlist,, remove coposit child prodcut
     if( item.Title && item.Title.includes('Tip')){
       //ekip tip
       _tipAmount +=item.Price ? parseFloat(item.Price):0;
      // _tipLable=item.Title;
     }
     else{
-
+      
+      //if(type="activity")
+      {
+          _itemData = reCalculateDiscount(data,item,type);
+          if(_itemData && _itemData.cart_discount)
+          {
+            _cartDiscount += _itemData.cart_discount;
+          }
+      }
+      
         var itemName = stripHtml(item.name ? item.name : item.Title)
         var skuName = item.sku && item.sku !== "N/A" && item.sku !== undefined ? 'SKU <br/>' + item.sku + ' <br/>' : item.Sku && item.Sku !== "N/A" && item.Sku !== undefined ? 'SKU <br/>' + item.Sku + ' <br/>' : '';
         var skuName_android = item.sku && item.sku !== "N/A" && item.sku !== undefined ? 'SKU ' + item.sku + '' : item.Sku && item.Sku !== "N/A" && item.Sku !== undefined ? 'SKU ' + item.Sku + '' : '';
       
    
             var lineitem_taxType = []
-            var itemvalue = item.Taxes && item.Taxes !==null &&  item.Taxes !=="" ? (type !== 'activity') ? item.Taxes:JSON.parse(item.Taxes).total:""
+            var itemvalue = item.Taxes && item.Taxes !==null &&  item.Taxes !=="" ? (type !== 'activity') ? item.Taxes:item.Taxes && item.Taxes !="null"? JSON.parse(item.Taxes).total:"":""
            var taxRate= JSON.parse(localStorage.getItem("SHOP_TAXRATE_LIST") )
            var TotalTax=0  
            if(type == 'activity') { // for activity
-                  itemvalue !="" && Object.keys(itemvalue).map(key=>{
+            itemvalue && itemvalue !="" && Object.keys(itemvalue).map(key=>{
                   var taxvalue=itemvalue[key];          
                   data.order_taxes && data.order_taxes.map(tm=>{
                  // taxRate && taxRate.map(tm=>{
@@ -726,7 +861,11 @@ if(order_reciept.ShowCustomText)
                                           :(item && item.addons_meta_data) ? CommonJs.showAddons(type, item.addons_meta_data)
                                                                         :(productxList && productxList.length > 0) && showProductxSubTitle(item.product_id, AllProductList) ? showProductxSubTitle(item.product_id, AllProductList) 
                                                                                                                                                                               : showSubTitle(item) !== "" ? itemName : ''
-          
+          //-----For composit Prodcut ---------------                                                                                                                                                                 : showSubTitle(item) !== "" ? itemName : ''
+          if(type == 'activity' && item.composite_product_key && item.composite_parent_key ==""){
+            lineitem_subTitle=getCompositItemDetail(item)            
+           } 
+           //----------------------------------
           var lineitem_Discount= lineItem_DiscountDetail && lineItem_DiscountDetail.discountAmount? lineItem_DiscountDetail.discountAmount:0;
           Total_IndividualProductDiscount +=lineitem_Discount;
            if(lineItem_DiscountDetail && lineItem_DiscountDetail.discountCart)
@@ -741,11 +880,12 @@ if(order_reciept.ShowCustomText)
                }):""
               var _lineitemTax =(taxInclusiveName !=='' || order_reciept.IndividualizedTaxAmountPerItem==true? item.total_tax?item.total_tax: item.totaltax?item.totaltax:0:0)            
               
-      var _activitylineItemTotal=(item.amount_refunded > 0 && item.quantity+item.quantity_refunded == 0) ?parseFloat(item.total - item.amount_refunded-lineitem_Discount) 
+      var _activitylineItemTotal=(item.amount_refunded > 0 && item.quantity+item.quantity_refunded == 0) ?parseFloat(item.total - item.amount_refunded) //-lineitem_Discount
                                           : 
-                                          (data.discount != 0 && item.total !== 0 && item.subtotal != item.total) ?  parseFloat(item.subtotal- (taxInclusiveName !=='' ?(isTotalRefund == true?item.total_tax:refundedTax) :0)-lineitem_Discount).toFixed(2) 
+                                          (data.discount != 0 && item.total !== 0 && item.subtotal != item.total) ?  parseFloat(item.subtotal+ (taxInclusiveName !=='' ?(isTotalRefund == true?refundedTax:item.total_tax) :0)-lineitem_Discount).toFixed(2) 
                                           : parseFloat(item.total+(taxInclusiveName !=='' ?_lineitemTax:0)- lineitem_Discount-item.amount_refunded-(taxInclusiveName !=='' ?refundedTax:0) )   
-              var lineitem_Total= type == 'activity' ?_activitylineItemTotal                                                             
+              var lineitem_Total= type == 'activity' ?_activitylineItemTotal  
+                                                                         
                                        // parseFloat(item.subtotal+ (taxInclusiveName !=='' ?item.total_tax :0)-lineitem_Discount).toFixed(2) : parseFloat(item.subtotal+ (taxInclusiveName !=='' ?item.total_tax :0)-lineitem_Discount)         
                                     :
                                     (item.product_id ?   parseFloat(parseFloat(item.subtotalPrice?item.subtotalPrice:0) - parseFloat(lineitem_Discount)+ (item.totaltax?parseFloat((_lineitemTax)):0) )//(taxInclusiveName !==''? (item.totaltax?item.totaltax:0):0) ))
@@ -755,6 +895,8 @@ if(order_reciept.ShowCustomText)
                                             
                                           //: item.Price ? parseFloat(RoundAmount(parseFloat(item.Price)+(taxInclusiveName ==''?item.totaltax:0))).toFixed(2) : ''
                                     )
+        lineitem_Total=  _itemData ?_itemData.newPrice :lineitem_Total ; 
+          lineitem_Total += (taxInclusiveName==''? item.total_tax:0)
         Order_subTotal += parseFloat(lineitem_Total);    
       
     //======For Android print===============================       
@@ -833,20 +975,21 @@ if(order_reciept.ShowCustomText)
           PrintAndroidData.push({"rn": rowNumber,"cms":2,"c1":txtitem.tax,"c2":parseFloat(txtitem.value).toFixed(2),"c3":"","bold":"0,0,0","fs":"24","alg":"0,2"}); 
         })
         //======End For Android print===============================
-
+        // ${lineitem_subTitle && lineitem_subTitle !==""?`<p>${ lineitem_subTitle} </p>`:``}
         lineItem += `<table class="item-table">
                 <tbody><tr>
                   <td>${lineitem_TotalQty? `<div class="item-quantity"> ${lineitem_TotalQty}</div>`:''} ${lineitem_Title}</td>
                   <td align="right">${lineitem_AcutalPrice.toFixed(2) }</td>
                 </tr>
                 ${item.psummary && typeof item.psummary!="undefined" && item.psummary!=""?`<tr><td style="text-transform: capitalize;font-size:10px;">${item.psummary}</td></tr>`:``}
-                ${item.ProductSummery && typeof item.ProductSummery!="undefined" && item.ProductSummery!=""?`<tr><td style="text-transform: capitalize;font-size:10px;">${item.ProductSummery.toString()}</td></tr>`:``}
+                ${item.ProductSummery && typeof item.ProductSummery!="undefined" && item.ProductSummery!=""?`<tr><td style="text-transform: capitalize;font-size:10px;">${item.ProductSummery.toString()}</td></tr>`
+                :lineitem_subTitle && lineitem_subTitle !==""?`<tr><td style="text-transform: capitalize;font-size:10px;">${lineitem_subTitle.toString()}</td></tr>`:''}
                 <tr>
                   <td>
                       <div class="item-addon-items">
                       ${lineitem_sku && order_reciept.ShowSKU==true ? `<p>${lineitem_sku && lineitem_sku} </p>`:``}
-                       ${order_reciept.ShowShortDescription==true && lineitem_shortDesc  && lineitem_shortDesc !==""?`<p> ${lineitem_shortDesc} </p>`:``}                        
-                       ${lineitem_subTitle && lineitem_subTitle !==""?`<p>${ lineitem_subTitle} </p>`:``}
+                      ${order_reciept.ShowShortDescription==true && lineitem_shortDesc  && lineitem_shortDesc !==""?`<p> ${lineitem_shortDesc} </p>`:``}                      
+                     
                        </div>
                   </td>
                   <td ></td>
@@ -1016,10 +1159,6 @@ if(order_reciept.ShowCustomText)
                   if(total_cashround==0 && cash_rounding_amount && cash_rounding_amount !== 0 && cash_rounding_amount !== '')
                   {total_cashround=cash_rounding_amount}
                  
-  if(isPaymentCash==false && ActiveUser.key.isSelfcheckout == true)
-  {
-    total_cashround=0;
-  }
 
   // console.log("Shop Name", data && data.ShopName);
   var topLogo = '';
@@ -1027,13 +1166,17 @@ if(order_reciept.ShowCustomText)
   var total_Tax=   data ? ((type=='activity' && data.total_tax) ? parseFloat(RoundAmount(data.total_tax- (data.tax_refunded?data.tax_refunded:0 ) )).toFixed(2) : parseFloat(RoundAmount(data.tax?data.tax:0)).toFixed(2)): '0.00'
   var totalProdDisc=Total_IndividualProductDiscount ? parseFloat(Total_IndividualProductDiscount).toFixed(2):0;
   var total_discount=  data ? (data.discount ? parseFloat(data.discount-totalProdDisc):parseFloat(data.discountCalculated) ? parseFloat(RoundAmount(data.discountCalculated)-totalProdDisc) : 0):0
+  
+  total_discount= _itemData?_cartDiscount :total_discount
+  
   var total_RedeemPoint= (data.redeemedAmountPoints && data.redeemedAmountPoints != 0 && data.redeemedAmountPoints != undefined) || (redeemPointsForActivity != 0 && redeemPointsForActivity != '')
                           ?  type == 'activity'?
                                     parseInt(redeemPointsForActivity).toFixed(2)
                                     : parseFloat(RoundAmount(data.redeemedPoints)).toFixed(2)
                           :0
 var total_amount = parseFloat( (type == 'activity')?data.total_amount :
-                    data && data.totalPrice ? parseFloat(RoundAmount(parseFloat(data.totalPrice) + parseFloat(total_cashround))).toFixed(2):'0.00'
+                    data && data.totalPrice ? parseFloat(RoundAmount(parseFloat(data.totalPrice))) //+ parseFloat(total_cashround))).toFixed(2)
+                              :'0.00'
                   )
                
  var total_cartDiscountPercentLable= order_reciept.PercentageDiscountOfEntireOrder==true ? "("+
@@ -1120,12 +1263,15 @@ var tipPercent= order_reciept.PercentageTipsOfEntireOrder==true ? "("+((_tipAmou
           let paytype = payment_TypeName.filter(itm => { return type == 'activity' ? itm.Code == item.type ? itm.Name : '' : item.payment_type && itm.Code == item.payment_type ? itm.Name :'' })
           let paymentName = type == 'activity' ? item.type !== "store-credit" ? paytype && paytype.length > 0 ? paytype[0].Name : item.type ?item.type :'' : 'store-credit' : item.payment_type && item.payment_type !== "store-credit" ? paytype && paytype.length > 0 ? paytype[0].Name : item.payment_type ? item.payment_type : '' : 'store-credit';
           let amount = type == 'activity' ? item.amount ? item.amount.toFixed(2) : '0.00' : item.payment_amount ? parseFloat(RoundAmount(item.payment_amount)).toFixed(2) : '0.00';
-            PrintAndroidData.push({"rn": rowNumber,"cms":2,"c1": paymentName + '(' + localDate + ')',"c2":amount.toString(),"c3":"","bold":"0,0,0","fs":"24","alg":"0,2"}); 
+          rowNumber +=1;  
+          PrintAndroidData.push({"rn": rowNumber,"cms":2,"c1": paymentName + '(' + localDate + ')',"c2":amount.toString(),"c3":"","bold":"0,0,0","fs":"24","alg":"0,2"}); 
             _emvData && _emvData.map((emv, index) => {
+              rowNumber +=1;
               PrintAndroidData.push(emv);
             });
         }
       })
+        rowNumber +=1;
         PrintAndroidData.push({"rn": rowNumber,"cms":0,"c1":"d_lne","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
       }
       //Refund payment
@@ -1140,11 +1286,15 @@ var tipPercent= order_reciept.PercentageTipsOfEntireOrder==true ? "("+((_tipAmou
           refundPay.push({"rn": rowNumber,"cms":2,"c1":paymentName + "(" + localDate + ')',"c2":item.amount.toFixed(2),"c3":"","bold":"0,0,0","fs":"24","alg":"0,2"});
         })
         if(refundPay && refundPay.length>0){
+          rowNumber +=1;
           PrintAndroidData.push({"rn": rowNumber,"cms":0,"c1":"d_lne","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
+          rowNumber +=1;
           PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":"Refund Payments","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"0"}); 
           refundPay && refundPay.map((emv, index) => {
+            rowNumber +=1;
             PrintAndroidData.push(emv);
           });
+          rowNumber +=1;
           PrintAndroidData.push({"rn": rowNumber,"cms":0,"c1":"d_lne","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
         }
       }
@@ -1238,11 +1388,11 @@ var tipPercent= order_reciept.PercentageTipsOfEntireOrder==true ? "("+((_tipAmou
         rowNumber +=1;
         PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":"*ORDER NOTES*","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
     }
-    if(order_reciept && order_reciept.ShowReturnPolicy && order_reciept.ShowReturnPolicy == true && order_reciept.ReturnPolicyText!=null)
+    if(order_reciept && order_reciept.ShowReturnPolicy && order_reciept.ShowReturnPolicy == true && order_reciept.ReturnpolicyText!="")
     {
-        receipt+=order_reciept.ReturnPolicyText+"\n";
+        receipt+=order_reciept.ReturnpolicyText+"\n";
         rowNumber +=1;
-        PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":order_reciept.ReturnPolicyText,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
+        PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":order_reciept.ReturnpolicyText,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
     }
     if(order_reciept && order_reciept.ShowBarcode == true  && print_bar_code!=null && print_bar_code!="")
     {
@@ -1260,12 +1410,16 @@ var tipPercent= order_reciept.PercentageTipsOfEntireOrder==true ? "("+((_tipAmou
     if(address && (address.address_1 != '' || address.address_2 != '' || address.zip != '' || address.city != '' || address.country_name != ''))
     {
      rowNumber +=1;
-     var _Add= (address && address.address_1 ? address.address_1 : '')+' '+ (address && address.address_2 ? address.address_2 : '');
+     var _Add= (address.address_1 ? address.address_1 : '')+' '+ (address.address_2 ? address.address_2 : '');
     //  PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":_Add,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
     //  rowNumber +=1;
-     var _Add1= (address && address.zip ? address.zip : '')+''+ (address && address.city ? ', '+address.city : '' )+''+(address && address.country_name ?', '+ address.country_name : '');
-     PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":_Add +' '+_Add1,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
+     var _Add1= (address.zip ? address.zip : '')+''+ (address.city ? ', '+address.city : '' )+''+(address.country_name ?', '+ address.country_name : '');
+     PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1": _Add + ' '+ _Add1,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"}); 
     }
+    rowNumber +=1;
+    PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1": "","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"});
+    rowNumber +=1;
+    PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1": "","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"});  
    
 //-----------------------------------------
 
@@ -1290,7 +1444,7 @@ var tipPercent= order_reciept.PercentageTipsOfEntireOrder==true ? "("+((_tipAmou
                 </td></tr>
                 ${address && (address.address_1 != '' || address.address_2 != '' || address.zip != '' || address.city != '' || address.country_name != '') ?
                   `<tr><td>      
-                              ${address && address.address_1 ? address.address_1 : ''} ${address && address.address_2 ? address.address_2 : ''} </br>
+                              ${address && address.address_1 ? address.address_1 : ''} ${address && address.address_2 ? address.address_2 : ''} 
                               ${address && address.zip ? address.zip : ''} ${address && address.city ? ', '+address.city : ''} ${address && address.country_name ?', '+ address.country_name : ''}
                               </td></tr>`
                   : ``}
@@ -1300,12 +1454,12 @@ var tipPercent= order_reciept.PercentageTipsOfEntireOrder==true ? "("+((_tipAmou
  </div>`
  
  var _externalApp=  displayExtensionAppData && displayExtensionAppData !==null ?
-  ` <div class="">
+  ` <div >
   <table class="additional-informations">
       <tr>
           <td>
           ${displayExtensionAppData && displayExtensionAppData !==null && displayExtensionAppData.url ?
-          `<img src=${ displayExtensionAppData.url}`
+          `<img src=${ displayExtensionAppData.url} style= 'padding:${pageSize.width=='80mm'?"2px" :(pageSize.width=='52mm' || pageSize.width=='58mm')? "2px" :"5px"};'   class='pagesize'>`
           : `App to add <br> information here.`}  </td>
           </tr>
       </table>
@@ -1340,6 +1494,7 @@ body, h1,h2,h3,h4,h5,h6 {
 }
 table.item-table {
     width: 100%;
+    padding-bottom:10px;
 }
 .item-details-total {
     margin-top: 30px;
@@ -1441,7 +1596,7 @@ table {
         <tbody>
             ${order_reciept.ShowDate == true?
             `<tr>       
-              <td colspan="2">${order_reciept.DateText ? order_reciept.DateText : labelDateDisplay}:${gmtDateTime ? gmtDateTime : ''}</td>
+              <td colspan="2">${order_reciept.DateText ? order_reciept.DateText : labelDateDisplay} : ${gmtDateTime ? gmtDateTime : ''}</td>
               </tr>`:""}
 
               ${order_reciept.ShowTime == true?
@@ -1504,9 +1659,23 @@ table {
            `         
   );
   htmlbody += ' </div></div></body ></html>'
-  // console.log("------Printreceipt---"+JSON.stringify(PrintAndroidData));
+  //console.log("------Printreceipt---"+JSON.stringify(PrintAndroidData));
 
  //CASH DRAWER OPENING AS PER THE SETTING
+
+   var isTizenWrapper = localStorage.getItem("isTizenWrapper");
+    if(isTizenWrapper && isTizenWrapper!=null && typeof isTizenWrapper!="undefined" && isTizenWrapper=="true")
+     {
+      if(Tizen && Tizen!=null && typeof Tizen!="undefined")
+      {
+        var whenToOpenDrawer=localStorage.getItem('selected_drawer');
+        if((isPaymentCash==true && (typeof whenToOpenDrawer!="undefined" && whenToOpenDrawer!="" && whenToOpenDrawer=="cash-only"))|| (typeof whenToOpenDrawer!="undefined" && whenToOpenDrawer!="" && whenToOpenDrawer=="every-sale"))
+        {
+          Tizen.openCashBox();
+        }
+      }
+     }
+
   if( type!="activity" && (typeof Android !== "undefined" && Android !== null) && (Android.getDatafromDevice("isWrapper")==true))
   {
     var whenToOpenDrawer=localStorage.getItem('selected_drawer');
@@ -1516,36 +1685,51 @@ table {
       //console.log("---------drawer opening-------");
     }
   }
+  rowNumber +=1;
+        PrintAndroidData.push({"rn": rowNumber,"cms":0,"c1":"d_lne","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"});
+        rowNumber +=1;
+        PrintAndroidData.push({"rn": rowNumber,"cms":0,"c1":"d_lne","c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"1"});
+
   PrintAndroidReceiptData["data"]=PrintAndroidData;
   var env = localStorage.getItem("env_type");
+  var isTizenWrapper = localStorage.getItem("isTizenWrapper");
   if(doPrint==true)
   {
-    if(  (env && env !='' && env !='ios')){ //typeof Android != "undefined" || Android != null ||
-      
-        showAndroidReceipt( receipt,PrintAndroidReceiptData) 
-    }else{
-        var mywindow = window.open('#', 'my div', "width='400', 'A2'");
-        mywindow && mywindow.document && mywindow.document.write(htmlbody);
-        // document.write(htmlbody);
+ if(isTizenWrapper && isTizenWrapper!=null && typeof isTizenWrapper!="undefined" && isTizenWrapper=="true")
+  {
+    PrintAndroidReceiptData["data"]=PrintAndroidData;
 
-      // console.log("htmlbody",htmlbody)
-
-        if (mywindow) {
-          setTimeout(() => {
-            mywindow.print();
-            mywindow.close();
-          }, 300);
-        }
+    if(Tizen && Tizen!=null && typeof Tizen!="undefined")
+    {
+      Tizen.generateReceipt(JSON.stringify(receipt),JSON.stringify(PrintAndroidReceiptData))
     }
-    return true;
   }
-  else
+  else if((env && env !='' && env !='ios')){ //typeof Android != "undefined" || Android != null ||
+       
+       showAndroidReceipt( receipt,PrintAndroidReceiptData) 
+  }
+  else{
+      var mywindow = window.open('#', 'my div', "width='400', 'A2'");
+      mywindow && mywindow.document && mywindow.document.write(htmlbody);
+      // document.write(htmlbody);
+
+     // console.log("htmlbody",htmlbody)
+
+      if (mywindow) {
+        setTimeout(() => {
+          mywindow.print();
+          mywindow.close();
+        }, 300);
+      }
+  }
+  return true;
+}
+else
   {
     // if doPrint variable value is false, then we are retruing PrintAndroidReceiptData object to ReceiptData extension app
     return PrintAndroidReceiptData;
   }
-
-
+ 
 }
 
 //TAx
