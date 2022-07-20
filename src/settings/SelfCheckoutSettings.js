@@ -419,12 +419,17 @@ export function initScreenSaver()
        
         var idleTimeout;
         function timeoutStart() {
-            if( document.querySelector(".idle-screen")){
-                 document.querySelector(".idle-screen").classList.remove("hide");
-                 setContinueBtnClick();
+            let screensaver = document.getElementById("screensaver");
+            if (screensaver!=null && typeof screensaver!="undefined" && screensaver.classList) {
+                if(screensaver.classList.contains("hide"))
+                {
+                    if( document.querySelector(".idle-screen")){
+                        document.querySelector(".idle-screen").classList.remove("hide");
+                        setContinueBtnClick();
+                   }
+                   idleTimeout = setTimeout(decrementCountdown, 1000);
+                }
             }
-           
-            idleTimeout = setTimeout(decrementCountdown, 1000);
         }
         function decrementCountdown() {
             var countdown = document.getElementById("timeoutNumber");
@@ -513,7 +518,7 @@ export function initScreenSaver()
                 clearTimeout(timer);
                 document.querySelector(".idle-screen").classList.add("hide");
                 countdown.innerHTML = "30";
-                timer = setTimeout(timeoutStart, 30000);
+                timer = setTimeout(timeoutStart, _timer);
             });
          }
        
