@@ -2610,6 +2610,8 @@ export const doCustomFee = (RequestData) => {
         });
         clientJSON["data"] = deleted_fees;
       }
+      else
+      { error="No custom fee to delete"}
       if(error !==""){
         clientJSON['status']=204;       
         clientJSON['data']="";
