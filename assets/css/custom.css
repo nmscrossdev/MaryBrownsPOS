@@ -598,3 +598,96 @@ span{font-weight: normal !important;}
 	opacity: 0.5;
 }
 
+/* Modifiers */
+.popup.mod-ingredients>div >.row> p,
+.popup.mod-ingredients>div > p,
+.popup.mod-ingredients > p {
+	font-family: Poppins;
+	font-size: 1.67vw;
+	font-weight: 400;
+	line-height: 2.22vw;
+	color: #050505;
+	margin-bottom: 3.98vw;
+}
+.popup.mod-ingredients >div> p.label,
+.popup.mod-ingredients > p.label {
+	font-family: Poppins;
+	font-size: 1.85vw;
+	font-weight: 500;
+	line-height: 2.41vw;
+	color: #050505;
+	margin-bottom: 0.74vw;
+}
+
+.popup.mod-ingredients >div> .row {
+	display: flex;
+	margin-bottom: 3.52vw;
+}
+.popup.mod-ingredients >div> .row > label > input[type="checkbox"],
+.popup.mod-ingredients >div> .row > label > input[type="radio"] {
+	opacity: 0;
+	position: fixed;
+	left: -10000px;
+}
+
+.popup.mod-ingredients >div> .row > label > .custom-radio {
+	width: 8.33vw;
+	height: 5vw;
+	box-sizing: border-box;
+	border: 0.092vw solid var(--primary);
+	border-radius: 0.37vw;
+	background-color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 0.93vw;
+	font-family: Poppins;
+	font-size: 1.67vw;
+	font-weight: 400;
+	line-height: 2.5vw;
+	text-align: center;
+	color: var(--primary);
+}
+.popup.mod-ingredients >div> .row > label > input[type="checkbox"]:checked ~ .custom-radio,
+.popup.mod-ingredients >div> .row > label > input[type="radio"]:checked ~ .custom-radio {
+	background-color: var(--primary);
+	color: #fff;
+}
+
+.popup.mod-ingredients >div> .row > label > .custom-radio:hover {
+	cursor: pointer;
+}
+.popup.mod-ingredients > button {
+	position: initial;
+	left: calc(50% - 14.45vw);
+	bottom: 4.17vw;
+	width: 28.89vw;
+	height: 4.91vw;
+	border: 0;
+	border-radius: 0.74vw;
+	background-color: var(--secondary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: Poppins;
+	font-size: 1.85vw;
+	font-weight: 600;
+	line-height: 2.22vw;
+	color: #fff;
+}
+.labelTitle
+{
+    font-size: 2.5vw !important;
+}
+
+element.style {
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.modiferAmount
+{
+	border: 0;
+	background-color: transparent;
+	margin-left: 10px;
+}

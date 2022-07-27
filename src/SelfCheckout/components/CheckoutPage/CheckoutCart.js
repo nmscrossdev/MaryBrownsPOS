@@ -711,7 +711,7 @@ handleNote() {
         if(checkList1 && checkList1.ListItem && checkList1.ListItem.length>0)
         {
             length = checkList1.ListItem.filter(function(item){
-                return item.Price && item.Price!="";
+                return item.Price && item.Price!="" && typeof item.product_id!="undefined";
             }).length;
         }
     var isShowNotes=showNotes(_key.DISPLAY_CART_PAGE);

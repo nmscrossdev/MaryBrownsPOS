@@ -904,6 +904,10 @@ class CheckoutView extends React.Component {
             if (parseFloat(RoundAmount(amountToBePaid + cash_round)) == parseFloat(RoundAmount(paidAmount))) {
                 this.createOrder("completed");
             }
+            else
+            {
+                this.orderPayments.close_loader();
+            }
         }
 
     }
@@ -1312,7 +1316,30 @@ class CheckoutView extends React.Component {
 
                 }
                 if (items.product_id == null) {
+                    // fix issue for other tax class other then standerd -------  
+                    var _subtotaltax=0.00;
+                      if(  items.subtotal_tax ){ //&& items.subtotal_tax[0] && items.subtotal_tax[0][_tax_id] ==undefined
+                           items.subtotal_tax.map(itm=>{
+                               for(var k in itm){
+                                  _subtotaltax +=itm[k];
+                                }                             
+                           }) 
+                      }
+                      //-----------------------------------------------------------------
+                      _subtotal_tax=_subtotaltax
+                      _total_tax=_subtotaltax
+
+                    var _cfee_total= items.total || items.total == 0 ? items.total : items.totalPrice;
+                    var _cfee_sub_total=items.subtotal ? items.subtotal : items.subtotalPrice;
                     if ((typeof items.Price !== 'undefined') && items.Price !== null) {
+                        if(_cfee_total==0 && items.subtotal_tax.length==0)
+                        {
+                            _cfee_total=items.Price;
+                        }
+                        if(!_cfee_sub_total || typeof _cfee_sub_total=="undefined")
+                        {
+                            _cfee_sub_total=items.Price;
+                        }
                         order_custom_fee.push({
                             amount: items.Price,
                             note: items.Title,
@@ -1322,8 +1349,8 @@ class CheckoutView extends React.Component {
                             TaxStatus: items.TaxStatus,
                             Title: items.Title,
                             Sku: items.Sku,
-                            after_discount: items.after_discount,
-                            cart_after_discount: items.cart_after_discount,
+                            after_discount: items.after_discount ? items.after_discount:0,
+                            cart_after_discount:  items.cart_after_discount,
                             cart_discount_amount: items.cart_discount_amount,
                             discount_amount: items.discount_amount,
                             discount_type: items.discount_type,
@@ -1335,6 +1362,12 @@ class CheckoutView extends React.Component {
                             product_after_discount: items.product_after_discount,
                             product_discount_amount: items.product_discount_amount,
                             quantity: items.quantity,
+                            subtotal: _cfee_sub_total,
+                            subtotal_tax: _subtotal_tax,
+                            subtotal_taxes: items.subtotal_tax ? items.subtotal_tax : items.subtotaltax,
+                            total: _cfee_total,
+                            total_tax: _total_tax,
+                            total_taxes: items.total_tax ? items.total_tax : items.totaltax,
                         })
                     } else {
                         order_notes.push({

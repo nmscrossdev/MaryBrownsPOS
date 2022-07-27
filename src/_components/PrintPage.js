@@ -454,7 +454,7 @@ if(data.orderCustomerInfo)
   }
   else
   {
-    oprationalDate= isSafari?data._currentTime.replace(/-/g, "/"):data._currentTime;
+    oprationalDate= isSafari && data._currentTime!=null && typeof data._currentTime!="undefined" ?data._currentTime.replace(/-/g, "/"):data._currentTime;
   }
 
   if(order_reciept.ShowDate == true)
@@ -883,7 +883,7 @@ function getCompositItemDetail(item){
       var _activitylineItemTotal=(item.amount_refunded > 0 && item.quantity+item.quantity_refunded == 0) ?parseFloat(item.total - item.amount_refunded) //-lineitem_Discount
                                           : 
                                           (data.discount != 0 && item.total !== 0 && item.subtotal != item.total) ?  parseFloat(item.subtotal+ (taxInclusiveName !=='' ?(isTotalRefund == true?refundedTax:item.total_tax) :0)-lineitem_Discount).toFixed(2) 
-                                          : parseFloat(item.total+(taxInclusiveName !=='' ?_lineitemTax:0)- lineitem_Discount-item.amount_refunded-(taxInclusiveName !=='' ?refundedTax:0) )   
+                                          : parseFloat(item.total+(item.total_tax?parseFloat(_lineitemTax):0)- lineitem_Discount-item.amount_refunded-(taxInclusiveName !=='' ?refundedTax:0) )    
               var lineitem_Total= type == 'activity' ?_activitylineItemTotal  
                                                                          
                                        // parseFloat(item.subtotal+ (taxInclusiveName !=='' ?item.total_tax :0)-lineitem_Discount).toFixed(2) : parseFloat(item.subtotal+ (taxInclusiveName !=='' ?item.total_tax :0)-lineitem_Discount)         
@@ -895,8 +895,8 @@ function getCompositItemDetail(item){
                                             
                                           //: item.Price ? parseFloat(RoundAmount(parseFloat(item.Price)+(taxInclusiveName ==''?item.totaltax:0))).toFixed(2) : ''
                                     )
-        lineitem_Total=  _itemData ?_itemData.newPrice :lineitem_Total ; 
-          lineitem_Total += (taxInclusiveName==''? item.total_tax:0)
+        lineitem_Total=  _itemData ?_itemData.newPrice +(taxInclusiveName==''? item.total_tax:0) :lineitem_Total ; 
+          // lineitem_Total += (taxInclusiveName==''? item.total_tax:0)
         Order_subTotal += parseFloat(lineitem_Total);    
       
     //======For Android print===============================       
@@ -927,7 +927,7 @@ function getCompositItemDetail(item){
           rowNumber +=1;
           PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1": skuName_android,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"0"}); 
         }
-        if(order_reciept.ShowShortDescription==true ){
+        if(order_reciept.ShowShortDescription==true && typeof lineitem_shortDesc!="undefined" && lineitem_shortDesc!="" ){
           receipt+="Description: "+lineitem_shortDesc+"\n";
           rowNumber +=1;
           PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":"Description: "+ lineitem_shortDesc,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"0"}); 
