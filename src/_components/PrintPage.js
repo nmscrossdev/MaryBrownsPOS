@@ -454,7 +454,7 @@ if(data.orderCustomerInfo)
   }
   else
   {
-    oprationalDate= isSafari?data._currentTime.replace(/-/g, "/"):data._currentTime;
+    oprationalDate= isSafari && data._currentTime!=null && typeof data._currentTime!="undefined" ?data._currentTime.replace(/-/g, "/"):data._currentTime;
   }
 
   if(order_reciept.ShowDate == true)
@@ -927,7 +927,7 @@ function getCompositItemDetail(item){
           rowNumber +=1;
           PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1": skuName_android,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"0"}); 
         }
-        if(order_reciept.ShowShortDescription==true ){
+        if(order_reciept.ShowShortDescription==true && typeof lineitem_shortDesc!="undefined" && lineitem_shortDesc!="" ){
           receipt+="Description: "+lineitem_shortDesc+"\n";
           rowNumber +=1;
           PrintAndroidData.push({"rn": rowNumber,"cms":1,"c1":"Description: "+ lineitem_shortDesc,"c2":"","c3":"","bold":"0,0,0","fs":"24","alg":"0"}); 

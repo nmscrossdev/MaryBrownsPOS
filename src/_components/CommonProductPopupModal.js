@@ -22,6 +22,9 @@ import { getProductSummery } from '../WrapperSettings/CommonWork';
 import { allProductActions } from '../_actions';
 import Navbar from '../SelfCheckout/components/Navbar';
 import {_key,markup,showNotes,isDisplay} from '../settings/SelfCheckoutSettings';
+import Config from '../Config';
+import { FormateDateAndTime } from '../settings/FormateDateAndTime';
+
 Permissions.updatePermissions();
 class CommonProductPopupModal extends React.Component {
     constructor(props) {
@@ -56,7 +59,12 @@ class CommonProductPopupModal extends React.Component {
             isAttributeDelete: false,
             //compositeProductActive:false
             isRefereshIconInventory: false,    // Syn icon inventory state
-            productNotes:""
+            productNotes:"",
+            Modifiers:[],
+            ProductModifiers:[],
+            SelectedModifiers:[],
+            SaveSelectedModifiers:[],
+            CustomFee_Modifiers:[]
         }
         this.clicks = [];
         this.timeout;
@@ -71,6 +79,9 @@ class CommonProductPopupModal extends React.Component {
         this.optionClick = this.optionClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.setSelectedOption = this.setSelectedOption.bind(this);
+        this.onChangeValue = this.onChangeValue.bind(this);
+        // this.qunatityChange = this.qunatityChange.bind(this);
+        
     }
 
     componentWillUnmount() {
@@ -294,7 +305,7 @@ class CommonProductPopupModal extends React.Component {
             }
             var cartItemList = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : []
             qty = qty + this.state.variationDefaultQunatity;
-            var txtPrdQuantity = document.getElementById("qualityUpdater").value;
+            var txtPrdQuantity = document.getElementById("quantityUpdater").value;
             if (parseInt(txtPrdQuantity) <= 0) {
                 /* Created By:priyanka,Created Date:14/6/2019,Description:quantity msg poppup */
                 this.props.msg(LocalizedLanguage.productQty)
@@ -336,6 +347,10 @@ class CommonProductPopupModal extends React.Component {
                 //--------------------------------------------------------------------------------------------
                 localStorage.removeItem("PRODUCT");
                 localStorage.removeItem("SINGLE_PRODUCT")
+                if(this.state.CustomFee_Modifiers && this.state.CustomFee_Modifiers.length>0)
+                {
+                    cartItemList= cartItemList.concat(this.state.CustomFee_Modifiers);
+                }
                 this.props.dispatch(cartProductActions.addtoCartProduct(cartItemList));
                 this.props.dispatch(cartProductActions.showSelectedProduct(null));
                 this.props.dispatch(cartProductActions.singleProductDiscount());
@@ -484,7 +499,7 @@ class CommonProductPopupModal extends React.Component {
                 qty = item.quantity;
             }
         })
-        var qytt = document.getElementById("qualityUpdater") ? document.getElementById("qualityUpdater").value : this.props.variationDefaultQunatity;
+        var qytt = document.getElementById("quantityUpdater") ? document.getElementById("quantityUpdater").value : this.props.variationDefaultQunatity;
         var txtPrdQuantity = (productx_qty > 0) ? productx_qty : qytt
         if (parseInt(txtPrdQuantity) <= 0) {
             /* Created By:priyanka,Created Date:14/6/2019,Description:quantity msg poppup */
@@ -525,6 +540,10 @@ class CommonProductPopupModal extends React.Component {
             if(this.state.productNotes && this.state.productNotes !=="" ){
                 cartlist.push({ "Title": this.state.productNotes })
                 this.state.productNotes="";
+            }
+            if(this.state.CustomFee_Modifiers && this.state.CustomFee_Modifiers.length>0)
+            {
+                cartlist= cartlist.concat(this.state.CustomFee_Modifiers);
             }
             this.stockUpdateQuantity(cartlist, data);
             localStorage.removeItem("PRODUCT");
@@ -1218,7 +1237,11 @@ class CommonProductPopupModal extends React.Component {
             }
         }
     }
-
+    closeModifier()
+    {
+        hideOverlay();
+        hideModal('modifiers');
+    }
     handleClose() {
         this.state.isRefereshIconInventory = false;
         $(".attribute-options-css").prop("checked", false);
@@ -1422,6 +1445,367 @@ class CommonProductPopupModal extends React.Component {
         hideOverlay();
         hideModal('no-variation');
     }
+    // Modifers --start
+
+    isActive(modifierSchedulings)
+        {
+        var schedul = modifierSchedulings;
+        var isActive = false;
+        if (schedul != null)
+        {
+            if (!schedul.AllowScheduling)
+                isActive = true;
+            else
+            {
+                //var today = SystemTime != null ? SystemTime : DateTime.Today.ToLocalTime();
+                var today = new Date();
+                if (schedul.SelectDateRange)
+                {
+                    if (today.Date >= schedul.FromDate.Date && today.Date <= schedul.ToDate.Date)
+                        isActive = this.checkActiveTime(today, schedul);
+                    else
+                        isActive = false;
+                }
+                else
+                    isActive = this.checkActiveTime(today, schedul);
+            }
+        }
+        return isActive;
+            
+        }
+    checkActiveTime( today,  schedul)
+    {
+        //var todayTime = today.TimeOfDay;
+        var todayTime = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+        var _to=0;
+        var _from=0;
+        switch (today.getDay())
+        {
+            case 1:
+                if(schedul.MondayActive && schedul.MondayActive==true)
+                {
+                    _to=FormateDateAndTime.timeCompare(todayTime,schedul.MondayFrom);
+                    _from=FormateDateAndTime.timeCompare(schedul.MondayTo,todayTime);
+                    if((_to==1 || _to==0) && (_from==1 || _from==0)){return true;}
+                    else{return false;}
+                }
+                // if (schedul.MondayActive && todayTime >= schedul.MondayFrom && todayTime <= schedul.MondayTo)
+                //     return true;
+                break;
+            case 2:
+                if(schedul.TuesdayActive && schedul.TuesdayActive==true)
+                {
+                    _to=FormateDateAndTime.timeCompare(todayTime,schedul.TuesdayFrom);
+                    _from=FormateDateAndTime.timeCompare(schedul.TuesdayTo,todayTime);
+                    if((_to==1 || _to==0) && (_from==1 || _from==0)){return true;}
+                    else{return false;}
+                }
+                // if (schedul.TuesdayActive && todayTime >= schedul.TuesdayFrom && todayTime <= schedul.TuesdayTo)
+                //     return true;
+                break;
+            case 3:
+                if(schedul.WednesdayActive && schedul.WednesdayActive==true)
+                {
+                    _to=FormateDateAndTime.timeCompare(todayTime,schedul.WednesdayFrom);
+                    _from=FormateDateAndTime.timeCompare(schedul.WednesdayTo,todayTime);
+                    if((_to==1 || _to==0) && (_from==1 || _from==0)){return true;}
+                    else{return false;}
+                }
+                // if (schedul.WednesdayActive && todayTime >= schedul.WednesdayFrom && todayTime <= schedul.WednesdayTo)
+                //     return true;
+                break;
+            case 4:
+                if(schedul.ThursdayActive && schedul.ThursdayActive==true)
+                {
+                    _to=FormateDateAndTime.timeCompare(todayTime,schedul.ThursdayFrom);
+                    _from=FormateDateAndTime.timeCompare(schedul.ThursdayTo,todayTime);
+                    if((_to==1 || _to==0) && (_from==1 || _from==0)){return true;}
+                    else{return false;}
+                }
+                // if (schedul.ThursdayActive && todayTime >= schedul.ThursdayFrom && todayTime <= schedul.ThursdayTo)
+                //     return true;
+                break;
+            case 5:
+                if(schedul.FridayActive && schedul.FridayActive==true)
+                {
+                    _to=FormateDateAndTime.timeCompare(todayTime,schedul.FridayFrom);
+                    _from=FormateDateAndTime.timeCompare(schedul.FridayTo,todayTime);
+                    if((_to==1 || _to==0) && (_from==1 || _from==0)){return true;}
+                    else{return false;}
+                }
+                // if (schedul.FridayActive && todayTime >= schedul.FridayFrom && todayTime <= schedul.FridayTo)
+                //     return true;
+                break;
+            case 6:
+                if(schedul.SaturdayActive && schedul.SaturdayActive==true)
+                {
+                    _to=FormateDateAndTime.timeCompare(todayTime,schedul.SaturdayFrom);
+                    _from=FormateDateAndTime.timeCompare(schedul.FridayTo,SaturdayTo);
+                    if((_to==1 || _to==0) && (_from==1 || _from==0)){return true;}
+                    else{return false;}
+                }
+                // if (schedul.SaturdayActive && todayTime >= schedul.SaturdayFrom && todayTime <= schedul.SaturdayTo)
+                //     return true;
+                break;
+            case 0:
+                if(schedul.SundayActive && schedul.SundayActive==true)
+                {
+                    _to=FormateDateAndTime.timeCompare(todayTime,schedul.SundayFrom);
+                    _from=FormateDateAndTime.timeCompare(schedul.FridayTo,SundayTo);
+                    if((_to==1 || _to==0) && (_from==1 || _from==0)){return true;}
+                    else{return false;}
+                }
+                // if (schedul.SundayActive && todayTime >= schedul.SundayFrom && todayTime <= schedul.SundayTo)
+                //     return true;
+                break;
+            default:
+                return false;
+                break;
+        }
+        return false;
+    }
+    getModifiers()
+    {
+        // showOverlay();
+        // showModal("modifiers");
+        //console.log("---ModifierList--"+JSON.stringify(  this.props.getVariationProductData) )
+        var product =this.props.getVariationProductData;
+        var idbKeyval = FetchIndexDB.fetchIndexDb();
+        idbKeyval.get('ModifierList').then(val => {
+            if (!val || val.length == 0 || val == null || val == "") {
+                this.setState({ Modifiers: [] });
+            }
+            else {
+                // console.log("---ModifierList--"+JSON.stringify(val) )
+                this.setState({ Modifiers: val });
+                var d= val.filter(match => match.Visible==true && match.modifierAssingnees.find(m => 
+                    
+                    (m.AssigneeId ==product.WPID && m.AssigneeType==Config.key_AssigneeType.Product) ||
+                    (product.CategorieList && product.CategorieList.find(x=>x.toLowerCase() ==m.AssigneeName.toLowerCase())  && m.AssigneeType==Config.key_AssigneeType.Category) ||
+                    (product.ProductAttributes && product.ProductAttributes.find(x=>x.Name.toLowerCase() ==m.AssigneeName.toLowerCase()) && m.AssigneeType==Config.key_AssigneeType.Attribute) ||
+                    (product.CategorieList && product.CategorieList.find(x=>x.toLowerCase()==m.AssigneeName.toLowerCase()) && m.AssigneeType==Config.key_AssigneeType.SubCategory) ||
+                    (product.ProductAttributes && product.ProductAttributes.find(x=>x.Name.toLowerCase() ==m.AssigneeName.toLowerCase()) && m.AssigneeType==Config.key_AssigneeType.SubAttribute)
+                    
+                    ))
+                    .map((match) =>
+                        // console.log("---ModifierList match--"+JSON.stringify(match) )
+                        {return match}
+                    )
+
+                var all_modifiers=[];
+                var modifiers=[];
+                if(d && d.length>0)
+                {
+                  d.map(m=>{
+                   let result= (m.modifierSchedulings && m.modifierSchedulings.length>0) ? this.isActive(m.modifierSchedulings[0]):true;  
+                   if(result && result==true)
+                   { 
+                     all_modifiers.push(m);
+                     modifiers.push({modifier_id:m.Title.replace(/ /g,"_"),title:m.Title,type:m.Type,is_active:false,TaxOption:m.TaxOption,data:[]})
+                   } 
+                });
+                }    
+                if(this.state.SelectedModifiers && this.state.SelectedModifiers.length>0)
+                {
+                    this.setState({ ProductModifiers: all_modifiers });
+                }
+                else
+                this.setState({ ProductModifiers: all_modifiers,SelectedModifiers:modifiers });
+                
+                // console.log("---ModifierList d--"+JSON.stringify(d) )
+                // console.log("---ModifierList modifiers--"+JSON.stringify(modifiers) )
+            }
+            showOverlay();
+            showModal("modifiers");
+        });
+    }
+    // editModifiersSelections()
+    // {
+    //     this.state.SelectedModifiers && this.state.SelectedModifiers.map(mod =>{
+    //         switch (mod.type) {
+    //             case Config.key_InputTypes.CheckBox:
+    //                 return(
+    //                     mod.data && mod.data.map(mf=>{
+    //                         if(document.getElementById(mf.id)) { document.getElementById(mf.id).checked=true};
+    //                     })
+    //                 )
+    //                 break;
+    //             case Config.key_InputTypes.NumberField:
+    //                 return(
+    //                     mod.data && mod.data.map(mf=>{
+    //                         if(document.getElementById(mf.id+"-quantityUpdater")) { document.getElementById(mf.id).value=mf.qty};
+    //                         if(document.getElementById(mf.id+"-amount")) { document.getElementById(mf.id).value=mf.amount};
+    //                     })
+    //                 )
+    //                 break;
+    //             case Config.key_InputTypes.RadioButton:
+    //                 return(
+    //                     mod.data && mod.data.map(mf=>{
+    //                         if(document.getElementById(mf.id)) { document.getElementById(mf.id).checked=true};
+    //                     })
+    //                 )
+    //                 break;
+    //             case Config.key_InputTypes.TextField:
+    //                 return(
+    //                     mod.data && mod.data.map(mf=>{
+    //                         if(document.getElementById(mf.id+"-txt")) { document.getElementById(mf.id).value=mf.sub_title};
+    //                         if(document.getElementById(mf.id+"-amount")) { document.getElementById(mf.id).value=mf.amount};
+    //                     })
+    //                 )
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     })
+    // }
+    qunatityChange=(event)=>
+    {
+        if(event.currentTarget.getAttribute("data-parent-id"))
+        {
+            var id=event.currentTarget.getAttribute("data-parent-id");
+            var gpid=event.currentTarget.getAttribute("data-gpid");
+            var btnType=event.currentTarget.getAttribute("data-btn-type")
+            var inputField=document.getElementById(id+"-quantityUpdater")
+            if(btnType=="plus")
+            {
+                if(inputField.getAttribute("data-max-number") && parseInt(inputField.value)<parseInt(inputField.getAttribute("data-max-number")))
+                {
+                    inputField.value = parseInt(inputField.value) +1
+                }
+            }
+            else
+            {
+                if(parseInt(inputField.value)>1)
+                {
+                    inputField.value = parseInt(inputField.value) -1
+                }
+            }
+            
+            var amount=inputField.getAttribute("data-amount") && inputField.getAttribute("data-amount") * inputField.value;
+            var amount_type=inputField.getAttribute("data-amount-type") && inputField.getAttribute("data-amount-type");
+            document.getElementById(id+"-amount").value=amount_type +" "+parseFloat(amount).toFixed(2) ;
+            var data={id:id,sub_title:event.target.getAttribute("name"),qty:inputField.value,amount:amount};
+            var update_data = this.state.SelectedModifiers.map( md => {
+                if ( md.modifier_id === gpid ) {
+                    md.is_active=true;
+                    const index = md.data.findIndex(object => object.id === data.id);
+                            if (index === -1) {md.data.push(data);}
+                            else{md.data[index]=data;}
+                            return md;
+                }
+                return md;
+                });
+            this.setState({SelectedModifiers:update_data});
+            // console.log("----selected modifier----"+JSON.stringify(update_data));
+        }
+    }
+   
+    onChangeValue(event)
+     {
+        if(event.target.getAttribute("id").includes("quantityUpdater"))
+        {
+            if(event.target.value=="")
+                event.target.value=1;
+            var amount=event.target.getAttribute("data-amount") && event.target.getAttribute("data-amount") * event.target.value;
+            var amount_type=event.target.getAttribute("data-amount-type") && event.target.getAttribute("data-amount-type");
+            var newid=event.target.getAttribute("id").replace("quantityUpdater","amount");
+            document.getElementById(newid).value=amount_type +" "+parseFloat(amount).toFixed(2) ;
+        }
+        if(event.target.type)
+        {
+            // console.log("--modifier type---"+event.target.type)
+            // console.log("--modifier parent id---"+event.target.getAttribute("data-gpid"));
+            var gpid=event.target.getAttribute("data-gpid") ? event.target.getAttribute("data-gpid"):"";
+            var data={};
+            var action="add_update";
+            switch (event.target.type) {
+                case "number":
+                    data={id:event.target.getAttribute("id").replace("-quantityUpdater",""),sub_title:event.target.getAttribute("name"),qty:event.target.value,amount:event.target.getAttribute("data-amount")};
+                    break;
+                case "radio":
+                    action="update";
+                    data={id:event.target.getAttribute("id"),sub_title:event.target.value,qty:1,amount:event.target.getAttribute("data-amount")};
+                    break;
+                case "checkbox":
+                    if(event.target.checked==false){action="remove";}
+                    data={id:event.target.getAttribute("id"),sub_title:event.target.value,qty:1,amount:event.target.getAttribute("data-amount")};
+                    break;
+                case "text":
+                    if(event.target.value=="")
+                        return
+                    data={id:event.target.getAttribute("id"),sub_title:event.target.value,qty:1,amount:event.target.getAttribute("data-amount")};
+                    break;
+                default:
+                    break;
+            }
+            if(action=="add_update")
+            {
+                var update_data =  this.state.SelectedModifiers.map(obj => {
+                    if (obj.modifier_id === gpid) {
+                        obj.is_active=true;
+                        const index = obj.data.findIndex(object => object.id === data.id);
+                        if (index === -1) {obj.data.push(data);}
+                        else{obj.data[index]=data;}
+                        return obj;
+                        }
+                    return obj;
+                    });
+                this.setState({SelectedModifiers:update_data});
+            }
+            else if(action=="remove")
+            {
+                var update_data = this.state.SelectedModifiers.map( md => {
+                    if ( md.modifier_id === gpid ) {
+                        md.is_active=true;
+                        md.data = md.data.filter( d => d.id !== data.id );
+                    }
+                    return md;
+                    });
+                this.setState({SelectedModifiers:update_data});
+            }
+            else if(action=="update")
+            {
+                var update_data = this.state.SelectedModifiers.map( md => {
+                    if ( md.modifier_id === gpid ) {
+                        md.is_active=true;
+                        md.data = [data];
+                    }
+                    return md;
+                    });
+                this.setState({SelectedModifiers:update_data});
+            }
+        }
+      }
+    submitChanges()
+    {
+        this.setState({SaveSelectedModifiers:this.state.SelectedModifiers});
+        console.log("----selected modifier----"+JSON.stringify(this.state.SelectedModifiers));
+        setTimeout(() => {
+            this.addModifierAsCustomFee();
+            this.closeModifier();
+        }, 300);
+    }
+    addModifierAsCustomFee()
+    {
+    var _data=[];
+    this.state.SaveSelectedModifiers && this.state.SaveSelectedModifiers.map(m=>{
+        if(m.is_active==true)
+        {
+            var _summary="";
+            var _sum=0
+            m.data.map(n=>{
+            _summary+= (_summary==""?"":", ")+ (n.sub_title!=null?n.sub_title:"");
+            _sum+=parseFloat(n.amount);
+            })
+            if(m.data.length>0)
+        _data.push({Title:m.title + (_summary!=null & _summary!=""? "("+_summary+")":""),Price:_sum,old_price:_sum,isTaxable:m.TaxOption,TaxStatus:(m.TaxOption==true?"taxable":"none"),TaxClass: '', quantity:1});
+        }
+    })
+    if(_data && _data.length>0)
+        this.setState({CustomFee_Modifiers:_data});
+    console.log("----modifier as custom fee----"+JSON.stringify(_data));
+    }
+    //   end
     render() {
         
         const { getVariationProductData, hasVariationProductData, single_product, showSelectedProduct, isInventoryUpdate } = this.props;
@@ -1552,6 +1936,7 @@ class CommonProductPopupModal extends React.Component {
                             </div> </div>
                      </React.Fragment>
                         :
+                        <React.Fragment>
                         <div className="product-container" style={{height:"93.5%"}}>
 
                             <div id="productCloseButton" className="product-close">
@@ -1592,7 +1977,7 @@ class CommonProductPopupModal extends React.Component {
                                                     <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
                                                     <p className="subtext">({typeOfTax() == 'incl' ? LocalizedLanguage.inclTax : "excl "+LocalizedLanguage.exclTax})</p>
                                                 </div>
-                                                {/* <button type="button">Modify Ingredients</button> */}
+                                                <button type="button" onClick={()=>this.getModifiers()}>Modify Ingredients</button>
                                             </div>
                                             <div className="increment-input">
                                                 <div onClick={this.decrementDefaultQuantity} className="decrement">
@@ -1600,7 +1985,7 @@ class CommonProductPopupModal extends React.Component {
                                                         <rect width={16} height={2} fill="#758696" />
                                                     </svg>
                                                 </div>
-                                                <input id="qualityUpdater" type="number"  name="qualityUpdater" 
+                                                <input id="quantityUpdater" type="number"  name="quantityUpdater" 
                                                         value={hasVariationProductData ? this.state.variationStockQunatity == 'outofstock' ? 0 : this.state.variationStockQunatity == 0 ? 
                                                         (showSelectStatus == true && showSelectedProduct) ? this.state.variationDefaultQunatity : 0 : this.state.variationDefaultQunatity 
                                                         : ''} onChange={this.handleChange.bind(this)} />
@@ -1684,9 +2069,129 @@ class CommonProductPopupModal extends React.Component {
                             }, 10)}
                             </div>
                         </div>
-                        
+
+                        <div id="modifiers" className="popup mod-ingredients hide">
+                        <svg onClick={()=>this.closeModifier()} className="popup-close" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M20.3714 23L11.5 14.1286L2.62857 23L0 20.3714L8.87143 11.5L0 2.62857L2.62857 0L11.5 8.87143L20.3714 0L23 2.62857L14.1286 11.5L23 20.3714L20.3714 23Z"
+                                fill="#050505"
+                            />
+                        </svg>
+                        <div className="popup-header m-b-27">
+                            <div className="col">
+                                <p>Modify</p>
+                                <div className="divider large"></div>
+                            </div>
+                        </div>
+                        <p>Select from the below options for item:</p>
+                        {
+                            <div onChange={this.onChangeValue}>{
+                            this.state.ProductModifiers && this.state.ProductModifiers.map(mod =>{
+                                var gpid=(mod.Title).replace(/ /g,"_");
+                                var gpname=(mod.Title).replace(/ /g,"_");
+                                switch (mod.Type) {
+                                    case Config.key_InputTypes.CheckBox:
+                                        return(
+                                            <React.Fragment>
+                                            <p className="labelTitle">{mod.Title}</p>
+                                            <div className="row">{
+                                            mod.modifierFields && mod.modifierFields.map(mf=>{
+                                              return(mf.ExtendFormData && mf.ExtendFormData.map(efm =>{
+                                                var id=(efm.Name).replace(/ /g,"_");
+                                                    return (
+                                                    <label htmlFor={id}>
+                                                            <input type="checkbox" id={id} name={efm.Name}  value={id} data-checked-value={efm.Default} data-gparent-name={gpname} data-gpid={gpid} data-amount={efm.Amount} />
+                                                            <div className="custom-radio">
+                                                                <p>{efm.Name}</p>
+                                                            </div>
+                                                    </label>)
+                                                }))
+                                            })
+                                            }</div></React.Fragment>
+                                        )
+                                        break;
+                                    case Config.key_InputTypes.NumberField:
+                                        return(
+                                            <React.Fragment>
+                                            <p className="labelTitle">{mod.Title}</p>
+                                            {
+                                            mod.modifierFields && mod.modifierFields.map(mf=>{
+                                              return(mf.ExtendFormData && mf.ExtendFormData.map(efm =>{
+                                                var id=(efm.Name).replace(/ /g,"_");
+                                                    return (<React.Fragment>
+                                                    <p className="label">{efm.Name}</p>
+                                                    <div className="row">
+                                                    <div className="increment-input">
+                                                        <div className="decrement"  onClick={this.qunatityChange} data-parent-id={id} data-btn-type="minus" data-gparent-name={gpname} data-gpid={gpid}>
+                                                            <svg width={16} height={2} viewBox="0 0 16 2">
+                                                                <rect width={16} height={2} fill="var(--primary)" />
+                                                            </svg>
+                                                        </div>
+                                                        <input id={id+"-quantityUpdater"} type="number"  name={id} data-max-number={efm.Maxnumber} defaultValue={efm.Startingnumber} data-amount={efm.Amount} data-amount-type={efm.Type} data-gparent-name={gpname} data-gpid={gpid}/>
+                                                        <div className="increment" id="btn_dv_plus_popup" onClick={this.qunatityChange} data-parent-id={id} data-btn-type="plus" data-gparent-name={gpname} data-gpid={gpid}>
+                                                            <svg className='checkout-increament-mr' width={16} height={16} viewBox="0 0 16 16" id="btn_svg_plus_popup" >
+                                                                <path d="M16 7H9V0H7V7H0V9H7V16H9V9H16V7Z" fill="var(--primary)" />
+                                                            </svg>
+                                                        </div>
+                                                     </div>
+                                                    <input id={id+"-amount"} type="text" defaultValue={efm.Type +" "+efm.Amount} data-amount-type={efm.Type} readOnly className='modiferAmount'/>
+                                                     </div>
+                                                    </React.Fragment>)
+                                                }))
+                                            })
+                                        }</React.Fragment>
+                                        )
+                                        break;
+                                    case Config.key_InputTypes.RadioButton:
+                                        return(
+                                            <React.Fragment>
+                                            <p className="labelTitle">{mod.Title}</p>
+                                            <div className="row">{
+                                            mod.modifierFields && mod.modifierFields.map(mf=>{
+                                              return(mf.ExtendFormData && mf.ExtendFormData.map(efm =>{
+                                                var id=(efm.Name).replace(/ /g,"_");
+                                                    return (
+                                                    <label htmlFor={id}>
+                                                            <input type="radio" id={id} name={mod.Title}  value={efm.Name} data-checked-value={efm.Default} data-gparent-name={gpname} data-gpid={gpid} data-amount={efm.Amount} />
+                                                            <div className="custom-radio">
+                                                                <p>{efm.Name}</p>
+                                                            </div>
+                                                    </label>)
+                                                }))
+                                            })
+                                            }</div></React.Fragment>
+                                        )
+                                        break;
+                                    case Config.key_InputTypes.TextField:
+                                        return(
+                                            <React.Fragment>
+                                            <p className="labelTitle">{mod.Title}</p>
+                                            {
+                                            mod.modifierFields && mod.modifierFields.map(mf=>{
+                                              return(mf.ExtendFormData && mf.ExtendFormData.map(efm =>{
+                                                var id=(efm.Name).replace(/ /g,"_");
+                                                    return (<React.Fragment>
+                                                    <p className="label">{efm.Name}</p>
+                                                    <div className="row">
+                                                    <input id={id+"-txt"} type="text"  name={id+"-txt"} defaultValue={efm.Startingnumber} data-amount={efm.Amount} data-amount-type={efm.Type} data-gparent-name={gpname} data-gpid={gpid}/>
+                                                    <input id={id+"-amount"} type="text" defaultValue={efm.Type +" "+efm.Amount} data-amount-type={efm.Type} readOnly className='modiferAmount'/>
+                                                     </div>
+                                                    </React.Fragment>)
+                                                }))
+                                            })
+                                        }</React.Fragment>
+                                        )
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            })
+                            }</div>
+                        }
+                        <button onClick={()=>this.submitChanges()}>Submit Changes</button>
+                    </div>
+                    </React.Fragment>
                     }
-                {/* </div> */}
             </div>
         )
     }

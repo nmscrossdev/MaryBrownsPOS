@@ -33,6 +33,7 @@ import{exchnagerate} from '../_reducers/exchangerate.reducer'
 import {cloudPrinterList, setOrderTocloudPrinter} from './cloudPrinter.reducer'
 import {tipslist} from './tips.reducer'
 import {tableRecord} from './groupSale.reducer'
+import { productModifier } from './productModifier.reducer';
 const rootReducer = combineReducers({
   authentication,
   registration,
@@ -119,7 +120,8 @@ const rootReducer = combineReducers({
   make_payconiq_payment, check_payconiq_pay_status, cancel_payconiq_payment,
   cloudPrinterList, setOrderTocloudPrinter,
   tipslist,
-  tableRecord
+  tableRecord,
+  productModifier
 });
 
 export default rootReducer;

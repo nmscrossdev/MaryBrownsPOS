@@ -624,16 +624,46 @@ const validateRequest = (RequestData) => {
     }
   }
   else if (RequestData.command == 'CustomFee') {
-    if (RequestData && !RequestData.method) { //missing attribut/invalid attribute name
-      isValidationSuccess = false;
-      clientJSON['error'] = "Invalid Attribute"
+    if (RequestData && !RequestData.method ) { //missing attribut/invalid attribute name
+      isValidationSuccess=false;        
+      clientJSON['error']= "Invalid Attribute"          
     }
-    if (RequestData.method == 'put' || RequestData.method == 'post') {
-      if (RequestData && (RequestData.method &&
-        (!RequestData.data || !RequestData.data.amount || !RequestData.data.name || !RequestData.data.hasOwnProperty("is_taxable")))) { //missing attribut/invalid attribute name
+    else if (RequestData.method == 'put' || RequestData.method == 'post') {
+      if (RequestData && RequestData && (!RequestData.data || RequestData.data == null || RequestData.data == '')) {
+
         isValidationSuccess = false;
-        clientJSON['error'] = "Missing Attribute"
+        clientJSON['error'] = "Missing attribute" //GR[3] 
       }
+      else if (RequestData && RequestData && (RequestData.data.name==""  || RequestData.data.amount == '' || RequestData.data.amount == '0' || RequestData.data.is_taxable==="")) {
+
+        isValidationSuccess = false;
+        clientJSON['error'] = "Missing attribute" //GR[3] 
+      } 
+       else if (RequestData && RequestData && RequestData.method == 'post' && 
+                ( !RequestData.data.name || !RequestData.data.amount  || !RequestData.data.hasOwnProperty("is_taxable") )) {          
+        isValidationSuccess = false;
+        clientJSON['error'] = "Missing attribute" //GR[3] 
+      }else if (RequestData && RequestData && RequestData.method == 'put' && 
+                ( !RequestData.data.name || (!RequestData.data.amount  && !RequestData.data.hasOwnProperty("is_taxable")) )) {          
+        isValidationSuccess = false;
+        clientJSON['error'] = "Missing attribute" //GR[3] 
+      } else if (RequestData && RequestData && RequestData.data.amount && (isNaN( RequestData.data.amount) || RequestData.data.amount<0)) {
+
+        isValidationSuccess = false;
+        clientJSON['error'] = "Invalid attribute" //GR[3] 
+      }
+    }
+    // else if (RequestData && RequestData.method == 'delete' /*&& (!RequestData.name || RequestData.name=="")*/) { //missing attribut/invalid attribute name
+    //     isValidationSuccess = false;
+    //     clientJSON['error'] = "Missing attribute"               
+     
+    // }
+    else {
+      if (RequestData && (!RequestData.method || !RequestData.method == 'get')) { //missing attribut/invalid attribute name
+        isValidationSuccess = false;
+        clientJSON['error'] = "Invalid Method"
+      }
+     
     }
   }
   else if (RequestData.command == 'ReceiptData') {
@@ -1927,6 +1957,76 @@ export const getOrderStatus = (RequestData) => {
   }
 
 }
+
+// export const getOrderStatus=(RequestData)=>{
+//   var validationResponse= validateRequest(RequestData) 
+//   if(validationResponse.isValidationSuccess==false){
+//         clientJSON=validationResponse.clientJSON;
+//         postmessage(clientJSON) 
+//   }  
+//   else{
+//       var tempOrdrId = localStorage.getItem('tempOrder_Id') && localStorage.getItem('tempOrder_Id') !== undefined ? JSON.parse(localStorage.getItem("tempOrder_Id")) : null;
+//       var clientJSON ={};
+    
+//       const { Email } = ActiveUser.key;
+//             var TempOrders = localStorage.getItem(`TempOrders_${Email}`) ? JSON.parse(localStorage.getItem(`TempOrders_${Email}`)) : []; if (TempOrders && TempOrders.length > 0) {
+//                   var filteredOrder=null;
+//                     if(TempOrders && TempOrders.length>0){
+//                       filteredOrder= TempOrders && TempOrders.filter(tOrder=>tOrder.TempOrderID==tempOrdrId)
+//                   } 
+//                 }  
+//               if(RequestData.method=='get'){   
+//                         clientJSON= {
+//                           command: RequestData.command,
+//                           version:"2.0",
+//                           method: RequestData.method,
+//                           status: 200,
+//                         }
+                        
+//                         // if(filteredOrder && filteredOrder.length>0 && whereToview !=='ActivityView' && whereToview !=='RefundView'){
+//                         //     filteredOrder && filteredOrder.map(order=>{
+//                         //           clientJSON['data']={
+//                         //                   wc_status: order.order_status_DB ? order.order_status_DB : order.order_status,
+//                         //                   wc_order_no: order.OrderID,
+//                         //                   oliver_order_id: order.TempOrderID
+                                  
+//                         //               }
+//                         //     })
+                        
+//                         // }else if(whereToview =='RefundView' &&  localStorage.getItem('getorder')){
+//                         //      var _order= JSON.parse(localStorage.getItem('getorder'));
+//                         //      clientJSON['data']={
+//                         //       wc_status: _order && _order.order_status,
+//                         //       wc_order_no: _order && _order.order_id,
+//                         //       oliver_order_id: _order && _order.OliverReciptId
+                      
+//                         //   }
+//                         // }
+//                         // else{
+//                           const state = store.getState();
+//                                   if(state.single_Order_list && state.single_Order_list.items && state.single_Order_list.items.content){
+//                                   var _order= state.single_Order_list.items.content
+//                                     if(_order){
+//                                       clientJSON['data']={
+//                                         wc_status: _order.order_status,
+//                                         wc_order_no: _order.order_id,
+//                                         oliver_order_id: _order.OliverReciptId
+//                                     }
+//                                     }
+                                    
+                                  
+//                                 }
+//                         // }
+//                   }
+//                   else
+//                   {
+//                     clientJSON['error']=="no transaction found"
+//                   }
+        
+//       postmessage(clientJSON);
+//     }
+// }
+
 export const doParkSale = (RequestData) => {
   var clientJSON = {};
   var validationResponse = validateRequest(RequestData)
@@ -2279,7 +2379,8 @@ export const doCustomFee = (RequestData) => {
       if (cartlist.length > 0) {
         cartlist.map(item => {
           if (item && !item.hasOwnProperty("product_id") && item.Price) {
-            customFes.push({ name: item.Title, amount: item.Price, is_taxable: item.TaxStatus == "taxable" ? true : false });
+            // amount=lowest denomination (e.g. 200 = $2.00)
+            customFes.push({ name: item.Title, amount: item.Price * 100 , is_taxable: item.TaxStatus == "taxable" ? true : false });
           }
         });
         if (RequestData.hasOwnProperty('name') && RequestData.name != "") {
@@ -2288,26 +2389,24 @@ export const doCustomFee = (RequestData) => {
       }
       clientJSON =
       {
-        oliverpos:
-        {
-          command: RequestData.command,
-          method: RequestData.method,
-          version: "2.0",
-          status: 200,
-        },
+        command: RequestData.command,
+        method: RequestData.method,
+        version: "2.0",
+        status: 200,
         data:
         {
           fees: customFes
         }
-      };
+      }
       postmessage(clientJSON);
     }
     else if (RequestData.method == "post" || RequestData.method == "put") {
-      var amount = RequestData.data.amount;
-      if(parseFloat(amount)>=100)
-      {
-        amount=parseFloat(amount)/100;
-      }
+      // var amount = RequestData.data.amount;
+      // if(parseFloat(amount)>=100)
+      // {
+      //   amount=parseFloat(amount)/100;
+      // }
+      let amount = RequestData.data.amount ? RequestData.data.amount / 100  : null ;
       let add_title = RequestData.data.name;
       let isfeeTaxable = RequestData.data.is_taxable;
 
@@ -2323,6 +2422,12 @@ export const doCustomFee = (RequestData) => {
           if (item && RequestData.method == "put" && (typeof item.product_id == 'undefined' || item.product_id == null)) {
             if (item.Title == add_title) {
               isCustomFeeFound=true;
+              if( typeof isfeeTaxable=='undefined'){
+                isfeeTaxable=item.isTaxable;  //set istaxable if RequestData.data.is_taxable not passed
+              }
+              if( !amount){
+                amount=item.Price; //set amount if RequestData.data.amount not passed
+              }
               item.Price = parseFloat(amount);
               item.old_price = isfeeTaxable == true && parseFloat(amount);
               item.isTaxable = isfeeTaxable;
@@ -2339,22 +2444,44 @@ export const doCustomFee = (RequestData) => {
         })
       }
       if(isCustomFeeFound==false && RequestData.method == "put")
-            {
-              _error="No matching fee found"
-              clientJSON =
-              {
-                oliverpos:
-                {
-                  command: RequestData.command,
-                  method: RequestData.method,
-                  version: "2.0",
-                  status: 200,
-                },
-                data:{error:_error}
-              };
-              postmessage(clientJSON);
-              return;
-            }
+        {
+          clientJSON['status']=206;
+          clientJSON['error']="No matching fee found";          
+          postmessage(clientJSON);
+          return;
+        }
+      // if(isCustomFeeFound==false && RequestData.method == "put")
+      //       {
+      //         _error="No matching fee found"
+      //         clientJSON =
+      //         {
+      //             command: RequestData.command,
+      //             method: RequestData.method,
+      //             version: "2.0",
+      //             status: 406,
+      //             data:{error:_error}
+      //         };
+      //         postmessage(clientJSON);
+      //         return;
+      //       }
+      if ( RequestData.method == "post" && new_array.length > 0) {
+        var withNoDigits = new_array.map(item => {
+            var remveNum = item.Title.replace(/[0-9]/g, '')
+            return remveNum;
+        });
+        var isDuplicate=false;  //Check for duplicate name
+        withNoDigits.length > 0 && withNoDigits.map((item, index) => {
+          if (item == title) {
+            isDuplicate=true;
+          }           
+        })
+        if(isDuplicate== true){
+          clientJSON['status']=209;
+          clientJSON['error']="fee name already exist";          
+          postmessage(clientJSON);
+          return;
+        }
+    }   
      if(_error==""){
       if (amount != 0) {
         if (new_array.length > 0) {
@@ -2418,16 +2545,13 @@ export const doCustomFee = (RequestData) => {
       }
       clientJSON =
       {
-        oliverpos:
-        {
           command: RequestData.command,
           method: RequestData.method,
           version: "2.0",
           status: 200,
-        }
       };
       if (RequestData.method == "put") {
-        clientJSON["data"] = {
+          clientJSON["data"] = {
           name: add_title,
           amount: amount
         }
@@ -2440,6 +2564,7 @@ export const doCustomFee = (RequestData) => {
       var amount = 0;
       var is_taxable = false;
       var cartlist_fee = [];
+      var error="";
       var cartlist = localStorage.getItem("CARD_PRODUCT_LIST") ? JSON.parse(localStorage.getItem("CARD_PRODUCT_LIST")) : [];//
       var i = 0;
       var index = null;
@@ -2452,8 +2577,11 @@ export const doCustomFee = (RequestData) => {
             is_taxable = cartlist[i].TaxStatus == "taxable" ? true : false
           }
         }
-        if (index != null)
+        if(index!=null){
           cartlist.splice(index, 1);
+        }else{  //No item found for given name
+          error="Not found"
+         }
       }
       else {
         cartlist_fee = cartlist.filter(item => !item.hasOwnProperty("product_id") && item.Price)
@@ -2464,13 +2592,10 @@ export const doCustomFee = (RequestData) => {
 
       clientJSON =
       {
-        oliverpos:
-        {
-          command: RequestData.command,
-          method: RequestData.method,
-          version: "2.0",
-          status: 200,
-        },
+        command: RequestData.command,
+        method: RequestData.method,
+        version: "2.0",
+        status: 200,
         data:
         {
           name: name,
@@ -2483,11 +2608,14 @@ export const doCustomFee = (RequestData) => {
         cartlist_fee.map(itm => {
           deleted_fees.push({ name: itm.Title, amount: itm.Price, is_taxable: itm.TaxStatus == "taxable" ? true : false })
         });
-        clientJSON["data"] = {};
-        clientJSON.data["fees"] = deleted_fees;
+        clientJSON["data"] = deleted_fees;
       }
-      if(name=="" && cartlist_fee && cartlist_fee.length==0)
-      clientJSON["data"] = {};
+      if(error !==""){
+        clientJSON['status']=204;       
+        clientJSON['data']="";
+        clientJSON['error'] =error;
+      }
+      
       postmessage(clientJSON);
     }
   } 
@@ -2555,7 +2683,7 @@ export const getReceiptData = (RequestData) => {
     }
   }
   var DataToSend=printData.data;
-  DataToSend.push({"rn": 0,"cms":1,"c1": "d_img","c2": Config.key.RECIEPT_IMAGE_DOMAIN +printData.logo_img,"c3":"","bold":"0,0,0","fs":"24","alg":"1"} )  
+  //DataToSend.push({"rn": 0,"cms":1,"c1": "d_img","c2": Config.key.RECIEPT_IMAGE_DOMAIN +printData.logo_img,"c3":"","bold":"0,0,0","fs":"24","alg":"1"} )  
 
   var clientJSON =
   {

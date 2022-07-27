@@ -233,7 +233,12 @@ class CheckoutViewThird extends React.Component {
     updateClosingTab = (st)=>{
         this.setState({closingTab : st})
     }
-
+    close_loader()
+    {
+        const getRemainingPrice = this.getRemainingPrice() ? this.getRemainingPrice() : 0;
+        this.setState({loading:false,paidAmount:parseFloat(RoundAmount(getRemainingPrice)).toFixed(2)});
+        this.state.paidAmount=parseFloat(RoundAmount(getRemainingPrice)).toFixed(2);
+    }
     //  function use to check for payment types and perform action accordingly 
     pay_amount = (paymentType, TerminalCount = 0, Support = '', paymentCode = '',paidConfirmAmount=0) => {
         const { paidAmount, closingTab } = this.state;
@@ -447,16 +452,18 @@ class CheckoutViewThird extends React.Component {
             // run this when item add in cart
         }, 200);
        
-        if (nextProp.checkoutlist) {
-            this.closingTab(true);
-            if(nextProp.checkoutlist){
-            this.setState({ paidAmount: nextProp.checkoutlist.totalPrice })}
-        }
-        if (nextProp.checkList !== this.props.checkList) {
-            this.closingTab(true);
-            if( nextProp.checkList){
-            this.setState({ paidAmount: nextProp.checkList.totalPrice })}
-        }
+        // if (nextProp.checkoutlist) {
+        //     this.closingTab(true);
+        //     //-this.getRemainingPrice()
+        //     if(nextProp.checkoutlist){
+        //     this.setState({ paidAmount: nextProp.checkoutlist.totalPrice })}
+        // }
+        // if (nextProp.checkList !== this.props.checkList) {
+        //     this.closingTab(true);
+        //     //-this.getRemainingPrice()
+        //     if( nextProp.checkList){
+        //     this.setState({ paidAmount: nextProp.checkList.totalPrice })}
+        // }
         if (nextProp.global_payment && this.state.isPaymentStart == true) {
             this.setState({ isPaymentStart: false })
             if (nextProp.global_payment.is_success === true) {
@@ -764,6 +771,7 @@ class CheckoutViewThird extends React.Component {
         // if(this.props.showExtIframe==false){
         //     this.state.IsPaymentButtonClicked=false;
         // }
+       
         return (
             // (ActiveUser.key.isSelfcheckout == true && (SelfCheckoutStatus == "sfcheckoutpayment" || isMobileOnly == true)) ?
               
@@ -796,7 +804,7 @@ class CheckoutViewThird extends React.Component {
                                     
                                         <div className="total">
                                             <p>Your Total</p>
-                                            <p className="amount">{parseFloat(this.props.checkList.totalPrice).toFixed(2)}</p>
+                                            <p className="amount">{parseFloat(this.getRemainingPrice()).toFixed(2)}</p>
                                         </div>
                                         <div className="payment-options">
                                         <p>Please select a payment method:</p>

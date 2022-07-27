@@ -38,3 +38,5 @@ exports.key = {
    // GA_KEY                  : process.env.ENVIRONMENT=='production'? 'UA-114926859-8':'UA-141287502-1'
     
 }
+exports.key_AssigneeType = { Category : 0, SubCategory : 1, Attribute : 2, SubAttribute : 3, Product : 4, Tag : 5 }
+exports.key_InputTypes = { TextField : 0 , NumberField : 1, RadioButton : 2, CheckBox : 3}
