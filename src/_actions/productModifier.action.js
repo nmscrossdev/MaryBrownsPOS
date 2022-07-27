@@ -2,6 +2,7 @@ import { productModifierConstants } from '../_constants';
 import { productModifier } from '../_services';
 import { get_UDid } from '../ALL_localstorage';
 import { openDb } from 'idb';
+import moment from 'moment';
 export const productModifierActions = {
     getAll,
 };
@@ -9,9 +10,11 @@ export const productModifierActions = {
 function getAll() {
     return dispatch => {
         dispatch(request());
-        var productlist = []
+        var productlist = [];
+        var time = moment().toDate().getTime();
+        var offset = moment().toDate().getTimezoneOffset();
         dispatch(success(productlist))
-        productModifier.getAll(100,1)
+        productModifier.getAll(100,1,time,offset)
             .then(
                 productlist => {
                     if(productlist && productlist.Records)

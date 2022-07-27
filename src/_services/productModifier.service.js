@@ -11,9 +11,9 @@ function refresh() {
     // remove user from local storage to log user out
 }
 
-function getAll(pageSize,pageNumber) {
+function getAll(pageSize,pageNumber,time,offset) {
     try {
-        return serverRequest.clientServiceRequest('GET', `/ProductModifier/Records?pageSize=${pageSize}&pageNumber=${pageNumber}`, '')
+        return serverRequest.clientServiceRequest('GET', `/ProductModifier/Records?pageSize=${pageSize}&pageNumber=${pageNumber}&time=${time}&offset=${offset}`, '')
             .then(productlst => {
                 return productlst.content;
             })
