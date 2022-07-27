@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { TileModel, NavbarPage, CommonProductPopupModal, CommonHeaderTwo, getTaxAllProduct, AllProduct, PopupShopStatus, CommonMsgModal, UpdateProductInventoryModal } from '../_components';
-import { cartProductActions, cloudPrinterActions,productModifierActions } from '../_actions'
+import { cartProductActions, cloudPrinterActions/*,productModifierActions */} from '../_actions'
 import {  favouriteListActions } from '../ShopView/index';
 import {FavouriteList} from '../SelfCheckout/components/FavouriteList';
 import {CategoriesList} from '../SelfCheckout/components/CategoriesList';
@@ -124,7 +124,7 @@ class SelfCheckoutView extends React.Component {
         var udid = get_UDid('UDID');
         const { dispatch } = this.props;
         
-        dispatch(productModifierActions.getAll());
+        // dispatch(productModifierActions.getAll());
 
         dispatch(selfCheckoutActions.get_selfcheckout_setting());
         //----- update product qty-------------------------------------------------

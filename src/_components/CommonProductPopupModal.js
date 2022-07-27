@@ -1977,7 +1977,7 @@ class CommonProductPopupModal extends React.Component {
                                                     <p className="price"><NumberFormat value={tax_is && RoundAmount(((product_price * this.state.variationDefaultQunatity) - after_discount_total_price) + (tax_is.excl_tax ? tax_is.excl_tax : 0))} displayType={'text'} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} /></p>
                                                     <p className="subtext">({typeOfTax() == 'incl' ? LocalizedLanguage.inclTax : "excl "+LocalizedLanguage.exclTax})</p>
                                                 </div>
-                                                <button type="button" onClick={()=>this.getModifiers()}>Modify Ingredients</button>
+                                                {/* <button type="button" onClick={()=>this.getModifiers()}>Modify Ingredients</button> */}
                                             </div>
                                             <div className="increment-input">
                                                 <div onClick={this.decrementDefaultQuantity} className="decrement">

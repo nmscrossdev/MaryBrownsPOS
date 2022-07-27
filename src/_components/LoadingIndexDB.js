@@ -13,7 +13,7 @@ import { refreshwebManu } from "../_components/CommonFunction";
 import ActiveUser from '../settings/ActiveUser';
 import LoaderOnboarding from '../onboarding/components/LoaderOnboarding'
 import { serverRequest } from '../CommonServiceRequest/serverRequest'
-import { checkShopSTatusAction, discountActions, attributesActions,categoriesActions, cartProductActions,exchangerateActions,productModifierActions } from '../_actions';
+import { checkShopSTatusAction, discountActions, attributesActions,categoriesActions, cartProductActions,exchangerateActions/*,productModifierActions */} from '../_actions';
 import { favouriteListActions } from '../ShopView';
 import { selfCheckoutActions } from '../SelfCheckout/actions/selfCheckout.action';
 import { cashManagementAction } from "../CashManagementPage/actions/cashManagement.action";
@@ -24,7 +24,7 @@ class LoadingIndexDB extends React.Component {
         super(props);
         this.state = { loadingProducts: '',loadPerc:0 }
         // this.props.dispatch(idbProductActions.createProductDB());
-        this.props.dispatch(productModifierActions.getAll());
+        // this.props.dispatch(productModifierActions.getAll());
         if (!localStorage.getItem("shopstatus")) {
             this.props.dispatch(checkShopSTatusAction.getStatus());
         }

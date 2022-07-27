@@ -33,7 +33,7 @@ import{exchnagerate} from '../_reducers/exchangerate.reducer'
 import {cloudPrinterList, setOrderTocloudPrinter} from './cloudPrinter.reducer'
 import {tipslist} from './tips.reducer'
 import {tableRecord} from './groupSale.reducer'
-import { productModifier } from './productModifier.reducer';
+// import { productModifier } from './productModifier.reducer';
 const rootReducer = combineReducers({
   authentication,
   registration,
@@ -121,7 +121,7 @@ const rootReducer = combineReducers({
   cloudPrinterList, setOrderTocloudPrinter,
   tipslist,
   tableRecord,
-  productModifier
+  // productModifier
 });
 
 export default rootReducer;
